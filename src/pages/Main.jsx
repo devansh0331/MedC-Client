@@ -5,6 +5,7 @@ import SignInPage from "./SignInPage";
 import ResetPassword from "./ResetPassword";
 import HomePage from "./HomePage";
 import OTPVerification from "./OTPVerification";
+import NewPassword from "./NewPassword";
 
 function Main() {
   return (
@@ -42,6 +43,15 @@ function Main() {
           <>
             <Navbar />
             <OTPVerification />
+          </>
+        }
+      />
+      <Route
+        path="/new-password"
+        element={
+          <>
+            <Navbar />
+            <NewPassword />
           </>
         }
       />
