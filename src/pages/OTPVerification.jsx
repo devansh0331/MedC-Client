@@ -3,6 +3,10 @@ import { Button, Input } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
 function OTPVerification() {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Function to verify otp
+  };
   return (
     <div className="w-screen h-screen">
       <div className="w-full h-full flex flex-col items-center justify-center">
@@ -15,6 +19,7 @@ function OTPVerification() {
             <Input label="One Time Password" className="" />
           </div>
           <Button
+            onClick={handleSubmit}
             color="#01bcf4"
             className="w-full md:w-full bg-primary text-white  rounded-full mt-6"
           >

@@ -3,6 +3,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function SignInPage() {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Function to signin
+  };
   return (
     <div className="w-screen h-screen">
       <div className="w-full h-full flex flex-col items-center justify-center">
@@ -30,6 +34,7 @@ function SignInPage() {
             <Input label="Password" className="" />
           </div>
           <Button
+            onClick={handleSubmit}
             color="#01bcf4"
             className="w-full md:w-full bg-primary text-white  rounded-full mt-6"
           >
