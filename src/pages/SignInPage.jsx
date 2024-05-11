@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 function SignInPage() {
   return (
-    <div className="w-screen">
-      <div className="w-full h-4/5 mt-12 flex flex-col items-center justify-center">
+    <div className="w-screen h-screen">
+      <div className="w-full h-full flex flex-col items-center justify-center">
         <h1 className="text-4xl md:text-5xl font-black mb-6">Sign In</h1>
         <Button
           color="black"
@@ -36,7 +36,9 @@ function SignInPage() {
             Sign In with Email
           </Button>
         </form>
-        <Link className="mt-2 text-sm text-primary">Forgot your password?</Link>
+        <Link to="/reset-password" className="mt-2 text-sm text-primary">
+          Forgot your password?
+        </Link>
       </div>
     </div>
   );
