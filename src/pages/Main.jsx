@@ -42,7 +42,7 @@ function Main() {
         path="/reset-password"
         element={
           <>
-            <Navbar />
+            <Navbar route="signup" />
             <ResetPassword />
           </>
         }
@@ -51,7 +51,7 @@ function Main() {
         path="/otp-verification"
         element={
           <>
-            <Navbar />
+            <Navbar route="signup" />
             <OTPVerification />
           </>
         }
@@ -60,7 +60,7 @@ function Main() {
         path="/new-password"
         element={
           <>
-            <Navbar />
+            <Navbar route="signup" />
             <NewPassword />
           </>
         }
