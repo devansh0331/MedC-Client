@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Input } from "@material-tailwind/react";
 
 function NewPassword() {
@@ -6,6 +6,11 @@ function NewPassword() {
     e.preventDefault();
     // Function to create new password
   };
+
+  useEffect(() => {
+    return () => {};
+  }, []);
+
   return (
     <div className="w-screen h-screen">
       <div className="w-full h-full flex flex-col items-center justify-center">
