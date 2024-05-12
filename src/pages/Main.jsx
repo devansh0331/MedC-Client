@@ -15,7 +15,7 @@ function Main() {
         path="/"
         element={
           <>
-            <Navbar />
+            <Navbar route="signup" />
             <HomePage />
           </>
         }
@@ -24,7 +24,7 @@ function Main() {
         path="/signup"
         element={
           <>
-            <Navbar />
+            <Navbar route="signin" />
             <SignUpPage />
           </>
         }
@@ -33,7 +33,7 @@ function Main() {
         path="/signin"
         element={
           <>
-            <Navbar />
+            <Navbar route="signup" />
             <SignInPage />
           </>
         }

@@ -1,13 +1,9 @@
 import { Button } from "@material-tailwind/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Navbar() {
+function Navbar(props) {
   const navigate = useNavigate();
-  const handleNavigate = (e) => {
-    e.preventDefault();
-    navigate("/signin");
-  };
 
   const handleLogoNavigate = (e) => {
     e.preventDefault();
@@ -21,13 +17,26 @@ function Navbar() {
           Logo
         </div>
         <div className="flex items-center justify-end">
-          <Button
-            onClick={handleNavigate}
-            variant="outlined"
-            className="rounded-full"
-          >
-            Sign In
-          </Button>
+          {props.route == "signup" && (
+            <Button
+              id="signup"
+              onClick={() => navigate("/signup")}
+              variant="outlined"
+              className="rounded-full"
+            >
+              Sign Up
+            </Button>
+          )}
+          {props.route == "signin" && (
+            <Button
+              id="signin"
+              onClick={() => navigate("/signin")}
+              variant="outlined"
+              className="rounded-full"
+            >
+              Sign In
+            </Button>
+          )}
         </div>
       </div>
     </nav>
