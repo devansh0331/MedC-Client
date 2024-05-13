@@ -1,12 +1,14 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import "./App.css";
 import Main from "./pages/Main";
 import Cookies from "js-cookie";
+import { UserContext } from "./UserContext";
 
 function App() {
+  const { userInfo, setUserInfo } = useContext(UserContext);
+
   useEffect(() => {
-    const cookies = Cookies.get("token");
-    console.log(cookies);
+    console.log(userInfo.name);
   }, []);
 
   return (
