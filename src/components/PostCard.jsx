@@ -1,5 +1,5 @@
 import React from "react";
-import profile from "../assets/profile.png";
+import profile from "../assets/profile2.png";
 import hacking from "../assets/hacking.jpg";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
