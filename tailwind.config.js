@@ -15,6 +15,7 @@ export default withMe({
         alert: "#f45050",
         notice: "#fbd605",
         offWhite: "#ddf6f1",
+        grayText: "#374151",
       },
       fontFamily: {
         rubik: ["Rubik", "sans-serif"],

@@ -7,6 +7,7 @@ import HomePage from "./HomePage";
 import OTPVerification from "./OTPVerification";
 import NewPassword from "./NewPassword";
 import SignUpPage from "./SignUpPage";
+import FeedPage from "./FeedPage";
 
 function Main() {
   return (
@@ -62,6 +63,15 @@ function Main() {
           <>
             <Navbar route="signup" />
             <NewPassword />
+          </>
+        }
+      />
+      <Route
+        path="/feed"
+        element={
+          <>
+            <Navbar route="signup" />
+            <FeedPage />
           </>
         }
       />

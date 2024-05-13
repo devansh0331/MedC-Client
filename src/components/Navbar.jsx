@@ -11,7 +11,7 @@ function Navbar(props) {
   };
 
   return (
-    <nav className="fixed py-5 top-0 flex justify-center w-screen overflow-hidden">
+    <nav className="fixed py-5 top-0 flex justify-center w-screen overflow-hidden bg-white z-10">
       <div className="w-11/12 flex items-center justify-between">
         <div onClick={handleLogoNavigate} className="cursor-pointer">
           Logo
