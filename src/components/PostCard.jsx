@@ -18,7 +18,9 @@ function PostCard() {
             className="rounded-full h-10 md:h-12 w-10 md:w-12 object-cover object-center cursor-pointer"
           />
           <div className="pl-3 flex flex-col items-start justify-start">
-            <h3 className="text-base font-bold">Devansh Shrivastava</h3>
+            <h3 className="text-base font-bold leading-4">
+              Devansh Shrivastava
+            </h3>
             <p className="text-grayText text-sm">Technology</p>
           </div>
         </div>
