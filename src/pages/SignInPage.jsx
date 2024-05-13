@@ -49,7 +49,7 @@ function SignInPage() {
           });
           toast.success("Logged In Successfully");
           setTimeout(() => {
-            navigate("/");
+            navigate("/feed");
             location.reload();
           }, 2000);
         } else {

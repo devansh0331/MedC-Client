@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PostCard from "../components/PostCard";
 import CreatePost from "../components/CreatePost";
 import JobCard from "../components/JobCard";
+import { SERVER_URL } from "../ServerURL";
+import { useNavigate } from "react-router-dom";
+import { Toaster, toast } from "react-hot-toast";
 
 function FeedPage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch(`${SERVER_URL}/auth/is-user`, { credentials: "include" }).then(
+      (res) =>
+        res.json().then((res) => {
+          console.log(res);
+          if (res != true) {
+            toast.error(res);
+            navigate("/signin");
+          }
+        })
+    );
+  }, []);
   return (
     <div className="w-screen h-screen  bg-offWhite ">
       <div className="w-full h-full flex items-start justify-between pt-24 px-3">
@@ -65,6 +82,7 @@ function FeedPage() {
             <h1 className="text-lg text-center text-primary">View all</h1>
           </div>
         </div>
+        <Toaster position="top-right" />
       </div>
     </div>
   );
