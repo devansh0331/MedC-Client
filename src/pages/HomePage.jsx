@@ -17,7 +17,7 @@ function HomePage() {
           if (res == true) navigate("/feed");
           else {
             Cookies.remove("token");
-            // navigate("/signup");
+            navigate("/signup");
           }
         }
       })
