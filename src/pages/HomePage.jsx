@@ -15,10 +15,10 @@ function HomePage() {
         {
           console.log("Home: " + res);
           if (res == true) navigate("/feed");
-          else {
-            Cookies.remove("token");
-            navigate("/signup");
-          }
+          // else {
+          //   Cookies.remove("token");
+          //   navigate("/signup");
+          // }
         }
       })
     );
