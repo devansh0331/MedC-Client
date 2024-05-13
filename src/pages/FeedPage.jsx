@@ -1,13 +1,17 @@
 import React from "react";
 import PostCard from "../components/PostCard";
 import CreatePost from "../components/CreatePost";
+import JobCard from "../components/JobCard";
 
 function FeedPage() {
   return (
     <div className="w-screen h-screen  bg-offWhite ">
       <div className="w-full h-full flex items-start justify-between pt-24 px-3">
+        {/* SIDEBAR */}
         <div className="hidden md:block">Sidebar</div>
-        <div className="w-full md:w-7/12 h-full grid grid-cols-1 gap-4 overflow-y-scroll">
+
+        {/* POSTS FEED */}
+        <div className="w-full md:w-8/12 h-full grid grid-cols-1 gap-4 overflow-y-scroll">
           <div className="bg-white rounded-md">
             <CreatePost />
           </div>
@@ -24,7 +28,43 @@ function FeedPage() {
             <PostCard />
           </div>
         </div>
-        <div className="hidden md:block">Job Alert</div>
+
+        {/* JOBS FOR YOU */}
+        <div className="hidden md:grid grid-cols-1 w-3/12 h-4/5 max-h-1/2 bg-white rounded-md">
+          <div className="p-6">
+            <h1 className="text-3xl font-extrabold">Jobs For You</h1>
+          </div>
+          <hr />
+          <div className="md:grid grid-cols-1  overflow-y-scroll">
+            <div className="">
+              <JobCard />
+              <hr className="mx-3" />
+            </div>
+            <div className="">
+              <JobCard />
+              <hr className="mx-3" />
+            </div>
+            <div>
+              <JobCard />
+              <hr className="mx-3" />
+            </div>
+            <div>
+              <JobCard />
+              <hr className="mx-3" />
+            </div>
+            <div>
+              <JobCard />
+              <hr className="mx-3" />
+            </div>
+            <div>
+              <JobCard />
+              <hr className="mx-3" />
+            </div>
+          </div>
+          <div className="p-4">
+            <h1 className="text-lg text-center text-primary">View all</h1>
+          </div>
+        </div>
       </div>
     </div>
   );
