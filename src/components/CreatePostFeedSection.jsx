@@ -2,7 +2,7 @@ import { Input } from "@material-tailwind/react";
 import React from "react";
 import profile from "../assets/profile.png";
 
-function CreatePost() {
+function CreatePostFeedSection(props) {
   return (
     <div className="w-full flex  items-center justify-evenly p-6">
       <div>
@@ -12,7 +12,7 @@ function CreatePost() {
           className="rounded-full h-12 md:h-16 w-12 md:w-16 object-cover object-center"
         />
       </div>
-      <div className="w-full pl-3 md:pl-0 md:w-5/6">
+      <div className="w-full pl-3 md:pl-0 md:w-5/6" onClick={props.handleOpen}>
         <Input
           type="text"
           placeholder='Post as "Devansh Shrivastava"'
@@ -20,6 +20,7 @@ function CreatePost() {
           labelProps={{
             className: "hidden",
           }}
+
           // containerProps={{ className: "min-w-[100px]" }}
         />
       </div>
@@ -27,4 +28,4 @@ function CreatePost() {
   );
 }
 
-export default CreatePost;
+export default CreatePostFeedSection;

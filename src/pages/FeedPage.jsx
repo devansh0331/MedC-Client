@@ -1,13 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
-import CreatePost from "../components/CreatePost";
+import CreatePostFeedSection from "../components/CreatePostFeedSection";
 import JobCard from "../components/JobCard";
 import { SERVER_URL } from "../ServerURL";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
+import CreatePostPopUp from "../components/CreatePostPopUp";
 
 function FeedPage() {
   const navigate = useNavigate();
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(!open);
 
   useEffect(() => {
     fetch(`${SERVER_URL}/auth/is-user`, { credentials: "include" }).then(
@@ -23,14 +28,16 @@ function FeedPage() {
   }, []);
   return (
     <div className="w-screen h-screen  bg-offWhite ">
-      <div className="w-full h-full flex items-start justify-between pt-24 px-3">
+      <div className="relative w-full h-full flex items-start justify-between pt-24 px-3">
+        <CreatePostPopUp open={open} handleOpen={handleOpen} />
+
         {/* SIDEBAR */}
         <div className="hidden md:block">Sidebar</div>
 
         {/* POSTS FEED */}
         <div className="w-full md:w-8/12 h-full grid grid-cols-1 gap-4 overflow-y-scroll">
           <div className="bg-white rounded-md">
-            <CreatePost />
+            <CreatePostFeedSection handleOpen={handleOpen} />
           </div>
           <div className="bg-white rounded-md">
             <PostCard />
