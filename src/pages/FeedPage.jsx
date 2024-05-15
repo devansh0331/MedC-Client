@@ -35,7 +35,7 @@ function FeedPage() {
         <div className="hidden md:block">Sidebar</div>
 
         {/* POSTS FEED */}
-        <div className="w-full md:w-8/12 h-full grid grid-cols-1 gap-4 overflow-y-scroll">
+        <div className="w-full md:w-1/2 h-full grid grid-cols-1 gap-4 overflow-y-scroll">
           <div className="bg-white rounded-md">
             <CreatePostFeedSection handleOpen={handleOpen} />
           </div>
