@@ -1,10 +1,47 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Input } from "@material-tailwind/react";
+import { Toaster, toast } from "react-hot-toast";
+import { SERVER_URL } from "../ServerURL";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function NewPassword() {
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const [serarchParams] = useSearchParams();
+
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     // Function to create new password
+    if (!password || !confirmPassword) toast.error("All fields are mandatory!");
+    if (password != confirmPassword) toast.error("Password does not match!");
+    else {
+      try {
+        const _id = serarchParams.get("_id");
+        const data = await fetch(`${SERVER_URL}/auth/reset-password`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ _id, password }),
+        });
+        const res = await data.json();
+
+        if (res.success) {
+          toast.success(res.message);
+          setTimeout(() => {
+            navigate("/signin");
+          }, 2000);
+        } else {
+          toast.error(res.error);
+        }
+      } catch (error) {
+        toast.error(error);
+      }
+    }
   };
 
   useEffect(() => {
@@ -23,10 +60,20 @@ function NewPassword() {
         </p>
         <form className="w-4/5 md:w-1/5 m-auto flex flex-col justify-center items-center mt-2 mb-1">
           <div className="w-full mt-3">
-            <Input label="New Password" className="" />
+            <Input
+              label="New Password"
+              className=""
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
           <div className="w-full mt-3">
-            <Input label="Confirm Password" className="" />
+            <Input
+              label="Confirm Password"
+              className=""
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
           </div>
           <Button
             onClick={handleSubmit}
@@ -36,6 +83,7 @@ function NewPassword() {
             Submit
           </Button>
         </form>
+        <Toaster position="top-right" />
       </div>
     </div>
   );

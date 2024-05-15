@@ -53,7 +53,7 @@ function SignInPage() {
             location.reload();
           }, 2000);
         } else {
-          toast.error("Server Message: " + parsedResponse);
+          toast.error("Server Message: " + parsedResponse.msg);
         }
       } catch (error) {
         toast.error("Client Error: " + error);
