@@ -6,6 +6,7 @@ import { SERVER_URL } from "../ServerURL";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import CreatePostPopUp from "../components/CreatePostPopUp";
+import SideBar from "../components/SideBar";
 
 function FeedPage() {
   const navigate = useNavigate();
@@ -28,11 +29,15 @@ function FeedPage() {
   }, []);
   return (
     <div className="w-screen h-screen  bg-offWhite ">
-      <div className="relative w-full h-full flex items-start justify-between pt-24 px-3">
+      <div className="relative w-full h-full flex flex-col md:flex-row items-start justify-evenly pt-24 px-3">
         <CreatePostPopUp open={open} handleOpen={handleOpen} />
 
         {/* SIDEBAR */}
-        <div className="hidden md:block">Sidebar</div>
+        <div className="w-full md:w-auto block">
+          <div className="bg-white rounded-md">
+            <SideBar />
+          </div>
+        </div>
 
         {/* POSTS FEED */}
         <div className="w-full md:w-1/2 h-full grid grid-cols-1 gap-4 overflow-y-scroll">
