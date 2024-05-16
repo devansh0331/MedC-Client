@@ -1,6 +1,7 @@
 import { Button } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo/medc-logo.png";
 
 function Navbar(props) {
   const navigate = useNavigate();
@@ -11,10 +12,10 @@ function Navbar(props) {
   };
 
   return (
-    <nav className="fixed py-5 top-0 flex justify-center w-screen overflow-hidden bg-white z-10">
+    <nav className="fixed  top-0 flex justify-center w-screen overflow-hidden bg-white z-10">
       <div className="w-11/12 flex items-center justify-between">
         <div onClick={handleLogoNavigate} className="cursor-pointer">
-          Logo
+          <img src={logo} alt="" className="w-5/6" />
         </div>
         <div className="flex items-center justify-end">
           {props.route == "signup" && (
