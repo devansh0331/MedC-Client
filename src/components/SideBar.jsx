@@ -4,7 +4,7 @@ import { FaEdit } from "react-icons/fa";
 
 function SideBar() {
   return (
-    <div className="relative w-full mb-4 md:mb:0 shadow-none md:shadow-md py-3 px-6">
+    <div className="relative w-full mb-4 md:mb:0 shadow-md py-3 px-6">
       <div className="relative flex flex-col items-center justify-evenly py-3">
         <img
           src={profile}
