@@ -33,7 +33,7 @@ function FeedPage() {
         <CreatePostPopUp open={open} handleOpen={handleOpen} />
 
         {/* SIDEBAR */}
-        <div className="w-full md:w-auto block">
+        <div className="w-full md:w-auto block ">
           <div className="bg-white rounded-md">
             <SideBar />
           </div>
@@ -41,7 +41,7 @@ function FeedPage() {
 
         {/* POSTS FEED */}
         <div className="w-full md:w-1/2 h-full grid grid-cols-1 gap-4 overflow-y-scroll">
-          <div className="bg-white rounded-md">
+          <div className="bg-white rounded-md ">
             <CreatePostFeedSection handleOpen={handleOpen} />
           </div>
           <div className="bg-white rounded-md">
@@ -59,7 +59,7 @@ function FeedPage() {
         </div>
 
         {/* JOBS FOR YOU */}
-        <div className="hidden md:grid grid-cols-1 w-3/12 h-4/5 max-h-1/2 bg-white rounded-md">
+        <div className="hidden md:grid grid-cols-1 w-3/12 h-4/5 max-h-1/2 bg-white rounded-md shadow-md">
           <div className="p-6">
             <h1 className="text-3xl font-extrabold">Jobs For You</h1>
           </div>

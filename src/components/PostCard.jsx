@@ -8,7 +8,7 @@ import { BsThreeDots } from "react-icons/bs";
 
 function PostCard() {
   return (
-    <div className="w-full flex flex-col items-center px-6 py-3">
+    <div className="w-full flex flex-col items-center px-6 py-3 shadow-md">
       <div className="w-full flex items-start justify-between py-3">
         {/* USER INFO */}
         <div className="flex items-center">

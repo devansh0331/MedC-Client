@@ -4,7 +4,7 @@ import profile from "../assets/profile.png";
 
 function CreatePostFeedSection(props) {
   return (
-    <div className="w-full flex  items-center justify-evenly p-6">
+    <div className="w-full flex  items-center justify-evenly p-6 shadow-md">
       <div>
         <img
           src={profile}
