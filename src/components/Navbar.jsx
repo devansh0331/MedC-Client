@@ -12,7 +12,7 @@ function Navbar(props) {
   };
 
   return (
-    <nav className="fixed  top-0 flex justify-center w-screen overflow-hidden bg-white z-10">
+    <nav className="fixed top-0 flex justify-center w-screen overflow-hidden bg-transparent z-10">
       <div className="w-11/12 flex items-center justify-between">
         <div onClick={handleLogoNavigate} className="cursor-pointer">
           <img src={logo} alt="" className="w-5/6" />
@@ -29,14 +29,13 @@ function Navbar(props) {
             </Button>
           )}
           {props.route == "signin" && (
-            <Button
+            <button
               id="signin"
               onClick={() => navigate("/signin")}
-              variant="outlined"
-              className="rounded-full"
+              className="rounded-full outline outline-2 outline-gray-400 bg-transparent text-black px-6 py-2 text-sm font-sans font-medium"
             >
               Sign In
-            </Button>
+            </button>
           )}
         </div>
       </div>
