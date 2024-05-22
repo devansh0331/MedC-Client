@@ -2,6 +2,8 @@ import { Button, Input } from "@material-tailwind/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import signup from "../assets/signup.png";
+import emaillogo from "../assets/emaillogo.png";
+import google from "../assets/google.png";
 import { Toaster, toast } from "react-hot-toast";
 import { SERVER_URL } from "../ServerURL";
 
@@ -47,94 +49,108 @@ function SignUpPage() {
     }
   };
   return (
-    <div className="w-screen h-screen">
-      <div className="w-full h-full flex  items-center justify-center md:justify-between">
-        <div className="w-full h-full flex flex-1 flex-col items-center justify-center">
-          {" "}
-          <h1 className="w-full md:w-2/5 text-4xl md:text-5xl text-center font-black mb-6">
-            Start Hiring with MEDC
-          </h1>
-          <Button
-            color="black"
-            variant="outlined"
-            className="w-4/5 md:w-2/5 rounded-full mb-3"
-          >
-            Continue with email
-          </Button>
-          <Button
-            color="black"
-            variant="outlined"
-            className="w-4/5 md:w-2/5 text-black rounded-full mb-3"
-          >
-            Continue with Google
-          </Button>
-          <p>or</p>
-          <form className="w-4/5 md:w-3/5  flex flex-col justify-center items-center mt-2 mb-0">
-            <div className="w-full md:grid grid-cols-2 md:gap-4 mt-0 m-0">
-              <div className="w-full  mt-5">
-                <Input
-                  type="text"
-                  label="First Name"
-                  className=""
-                  value={fname}
-                  onChange={(e) => setFname(e.target.value)}
-                />
-              </div>
-              <div className="w-full  mt-3 md:mt-5">
-                <Input
-                  type="text"
-                  label="Last Name"
-                  className=""
-                  value={lname}
-                  onChange={(e) => setLname(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="w-full mt-3">
-              <Input
-                type="email"
-                label="Work Email"
-                className=""
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="w-full mt-3">
-              <Input
-                type="password"
-                label="Password"
-                className=""
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <Button
-              onClick={handleSubmit}
-              color="#01bcf4"
-              className="w-full md:w-full bg-primary text-white  rounded-full mt-6"
-            >
+    <div className="w-screen h-screen flex overflow-hidden">
+      <div className="w-1/2 h-full flex flex-col items-center justify-center mt-4">
+        <div className="w-2/5">
+          <p className="w-full text-4xl tracking-wide text-center font-black mb-6 mt-4 font-open leading-custom">
+            Start Hiring <br /> With MEDC
+          </p>
+          <button className="w-full rounded-full mb-3 flex items-center border border-1 border-gray-500 py-2 px-3">
+            <img src={emaillogo} alt="email" className="h-7 w-7" />
+            <p className="text-center text-base font-medium w-full">
               Continue with Email
-            </Button>
-          </form>
-          {/* <Link to="/reset-password" className="mt-2 text-sm text-primary"> */}
-          {/* </Link> */}
-          <div className="w-4/5 md:w-3/5 mt-2 ">
-            <p className=" text-sm text-center">
-              Password must be minimum of 8 characters which includes a
-              character, a number and a special symbol
             </p>
+          </button>
+          <button className="w-full rounded-full mb-3 flex items-center border border-1 border-gray-500 py-2 px-3">
+            <img src={google} alt="google" className="h-7 w-7" />
+            <p className="text-center text-base w-full">Continue with Google</p>
+          </button>
+          <div class="line-with-text">
+            <span class="line"></span>
+            <span class="text-word">or</span>
+            <span class="line"></span>
           </div>
-        </div>
-        <div className="hidden h-screen w-full bg-offWhite md:flex items-center justify-center  md:flex-1">
-          <div className="md:h-full md:w-4/5 md:flex md:flex-col md:items-center md:justify-center">
-            <img src={signup} alt="" />
-            <p className="font-extrabold text-xl text-center">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            </p>
+
+          <div className="flex my-0">
+            <div className="flex flex-col my-2 mr-2">
+              <label
+                htmlFor="fname"
+                className="text-sm font-medium tracking-wider text-gray-700"
+              >
+                First Name
+              </label>
+              <input
+                value={fname}
+                onChange={(e) => setFname(e.target.value)}
+                id="fname"
+                className="text-sm font-medium text-gray-800 p-2 border w-full border-gray-600 rounded-sm"
+                placeholder="First Name"
+              />
+            </div>
+            <div className="flex flex-col my-2">
+              <label
+                htmlFor="lname"
+                className="text-sm font-medium tracking-wider text-gray-700"
+              >
+                Last Name
+              </label>
+              <input
+                value={lname}
+                onChange={(e) => setLname(e.target.value)}
+                id="lname"
+                className="text-sm font-medium text-gray-800 p-2 border w-full border-gray-600 rounded-sm"
+                placeholder="Last Name"
+              />
+            </div>
           </div>
+          <div className="flex flex-col my-2">
+            <label
+              htmlFor="email"
+              className="text-sm font-medium tracking-wider text-gray-700"
+            >
+              Work Email
+            </label>
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              id="email"
+              className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm"
+              placeholder="Work email"
+            />
+          </div>
+          <div className="flex flex-col my-2">
+            <label
+              htmlFor="password"
+              className="text-sm font-medium tracking-wider text-gray-700"
+            >
+              Password
+            </label>
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              id="password"
+              className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm"
+              placeholder="Password"
+            />
+          </div>
+          <Button
+            onClick={handleSubmit}
+            color="#01bcf4"
+            className="w-full md:w-full bg-primary text-white  rounded-full mt-4"
+          >
+            Continue with Email
+          </Button>
         </div>
-        <Toaster position="top-right" />
       </div>
+      <div className="bg-offWhite w-1/2 h-full flex flex-col items-center justify-center">
+        <div className="md:h-full md:w-4/5 md:flex md:flex-col md:items-center md:justify-center">
+          <img src={signup} alt="" />
+          <p className="font-extrabold text-xl text-center">
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+          </p>
+        </div>
+      </div>
+      <Toaster position="top-right" />
     </div>
   );
 }

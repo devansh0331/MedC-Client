@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.line-with-text {
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
+  .line {
+    flex: 1;
+    height: 1px;
+    background-color: #919191;
+  }
+
+  .text-word {
+    margin: 0 10px; 
+    font-family: 'Open Sans', sans-serif;
+    font-weight:400;
+    color: #616060
+  }
