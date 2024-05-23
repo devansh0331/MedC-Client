@@ -70,30 +70,35 @@ function OTPVerification() {
 
   return (
     <div className="w-screen h-screen">
-      <div className="w-full h-full flex flex-col items-center justify-center">
-        <h1 className="text-4xl md:text-5xl font-black mb-3 text-center">
-          OTP Verification
-        </h1>
-        <p className="text-gray-700 mb-4">OTP have sent to your email id</p>
-        <form className="w-4/5 md:w-1/5 m-auto flex flex-col justify-center items-center mt-2 mb-1">
-          <div className="w-full mt-3">
-            <Input
-              label="One Time Password"
+      <div className="w-2/5 m-auto h-full flex flex-col items-center justify-center">
+        <p className="w-full text-4xl tracking-wide text-center font-black mb-6 mt-4 font-open leading-custom">
+        OTP Verification
+          </p>
+        <p className="text-gray-700 mb-4">OTP have been sent to your email id</p>
+        <div className="flex flex-col mt-6 w-1/2">
+        <label
+              htmlFor="otp"
+              className="text-sm font-medium tracking-wider text-gray-700 self-start"
+            >
+              One Time Password
+            </label>
+            <input
               type="number"
-              className=""
+              id="otp"
+              className="no-spinner text-sm w-full font-medium text-gray-800 p-2 border border-gray-600 rounded-sm"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
+              placeholder="Enter OTP"
             />
           </div>
-          <Button
+          <button
             onClick={handleSubmit}
             color="#01bcf4"
-            className="w-full md:w-full bg-primary text-white  rounded-full mt-6"
+            className="w-full md:w-1/2 bg-primary text-white  rounded-full mt-6 py-2"
           >
             Verify
-          </Button>
-        </form>
-        <p>
+          </button>
+        <p className="text-gray-700 text-sm mt-2">
           Didn't receive code? &nbsp;
           <Link
             className="mt-2 text-sm text-primary"

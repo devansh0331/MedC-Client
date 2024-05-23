@@ -8,6 +8,7 @@ import OTPVerification from "./OTPVerification";
 import NewPassword from "./NewPassword";
 import SignUpPage from "./SignUpPage";
 import FeedPage from "./FeedPage";
+import "../index.css";
 
 function Main() {
   return (
