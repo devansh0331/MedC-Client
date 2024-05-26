@@ -5,10 +5,10 @@ import { createContext, useEffect, useState } from "react";
 
 export const UserContext = createContext({});
 
-const [signnedin, setSignnedin] = useState(false);
+
 export function UserContextProvider({ children }) {
   const [userInfo, setUserInfo] = useState({
-    signnedin: false,
+    state: false,
     name: "",
     email: "",
   });
@@ -16,8 +16,13 @@ export function UserContextProvider({ children }) {
   useEffect(() => {
     const name = Cookies.get("name");
     const email = Cookies.get("email");
-    setSignnedin(true);
-    setUserInfo({ name, email });
+    if(name === undefined || email === undefined){
+      const state = false;
+      setUserInfo({ state, name, email });
+    }else{
+      const state = true;
+      setUserInfo({ state, name, email });
+    }
   }, [userInfo.name]);
 
   return (
