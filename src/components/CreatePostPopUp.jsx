@@ -37,7 +37,7 @@ function CreatePostPopUp(props) {
       <hr />
       <br />
       <DialogBody>
-        <Typography className="mb-2 -mt-7 text-lg" color="gray">
+        <Typography className="mb-2 -mt-7 text-lg" >
           Select audience
         </Typography>
         <div className="grid mb-5">
@@ -86,7 +86,7 @@ function CreatePostPopUp(props) {
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             for="file_input"
           >
-            <Typography className=" text-lg" color="gray">
+            <Typography className=" text-lg">
               Upload file
             </Typography>
           </label>
@@ -110,7 +110,7 @@ function CreatePostPopUp(props) {
         </Button>
         <Button
           onClick={props.handleOpen}
-          color="#01bcf4"
+          
           className=" bg-primary text-white  rounded-full "
         >
           Post

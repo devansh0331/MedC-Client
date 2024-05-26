@@ -1,6 +1,7 @@
 import { Button } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../UserContext";
 import logo from "../assets/logo/medc-logo.png";
 
 function Navbar(props) {
