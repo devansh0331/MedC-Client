@@ -1,40 +1,38 @@
 import React from "react";
-import profile from "../assets/profile3.png";
-import { FaEdit } from "react-icons/fa";
+import { useState } from "react";
+import { TbCarouselVerticalFilled } from "react-icons/tb";
+import { HiRectangleGroup } from "react-icons/hi2";
+import { FaBriefcase } from "react-icons/fa6";
+import { FaUserFriends } from "react-icons/fa";
+import { IoSettingsSharp } from "react-icons/io5";
+
+
 
 function SideBar() {
-  return (
-    <div className="relative w-full mb-4 md:mb:0 shadow-md py-3 px-6">
-      <div className="relative flex flex-col items-center justify-evenly py-3">
-        <img
-          src={profile}
-          alt=""
-          className="rounded-full h-64 md:h-20 w-64 md:w-20 object-cover object-center cursor-pointer"
-        />
 
-        <p className="font-bold text-2xl md:text-lg leading-1 pt-2">
-          Devansh Shrivastava
-        </p>
-        <p className="text-grayText leading-3 text-base md:text-sm">
-          Developer | Learner | Explorer
-        </p>
-      </div>
-      <hr />
-      <div className=" text-sm  text-center  py-3">
-        <p className="font-semibold">
-          Connections: <span className="font-normal">500+</span>{" "}
-        </p>
-        <p className="font-semibold">
-          Followers: <span className="font-normal">153k</span>
-        </p>
-        <p className="font-semibold">
-          Impressions: <span className="font-normal">587k</span>
-        </p>
-      </div>
-      <div className="absolute right-2 top-2">
-        <FaEdit className="text-2xl md:text-xl" />
-      </div>
-    </div>
+  const [open, setOpen] = useState(false);
+  const handleopen = () => {
+    setOpen(!open);
+  }
+
+  return (
+    <button className={`h-full z-20 flex flex-col text-center justify-evenly px-5 shadow-lg bg-white ${open? `w-36` : `w-14`}`} onClick={()=>handleopen()}>
+      <button className="flex">
+      <TbCarouselVerticalFilled className="cursor-pointer w-6 h-6" /><span className={`${open ? `block` : `hidden`} mx-3`}>Posts</span>
+      </button>
+      <button className="flex">
+      <HiRectangleGroup  className="cursor-pointer w-6 h-6"/><span className={`${open ? `block` : `hidden`} mx-3`}>Jobs</span>
+      </button>
+      <button className="flex">
+      <FaBriefcase className="cursor-pointer w-6 h-6" /><span className={`${open ? `block` : `hidden`} mx-3`}>Hire</span>
+      </button>
+      <button className="flex">
+      <FaUserFriends  className="cursor-pointer w-6 h-6"/><span className={`${open ? `block` : `hidden`} mx-3`}>Friends</span>
+      </button>
+      <button className="flex">
+      <IoSettingsSharp  className="cursor-pointer w-6 h-6"/><span className={`${open ? `block` : `hidden`} mx-3`}>Settings</span>
+      </button>
+    </button>  
   );
 }
 

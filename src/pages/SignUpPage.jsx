@@ -6,6 +6,8 @@ import emaillogo from "../assets/emaillogo.png";
 import google from "../assets/google.png";
 import { Toaster, toast } from "react-hot-toast";
 import { SERVER_URL } from "../ServerURL";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 function SignUpPage() {
   // useNavigate Initialization
@@ -16,6 +18,11 @@ function SignUpPage() {
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,10 +72,10 @@ function SignUpPage() {
             <img src={google} alt="google" className="h-7 w-7" />
             <p className="text-center text-base w-full">Continue with Google</p>
           </button>
-          <div class="line-with-text">
-            <span class="line"></span>
-            <span class="text-word">or</span>
-            <span class="line"></span>
+          <div className="line-with-text">
+            <span className="line"></span>
+            <span className="text-word">or</span>
+            <span className="line"></span>
           </div>
 
           <div className="flex my-0">
@@ -118,27 +125,36 @@ function SignUpPage() {
               placeholder="Work email"
             />
           </div>
-          <div className="flex flex-col my-2">
+          <div className="relative">
             <label
               htmlFor="password"
               className="text-sm font-medium tracking-wider text-gray-700"
             >
               Password
             </label>
-            <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              id="password"
-              className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm"
-              placeholder="Password"
-            />
+            <div className="relative">
+              <input
+                value={password}
+                type={showPassword ? "text" : "password"}
+                onChange={(e) => setPassword(e.target.value)}
+                id="password"
+                className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm w-full pr-10"
+                placeholder="Password"
+              />
+              <span
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+              >
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+              </span>
+            </div>
           </div>
           <Button
             onClick={handleSubmit}
             color="#01bcf4"
             className="w-full md:w-full bg-primary text-white  rounded-full mt-4"
           >
-            Continue with Email
+            Create Account
           </Button>
         </div>
       </div>

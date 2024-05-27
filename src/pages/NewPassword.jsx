@@ -3,6 +3,8 @@ import { Button, Input } from "@material-tailwind/react";
 import { Toaster, toast } from "react-hot-toast";
 import { SERVER_URL } from "../ServerURL";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 function NewPassword() {
   const navigate = useNavigate();
@@ -11,6 +13,16 @@ function NewPassword() {
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordsec, setShowPasswordsec] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  const togglePasswordVisibilitysec = () => {
+    setShowPasswordsec(!showPasswordsec);
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,38 +63,74 @@ function NewPassword() {
   return (
     <div className="w-screen h-screen">
       <div className="w-full h-full flex flex-col items-center justify-center">
-        <h1 className="text-4xl md:text-5xl font-black mb-3 text-center">
-          Create a New Password
-        </h1>
+        <p className="w-full text-4xl tracking-wide text-center font-black mb-3 mt-2 font-open leading-custom">
+        Create a New Password
+          </p>
         <p className="md:w-1/4 text-center text-gray-700 mb-4">
           Minimum of 8 characters which includes a character, a number and a
           special symbol
         </p>
-        <form className="w-4/5 md:w-1/5 m-auto flex flex-col justify-center items-center mt-2 mb-1">
-          <div className="w-full mt-3">
-            <Input
-              label="New Password"
-              className=""
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+        <div className="w-4/5 md:w-1/5 m-auto flex flex-col justify-center items-center mt-2 mb-1">
+         <div className="relative w-full">
+            <label
+              htmlFor="newpassword"
+              className="text-sm font-medium tracking-wider text-gray-700"
+            >
+              New Password
+            </label>
+            <div className="relative">
+              <input
+                value={password}
+                type={showPassword ? "text" : "password"}
+                onChange={(e) => setPassword(e.target.value)}
+                id="newpassword"
+                className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm w-full pr-10"
+                placeholder="Password"
+                required
+              />
+              <span
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+              >
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+              </span>
+            </div>
           </div>
-          <div className="w-full mt-3">
-            <Input
-              label="Confirm Password"
-              className=""
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
+          <div className="relative w-full">
+            <label
+              htmlFor="confirmPassword"
+              className="text-sm font-medium tracking-wider text-gray-700"
+            >
+              Confirm Password
+            </label>
+            <div className="relative">
+              <input
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                type={showPasswordsec ? "text" : "password"}
+                id="confirmPassword"
+                className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm w-full pr-10"
+                placeholder="Password"
+                required
+              />
+              <span
+                onClick={togglePasswordVisibilitysec}
+                className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+              >
+                <FontAwesomeIcon icon={showPasswordsec ? faEyeSlash : faEye} />
+              </span>
+            </div>
           </div>
+
+
           <Button
             onClick={handleSubmit}
             color="#01bcf4"
             className="w-full md:w-full bg-primary text-white  rounded-full mt-6"
           >
-            Submit
+            Change Password
           </Button>
-        </form>
+        </div>
         <Toaster position="top-right" />
       </div>
     </div>

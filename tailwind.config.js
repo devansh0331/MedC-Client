@@ -1,5 +1,3 @@
-/** @type {import('tailwindcss').Config} */
-
 const withMT = require("@material-tailwind/react/utils/withMT");
 
 module.exports = withMT({
@@ -12,8 +10,9 @@ module.exports = withMT({
   theme: {
     extend: {
       colors: {
-        primary: "#01bcf4",
+        primary: "#4ED1F8",
         secondary: "#3c9184",
+        background: "#F6FCFE",
         black: "#222222",
         white: "#ffffff",
         success: "#23d97e",
@@ -24,7 +23,7 @@ module.exports = withMT({
       },
       fontFamily: {
         rubik: ["Rubik", "sans-serif"],
-        open: [ "Open Sans", "sans-serif"]
+        open: ["Open Sans", "sans-serif"]
       },
       lineHeight: {
         'custom': '3.2rem', // Add custom line height
@@ -46,5 +45,29 @@ module.exports = withMT({
       },
     },
   },
-  plugins: [],
-})
+  plugins: [
+    function({ addUtilities }) {
+      const newUtilities = {
+        '.scrollbar-thin': {
+          '&::-webkit-scrollbar': {
+            width: '6px',
+            height: '6px',
+          },
+          '&::-webkit-scrollbar-track': {
+            background: '#f1f1f1',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: '#cdcdcd',
+            borderRadius: '6px',
+          },
+          '&::-webkit-scrollbar-thumb:hover': {
+            background: '#A8A8A8',
+            cursor: 'pointer',
+          },
+        },
+      }
+
+      addUtilities(newUtilities, ['responsive'])
+    }
+  ],
+});
