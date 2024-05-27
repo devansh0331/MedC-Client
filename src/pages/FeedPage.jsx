@@ -7,10 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import CreatePostPopUp from "../components/CreatePostPopUp";
 import SideBar from "../components/SideBar";
+import MinPost from "../components/MinPost";
+import { useSelector } from "react-redux";
+import { feedClick } from '../Slices/feedSlice';
+import MaxJob from "../components/MaxJob";
 
 function FeedPage() {
   const navigate = useNavigate();
-
+  const minJobs = useSelector((state)=> state.feed.minJobs)
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(!open);
@@ -28,72 +32,11 @@ function FeedPage() {
     );
   }, []);
   return (
-    <div className="w-screen h-screen  bg-offWhite ">
-      <div className="relative w-full h-full flex flex-col md:flex-row items-start justify-evenly pt-24 px-3">
-        <CreatePostPopUp open={open} handleOpen={handleOpen} />
-
-        {/* SIDEBAR */}
-        <div className="w-full md:w-auto block ">
-          <div className="bg-white rounded-md">
-            <SideBar />
-          </div>
-        </div>
-
-        {/* POSTS FEED */}
-        <div className="w-full md:w-1/2 h-full grid grid-cols-1 gap-4 overflow-y-scroll">
-          <div className="bg-white rounded-md ">
-            <CreatePostFeedSection handleOpen={handleOpen} />
-          </div>
-          <div className="bg-white rounded-md">
-            <PostCard />
-          </div>
-          <div className="bg-white rounded-md">
-            <PostCard />
-          </div>
-          <div className="bg-white rounded-md">
-            <PostCard />
-          </div>
-          <div className="bg-white rounded-md">
-            <PostCard />
-          </div>
-        </div>
-
-        {/* JOBS FOR YOU */}
-        <div className="hidden md:grid grid-cols-1 w-3/12 h-4/5 max-h-1/2 bg-white rounded-md shadow-md">
-          <div className="p-6">
-            <h1 className="text-3xl font-extrabold">Jobs For You</h1>
-          </div>
-          <hr />
-          <div className="md:grid grid-cols-1  overflow-y-scroll">
-            <div className="">
-              <JobCard />
-              <hr className="mx-3" />
-            </div>
-            <div className="">
-              <JobCard />
-              <hr className="mx-3" />
-            </div>
-            <div>
-              <JobCard />
-              <hr className="mx-3" />
-            </div>
-            <div>
-              <JobCard />
-              <hr className="mx-3" />
-            </div>
-            <div>
-              <JobCard />
-              <hr className="mx-3" />
-            </div>
-            <div>
-              <JobCard />
-              <hr className="mx-3" />
-            </div>
-          </div>
-          <div className="p-4">
-            <h1 className="text-lg text-center text-primary">View all</h1>
-          </div>
-        </div>
+    <div className="w-screen h-screen  bg-background relative flex z-0">
+      <SideBar className="z-20 absolute h-screen left-0" /> 
+      <div className="w-full h-full flex flex-col md:flex-row pt-16 fixed z-0 pl-20">
+        {!minJobs? <MaxJob className="w-full m-auto"/> : <PostCard className="w-full m-auto"/>}
+        {!minJobs ? <MinPost/> : <JobCard/>}
         <Toaster position="top-right" />
       </div>
     </div>

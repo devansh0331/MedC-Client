@@ -26,26 +26,29 @@ function Navbar(props) {
   })
 
   return (
-    <nav className="fixed top-0 flex justify-center w-screen overflow-hidden bg-transparent z-10">
-      <div className="w-11/12 flex items-center justify-between">
-        <div onClick={handleLogoNavigate} className="cursor-pointer">
+    <nav className="fixed top-0 h-16 flex justify-center w-screen overflow-hidden bg-white z-10 shadow-md">
+      <div className="w-full flex items-center justify-between">
+        <div onClick={handleLogoNavigate} className="cursor-pointer ml-10">
           <img src={logo} alt="" className="w-5/6" />
         </div>
         {!signnedIn && (
           <div className="flex items-center justify-end">
-            <button className="bg-primary text-white px-4 py-2 rounded-full shadow-md active:translate-x-0.5 active:translate-y-0.5">
+            <button className="bg-primary mr-8 text-white px-4 py-2 rounded-full shadow-md active:translate-x-0.5 active:translate-y-0.5">
               Sign Up
             </button>
           </div>
         )}
         {signnedIn && (
-          <div className="flex items-center justify-between w-1/5">
+          <div className="flex items-center justify-between w-1/5 pr-5">
             <button className="flex items-center text-black border-2 border-black px-3 py-2 rounded-full">
             <FaCirclePlus />
              <span className="pl-2">Post a Job</span>
             </button>
             <button className="w-7 h-7">
             <FaBell className="w-5 h-5" />
+            </button>
+            <button className="w-7 h-7">
+            <FaMessage className="w-5 h-5" />
             </button>
             <button className="w-7 h-7">
             <FaMessage className="w-5 h-5" />

@@ -8,7 +8,7 @@ function App() {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
   useEffect(() => {
-    console.log(userInfo.name);
+    // console.log(userInfo.name);
   }, []);
 
   return (
