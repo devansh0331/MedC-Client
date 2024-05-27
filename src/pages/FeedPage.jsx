@@ -9,12 +9,13 @@ import CreatePostPopUp from "../components/CreatePostPopUp";
 import SideBar from "../components/SideBar";
 import MinPost from "../components/MinPost";
 import { useSelector } from "react-redux";
-import { feedClick } from '../Slices/feedSlice';
+import { feedClick } from "../Slices/feedSlice";
 import MaxJob from "../components/MaxJob";
+import Cookies from "js-cookie";
 
 function FeedPage() {
   const navigate = useNavigate();
-  const minJobs = useSelector((state)=> state.feed.minJobs)
+  const minJobs = useSelector((state) => state.feed.minJobs);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(!open);
@@ -31,12 +32,39 @@ function FeedPage() {
         })
     );
   }, []);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    try {
+      // fetch(`${SERVER_URL}/auth/logout`).then((res) =>
+      //   res
+      //     .json()
+      //     .then((data) => alert(data.message))
+      //     .catch((err) => alert(err))
+      // );
+      Cookies.remove("token");
+      toast.success("Logged Out");
+      setTimeout(() => {
+        navigate("/signin");
+      }, 2000);
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
   return (
     <div className="w-screen h-screen  bg-background relative flex z-0">
-      <SideBar className="z-20 absolute h-screen left-0" /> 
+      <SideBar
+        handleLogout={handleLogout}
+        className="z-20 absolute h-screen left-0"
+      />
       <div className="w-full h-full flex flex-col md:flex-row pt-16 fixed z-0 pl-20">
-        {!minJobs? <MaxJob className="w-full m-auto"/> : <PostCard className="w-full m-auto"/>}
-        {!minJobs ? <MinPost/> : <JobCard/>}
+        {!minJobs ? (
+          <MaxJob className="w-full m-auto" />
+        ) : (
+          <PostCard className="w-full m-auto" />
+        )}
+        {!minJobs ? <MinPost /> : <JobCard />}
         <Toaster position="top-right" />
       </div>
     </div>
