@@ -9,7 +9,7 @@ const SingleJobCard = () => {
           <img
             src={profile}
             alt=""
-            className="rounded-full h-6 md:h-7 w-6 md:w-7 object-cover object-center cursor-pointer"
+            className="rounded-full h-6 md:h-6 w-6 md:w-6 object-cover object-center cursor-pointer"
           />
           <h3 className="text-base pl-2">Senior Dentist : Job Profile</h3>
         </div>

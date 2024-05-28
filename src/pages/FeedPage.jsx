@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import PostCard from "../components/PostCard";
 import CreatePostFeedSection from "../components/CreatePostFeedSection";
 import JobCard from "../components/JobCard";
@@ -12,15 +12,17 @@ import { useSelector } from "react-redux";
 import { feedClick } from "../Slices/feedSlice";
 import MaxJob from "../components/MaxJob";
 import Cookies from "js-cookie";
+import { UserContext } from "../UserContext";
 
 function FeedPage() {
   const navigate = useNavigate();
   const minJobs = useSelector((state) => state.feed.minJobs);
   const [open, setOpen] = useState(false);
-
+  const userInfo = useContext(UserContext);
   const handleOpen = () => setOpen(!open);
 
   useEffect(() => {
+    console.log(userInfo)
     fetch(`${SERVER_URL}/auth/is-user`, { credentials: "include" }).then(
       (res) =>
         res.json().then((res) => {
@@ -46,7 +48,7 @@ function FeedPage() {
       toast.success("Logged Out");
       setTimeout(() => {
         navigate("/signin");
-      }, 2000);
+      }, 1000);
     } catch (error) {
       toast.error(error);
     }

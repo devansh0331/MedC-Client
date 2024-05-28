@@ -8,7 +8,7 @@ import { IoMdTimer } from "react-icons/io";
 import { FaRegCalendarAlt } from "react-icons/fa";
 const MaxJobCard = () => {
   return (
-    <div className='w-full flex flex-col bg-white p-4 border-b-2'>
+    <div className='w-11/12 flex flex-col bg-white p-2 mx-auto border-b-2'>
         {/* POST AND ORGANIZATION */}
       <div className='flex w-full justify-between px-5 my-2'>
         <div className='flex flex-col'>
@@ -34,7 +34,7 @@ const MaxJobCard = () => {
       <div className="w-full flex justify-between px-5 my-2">
         <div className="flex flex-col">
             <p className='text-sm text-gray-500'>250 Applicants</p>
-            <p className='text-sm text-gray-500'>Posted By: <span className='hover:text-gray-700 cursor-pointer'>Aman Mishra</span>  | 2 Days Ago</p>
+            <p className='text-sm text-gray-500'>Posted By: <span className='text-blue-400 cursor-pointer'>Aman Mishra</span>  | 2 Days Ago</p>
         </div>
         <div className="flex justify-evenly">
             <button className="bg-primary text-white px-4 py-1 rounded-lg mx-2 shadow-md">Apply</button>

@@ -9,15 +9,15 @@ import SinglePostCard from "./SinglePostCard";
 function PostCard() {
   return (
     <div className="flex flex-col w-2/4 mx-auto mt-6">
-      <div className="flex justify-around w-full bg-white py-4 px-2 border-b-2">
+      <div className="flex justify-evenly w-full bg-white py-4 px-2 border-b-2 items-center">
         <img
           src={profile}
-          className="rounded-full h-10 md:h-12 w-10 md:w-12"
+          className="rounded-full h-10 md:h-11 w-10 md:w-11"
           alt="profile"
         />
         <input
           type="text"
-          className="w-3/4 border-2 border-gray-500 rounded-md px-4"
+          className="w-3/4 border-2 border-gray-500 rounded-md px-4 py-2"
           placeholder="Create Post"
         />
       </div>

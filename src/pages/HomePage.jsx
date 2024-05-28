@@ -14,7 +14,7 @@ function HomePage() {
     }).then((res) =>
       res.json().then((res) => {
         {
-          // console.log("Home: " + res);
+          console.log("Home: " + res);
           if (res == true) navigate("/feed");
           // else {
           //   Cookies.remove("token");
