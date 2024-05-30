@@ -20,6 +20,10 @@ module.exports = withMT({
         notice: "#fbd605",
         offWhite: "#ddf6f1",
         grayText: "#374151",
+        gradient1: "#04B4E8",
+        gradient2: "#9CE0FF",
+        gradient3: "#D8F3FF",
+        blue1: "#47C8EE"
       },
       fontFamily: {
         rubik: ["Rubik", "sans-serif"],

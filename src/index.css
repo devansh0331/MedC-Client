@@ -26,5 +26,27 @@
   -webkit-appearance: none;
   margin: 0;
 }
-
-
+.first{
+    background-image: linear-gradient(to right, #04B4E8 , #9CE0FF), url('./assets/WhiteDoodle2.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-blend-mode: overlay;
+}
+.first2{
+  background-image: linear-gradient(to right, #FFFFFF , #D8F3FF), url('./assets/BlueDoodle.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+}
+.second{
+  background-image: linear-gradient(to right, #D8F3FF , #FFFFFF), url('./assets/BlueDoodle2.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+}
+.second2{
+  background-image: linear-gradient(to right, #9CE0FF , #04B4E8), url('./assets/WhiteDoodle.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+}
