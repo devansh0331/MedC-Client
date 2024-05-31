@@ -1,6 +1,6 @@
 import React from "react";
 
-import profile from "../assets/profile2.png";
+import profile from "../assets/profile3.png";
 import jobBuilding from "../assets/jobBuilding.png";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { AiFillLike } from "react-icons/ai";
