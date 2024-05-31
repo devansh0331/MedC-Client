@@ -7,6 +7,13 @@ import { ThemeProvider } from "@material-tailwind/react";
 import { BrowserRouter } from "react-router-dom";
 import { UserContextProvider } from "./UserContext.jsx";
 import { store } from "./store.js";
+import TimeAgo from "javascript-time-ago";
+
+import en from "javascript-time-ago/locale/en";
+import ru from "javascript-time-ago/locale/ru";
+
+TimeAgo.addDefaultLocale(en);
+TimeAgo.addLocale(ru);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <UserContextProvider>
