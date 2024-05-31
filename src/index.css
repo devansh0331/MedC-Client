@@ -33,13 +33,13 @@
     background-blend-mode: overlay;
 }
 .first2{
-  background-image: linear-gradient(to right, #FFFFFF , #D8F3FF), url('./assets/BlueDoodle.png');
+  background-image: linear-gradient(to right, #D8F3FF, #FFFFFF), url('./assets/BlueDoodle.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-blend-mode: overlay;
 }
 .second{
-  background-image: linear-gradient(to right, #D8F3FF , #FFFFFF), url('./assets/BlueDoodle2.png');
+  background-image: linear-gradient(to right, #FFFFFF, #D8F3FF ), url('./assets/BlueDoodle2.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-blend-mode: overlay;
@@ -49,4 +49,5 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-blend-mode: overlay;
+  color:#FFFFFF
 }

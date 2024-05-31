@@ -51,7 +51,8 @@ function HomePage() {
             <button className="bg-primary text-xl text-white px-6 py-2 mr-5 rounded-full shadow-lg active:translate-x-0.5 active:translate-y-0.5">
               Get Started
             </button>
-            <button className="border-2 border-primary text-xl text-primary mx-5 px-6 py-2 rounded-full shadow-lg active:translate-x-0.5 active:translate-y-0.5 hover:bg-primary hover:text-white">
+            <button className="border-2 border-primary text-xl text-primary mx-5 px-6 py-2 rounded-full shadow-lg active:translate-x-0.5 active:translate-y-0.5 hover:bg-primary hover:text-white"
+            style={{transition: "color 0.5s, background-color 0.5s"}}>
               Learn More
             </button>
           </div>
@@ -64,11 +65,11 @@ function HomePage() {
       <div className="w-full h-screen flex box-border">
         <div
           className={`w-1/2 h-full text-7xl text-white hover:text-primary flex justify-end items-center pr-3 ${
-            blue ? "second" : "first"
+            blue ? "first2" : "first"
           }`}
           onMouseEnter={() => setBlue(true)}
           onMouseLeave={() => setBlue(false)}
-          style={{ transition: "color 0.5s, background-image 0.7s" }}
+          style={{ transition: "color 1s, background-color 2s" }}
         >
           <div className="text-right">
             <p>From aspiration</p>
@@ -76,11 +77,9 @@ function HomePage() {
           </div>
         </div>
         <div
-          className={`w-1/2 h-full text-7xl text-primary hover:text-white flex justify-start pl-3 items-center pr-3 first2 ${
-            white ? "second2" : "first2"
+          className={`w-1/2 h-full text-7xl text-primary  flex justify-start pl-3 items-center pr-3 first2 ${
+            blue? "second2" : "second" 
           }`}
-          onMouseEnter={() => setWhite(true)}
-          onMouseLeave={() => setWhite(false)}
           style={{ transition: "color 0.5s, background-image 0.7s" }}
         >
           <div className="text-left">
@@ -90,20 +89,22 @@ function HomePage() {
         </div>
       </div>
       {/* WHY MEDC */}
-      <div className="flex flex-col my-5">
-        <h1 className="text-4xl text-center mt-10 mb-5">Why MedC?</h1>
+      <div className="flex flex-col justify-center mb-5 h-screen m-auto items-center">
+        <h1 className="text-4xl text-center mb-14   font-semibold">Why <span className="text-primary">MedC?</span></h1>
         <div className="flex">
           <div className="w-1/4 flex flex-col items-center  p-5">
-            <div className=" w-2/3 h-full flex flex-col items-center border-2 border-gray-200 rounded-3xl shadow-md p-4">
-              <img src={whyus1} alt="whyus1" className="w-full" />
+            <div className=" w-2/3 h-full flex flex-col justify-evenly items-center border-2 border-gray-200 rounded-3xl shadow-md p-4 hover:scale-110 hover:shadow-lg"
+            style={{transition: "all 0.3s"}}>
+              <img src={whyus1} alt="whyus1" className="w-11/12" />
               <p className="text-center font-semibold mt-1">
                 Vast community <br /> of health sector
               </p>
             </div>
           </div>
           <div className="w-1/4 flex flex-col items-center  p-5">
-            <div className=" w-2/3 h-full flex flex-col items-center border-2 border-gray-200 rounded-3xl shadow-md p-4">
-              <img src={whyus2} alt="whyus1" className="w-full" />
+            <div className=" w-2/3 h-full flex flex-col justify-evenly items-center border-2 border-gray-200 rounded-3xl shadow-md p-4 hover:scale-110 hover:shadow-lg"
+            style={{transition: "all 0.3s"}}>
+              <img src={whyus2} alt="whyus1" className="w-11/12" />
               <p className="text-center font-semibold mt-1">
               Strengthen your <br /> business with right
               <br /> people
@@ -111,16 +112,18 @@ function HomePage() {
             </div>
           </div>
           <div className="w-1/4 flex flex-col items-center  p-5">
-            <div className=" w-2/3 h-full flex flex-col items-center border-2 border-gray-200 rounded-3xl shadow-md p-4">
-              <img src={whyus3} alt="whyus1" className="w-full" />
+            <div className=" w-2/3 h-full flex flex-col justify-evenly items-center border-2 border-gray-200 rounded-3xl shadow-md p-4 hover:scale-110 hover:shadow-lg"
+            style={{transition: "all 0.3s"}}>
+              <img src={whyus3} alt="whyus1" className="w-11/12" />
               <p className="text-center font-semibold mt-1">
               Tonnes of<br/> opportunities.
               </p>
             </div>
           </div>
           <div className="w-1/4 flex flex-col items-center  p-5">
-            <div className=" w-2/3 h-full flex flex-col items-center border-2 border-gray-200 rounded-3xl shadow-md p-4">
-              <img src={whyus4} alt="whyus1" className="w-full" />
+            <div className=" w-2/3 h-full flex flex-col justify-evenly items-center border-2 border-gray-200 rounded-3xl shadow-md p-4 hover:scale-110 hover:shadow-lg"
+            style={{transition: "all 0.3s"}}>
+              <img src={whyus4} alt="whyus1" className="w-11/12" />
               <p className="text-center font-semibold mt-1">
               Make global <br /> connections
               </p>
@@ -135,9 +138,10 @@ function HomePage() {
             <img src={jobs} alt="job" className="w-3/5 mr-5"/>
           </div>
           <div className="text-left ml-5">
-            <p className="text-5xl">Search yourself <br/><span className="text-white">The Best Jobs</span></p>
+            <p className="text-5xl leading-custom mt-3">Search yourself <br/><span className="text-white">The Best Jobs</span></p>
             <p className="text-gray-800">Get your dream job at your dream location.<br/>Connect with up to date medical world.</p>
-            <button className="bg-blue1 border-2 py-1 px-3 mt-8 rounded-full text-xl text-white">Learn More</button>
+            <button className="bg-blue1 border-2 py-2 px-4 mt-8 rounded-full text-lg text-white hover:bg-white hover:text-primary"
+            style={{transition: "all 0.3s"}}>Learn More</button>
           </div>
         </div>
         <div className="w-full h-96 bg-blue1 -mt-80"></div>
@@ -145,7 +149,8 @@ function HomePage() {
           <div className="text-right  mr-5 w-1/2 self-right">
           <p className="text-5xl leading-custom">Find A <br/><span className="text-white">Professional</span></p>
           <p className="text-gray-800">Find a perfect suit for the job openings<br/> in your business</p>
-            <button className="bg-blue1 border-2 py-1 px-3 mt-8 rounded-full text-xl text-white">Learn More</button>
+            <button className="bg-blue1 border-2 py-2 px-4 mt-8 rounded-full text-lg text-white hover:text-primary hover:bg-white hover:border-primary "
+            style={{transition: "all 0.3s"}}>Learn More</button>
           </div>
           <div className="w-1/2 h-72 justify-start flex ">
             <img src={professional} alt="professional" className="w-3/5 ml-5" />
@@ -175,7 +180,6 @@ function HomePage() {
             <div className="w-1/3">
               <p className="text-lg font-medium">Contact Us</p>
               <p className="text-gray-600">contact@medc.in</p>
-              <p className="text-gray-600">Community</p>
               <p className="text-gray-600">+91 00000 00000</p>
             </div>
           </div>
