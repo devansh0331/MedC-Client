@@ -9,6 +9,7 @@ import NewPassword from "./NewPassword";
 import SignUpPage from "./SignUpPage";
 import FeedPage from "./FeedPage";
 import "../index.css";
+import ProfilePage from "./ProfilePage";
 
 function Main() {
   return (
@@ -73,6 +74,15 @@ function Main() {
           <>
             <Navbar route="signup" />
             <FeedPage />
+          </>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <>
+            <Navbar route="profile" />
+            <ProfilePage />
           </>
         }
       />

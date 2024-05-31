@@ -23,7 +23,8 @@ module.exports = withMT({
         gradient1: "#04B4E8",
         gradient2: "#9CE0FF",
         gradient3: "#D8F3FF",
-        blue1: "#47C8EE"
+        blue1: "#47C8EE",
+        dialogueBg: "rgba(0,0,0,0.5)"
       },
       fontFamily: {
         rubik: ["Rubik", "sans-serif"],

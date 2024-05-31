@@ -17,7 +17,7 @@ const MaxJob = () => {
         </button>
       </div>
 
-      <div className=" overflow-y-scroll scrollbar-thin ">
+      <div className="overflow-y-scroll scrollbar-thin ">
         <MaxJobCard />
         <MaxJobCard />
         <MaxJobCard />
