@@ -6,9 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import emaillogo from "../assets/emaillogo.png";
 import google from "../assets/google.png";
 import { SERVER_URL } from "../ServerURL";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 function SignInPage() {
   // useNavigate Initialization
@@ -24,7 +23,6 @@ function SignInPage() {
     setShowPassword(!showPassword);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Function to signin
@@ -32,7 +30,7 @@ function SignInPage() {
       toast.error("All credentials are mandatory");
     } else {
       try {
-        const response = await fetch(`${SERVER_URL}/auth/login`, {
+        const response = await fetch(`${SERVER_URL}/auth/signin`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -74,26 +72,26 @@ function SignInPage() {
   return (
     <div className="w-screen h-screen">
       <div className="w-1/5 m-auto h-full flex flex-col items-center justify-center">
-      <p className="w-full text-4xl tracking-wide text-center font-black mb-6 mt-4 font-open leading-custom">
-            Sign In
-      </p>
-      <button className="w-full rounded-full mb-3 flex items-center border border-1 border-gray-500 py-2 px-3">
-            <img src={emaillogo} alt="email" className="h-7 w-7" />
-            <p className="text-center text-base font-medium w-full">
-              Continue with Email
-            </p>
-          </button>
-          <button className="w-full rounded-full mb-3 flex items-center border border-1 border-gray-500 py-2 px-3">
-            <img src={google} alt="google" className="h-7 w-7" />
-            <p className="text-center text-base w-full">Continue with Google</p>
-          </button>
-          <div className="line-with-text w-full">
-            <span className="line"></span>
-            <span className="text-word">or</span>
-            <span className="line"></span>
-          </div>
+        <p className="w-full text-4xl tracking-wide text-center font-black mb-6 mt-4 font-open leading-custom">
+          Sign In
+        </p>
+        <button className="w-full rounded-full mb-3 flex items-center border border-1 border-gray-500 py-2 px-3">
+          <img src={emaillogo} alt="email" className="h-7 w-7" />
+          <p className="text-center text-base font-medium w-full">
+            Continue with Email
+          </p>
+        </button>
+        <button className="w-full rounded-full mb-3 flex items-center border border-1 border-gray-500 py-2 px-3">
+          <img src={google} alt="google" className="h-7 w-7" />
+          <p className="text-center text-base w-full">Continue with Google</p>
+        </button>
+        <div className="line-with-text w-full">
+          <span className="line"></span>
+          <span className="text-word">or</span>
+          <span className="line"></span>
+        </div>
         <div className="w-full">
-        <div className="flex flex-col my-2">
+          <div className="flex flex-col my-2">
             <label
               htmlFor="email"
               className="text-sm font-medium tracking-wider text-gray-700"

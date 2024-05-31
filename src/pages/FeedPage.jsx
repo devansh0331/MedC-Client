@@ -21,20 +21,6 @@ function FeedPage() {
   const userInfo = useContext(UserContext);
   const handleOpen = () => setOpen(!open);
 
-  useEffect(() => {
-    console.log(userInfo)
-    fetch(`${SERVER_URL}/auth/is-user`, { credentials: "include" }).then(
-      (res) =>
-        res.json().then((res) => {
-          console.log(res);
-          if (res != true) {
-            toast.error(res);
-            navigate("/signin");
-          }
-        })
-    );
-  }, []);
-
   const handleLogout = (e) => {
     e.preventDefault();
     try {
