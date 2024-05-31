@@ -21,30 +21,6 @@ function FeedPage() {
   const userInfo = useContext(UserContext);
   const handleOpen = () => setOpen(!open);
 
-  const [posts, setPosts] = useState();
-
-  useEffect(() => {
-    console.log(userInfo);
-    fetch(`${SERVER_URL}/post/all-posts`, { credentials: "include" })
-      .then((res) =>
-        res
-          .json()
-          .then((res) => {
-            if (!res.success) {
-              if (res.status == 403 || res.status == 500) {
-                toast.error(res.error);
-                setTimeout(() => {
-                  navigate("/signin");
-                }, 500);
-              }
-              if (res.status == 400) toast.error(res.error);
-            } else setPosts(res.data);
-          })
-          .catch((error) => toast.error(error))
-      )
-      .catch((error) => toast.error(error));
-  }, []);
-
   const handleLogout = (e) => {
     e.preventDefault();
     try {
@@ -74,7 +50,7 @@ function FeedPage() {
         {!minJobs ? (
           <MaxJob className="w-full m-auto" />
         ) : (
-          <PostCard posts={posts} className="w-full m-auto" />
+          <PostCard className="w-full m-auto" />
         )}
         {!minJobs ? <MinPost /> : <JobCard />}
         <Toaster position="top-right" />

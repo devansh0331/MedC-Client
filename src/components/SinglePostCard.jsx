@@ -52,9 +52,16 @@ const SinglePostCard = (props) => {
 
           {/* LIKE AND COMMENT INFO */}
           <div className="flex justify-evenly pt-4">
-            <div className="flex items-center cursor-pointer">
-              <AiOutlineLike className="w-5 h-5 mr-4" /> {props.likes}{" "}
-              {props.likes == 0 ? "Like" : "Likes"}
+            <div
+              onClick={props.handleLike}
+              className="flex items-center cursor-pointer"
+            >
+              {props.isLiked ? (
+                <AiFillLike className="w-5 h-5 mr-4" />
+              ) : (
+                <AiOutlineLike className="w-5 h-5 mr-4" />
+              )}{" "}
+              {props.likes} {props.likes == 0 ? "Like" : "Likes"}
             </div>
             <div className="flex items-center cursor-pointer">
               <FaRegCommentAlt className="w-4 h-4 mr-4" /> {props.comments}{" "}
