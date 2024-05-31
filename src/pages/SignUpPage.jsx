@@ -6,8 +6,8 @@ import emaillogo from "../assets/emaillogo.png";
 import google from "../assets/google.png";
 import { Toaster, toast } from "react-hot-toast";
 import { SERVER_URL } from "../ServerURL";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 function SignUpPage() {
   // useNavigate Initialization
@@ -32,7 +32,7 @@ function SignUpPage() {
     } else {
       try {
         const name = fname + " " + lname;
-        const response = await fetch(`${SERVER_URL}/auth/register`, {
+        const response = await fetch(`${SERVER_URL}/auth/signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
