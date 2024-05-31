@@ -9,10 +9,47 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import React from "react";
-
+import { useState } from "react";
+import { SERVER_URL } from "../ServerURL";
 function CreatePostPopUp(props) {
+  const [audience, setAudience] = useState("Everyone"); 
+  const [post, setPost] = useState("");
+  const [file, setFile] = useState(null);
+  const [userId, setUserID] = useState('')
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append("user", userId);
+    formData.append("audience", audience);
+    formData.append("description", post);
+    if (file) {
+      formData.append("filepath", file);
+    }
+
+    try {
+      const response = await fetch(`${SERVER_URL}/create-post`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log("Post created successfully:", result.data);
+        props.handleOpen(); 
+      } else {
+        console.error("Failed to create post:", result.error);
+      }
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
+  };
+
+  const handleAudienceChange = (event) => {
+    setAudience(event.target.value);
+  };
   return (
-    <Dialog open={props.open} size="lg" handler={props.handleOpen}>
+    <Dialog open={props.open} size="lg">
       <div className="flex items-center justify-between">
         <DialogHeader className="flex flex-col items-start">
           {" "}
@@ -25,7 +62,7 @@ function CreatePostPopUp(props) {
           viewBox="0 0 24 24"
           fill="currentColor"
           className="mr-3 h-5 w-5"
-          onClick={props.handleOpen}
+          onClick={() => props.handleOpen()}
         >
           <path
             fillRule="evenodd"
@@ -45,9 +82,11 @@ function CreatePostPopUp(props) {
             <input
               id="default-radio-1"
               type="radio"
-              value=""
+              value="Friends Only"
               name="default-radio"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              checked={audience === "Friends Only"}
+              onChange={handleAudienceChange}
             />
             <label
               for="default-radio-1"
@@ -58,12 +97,13 @@ function CreatePostPopUp(props) {
           </div>
           <div className="flex items-center">
             <input
-              checked
               id="default-radio-2"
               type="radio"
-              value=""
+              value="Everyone"
               name="default-radio"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              checked={audience === "Everyone"}
+              onChange={handleAudienceChange}
             />
             <label
               for="default-radio-2"
@@ -78,7 +118,7 @@ function CreatePostPopUp(props) {
             Username
           </Typography> */}
           {/* <Input label="Username" /> */}
-          <Textarea label="Share Your experience or get advice from other professionals." />
+          <Textarea label="Share Your experience"  value={post} onChange={(e) => setPost(e.target.value)}/>
         </div>
 
         <div className="grid gap-0 mt-5">
@@ -95,6 +135,7 @@ function CreatePostPopUp(props) {
             aria-describedby="file_input_help"
             id="file_input"
             type="file"
+            onChange={(e) => setFile(e.target.files[0])}
           />
           <p
             className="mt-1 text-sm text-gray-500 dark:text-gray-300"
@@ -109,8 +150,7 @@ function CreatePostPopUp(props) {
           cancel
         </Button>
         <Button
-          onClick={props.handleOpen}
-          
+          onClick={()=>handleSubmit()}
           className=" bg-primary text-white  rounded-full "
         >
           Post

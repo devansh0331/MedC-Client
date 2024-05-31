@@ -10,7 +10,7 @@ export const feedSlice = createSlice({
     reducers:{
         feedClick: (state, action)=>{
             state.minJobs = action.payload;
-        }
+        },
     }
 })
 
