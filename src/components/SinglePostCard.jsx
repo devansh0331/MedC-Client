@@ -73,6 +73,7 @@ const SinglePostCard = (props) => {
           </div>
         </div>
       </div>
+      
     </div>
   );
 };
