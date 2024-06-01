@@ -72,7 +72,11 @@ function PostCard() {
           placeholder="Create Post"
           onClick={handleOpen}
         />
-        <CreatePostPopUp open={open} handleOpen={handleOpen} />
+        <CreatePostPopUp
+          open={open}
+          handleOpen={handleOpen}
+          getAllPosts={getData}
+        />
       </div>
       <div className="flex flex-col bg-white py-2 px-2 w-full h-full overflow-y-scroll scrollbar-thin">
         {posts.length === 0 ? (
@@ -83,6 +87,7 @@ function PostCard() {
           posts.map((post, key) => (
             <SinglePostCard
               key={key}
+              img={post.fileURL == "" ? null : post.fileURL}
               name={post.user ? post.user.name : "Unknown User"}
               description={post.description}
               likes={post.likes ? Object.keys(post.likes).length : "0"}

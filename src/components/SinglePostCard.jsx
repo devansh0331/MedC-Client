@@ -45,8 +45,8 @@ const SinglePostCard = (props) => {
           </p>
           {props.img && (
             <img
-              src={jobBuilding}
-              className="my-4 w-72 h-72 mx-auto bg-gray-100 p-3 rounded-md"
+              src={props.img}
+              className="my-4 w-full h-80 mx-auto bg-gray-100  rounded-md"
             ></img>
           )}
 
@@ -73,7 +73,6 @@ const SinglePostCard = (props) => {
           </div>
         </div>
       </div>
-      
     </div>
   );
 };

@@ -11,37 +11,75 @@ import {
 import React from "react";
 import { useState } from "react";
 import { SERVER_URL } from "../ServerURL";
+import toast, { Toaster } from "react-hot-toast";
 function CreatePostPopUp(props) {
-  const [audience, setAudience] = useState("Everyone"); 
+  const [audience, setAudience] = useState("Everyone");
   const [post, setPost] = useState("");
   const [file, setFile] = useState(null);
-  const [userId, setUserID] = useState('')
+  const [userId, setUserID] = useState("");
 
   const handleSubmit = async () => {
     const formData = new FormData();
-    formData.append("user", userId);
-    formData.append("audience", audience);
-    formData.append("description", post);
+    const data = {
+      audience: audience,
+      description: post,
+    };
+    formData.append("data", JSON.stringify(data));
+
+    // FOR POSTING WITH A FILE
     if (file) {
       formData.append("filepath", file);
-    }
+      try {
+        console.log("Form Data: ", formData.getAll);
+        const response = await fetch(`${SERVER_URL}/post/create-post`, {
+          method: "POST",
+          credentials: "include",
+          body: formData,
+        });
 
-    try {
-      const response = await fetch(`${SERVER_URL}/create-post`, {
-        method: "POST",
-        body: formData,
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        console.log("Post created successfully:", result.data);
-        props.handleOpen(); 
-      } else {
-        console.error("Failed to create post:", result.error);
+        const result = await response.json();
+        console.log(response);
+        if (response.ok) {
+          toast.success("Post created successfully:");
+          setTimeout(() => {
+            props.getAllPosts();
+            props.handleOpen();
+          }, 2000);
+        } else {
+          console.error("Failed to create post:", result.error);
+          toast.error("Failed to create post");
+        }
+      } catch (error) {
+        console.error("Error creating post:", error);
+        toast.error("Failed to create post");
       }
-    } catch (error) {
-      console.error("Error creating post:", error);
+    }
+    // FOR POSTING WITHOUT A FILE
+    else {
+      try {
+        console.log("Form Data: ", formData.getAll);
+        const response = await fetch(`${SERVER_URL}/post/create-post-no-file`, {
+          method: "POST",
+          credentials: "include",
+          body: formData,
+        });
+
+        const result = await response.json();
+        console.log(response);
+        if (response.ok) {
+          toast.success("Post created successfully:");
+          setTimeout(() => {
+            props.getAllPosts();
+            props.handleOpen();
+          }, 2000);
+        } else {
+          console.error("Failed to create post:", result.error);
+          toast.error("Failed to create post");
+        }
+      } catch (error) {
+        console.error("Error creating post:", error);
+        toast.error("Failed to create post");
+      }
     }
   };
 
@@ -74,9 +112,7 @@ function CreatePostPopUp(props) {
       <hr />
       <br />
       <DialogBody>
-        <Typography className="mb-2 -mt-7 text-lg" >
-          Select audience
-        </Typography>
+        <Typography className="mb-2 -mt-7 text-lg">Select audience</Typography>
         <div className="grid mb-5">
           <div className="flex items-center mb-1">
             <input
@@ -118,7 +154,11 @@ function CreatePostPopUp(props) {
             Username
           </Typography> */}
           {/* <Input label="Username" /> */}
-          <Textarea label="Share Your experience"  value={post} onChange={(e) => setPost(e.target.value)}/>
+          <Textarea
+            label="Share Your experience"
+            value={post}
+            onChange={(e) => setPost(e.target.value)}
+          />
         </div>
 
         <div className="grid gap-0 mt-5">
@@ -126,9 +166,7 @@ function CreatePostPopUp(props) {
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             for="file_input"
           >
-            <Typography className=" text-lg">
-              Upload file
-            </Typography>
+            <Typography className=" text-lg">Upload file</Typography>
           </label>
           <input
             className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 p-1"
@@ -150,11 +188,12 @@ function CreatePostPopUp(props) {
           cancel
         </Button>
         <Button
-          onClick={()=>handleSubmit()}
+          onClick={() => handleSubmit()}
           className=" bg-primary text-white  rounded-full "
         >
           Post
         </Button>
+        <Toaster position="top-right" />
       </DialogFooter>
     </Dialog>
   );
