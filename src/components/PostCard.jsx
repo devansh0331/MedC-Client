@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
 import profile from "../assets/profile2.png";
-import jobBuilding from "../assets/jobBuilding.png";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import { AiFillLike } from "react-icons/ai";
-import { FaMonument, FaRegCommentAlt } from "react-icons/fa";
-import { IoPaperPlaneOutline } from "react-icons/io5";
 import SinglePostCard from "./SinglePostCard";
 import CreatePostPopUp from "./CreatePostPopUp";
 import ReactTimeAgo from "react-time-ago";
