@@ -22,30 +22,37 @@ function SideBar(props) {
       onClick={() => handleopen()}
     >
       <div className="mt-20 ">
-      <span className={`${open ? `block` : `hidden`}`}> <ProfileCard/></span>
-     
+        <span className={`${open ? `block` : `hidden`}`}>
+          {" "}
+          <ProfileCard name={props.name} email={props.email} />
+        </span>
       </div>
       <div className="flex flex-col justify-around h-full items-start">
-      <button className="flex items-center justify-center ml-2 text-gray-800">
-        <FaBriefcase className="cursor-pointer w-6 h-6" />
-        <span className={`${open ? `block` : `hidden`} mx-3`}>Hire</span>
-      </button>
-      <button className="flex items-center justify-center ml-2 text-gray-800">
-        <FaUserFriends className="cursor-pointer w-6 h-6" />
-        <span className={`${open ? `block` : `hidden`} mx-3`}>Friends</span>
-      </button>
-      <button className="flex items-center justify-center ml-2 text-gray-800">
-        <IoSettingsSharp className="cursor-pointer w-6 h-6" />
-        <span className={`${open ? `block` : `hidden`} mx-3`}>Settings</span>
-      </button>
-      <button className="flex items-center justify-center ml-2 text-gray-800" onClick={props.handleLogout}>
-      <IoPowerSharp className="cursor-pointer w-6 h-6 text-red-700" />
-        <span
-          className={`${open ? `block` : `hidden`} mx-3 text-red-700 font-bold`}
+        <button className="flex items-center justify-center ml-2 text-gray-800">
+          <FaBriefcase className="cursor-pointer w-6 h-6" />
+          <span className={`${open ? `block` : `hidden`} mx-3`}>Hire</span>
+        </button>
+        <button className="flex items-center justify-center ml-2 text-gray-800">
+          <FaUserFriends className="cursor-pointer w-6 h-6" />
+          <span className={`${open ? `block` : `hidden`} mx-3`}>Friends</span>
+        </button>
+        <button className="flex items-center justify-center ml-2 text-gray-800">
+          <IoSettingsSharp className="cursor-pointer w-6 h-6" />
+          <span className={`${open ? `block` : `hidden`} mx-3`}>Settings</span>
+        </button>
+        <button
+          className="flex items-center justify-center ml-2 text-gray-800"
+          onClick={props.handleLogout}
         >
-          Logout
-        </span>
-      </button>
+          <IoPowerSharp className="cursor-pointer w-6 h-6 text-red-700" />
+          <span
+            className={`${
+              open ? `block` : `hidden`
+            } mx-3 text-red-700 font-bold`}
+          >
+            Logout
+          </span>
+        </button>
       </div>
     </button>
   );

@@ -18,7 +18,7 @@ function FeedPage() {
   const navigate = useNavigate();
   const minJobs = useSelector((state) => state.feed.minJobs);
   const [open, setOpen] = useState(false);
-  const userInfo = useContext(UserContext);
+  const { userInfo } = useContext(UserContext);
   const handleOpen = () => setOpen(!open);
 
   const handleLogout = (e) => {
@@ -31,6 +31,8 @@ function FeedPage() {
       //     .catch((err) => alert(err))
       // );
       Cookies.remove("token");
+      Cookies.remove("name");
+      Cookies.remove("email");
       toast.success("Logged Out");
       setTimeout(() => {
         navigate("/signin");
@@ -43,9 +45,10 @@ function FeedPage() {
   return (
     <div className="w-screen h-screen  bg-background relative flex z-0">
       <SideBar
+        name={userInfo.name}
+        email={userInfo.email}
         handleLogout={handleLogout}
         className="z-20 absolute h-screen left-0"
-        route="feed"
       />
       <div className="w-full h-full flex flex-col md:flex-row pt-16 fixed z-0 pl-20">
         {!minJobs ? (

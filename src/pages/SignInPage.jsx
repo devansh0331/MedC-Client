@@ -47,15 +47,9 @@ function SignInPage() {
 
           console.log("Token: " + parsedResponse.token);
           console.log("User: " + parsedEmail + " " + parsedName);
-          Cookies.set("name", parsedName, {
-            expires: 7,
-          });
-          Cookies.set("email", parsedEmail, {
-            expires: 7,
-          });
-          Cookies.set("token", parsedResponse.token, {
-            expires: 7,
-          });
+          Cookies.set("name", parsedName);
+          Cookies.set("email", parsedEmail);
+          Cookies.set("token", parsedResponse.token);
           toast.success("Logged In Successfully");
           setTimeout(() => {
             navigate("/feed");
@@ -141,7 +135,12 @@ function SignInPage() {
         <Link to="/reset-password" className="mt-2 text-sm text-primary">
           Forgot your password?
         </Link>
-        <p className="text-sm text-gray-600 mt-4">Don't have an account? <button className="text-primary" onClick={()=>navigate("/signup")}>Sign Up</button></p>
+        <p className="text-sm text-gray-600 mt-4">
+          Don't have an account?{" "}
+          <button className="text-primary" onClick={() => navigate("/signup")}>
+            Sign Up
+          </button>
+        </p>
         <Toaster position="top-right" />
       </div>
     </div>
