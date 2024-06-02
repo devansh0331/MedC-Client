@@ -10,6 +10,12 @@ import SignUpPage from "./SignUpPage";
 import FeedPage from "./FeedPage";
 import "../index.css";
 import ProfilePage from "./ProfilePage";
+import JobPage from "./JobPage";
+import HirePage from "./HirePage";
+import PostJobPage from "./PostJobPage";
+import AboutPage from "./AboutPage";
+import Faq from "./Faq";
+import Privacypolicy from "./Privacypolicy";
 
 function Main() {
   return (
@@ -83,6 +89,60 @@ function Main() {
           <>
             <Navbar route="profile" />
             <ProfilePage />
+          </>
+        }
+      />
+      <Route
+        path="/jobs"
+        element={
+          <>
+            <Navbar route="profile" />
+            <JobPage/>
+          </>
+        }
+      />
+      <Route
+        path="/hire"
+        element={
+          <>
+            <Navbar route="profile" />
+            <HirePage/>
+          </>
+        }
+      />
+      <Route
+        path="/postjob"
+        element={
+          <>
+            <Navbar route="profile" />
+            <PostJobPage/>
+          </>
+        }
+      />
+      <Route
+        path="/about"
+        element={
+          <>
+            <Navbar route="profile" />
+            <AboutPage/>
+          </>
+        }
+      />
+      <Route
+        path="/faq"
+        element={
+          <>
+            <Navbar route="profile" />
+            <Faq/>
+          </>
+        }
+      />
+      <Route
+        path="/privacypolicy"
+        element={
+          <>
+            <Navbar route="profile" />
+            <Privacypolicy/>
           </>
         }
       />

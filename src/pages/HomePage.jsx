@@ -48,11 +48,13 @@ function HomePage() {
             presence in the Medical Community
           </p>
           <div className=" mt-10">
-            <button className="bg-primary text-xl text-white px-6 py-2 mr-5 rounded-full shadow-lg active:translate-x-0.5 active:translate-y-0.5">
+            <button className="bg-primary text-xl text-white px-6 py-2 mr-5 rounded-full shadow-lg active:translate-x-0.5 active:translate-y-0.5"
+            onClick={() => navigate("/signup")}>
               Get Started
             </button>
             <button className="border-2 border-primary text-xl text-primary mx-5 px-6 py-2 rounded-full shadow-lg active:translate-x-0.5 active:translate-y-0.5 hover:bg-primary hover:text-white"
-            style={{transition: "color 0.5s, background-color 0.5s"}}>
+            style={{transition: "color 0.5s, background-color 0.5s"}}
+            onClick={() => navigate(window.location.href="#jobs")}>
               Learn More
             </button>
           </div>
@@ -132,16 +134,16 @@ function HomePage() {
         </div>
       </div>
       {/* JOBS AND HIRE */}
-      <div className="w-full my-10">
+      <div className="w-full my-10" id="jobs">
         <div className="w-full h-96 flex">
-          <div className="w-1/2 h-72 justify-end flex ">
-            <img src={jobs} alt="job" className="w-3/5 mr-5"/>
+          <div className="w-1/2 h-72 justify-end flex rounded-3xl">
+            <img src={jobs} alt="job" className="w-3/5 mr-5 object-cover rounded-3xl"/>
           </div>
           <div className="text-left ml-5">
             <p className="text-5xl leading-custom mt-3">Search yourself <br/><span className="text-white">The Best Jobs</span></p>
             <p className="text-gray-800">Get your dream job at your dream location.<br/>Connect with up to date medical world.</p>
             <button className="bg-blue1 border-2 py-2 px-4 mt-8 rounded-full text-lg text-white hover:bg-white hover:text-primary"
-            style={{transition: "all 0.3s"}}>Learn More</button>
+            style={{transition: "all 0.3s"}} onClick={() => navigate("/jobs")}>Learn More</button>
           </div>
         </div>
         <div className="w-full h-96 bg-blue1 -mt-80"></div>
@@ -150,10 +152,10 @@ function HomePage() {
           <p className="text-5xl leading-custom">Find A <br/><span className="text-white">Professional</span></p>
           <p className="text-gray-800">Find a perfect suit for the job openings<br/> in your business</p>
             <button className="bg-blue1 border-2 py-2 px-4 mt-8 rounded-full text-lg text-white hover:text-primary hover:bg-white hover:border-primary "
-            style={{transition: "all 0.3s"}}>Learn More</button>
+            style={{transition: "all 0.3s"}} onClick={() => navigate("/hire")}>Learn More</button>
           </div>
-          <div className="w-1/2 h-72 justify-start flex ">
-            <img src={professional} alt="professional" className="w-3/5 ml-5" />
+          <div className="w-1/2 h-72 justify-start flex rounded-3xl">
+            <img src={professional} alt="professional" className="w-3/5 ml-5 object-cover rounded-3xl" />
           </div>
         </div>
       </div>
@@ -164,23 +166,23 @@ function HomePage() {
             <img src={logofoot} alt="logofoot" className="w-1/3"></img>
           </div>
           <div className="w-3/5 flex">
-            <div className="w-1/3">
-              <p className="text-lg font-medium">Services</p>
-              <p className="text-gray-600">Hire talent</p>
-              <p className="text-gray-600">Community</p>
-              <p className="text-gray-600">Post a job</p>
-              <p className="text-gray-600">Find job</p>
+            <div className="w-1/3 flex flex-col items-start">
+              <button className="text-lg font-medium">Services</button>
+              <button className="text-gray-600" onClick={() => navigate("/hire")}>Hire talent</button>
+              <button className="text-gray-600" onClick={() => navigate("/feed")}>Community</button>
+              <button className="text-gray-600" onClick={() => navigate("/postjob")}>Post a job</button>
+              <button className="text-gray-600" onClick={() => navigate("/jobs")}>Find job</button>
             </div>
-            <div className="w-1/3">
-              <p className="text-lg font-medium">Help</p>
-              <p className="text-gray-600">About Us</p>
-              <p className="text-gray-600">FAQ</p>
-              <p className="text-gray-600">Privacy Policy</p>
+            <div className="w-1/3 flex flex-col items-start">
+              <button className="text-lg font-medium">Help</button>
+              <button className="text-gray-600" onClick={() => navigate("/about")}>About Us</button>
+              <button className="text-gray-600" onClick={() => navigate("/faq")}>FAQ</button>
+              <button className="text-gray-600" onClick={() => navigate("/privacypolicy")}>Privacy Policy</button>
             </div>
-            <div className="w-1/3">
-              <p className="text-lg font-medium">Contact Us</p>
-              <p className="text-gray-600">contact@medc.in</p>
-              <p className="text-gray-600">+91 00000 00000</p>
+            <div className="w-1/3 flex flex-col items-start">
+              <button className="text-lg font-medium">Contact Us</button>
+              <button className="text-gray-600" onClick={() => navigate("/contact")}>contact@medc.in</button>
+              <button className="text-gray-600" onClick={() => navigate("/contact")}>+91 00000 00000</button>
             </div>
           </div>
         </div>

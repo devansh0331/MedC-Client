@@ -141,6 +141,7 @@ function SignInPage() {
         <Link to="/reset-password" className="mt-2 text-sm text-primary">
           Forgot your password?
         </Link>
+        <p className="text-sm text-gray-600 mt-4">Don't have an account? <button className="text-primary" onClick={()=>navigate("/signup")}>Sign Up</button></p>
         <Toaster position="top-right" />
       </div>
     </div>

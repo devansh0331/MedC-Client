@@ -156,6 +156,15 @@ function SignUpPage() {
           >
             Create Account
           </Button>
+          <p className="text-center mt-2 text-gray-600 text-sm">
+            Already have an account?{" "}
+            <button
+              className="text-primary"
+              onClick={() => navigate("/signin")}
+            >
+              Login
+            </button>
+          </p>
         </div>
       </div>
       <div className="bg-offWhite w-1/2 h-full flex flex-col items-center justify-center">

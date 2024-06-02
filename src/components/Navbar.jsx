@@ -10,29 +10,34 @@ import { FaMessage } from "react-icons/fa6";
 function Navbar(props) {
   const navigate = useNavigate();
   const {userInfo} = useContext(UserContext);
+  const [check, setCheck] = useState(false);
+  useEffect(() => {
+    if (userInfo.name !== undefined) {
+      setCheck(true);
+    }
+  })
 
-
-
+console.log(userInfo);
   const handleLogoNavigate = (e) => {
     e.preventDefault();
     navigate("/");
   };
 
-
+console.log(userInfo);
   return (
     <nav className="fixed top-0 h-16 flex justify-center w-screen overflow-hidden bg-white z-10 shadow-sm">
       <div className="w-full flex items-center justify-between">
         <div onClick={handleLogoNavigate} className="cursor-pointer ml-10">
           <img src={logo} alt="" className="w-5/6" />
         </div>
-        {!userInfo.state && (
+        {!check && (
           <div className="flex items-center justify-end">
             <button className="bg-primary mr-8 text-white px-4 py-2 rounded-full shadow-md active:translate-x-0.5 active:translate-y-0.5">
               Sign Up
             </button>
           </div>
         )}
-        {userInfo.state && (
+        {check && (
           <div className="flex items-center justify-between pr-5">
             <button className="flex items-center text-black border-2 border-black px-3 py-2 rounded-full mx-2">
             <FaCirclePlus />
