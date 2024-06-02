@@ -1,8 +1,10 @@
 import React from 'react'
 import { useState } from 'react';
 import { FiEdit } from "react-icons/fi";
+import { useNavigate } from 'react-router-dom';
 const ProfileDetails = () => {
-    const [section, setSection] = useState("Achivements");
+    const [section, setSection] = useState("Experience");
+    const navigate = useNavigate();
   return (
     <div className='w-full h-4/5 flex flex-col bg-white mt-4 mb-4 px-2 rounded-xl'>
       <div className="w-full flex justify-between border-b-2 py-2 text-md items-center">
@@ -12,7 +14,7 @@ const ProfileDetails = () => {
             <button className={`border-r-2 mx-1 px-2 border-gray-300 ${(section === "Certificates") ? "text-blue-600" : ""}`} onClick={() => setSection("Certificates")}>Certificates</button>
             <button className={`mx-1 px-2 ${(section === "Achivements") ? "text-blue-600" : ""}`} onClick={() => setSection("Achivements")}>Achivements</button>
         </div>
-        <button className=""><FiEdit className='w-5 h-5'/></button>
+        <button className="" onClick={()=> navigate("/editdetails")}><FiEdit className='w-5 h-5'/></button>
       </div>
       <div className="overflow-y-scroll scrollbar-thin mx-2 h-96">
         {(section === "Experience") &&

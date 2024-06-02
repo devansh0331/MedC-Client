@@ -6,16 +6,12 @@ import logo from "../assets/logo/medc-logo.png";
 import { FaCirclePlus } from "react-icons/fa6";
 import { FaBell } from "react-icons/fa6";
 import { FaMessage } from "react-icons/fa6";
-
+import { BsPersonFillAdd } from "react-icons/bs";
+import { BsPersonFillDash } from "react-icons/bs";
 function Navbar(props) {
   const navigate = useNavigate();
   const {userInfo} = useContext(UserContext);
-  const [check, setCheck] = useState(false);
-  useEffect(() => {
-    if (userInfo.name !== undefined) {
-      setCheck(true);
-    }
-  })
+ 
 
 console.log(userInfo);
   const handleLogoNavigate = (e) => {
@@ -25,19 +21,19 @@ console.log(userInfo);
 
 console.log(userInfo);
   return (
-    <nav className="fixed top-0 h-16 flex justify-center w-screen overflow-hidden bg-white z-10 shadow-sm">
+    <nav className="fixed top-0 h-16 flex justify-center w-screen overflow-hidden bg-white z-20 shadow-sm">
       <div className="w-full flex items-center justify-between">
         <div onClick={handleLogoNavigate} className="cursor-pointer ml-10">
           <img src={logo} alt="" className="w-5/6" />
         </div>
-        {!check && (
+        {!userInfo.state && (
           <div className="flex items-center justify-end">
             <button className="bg-primary mr-8 text-white px-4 py-2 rounded-full shadow-md active:translate-x-0.5 active:translate-y-0.5">
               Sign Up
             </button>
           </div>
         )}
-        {check && (
+        {userInfo.state && (
           <div className="flex items-center justify-between pr-5">
             <button className="flex items-center text-black border-2 border-black px-3 py-2 rounded-full mx-2">
             <FaCirclePlus />

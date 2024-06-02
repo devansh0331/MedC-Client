@@ -6,16 +6,47 @@ import EditProfile from "../components/EditProfile";
 import { useState } from "react";
 import EditAbout from "../components/EditAbout";
 import { UserContext } from "../UserContext";
+import SideBar from "../components/SideBar";
+import EditDetails from "../components/EditExperience";
 
 const ProfilePage = () => {
   const [close, setClose] = useState(false);
   const [closeAbout, setCloseAbout] = useState(false);
+  const [closeDetails, setCloseDetails] = useState(false);
   const { userInfo } = useContext(UserContext);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    try {
+      Cookies.remove("token");
+      Cookies.remove("name");
+      Cookies.remove("email");
+      toast.success("Logged Out");
+      setTimeout(() => {
+        navigate("/signin");
+      }, 1000);
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
   return (
+    <div className="w-full h-screen flex">
+      <SideBar 
+      name={userInfo.name}
+      email={userInfo.email}
+      handleLogout={handleLogout}
+      route="profile"
+      />
     <div className="w-full h-screen bg-background overflow-hidden relative">
       {close ? <EditProfile close={close} setClose={setClose} /> : ""}
       {closeAbout ? (
         <EditAbout closeAbout={closeAbout} setCloseAbout={setCloseAbout} />
+      ) : (
+        ""
+      )}
+      {closeDetails ? (
+        <EditDetails closeDetails={closeDetails} setCloseDetails={setCloseDetails} />
       ) : (
         ""
       )}
@@ -33,9 +64,10 @@ const ProfilePage = () => {
         </div>
         <div className="mx-2">
           <ProfileAbout setCloseAbout={setCloseAbout} />
-          <ProfileDetails />
+          <ProfileDetails setCloseDetails={setCloseDetails} />
         </div>
       </div>
+    </div>
     </div>
   );
 };

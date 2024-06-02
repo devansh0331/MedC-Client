@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useState } from "react";
 import profile from "../assets/profile3.png";
 import jobBuilding from "../assets/jobBuilding.png";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
@@ -9,6 +9,7 @@ import { IoPaperPlaneOutline } from "react-icons/io5";
 import { AiOutlineLike } from "react-icons/ai";
 
 const SinglePostCard = (props) => {
+  const [comm, setComm] = useState(false);
   return (
     <div>
       <div className="w-3/4 m-auto border-b-2 pb-4 py-2 mt-4">
@@ -63,14 +64,47 @@ const SinglePostCard = (props) => {
               )}{" "}
               {props.likes} {props.likes == 0 ? "Like" : "Likes"}
             </div>
-            <div className="flex items-center cursor-pointer">
+            <button className="flex items-center cursor-pointer" onClick={() => setComm(!comm)}>
               <FaRegCommentAlt className="w-4 h-4 mr-4" /> {props.comments}{" "}
               Comments
-            </div>
+            </button>
             <div className="flex items-center cursor-pointer">
               <IoPaperPlaneOutline className="w-4 h-4 mr-4" /> Share
             </div>
           </div>
+
+          {/* COMMENTS */}
+          {comm && (
+          <div className="w-full flex flex-col my-2">
+            <div className="w-full border-t-2 mx-auto p-2">
+              <div className="flex items-center">
+                <img src={profile} className="rounded-full h-6 w-6"/>
+                <p className="ml-2 text-sm font-semibold text-gray-700">Devansh</p>
+              </div>
+              <p className="text-sm text-gray-700 ml-8" >Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+            <div className="w-full border-t-2 mx-auto p-2">
+              <div className="flex items-center">
+                <img src={profile} className="rounded-full h-6 w-6"/>
+                <p className="ml-2 text-sm font-semibold text-gray-700">Devansh</p>
+              </div>
+              <p className="text-sm text-gray-700 ml-8" >Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+            <div className="w-full border-t-2 mx-auto p-2">
+              <div className="flex items-center">
+                <img src={profile} className="rounded-full h-6 w-6"/>
+                <p className="ml-2 text-sm font-semibold text-gray-700">Devansh</p>
+              </div>
+              <p className="text-sm text-gray-700 ml-8" >Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+            <div className="w-full border-t-2 mx-auto p-2">
+              <div className="flex w-full items-center mt-2">
+              <input className="text-sm w-full border-2 border-gray-400 px-2 py-1 rounded-md text-gray-700 ml-8" placeholder="Write a comment"/>
+                <button className="ml-2 text-sm bg-primary rounded-full px-4 py-1 text-white">Post</button>
+              </div>
+            </div>
+          </div>
+          )}
         </div>
       </div>
     </div>

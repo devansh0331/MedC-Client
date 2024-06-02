@@ -16,6 +16,9 @@ import PostJobPage from "./PostJobPage";
 import AboutPage from "./AboutPage";
 import Faq from "./Faq";
 import Privacypolicy from "./Privacypolicy";
+import SideBar from "../components/SideBar";
+import EditDetails from "./EditDetails";
+import SinglePost from "./SinglePost";
 
 function Main() {
   return (
@@ -143,6 +146,24 @@ function Main() {
           <>
             <Navbar route="profile" />
             <Privacypolicy/>
+          </>
+        }
+      />
+      <Route
+        path="/editdetails"
+        element={
+          <>
+            <Navbar route="profile" />
+            <EditDetails/>
+          </>
+        }
+      />
+      <Route
+        path="/post/:id"
+        element={
+          <>
+            <Navbar route="profile" />
+            <SinglePost/>
           </>
         }
       />

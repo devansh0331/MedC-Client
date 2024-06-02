@@ -1,4 +1,3 @@
-import { Dialog } from '@material-tailwind/react';
 import React from 'react'
 import { MdClose } from "react-icons/md";
 const EditProfile = (props) => {
@@ -50,7 +49,7 @@ const EditProfile = (props) => {
             </div>
         </div>
         <div className="flex justify-end mx-4 mt-2">
-            <button className='text-primary border-2 border-primary px-3 py-1 rounded-md'>Cancel</button>
+            <button className='text-primary border-2 border-primary px-3 py-1 rounded-md' onClick={() => props.setClose(false)}>Cancel</button>
             <button className='text-white bg-primary px-3 py-1 rounded-md ml-3'>Save</button>
         </div>
       </div>
