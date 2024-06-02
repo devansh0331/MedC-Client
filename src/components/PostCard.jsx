@@ -89,6 +89,7 @@ function PostCard() {
               isLiked={post.likes && userId && post.likes[userId]}
               postedAt={<ReactTimeAgo date={post.createdAt} locale="en-US" />}
               handleLike={() => handleLike(post._id)}
+              postId={post._id}
             />
           ))
         )}
