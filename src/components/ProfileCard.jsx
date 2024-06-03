@@ -8,8 +8,10 @@ import { useState } from "react";
 import EditProfile from "./EditProfile";
 
 const ProfileCard = (props) => {
-  const [linkedin, setLinkedin] = useState("/devansh-shrivastava");
   const [check, setCheck] = useState(false);
+  const [linkedin, setLinkedin] = useState(
+    props.linkedin ? props.linkedin : ""
+  );
 
   useEffect(() => {
     if (props.route === "profile") {
@@ -32,25 +34,35 @@ const ProfileCard = (props) => {
       <img src={profile2} className="rounded-full h-20 w-20" />
       <div className="flex flex-col mx-auto my-2 h-auto pb-2 border-b-2">
         <div className="text-md font-semibold mx-auto mb-1">{props.name}</div>
-        <div className="text-sm mx-auto text-gray-700">ENT Specialist</div>
+        {props.bio && (
+          <div className="text-sm mx-auto text-gray-700">{props.bio}</div>
+        )}
       </div>
       <div className="flex flex-col mx-auto my-2 h-auto">
-        <div className="text-sm flex items-center text-gray-700 my-1">
-          <IoLocationSharp className="w-4 h-4 mr-3" />
-          Bhilai, Chhattisgarh
-        </div>
-        <div className="text-sm flex items-center text-gray-700 my-1">
-          <FaPhoneAlt className="w-4 h-4 mr-3" />
-          +91 1234567890
-        </div>
-        <div className="text-sm flex items-center text-gray-700 my-1">
-          <MdEmail className="w-4 h-4 mr-3" />
-          {props.email}
-        </div>
-        <div className="text-sm flex items-center text-gray-700 my-1">
-          <FaLinkedinIn className="w-4 h-4 mr-3" />
-          {linkedin}
-        </div>
+        {props.location && (
+          <div className="text-sm flex items-center text-gray-700 my-1">
+            <IoLocationSharp className="w-4 h-4 mr-3" />
+            {props.location}
+          </div>
+        )}
+        {props.contact && (
+          <div className="text-sm flex items-center text-gray-700 my-1">
+            <FaPhoneAlt className="w-4 h-4 mr-3" />
+            {props.contact}
+          </div>
+        )}
+        {props.email && (
+          <div className="text-sm flex items-center text-gray-700 my-1">
+            <MdEmail className="w-4 h-4 mr-3" />
+            {props.email}
+          </div>
+        )}
+        {props.linkedin && (
+          <div className="text-sm flex items-center text-gray-700 my-1">
+            <FaLinkedinIn className="w-4 h-4 mr-3" />
+            {props.linkedin}
+          </div>
+        )}
         {check && (
           <button
             className="mx-auto text-blue-600 underline my-2"
