@@ -1,56 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import profile from "../assets/profile2.png";
 import SinglePostCard from "./SinglePostCard";
 import CreatePostPopUp from "./CreatePostPopUp";
 import ReactTimeAgo from "react-time-ago";
 import { SERVER_URL } from "../ServerURL";
 import toast, { Toaster } from "react-hot-toast";
+import { UserContext } from "../UserContext";
 
 function PostCard() {
-  const [posts, setPosts] = useState([]);
-  const [userId, setUserId] = useState(null);
   const [open, setOpen] = useState(false);
+  const { getPosts, userId, posts, handleLike } = useContext(UserContext);
 
   useEffect(() => {
-    getData();
+    getPosts();
   }, []);
-
-  const getData = async () => {
-    try {
-      const response = await fetch(`${SERVER_URL}/post/all-posts`, {
-        credentials: "include",
-      });
-      const res = await response.json();
-      if (!res.success) {
-        toast.error(res.error);
-      } else {
-        setPosts(res.data);
-        setUserId(res.userId.id);
-      }
-    } catch (error) {
-      toast.error("Failed to fetch posts");
-    }
-  };
 
   const handleOpen = () => {
     setOpen(!open);
-  };
-
-  const handleLike = async (postId) => {
-    try {
-      const res = await fetch(`${SERVER_URL}/post/single-post/like/${postId}`, {
-        method: "POST",
-        credentials: "include",
-      });
-      const parsedRes = await res.json();
-      if (!parsedRes.success) {
-        toast.error(parsedRes.error);
-      } else {
-        getData();
-      }
-    } catch (error) {
-      toast.error("Failed to like post");
-    }
   };
 
   return (
@@ -70,7 +36,7 @@ function PostCard() {
         <CreatePostPopUp
           open={open}
           handleOpen={handleOpen}
-          getAllPosts={getData}
+          getAllPosts={getPosts}
         />
       </div>
       <div className="flex flex-col bg-white py-2 px-2 w-full h-full overflow-y-scroll scrollbar-thin">

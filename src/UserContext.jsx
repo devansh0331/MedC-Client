@@ -13,6 +13,8 @@ export function UserContextProvider({ children }) {
     email: "",
   });
   const [user, setUser] = useState({});
+  const [posts, setPosts] = useState([]);
+  const [userId, setUserId] = useState(null);
 
   const getUser = async () => {
     try {
@@ -32,6 +34,41 @@ export function UserContextProvider({ children }) {
       console.error("Failed to fetch user");
     }
   };
+
+  const getPosts = async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/post/all-posts`, {
+        credentials: "include",
+      });
+      const res = await response.json();
+      if (!res.success) {
+        toast.error(res.error);
+      } else {
+        setPosts(res.data);
+        setUserId(res.userId.id);
+      }
+    } catch (error) {
+      toast.error("Failed to fetch posts");
+    }
+  };
+
+  const handleLike = async (postId) => {
+    try {
+      const res = await fetch(`${SERVER_URL}/post/single-post/like/${postId}`, {
+        method: "POST",
+        credentials: "include",
+      });
+      const parsedRes = await res.json();
+      if (!parsedRes.success) {
+        toast.error(parsedRes.error);
+      } else {
+        getPosts();
+      }
+    } catch (error) {
+      toast.error("Failed to like post");
+    }
+  };
+
   useEffect(() => {
     const name = Cookies.get("name");
     const email = Cookies.get("email");
@@ -45,7 +82,18 @@ export function UserContextProvider({ children }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo, user, getUser }}>
+    <UserContext.Provider
+      value={{
+        userInfo,
+        setUserInfo,
+        user,
+        getUser,
+        posts,
+        userId,
+        getPosts,
+        handleLike,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
