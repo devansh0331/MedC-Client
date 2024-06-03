@@ -54,6 +54,7 @@ const SinglePostCard = (props) => {
       if (!res.success) {
         console.log("Failed to comment due to: ", res.error);
       } else {
+        setComment("");
         getComments(true);
       }
     } catch (error) {

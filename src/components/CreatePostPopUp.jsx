@@ -41,6 +41,8 @@ function CreatePostPopUp(props) {
         console.log(response);
         if (response.ok) {
           toast.success("Post created successfully:");
+          setPost("");
+          setFile(null);
           setTimeout(() => {
             props.getAllPosts();
             props.handleOpen();
@@ -68,6 +70,8 @@ function CreatePostPopUp(props) {
         console.log(response);
         if (response.ok) {
           toast.success("Post created successfully:");
+          setPost("");
+          setFile(null);
           setTimeout(() => {
             props.getAllPosts();
             props.handleOpen();
@@ -100,7 +104,11 @@ function CreatePostPopUp(props) {
           viewBox="0 0 24 24"
           fill="currentColor"
           className="mr-3 h-5 w-5"
-          onClick={() => props.handleOpen()}
+          onClick={() => {
+            setPost("");
+            setFile(null);
+            props.handleOpen();
+          }}
         >
           <path
             fillRule="evenodd"
@@ -184,7 +192,15 @@ function CreatePostPopUp(props) {
         </div>
       </DialogBody>
       <DialogFooter className="space-x-2">
-        <Button variant="text" color="gray" onClick={props.handleOpen}>
+        <Button
+          variant="text"
+          color="gray"
+          onClick={() => {
+            setPost("");
+            setFile(null);
+            props.handleOpen();
+          }}
+        >
           cancel
         </Button>
         <Button
