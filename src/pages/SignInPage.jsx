@@ -53,7 +53,7 @@ function SignInPage() {
           toast.success("Logged In Successfully");
           setTimeout(() => {
             navigate("/feed");
-            location.reload();
+            // location.reload();
           }, 2000);
         } else {
           toast.error("Server Message: " + parsedResponse.msg);
