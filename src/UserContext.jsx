@@ -5,7 +5,6 @@ import { createContext, useEffect, useState } from "react";
 
 export const UserContext = createContext({});
 
-
 export function UserContextProvider({ children }) {
   const [userInfo, setUserInfo] = useState({
     state: false,
@@ -16,14 +15,14 @@ export function UserContextProvider({ children }) {
   useEffect(() => {
     const name = Cookies.get("name");
     const email = Cookies.get("email");
-    if(name === undefined || email === undefined){
+    if (name === undefined || email === undefined) {
       const state = false;
       setUserInfo({ state, name, email });
-    }else{
+    } else {
       const state = true;
       setUserInfo({ state, name, email });
     }
-  }, [userInfo.name]);
+  }, []);
 
   return (
     <UserContext.Provider value={{ userInfo, setUserInfo }}>

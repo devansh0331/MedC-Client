@@ -10,16 +10,13 @@ import { BsPersonFillAdd } from "react-icons/bs";
 import { BsPersonFillDash } from "react-icons/bs";
 function Navbar(props) {
   const navigate = useNavigate();
-  const {userInfo} = useContext(UserContext);
- 
+  const { userInfo } = useContext(UserContext);
 
-console.log(userInfo);
   const handleLogoNavigate = (e) => {
     e.preventDefault();
     navigate("/");
   };
 
-console.log(userInfo);
   return (
     <nav className="fixed top-0 h-16 flex justify-center w-screen overflow-hidden bg-white z-20 shadow-sm">
       <div className="w-full flex items-center justify-between">
@@ -36,18 +33,18 @@ console.log(userInfo);
         {userInfo.state && (
           <div className="flex items-center justify-between pr-5">
             <button className="flex items-center text-black border-2 border-black px-3 py-2 rounded-full mx-2">
-            <FaCirclePlus />
-             <span className="pl-2">Post a Job</span>
+              <FaCirclePlus />
+              <span className="pl-2">Post a Job</span>
             </button>
             <button className="w-7 h-7 mx-2">
-            <FaBell className="w-5 h-5" />
+              <FaBell className="w-5 h-5" />
             </button>
             <button className="w-7 h-7 mx-2">
-            <FaMessage className="w-5 h-5" />
+              <FaMessage className="w-5 h-5" />
             </button>
           </div>
         )}
-       </div>
+      </div>
     </nav>
   );
 }
