@@ -15,28 +15,7 @@ const ProfilePage = () => {
   const [close, setClose] = useState(false);
   const [closeAbout, setCloseAbout] = useState(false);
   const [closeDetails, setCloseDetails] = useState(false);
-  const { userInfo } = useContext(UserContext);
-
-  const [user, setUser] = useState({});
-
-  const getUser = async () => {
-    try {
-      const response = await fetch(`${SERVER_URL}/auth/profile`, {
-        method: "GET",
-        credentials: "include",
-      });
-
-      const res = await response.json();
-
-      if (!res.success) {
-        toast.error(res.error);
-      } else {
-        setUser(res.data);
-      }
-    } catch (error) {
-      toast.error("Failed to fetch user");
-    }
-  };
+  const { userInfo, user, getUser } = useContext(UserContext);
 
   useEffect(() => {
     getUser();
@@ -119,7 +98,8 @@ const ProfilePage = () => {
               bio={user.bio ? user.bio : ""}
               linkedin={user.linkedin ? user.linkedin : ""}
               setClose={setClose}
-              route="profile"
+              profile={true}
+              // route="profile"
             />
             <button className="mx-auto text-white bg-primary px-3 py-1 rounded-full my-4 hover:bg-background hover:border-2 hover:border-primary hover:text-primary">
               Download Resume

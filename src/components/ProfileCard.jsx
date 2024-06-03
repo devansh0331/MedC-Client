@@ -13,19 +13,6 @@ const ProfileCard = (props) => {
     props.linkedin ? props.linkedin : ""
   );
 
-  
-  useEffect(() => {
-    if (props.route === "profile") {
-      setCheck(true);
-    }
-    if (props.route === "feed") {
-      setCheck(false);
-    }
-  
-      // const text = props.linkedin.slice(0, 18);
-      // setLinkedin(text+ "...");
-    
-  });
   return (
     <div
       className={`bg-white pt-6 pb-2 rounded-xl flex flex-col items-center ${
@@ -64,7 +51,7 @@ const ProfileCard = (props) => {
             {linkedin}
           </div>
         )}
-        {check && (
+        {props.profile && (
           <button
             className="mx-auto text-blue-600 underline my-2"
             onClick={() => props.setClose(true)}

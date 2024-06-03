@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { FaBriefcase } from "react-icons/fa6";
 import { FaUserFriends } from "react-icons/fa";
@@ -8,20 +8,23 @@ import ProfileCard from "./ProfileCard";
 import { BsPersonCircle } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { MdHome } from "react-icons/md";
+import { UserContext } from "../UserContext";
 function SideBar(props) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const [profile,setProfile] = useState(false);
+  const [profile, setProfile] = useState(false);
+  const { userInfo, user, getUser } = useContext(UserContext);
 
   useEffect(() => {
-    if(props.route === "profile"){
+    if (props.route === "profile") {
       setProfile(true);
     }
-  
-    if(props.route === "feed"){
+
+    if (props.route === "feed") {
+      getUser();
       setProfile(false);
     }
-  })
+  }, []);
 
   const handleopen = () => {
     setOpen(!open);
@@ -35,21 +38,34 @@ function SideBar(props) {
       onClick={() => handleopen()}
     >
       <div className="flex flex-col justify-around h-full items-start mt-20">
-        {profile && 
-          <button className="flex items-center justify-center ml-1 text-gray-800" onClick={()=>navigate("/feed")}>
-          <MdHome className="cursor-pointer w-7 h-7" />
-          <span className={`${open ? `block` : `hidden`} mx-3`}>Home</span>
-        </button>
-        }
-        {!profile &&
-        <button className="flex items-center justify-center ml-1 text-gray-800"
-        onClick={()=>navigate("/profile")}>
-          {!open  && <BsPersonCircle className="cursor-pointer w-6 h-6" />}
-          <span className={`${open ? `block` : `hidden`}`}>
-          <ProfileCard name={props.name} email={props.email} />
-        </span>
-        </button>
-        }
+        {profile && (
+          <button
+            className="flex items-center justify-center ml-1 text-gray-800"
+            onClick={() => navigate("/feed")}
+          >
+            <MdHome className="cursor-pointer w-7 h-7" />
+            <span className={`${open ? `block` : `hidden`} mx-3`}>Home</span>
+          </button>
+        )}
+        {!profile && (
+          <button
+            className="flex items-center justify-center ml-1 text-gray-800"
+            onClick={() => navigate("/profile")}
+          >
+            {!open && <BsPersonCircle className="cursor-pointer w-6 h-6" />}
+            <span className={`${open ? `block` : `hidden`}`}>
+              <ProfileCard
+                contact={user.contact ? user.contact : ""}
+                location={user.location ? user.location : ""}
+                name={user.name ? user.name : ""}
+                email={user.email ? user.email : ""}
+                bio={user.bio ? user.bio : ""}
+                linkedin={user.linkedin ? user.linkedin : ""}
+                route={false}
+              />
+            </span>
+          </button>
+        )}
         <button className="flex items-center justify-center ml-1 text-gray-800 -mt-8">
           <FaBriefcase className="cursor-pointer w-6 h-6" />
           <span className={`${open ? `block` : `hidden`} mx-3`}>Hire</span>
