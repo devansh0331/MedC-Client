@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { SERVER_URL } from "../ServerURL";
 const EditProfile = (props) => {
@@ -8,6 +8,7 @@ const EditProfile = (props) => {
   const [location, setLocation] = useState(
     props.location ? props.location : ""
   );
+  const [file, setFile] = useState(null);
   const [contact, setContact] = useState(props.contact ? props.contact : "");
   const [linkedin, setLinkedin] = useState(
     props.linkedin ? props.linkedin : ""
@@ -58,13 +59,24 @@ const EditProfile = (props) => {
           </button>
         </div>
         <div className="flex flex-col mx-4 my-1">
+          <div className="flex w-full justify-between">
           <div className="flex flex-col my-1">
             <label className="text-gray-700 text-sm">Name</label>
             <input
-              className="border-2 border-gray-400 rounded-md px-3 py-1 w-2/3 h-7"
+              className="border-2 border-gray-400 rounded-md px-3 py-1 w-full h-7 "
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
+          </div>
+          <div className="flex flex-col my-1">
+            <label className="text-gray-700 text-sm">Profile Picture</label>
+            <input
+              className="border-2 profilepic border-gray-400 rounded-md px-3 w-full h-full text-sm text-gray-700"
+              type="file"
+              value={file}
+              onChange={(e) => setFile(e.target.value)}
+            />
+          </div>
           </div>
           <div className="flex flex-col my-1">
             <label className="text-gray-700 text-sm">Bio</label>

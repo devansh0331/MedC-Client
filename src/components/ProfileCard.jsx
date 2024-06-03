@@ -13,6 +13,7 @@ const ProfileCard = (props) => {
     props.linkedin ? props.linkedin : ""
   );
 
+  
   useEffect(() => {
     if (props.route === "profile") {
       setCheck(true);
@@ -20,10 +21,10 @@ const ProfileCard = (props) => {
     if (props.route === "feed") {
       setCheck(false);
     }
-    if (linkedin.length > 15) {
-      const text = linkedin.slice(0, 15);
-      setLinkedin(text);
-    }
+  
+      // const text = props.linkedin.slice(0, 18);
+      // setLinkedin(text+ "...");
+    
   });
   return (
     <div
@@ -60,7 +61,7 @@ const ProfileCard = (props) => {
         {props.linkedin && (
           <div className="text-sm flex items-center text-gray-700 my-1">
             <FaLinkedinIn className="w-4 h-4 mr-3" />
-            {props.linkedin}
+            {linkedin}
           </div>
         )}
         {check && (

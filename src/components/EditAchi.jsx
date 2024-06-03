@@ -6,7 +6,7 @@ const EditAchi = (props) => {
     <div className='w-screen h-screen z-100 bg-dialogueBg flex'>
     <div className='w-2/5 h-2/5 mx-auto mt-24 bg-white rounded-2xl flex flex-col p-3 justify-between'>
       <div className='flex justify-between mx-4 mt-2'>
-          <p className='text-lg text-gray-700 font-medium'>Edit Profile</p>
+          <p className='text-lg text-gray-700 font-medium'>Edit Achivements</p>
           <button onClick={() => props.setEditAchi(false)}><MdClose className='w-6 h-6 text-gray-700 font-medium'/></button>
       </div>
       <div className="flex flex-col mx-4 my-1">

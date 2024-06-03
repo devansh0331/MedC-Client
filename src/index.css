@@ -51,3 +51,10 @@
   background-blend-mode: overlay;
   color:#FFFFFF
 }
+.profilepic::file-selector-button{
+  padding: 1px 1px;
+  font-size: small;
+  margin: 0px 3px;
+  margin-right: 5px;
+}
+

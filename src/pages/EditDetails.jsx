@@ -15,6 +15,17 @@ const EditDetails = () => {
     const [editAchi, setEditAchi] = useState(false);
     const navigate = useNavigate();
 
+    const handleAdd = () =>{
+      if(section === "Experience"){
+        setEditexp(true);
+      }else if(section === "Education"){
+        setEditEdu(true);
+      }else if(section === "Certificates"){
+        setEditCert(true);
+      }else if(section === "Achivements"){
+        setEditAchi(true);
+      }
+    }
   return (
     <div className='w-full h-screen mx-auto bg-background pt-20 overflow-hidden relative'>
         {editexp &&
@@ -89,6 +100,9 @@ const EditDetails = () => {
                 </div>
             </div>
         }
+      <div className='w-full flex justify-end py-2 px-5'>
+        <button className="bg-primary text-white px-3 py-1 rounded-full" onClick={()=> handleAdd()}>Add</button>
+      </div>
       </div>
     </div>
   )
