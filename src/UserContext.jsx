@@ -45,7 +45,6 @@ export function UserContextProvider({ children }) {
         toast.error(res.error);
       } else {
         setPosts(res.data);
-        setUserId(res.userId.id);
       }
     } catch (error) {
       toast.error("Failed to fetch posts");

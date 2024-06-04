@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import profile from "../assets/profile3.png";
 import jobBuilding from "../assets/jobBuilding.png";
@@ -9,13 +9,17 @@ import { IoPaperPlaneOutline } from "react-icons/io5";
 import { AiOutlineLike } from "react-icons/ai";
 import { SERVER_URL } from "../ServerURL";
 import altprofile from "../assets/altprofile.png";
-
+import { RiDeleteBin6Line } from "react-icons/ri";
 const SinglePostCard = (props) => {
   const [comm, setComm] = useState(false);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [commentsCount, setCommentsCount] = useState(0);
   const postId = props.postId;
+  const user = props.userId;
 
+  useEffect(() => {   
+  })
   const getComments = async (comm) => {
     if (comm == true) {
       try {
@@ -30,6 +34,7 @@ const SinglePostCard = (props) => {
           console.log(res.error);
         } else {
           setComments(res.data);
+          setCommentsCount(res.data.length);
         }
       } catch (error) {
         console.error("Failed to fetch comments");
@@ -62,6 +67,27 @@ const SinglePostCard = (props) => {
       console.error(error.message);
     }
   };
+
+  const deleteComment = async (commentId) => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/post/single-post/comment/delete/${commentId}`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
+      const res = await response.json();
+      if (!res.success) {
+        console.log("Failed to delete comment due to: ", res.error);
+      } else {
+        getComments(true);
+      }
+    }catch (error) {
+        console.error(error.message);
+      }
+    }
+    
 
   return (
     <div>
@@ -115,18 +141,17 @@ const SinglePostCard = (props) => {
               ) : (
                 <AiOutlineLike className="w-5 h-5 mr-4" />
               )}{" "}
-              {props.likes} {props.likes == 0 ? "Like" : "Likes"}
+              {props.likes} {props.likes == 0 || props.likes == 1 ? "Like" : "Likes"}
             </div>
             <button
               className="flex items-center cursor-pointer"
               onClick={() => {
                 setComm(!comm);
-
                 getComments(!comm);
               }}
             >
-              <FaRegCommentAlt className="w-4 h-4 mr-4" /> {props.commentsCount}{" "}
-              Comments
+              <FaRegCommentAlt className="w-4 h-4 mr-4" /> {commentsCount ? commentsCount : ""}{" "}
+              {commentsCount === 1 ? "Comment" : "Comments"}
             </button>
             <div className="flex items-center cursor-pointer">
               <IoPaperPlaneOutline className="w-4 h-4 mr-4" /> Share
@@ -152,22 +177,25 @@ const SinglePostCard = (props) => {
               </div>
               {comments &&
                 comments.map((comment, key) => (
-                  <div key={key} className="w-full flex flex-col my-2">
+                  <div key={key} className="w-full flex flex-col my-1">
                     <div className="w-full border-t-2 mx-auto p-2">
                       <div className="flex items-center">
                         <img src={profile} className="rounded-full h-6 w-6" />
+                        <div className="flex w-full justify-between">
                         <p className="ml-2 text-sm font-semibold text-gray-700">
                           {comment.userId == null
                             ? "Unknown User"
                             : comment.userId.name}
                         </p>
+                        {comment.userId._id === user && <button onClick={() => deleteComment(comment._id)}>
+                          <RiDeleteBin6Line className="w-4 h-4 mr-2" />
+                        </button>}
+                        </div>
                       </div>
                       <p className="text-sm text-gray-700 ml-8">
                         {comment.comment}
                       </p>
                     </div>
-
-                    <div className="w-full border-t-2 mx-auto p-2"></div>
                   </div>
                 ))}
             </div>

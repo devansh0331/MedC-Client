@@ -61,10 +61,11 @@ function PostCard() {
               }
               description={post.description}
               likes={post.likes ? Object.keys(post.likes).length : "0"}
-              isLiked={post.likes && userId && post.likes[userId]}
+              isLiked={post.likes && user._id && post.likes[user._id]}
               postedAt={<ReactTimeAgo date={post.createdAt} locale="en-US" />}
               handleLike={() => handleLike(post._id)}
               postId={post._id}
+              userId={user._id}
             />
           ))
         )}
