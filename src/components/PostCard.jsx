@@ -13,6 +13,7 @@ function PostCard() {
 
   useEffect(() => {
     getPosts();
+    console.log(posts);
   }, []);
 
   const handleOpen = () => {
@@ -50,6 +51,9 @@ function PostCard() {
               key={key}
               img={post.fileURL == "" ? null : post.fileURL}
               name={post.user ? post.user.name : "Unknown User"}
+              profileURL={
+                post.user && post.user.profileURL ? post.user.profileURL : ""
+              }
               description={post.description}
               likes={post.likes ? Object.keys(post.likes).length : "0"}
               isLiked={post.likes && userId && post.likes[userId]}

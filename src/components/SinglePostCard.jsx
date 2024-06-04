@@ -8,6 +8,7 @@ import { FaRegCommentAlt } from "react-icons/fa";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { AiOutlineLike } from "react-icons/ai";
 import { SERVER_URL } from "../ServerURL";
+import altprofile from "../assets/altprofile.png";
 
 const SinglePostCard = (props) => {
   const [comm, setComm] = useState(false);
@@ -69,7 +70,7 @@ const SinglePostCard = (props) => {
         <div className="flex justify-between">
           <div className="flex">
             <img
-              src={profile}
+              src={props.profileURL != "" ? props.profileURL : altprofile}
               alt="profile"
               className="rounded-full h-10 md:h-12 w-10 md:w-12"
             />

@@ -6,6 +6,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import { useState } from "react";
 import EditProfile from "./EditProfile";
+import altprofile from "../assets/altprofile.png";
 
 const ProfileCard = (props) => {
   const [check, setCheck] = useState(false);
@@ -16,10 +17,13 @@ const ProfileCard = (props) => {
   return (
     <div
       className={`bg-white pt-6 pb-2 rounded-xl flex flex-col items-center ${
-        check ? `px-8` : `px-4`
+        props.profile ? `px-8 shadow-md` : `px-4 `
       }`}
     >
-      <img src={profile2} className="rounded-full h-20 w-20" />
+      <img
+        src={props.profileURL ? props.profileURL : altprofile}
+        className="rounded-full h-20 w-20"
+      />
       <div className="flex flex-col mx-auto my-2 h-auto pb-2 border-b-2">
         <div className="text-md font-semibold mx-auto mb-1">{props.name}</div>
         {props.bio && (

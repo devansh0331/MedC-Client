@@ -55,6 +55,7 @@ function SideBar(props) {
             {!open && <BsPersonCircle className="cursor-pointer w-6 h-6" />}
             <span className={`${open ? `block` : `hidden`}`}>
               <ProfileCard
+                profileURL={user.profileURL}
                 contact={user.contact ? user.contact : ""}
                 location={user.location ? user.location : ""}
                 name={user.name ? user.name : ""}

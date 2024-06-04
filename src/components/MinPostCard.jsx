@@ -1,6 +1,6 @@
 import React from "react";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
-import profile from "../assets/profile2.png";
+import altprofile from "../assets/altprofile.png";
 const MinPostCard = (props) => {
   return (
     <div className="w-full m-auto border-b-2 pb-4 mt-4">
@@ -8,7 +8,7 @@ const MinPostCard = (props) => {
         {/* NAME AND DETAILS */}
         <div className="flex">
           <img
-            src={profile}
+            src={props.profileURL != "" ? props.profileURL : altprofile}
             alt="profile"
             className="rounded-full h-6 md:h-7 w-6 md:w-7"
           />

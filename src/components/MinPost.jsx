@@ -19,7 +19,7 @@ const MinPost = () => {
   }, []);
 
   return (
-    <div className="w-1/3 bg-white h-2/3  overflow-y-scroll scrollbar-thin flex flex-col items-center px-6 py-3 mx-auto mt-6">
+    <div className="w-1/3 bg-white h-2/3  overflow-y-scroll scrollbar-thin flex flex-col items-center px-6 py-3 mx-auto mt-6 shadow-md">
       <div className="flex w-full justify-between items-center">
         <p className="text-xl w-full border-b-2 font-semibold">New Posts</p>
         <button onClick={() => handleExpand()}>
@@ -32,6 +32,9 @@ const MinPost = () => {
             <MinPostCard
               key={key}
               name={post.user ? post.user.name : "Unknown User"}
+              profileURL={
+                post.user && post.user.profileURL ? post.user.profileURL : ""
+              }
               description={post.description}
               isLiked={post.likes && userId && post.likes[userId]}
               handleLike={() => handleLike(post._id)}

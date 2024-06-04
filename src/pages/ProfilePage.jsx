@@ -53,8 +53,8 @@ const ProfilePage = () => {
       <div className="w-full h-screen bg-background overflow-hidden relative">
         {close ? (
           <EditProfile
-            name={userInfo.name}
-            email={userInfo.email}
+            name={user.name}
+            email={user.email}
             bio={user.bio ? user.bio : ""}
             contact={user.contact ? user.contact : ""}
             location={user.location ? user.location : ""}
@@ -91,6 +91,7 @@ const ProfilePage = () => {
         <div className="w-3/5 mx-auto flex justify-around pt-20">
           <div className="mx-2 items-center flex flex-col">
             <ProfileCard
+              profileURL={user.profileURL ? user.profileURL : ""}
               contact={user.contact ? user.contact : ""}
               location={user.location ? user.location : ""}
               name={user.name ? user.name : ""}

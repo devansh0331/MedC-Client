@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { SERVER_URL } from "../ServerURL";
+
 const EditProfile = (props) => {
   const [name, setName] = useState(props.name ? props.name : "");
   const [email, setEmail] = useState(props.email ? props.email : "");
@@ -17,35 +18,64 @@ const EditProfile = (props) => {
   const [website, setWebsite] = useState(props.website ? props.website : "");
 
   const handleSaveProfile = async () => {
-    try {
-      const response = await fetch(
-        `${SERVER_URL}/auth/update-profile/social-info`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name,
-            email,
-            bio,
-            location,
-            contact,
-            linkedin,
-            twitter,
-            website,
-          }),
+    const formData = new FormData();
+    const data = {
+      name: name,
+      email: email,
+      bio: bio,
+      location: location,
+      contact: contact,
+      linkedin: linkedin,
+      twitter: twitter,
+      website: website,
+    };
+    formData.append("data", JSON.stringify(data));
+
+    if (file) {
+      formData.append("filepath", file);
+      try {
+        const response = await fetch(
+          `${SERVER_URL}/auth/update-profile/social-info`,
+          {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+          }
+        );
+
+        const res = await response.json();
+        console.log(res);
+        if (res.success) {
+          props.setToast("Profile updated successfully", true);
+          props.getUser();
         }
-      );
-      const res = await response.json();
-      console.log(res);
-      if (res.success) {
-        props.setToast("Profile updated successfully", true);
-        props.getUser();
+      } catch (error) {
+        props.setToast("Failed to update", false);
       }
-    } catch (error) {
-      props.setToast("Failed to update", false);
+    }
+
+    // NO FILE
+    else {
+      try {
+        console.log(formData.getAll("data"));
+        const response = await fetch(
+          `${SERVER_URL}/auth/update-profile/social-info-no-profile`,
+          {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+          }
+        );
+
+        const res = await response.json();
+        console.log(res);
+        if (res.success) {
+          props.setToast("Profile updated successfully", true);
+          props.getUser();
+        }
+      } catch (error) {
+        props.setToast("Failed to update", false);
+      }
     }
   };
 
@@ -60,23 +90,23 @@ const EditProfile = (props) => {
         </div>
         <div className="flex flex-col mx-4 my-1">
           <div className="flex w-full justify-between">
-          <div className="flex flex-col my-1">
-            <label className="text-gray-700 text-sm">Name</label>
-            <input
-              className="border-2 border-gray-400 rounded-md px-3 py-1 w-full h-7 "
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col my-1">
-            <label className="text-gray-700 text-sm">Profile Picture</label>
-            <input
-              className="border-2 profilepic border-gray-400 rounded-md px-3 w-full h-full text-sm text-gray-700"
-              type="file"
-              value={file}
-              onChange={(e) => setFile(e.target.value)}
-            />
-          </div>
+            <div className="flex flex-col my-1">
+              <label className="text-gray-700 text-sm">Name</label>
+              <input
+                className="border-2 border-gray-400 rounded-md px-3 py-1 w-full h-7 "
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col my-1">
+              <label className="text-gray-700 text-sm">Profile Picture</label>
+              <input
+                className="border-2 profilepic border-gray-400 rounded-md px-3 w-full h-full text-sm text-gray-700"
+                type="file"
+                // value={file}
+                onChange={(e) => setFile(e.target.files[0])}
+              />
+            </div>
           </div>
           <div className="flex flex-col my-1">
             <label className="text-gray-700 text-sm">Bio</label>
