@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 import { CiStar } from "react-icons/ci";
-import profile from '../assets/profile.png';
+import profile from "../assets/profile.png";
 const SingleJobCard = () => {
   return (
-    <div className='w-full mt-3 border-b-2 pb-2'>
+    <div className="w-full mt-3 border-b-2 pb-2">
       <div className="w-full flex items-center justify-between ">
         <div className="flex items-center justify-center">
           <img
@@ -36,7 +36,7 @@ const SingleJobCard = () => {
         <div>27d</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SingleJobCard
+export default SingleJobCard;
