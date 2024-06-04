@@ -61,7 +61,11 @@ function SideBar(props) {
                 name={user.name ? user.name : ""}
                 email={user.email ? user.email : ""}
                 bio={user.bio ? user.bio : ""}
-                linkedin={user.linkedin ? user.linkedin : ""}
+                linkedin={
+                  user.linkedin ? "/" + user.linkedin.split("/")[4] : ""
+                }
+                twitter={user.twitter ? "/" + user.twitter.split("/")[3] : ""}
+                website={user.website ? user.website : ""}
                 route={false}
               />
             </span>

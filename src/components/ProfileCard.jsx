@@ -4,6 +4,8 @@ import { IoLocationSharp } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { FaLink } from "react-icons/fa";
 import { useState } from "react";
 import EditProfile from "./EditProfile";
 import altprofile from "../assets/altprofile.png";
@@ -53,6 +55,18 @@ const ProfileCard = (props) => {
           <div className="text-sm flex items-center text-gray-700 my-1">
             <FaLinkedinIn className="w-4 h-4 mr-3" />
             {linkedin}
+          </div>
+        )}
+        {props.twitter && (
+          <div className="text-sm flex items-center text-gray-700 my-1">
+            <FaXTwitter className="w-4 h-4 mr-3" />
+            {props.twitter}
+          </div>
+        )}
+        {props.website && (
+          <div className="text-sm flex items-center text-gray-700 my-1">
+            <FaLink className="w-4 h-4 mr-3" />
+            {props.website}
           </div>
         )}
         {props.profile && (
