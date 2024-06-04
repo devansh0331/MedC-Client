@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import profile from "../assets/profile2.png";
+import altprofile from "../assets/altprofile.png";
 import SinglePostCard from "./SinglePostCard";
 import CreatePostPopUp from "./CreatePostPopUp";
 import ReactTimeAgo from "react-time-ago";
@@ -9,10 +9,15 @@ import { UserContext } from "../UserContext";
 
 function PostCard() {
   const [open, setOpen] = useState(false);
-  const { getPosts, userId, posts, handleLike } = useContext(UserContext);
+  const { getPosts, userId, posts, handleLike, getUser, user } =
+    useContext(UserContext);
 
   useEffect(() => {
     getPosts();
+    console.log(posts);
+  }, []);
+  useEffect(() => {
+    getUser();
     console.log(posts);
   }, []);
 
@@ -24,7 +29,7 @@ function PostCard() {
     <div className="flex flex-col w-1/2 mx-auto mt-6 border-b-2 shadow-md ">
       <div className="flex justify-evenly w-full bg-white py-4 px-2 border-b-2 items-center">
         <img
-          src={profile}
+          src={user.profileURL ? user.profileURL : altprofile}
           className="rounded-full h-10 md:h-11 w-10 md:w-11"
           alt="profile"
         />

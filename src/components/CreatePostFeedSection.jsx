@@ -1,13 +1,13 @@
 import { Input } from "@material-tailwind/react";
 import React from "react";
-import profile from "../assets/profile.png";
+import altprofile from "../assets/altprofile.png";
 
 function CreatePostFeedSection(props) {
   return (
     <div className="w-full flex  items-center justify-evenly p-6 shadow-md">
       <div>
         <img
-          src={profile}
+          src={props.profileURL != "" ? props.profileURL : altprofile}
           alt=""
           className="rounded-full h-12 md:h-16 w-12 md:w-16 object-cover object-center"
         />
