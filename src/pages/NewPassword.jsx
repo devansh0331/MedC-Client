@@ -66,11 +66,11 @@ function NewPassword() {
         <p className="w-full text-4xl tracking-wide text-center font-black mb-3 mt-2 font-open leading-custom">
         Create a New Password
           </p>
-        <p className="md:w-1/4 text-center text-gray-700 mb-4">
+        <p className="w-3/5 md:w-1/4 text-center text-gray-700 mb-4">
           Minimum of 8 characters which includes a character, a number and a
           special symbol
         </p>
-        <div className="w-4/5 md:w-1/5 m-auto flex flex-col justify-center items-center mt-2 mb-1">
+        <div className="w-3/5 md:w-1/5 m-auto flex flex-col justify-center items-center mt-2 mb-1">
          <div className="relative w-full">
             <label
               htmlFor="newpassword"

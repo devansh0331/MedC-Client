@@ -25,7 +25,8 @@ function Navbar(props) {
         </div>
         {!userInfo.state && (
           <div className="flex items-center justify-end">
-            <button className="bg-primary mr-8 text-white px-4 py-2 rounded-full shadow-md active:translate-x-0.5 active:translate-y-0.5">
+            <button className="bg-primary mr-8 text-white px-4 py-2 rounded-full shadow-md active:translate-x-0.5 active:translate-y-0.5"
+            onClick={() => navigate("/signup")}>
               Sign Up
             </button>
           </div>

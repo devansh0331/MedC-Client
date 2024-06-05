@@ -70,7 +70,7 @@ function OTPVerification() {
 
   return (
     <div className="w-screen h-screen">
-      <div className="w-2/5 m-auto h-full flex flex-col items-center justify-center">
+      <div className="w-10/12 md:w-2/5 m-auto h-full flex flex-col items-center justify-center">
         <p className="w-full text-4xl tracking-wide text-center font-black mb-6 mt-4 font-open leading-custom">
         OTP Verification
           </p>

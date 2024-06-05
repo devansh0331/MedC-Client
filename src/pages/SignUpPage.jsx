@@ -57,10 +57,10 @@ function SignUpPage() {
   };
   return (
     <div className="w-screen h-screen flex overflow-hidden">
-      <div className="w-1/2 h-full flex flex-col items-center justify-center mt-4">
-        <div className="w-2/5">
+      <div className="w-full md:w-3/5 lg:w-1/2 h-full flex flex-col items-center justify-center mt-4">
+        <div className="w-3/5 lg:w-1/2">
           <p className="w-full text-4xl tracking-wide text-center font-black mb-6 mt-4 font-open leading-custom">
-            Start Hiring <br /> With MEDC
+            Start Hiring <br/> With MEDC
           </p>
           <button className="w-full rounded-full mb-3 flex items-center border border-1 border-gray-500 py-2 px-3">
             <img src={emaillogo} alt="email" className="h-7 w-7" />
@@ -167,13 +167,15 @@ function SignUpPage() {
           </p>
         </div>
       </div>
-      <div className="bg-offWhite w-1/2 h-full flex flex-col items-center justify-center">
+      <div className="md:block hidden  w-2/5 lg:w-1/2">
+      <div className="bg-offWhite h-full flex flex-col items-center justify-center">
         <div className="md:h-full md:w-4/5 md:flex md:flex-col md:items-center md:justify-center">
           <img src={signup} alt="" />
           <p className="font-extrabold text-xl text-center">
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
           </p>
         </div>
+      </div>
       </div>
       <Toaster position="top-right" />
     </div>

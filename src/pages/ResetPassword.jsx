@@ -40,7 +40,7 @@ function ResetPassword() {
   };
   return (
     <div className="w-screen h-screen">
-      <div className="w-2/5 m-auto h-full flex flex-col items-center justify-center">
+      <div className="w-10/12 md:w-2/5 m-auto h-full flex flex-col items-center justify-center">
       <p className="w-full text-4xl tracking-wide text-center font-black mb-6 mt-4 font-open leading-custom">
             Reset Password
           </p>
@@ -50,14 +50,14 @@ function ResetPassword() {
               htmlFor="email"
               className="text-sm font-medium tracking-wider text-gray-700"
             >
-              Work Email
+              Email
             </label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               id="email"
               className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm"
-              placeholder="Work email"
+              placeholder="Email"
             />
           </div>
           <Button
