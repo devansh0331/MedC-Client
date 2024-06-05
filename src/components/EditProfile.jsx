@@ -81,7 +81,7 @@ const EditProfile = (props) => {
 
   return (
     <div className="w-screen h-screen z-100 bg-dialogueBg flex items-center justify-center">
-      <div className="w-2/5 h-3/5 m-auto bg-white rounded-2xl flex flex-col p-3">
+      <div className="w-2/5 h-4/5 mt-20 m-auto bg-white rounded-2xl flex flex-col p-3">
         <div className="flex justify-between mx-4 mt-1">
           <p className="text-lg text-gray-700 font-medium">Edit Profile</p>
           <button onClick={() => props.setClose(false)}>

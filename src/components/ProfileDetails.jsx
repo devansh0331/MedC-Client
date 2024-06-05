@@ -6,7 +6,7 @@ const ProfileDetails = () => {
   const [section, setSection] = useState("Experience");
   const navigate = useNavigate();
   return (
-    <div className="w-full h-4/5 flex flex-col bg-white mt-4 mb-4 px-2 rounded-xl shadow-md">
+    <div className="w-full h-4/5 flex flex-col bg-white mt-4 mb-4 px-2 rounded-xl shadow-md font-open">
       <div className="w-full flex justify-between border-b-2 py-2 text-md items-center">
         <div className="flex  text-gray-800 ">
           <button
@@ -18,7 +18,7 @@ const ProfileDetails = () => {
             Experience
           </button>
           <button
-            className={`border-r-2 mx-1 px-2 border-gray-300 ${
+            className={`border-r-2 mx-1 px-2 border-gray-300 font-medium ${
               section === "Education" ? "text-blue-600" : ""
             }`}
             onClick={() => setSection("Education")}
@@ -51,9 +51,9 @@ const ProfileDetails = () => {
           <div className=" px-3">
             <div className="w-full my-1 px-3 py-2 border-b-2">
               <p className="text-base font-medium">Heart Surgeon</p>
-              <p className="text-sm text-gray-800">ABC Hospital</p>
-              <p className="text-sm text-gray-600 italic">(2020 - 2022)</p>
-              <p className="text-sm text-gray-700">
+              <p className="text-base text-gray-800">ABC Hospital</p>
+              <p className="text-base text-gray-600 italic">(2020 - 2022)</p>
+              <p className="text-base text-gray-700">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                 enim ad minim veniam, quis nostrud exercitation ullamco laboris
