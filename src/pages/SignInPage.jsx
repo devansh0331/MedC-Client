@@ -47,9 +47,9 @@ function SignInPage() {
 
           console.log("Token: " + parsedResponse.token);
           console.log("User: " + parsedEmail + " " + parsedName);
-          Cookies.set("name", parsedName);
-          Cookies.set("email", parsedEmail);
-          Cookies.set("token", parsedResponse.token);
+          Cookies.set("name", parsedName, { expires: 365 });
+          Cookies.set("email", parsedEmail, { expires: 365 });
+          Cookies.set("token", parsedResponse.token, { expires: 365 });
           toast.success("Logged In Successfully");
           setTimeout(() => {
             navigate("/feed");
