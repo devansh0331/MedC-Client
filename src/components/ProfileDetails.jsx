@@ -6,7 +6,7 @@ const ProfileDetails = () => {
   const [section, setSection] = useState("Experience");
   const navigate = useNavigate();
   return (
-    <div className="w-full h-4/5 flex flex-col bg-white mt-4 mb-4 px-2 rounded-xl shadow-md font-open">
+    <div className="w-full h-full md:h-4/5 flex flex-col bg-white mt-4 mb-4 px-2 rounded-xl shadow-md font-open">
       <div className="w-full flex justify-between border-b-2 py-2 text-md items-center">
         <div className="flex  text-gray-800 ">
           <button

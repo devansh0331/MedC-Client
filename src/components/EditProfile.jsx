@@ -80,16 +80,16 @@ const EditProfile = (props) => {
   };
 
   return (
-    <div className="w-screen h-screen z-100 bg-dialogueBg flex items-center justify-center">
-      <div className="w-2/5 h-4/5 mt-20 m-auto bg-white rounded-2xl flex flex-col p-3">
+    <div className="w-full h-full z-100 bg-dialogueBg flex items-center justify-center">
+      <div className="w-11/12 md:w-2/5 h-4/5 md:mt-20 md:m-auto bg-white rounded-2xl flex flex-col p-1 md:p-3">
         <div className="flex justify-between mx-4 mt-1">
           <p className="text-lg text-gray-700 font-medium">Edit Profile</p>
           <button onClick={() => props.setClose(false)}>
             <MdClose className="w-6 h-6 text-gray-700 font-medium" />
           </button>
         </div>
-        <div className="flex flex-col mx-4 my-1">
-          <div className="flex w-full justify-between">
+        <div className="flex flex-col mx-2 md:mx-4 my-1">
+          <div className="flex flex-col md:flex-row w-full justify-between">
             <div className="flex flex-col my-1">
               <label className="text-gray-700 text-sm">Name</label>
               <input
@@ -116,7 +116,7 @@ const EditProfile = (props) => {
               onChange={(e) => setBio(e.target.value)}
             />
           </div>
-          <div className="flex w-full justify-between ">
+          <div className="flex flex-col md:flex-row w-full justify-between ">
             <div className="flex flex-col h-1/2 my-1">
               <label className="text-gray-700 text-sm">Location</label>
               <input
@@ -134,7 +134,7 @@ const EditProfile = (props) => {
               />
             </div>
           </div>
-          <div className="flex w-full justify-between ">
+          <div className="flex flex-col md:flex-row w-full justify-between ">
             <div className="flex flex-col h-1/2 my-1">
               <label className="text-gray-700 text-sm">Email</label>
               <input
@@ -152,7 +152,7 @@ const EditProfile = (props) => {
               />
             </div>
           </div>
-          <div className="flex w-full justify-between ">
+          <div className="flex  flex-col md:flex-row w-full justify-between ">
             <div className="flex flex-col h-1/2 my-1">
               <label className="text-gray-700 text-sm">Twitter</label>
               <input

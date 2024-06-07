@@ -45,7 +45,7 @@ function FeedPage() {
         className="z-20 absolute h-screen left-0"
         route="feed"
       />
-      <div className="w-full h-full flex flex-col md:flex-row pt-16 fixed z-0 pl-20">
+      <div className="w-full h-full flex flex-col md:flex-row pt-16 fixed z-0 pl-16 md:pl-20">
         {!minJobs ? (
           <MaxJob className="w-full m-auto" />
         ) : (

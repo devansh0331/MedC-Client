@@ -20,20 +20,22 @@ function Navbar(props) {
   return (
     <nav className="fixed top-0 h-16 flex justify-center w-screen overflow-hidden bg-white z-20 shadow-sm">
       <div className="w-full flex items-center justify-between">
-        <div onClick={handleLogoNavigate} className="cursor-pointer ml-10">
+        <div onClick={handleLogoNavigate} className="cursor-pointer md:ml-10">
           <img src={logo} alt="" className="w-5/6" />
         </div>
         {!userInfo.state && (
           <div className="flex items-center justify-end">
-            <button className="bg-primary mr-8 text-white px-4 py-2 rounded-full shadow-md active:translate-x-0.5 active:translate-y-0.5"
-            onClick={() => navigate("/signup")}>
+            <button
+              className="bg-primary mr-8 text-white px-4 py-2 rounded-full shadow-md active:translate-x-0.5 active:translate-y-0.5"
+              onClick={() => navigate("/signup")}
+            >
               Sign Up
             </button>
           </div>
         )}
         {userInfo.state && (
-          <div className="flex items-center justify-between pr-5">
-            <button className="flex items-center text-black border-2 border-black px-3 py-2 rounded-full mx-2">
+          <div className="flex items-center justify-between md:pr-5">
+            <button className="flex items-center text-black border-2 border-black px-1 md:px-3 rounded-full py-2  mx-2">
               <FaCirclePlus />
               <span className="pl-2">Post a Job</span>
             </button>

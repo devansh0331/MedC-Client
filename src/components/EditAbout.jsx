@@ -25,25 +25,25 @@ const EditAbout = (props) => {
   };
 
   return (
-    <div className="w-screen h-screen z-100 bg-dialogueBg flex items-center justify-center">
-      <div className="w-2/5 h-3/5 m-auto bg-white rounded-2xl flex flex-col p-3">
-        <div className="flex justify-between mx-4 mt-1">
+    <div className="w-full h-full z-100 bg-dialogueBg flex items-center justify-center">
+      <div className="w-11/12 md:w-2/5 h-3/5 md:m-auto bg-white rounded-2xl flex flex-col p-3">
+        <div className="flex justify-between md:mx-4 mt-1">
           <p className="text-lg text-gray-700 font-medium">Edit Profile</p>
           <button onClick={() => props.setCloseAbout(false)}>
             <MdClose className="w-6 h-6 text-gray-700 font-medium" />
           </button>
         </div>
-        <div className="flex flex-col mx-4 my-1 h-full">
+        <div className="flex flex-col md:mx-4 my-1 h-full">
           <div className="flex flex-col my-1 h-full">
             <label className="text-gray-700 text-base">About</label>
             <textarea
-              className="border-2 border-gray-400 rounded-md px-3 py-1 w-full h-4/5"
+              className="border-2 border-gray-400 rounded-md px-3 py-1 w-full h-5/6"
               value={about}
               onChange={(e) => setAbout(e.target.value)}
             />
           </div>
         </div>
-        <div className="flex justify-end mx-4 mt-2">
+        <div className="flex justify-end md:mx-4 mt-2">
           <button
             className="text-primary border-2 border-primary px-3 py-1 rounded-md"
             onClick={() => props.setCloseAbout(false)}

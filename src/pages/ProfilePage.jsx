@@ -43,14 +43,15 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="w-full h-screen flex">
+    <div className=" w-screen h-screen relative z-0 flex">
       <SideBar
         name={userInfo.name}
         email={userInfo.email}
         handleLogout={handleLogout}
+        className="absolute z-20  h-screen left-0"
         route="profile"
       />
-      <div className="w-full h-screen bg-background overflow-hidden relative">
+      <div className="w-full h-full bg-background overflow-hidden ">
         {close ? (
           <EditProfile
             name={user.name}
@@ -88,8 +89,8 @@ const ProfilePage = () => {
         ) : (
           ""
         )}
-        <div className="w-3/5 mx-auto flex justify-around pt-20">
-          <div className="mx-2 items-center flex flex-col">
+        <div className="md:w-3/5 mx-auto flex flex-col md:flex-row justify-around pt-20">
+          <div className="mx-2 items-center  flex flex-col">
             <ProfileCard
               profileURL={user.profileURL ? user.profileURL : ""}
               contact={user.contact ? user.contact : ""}
@@ -108,7 +109,7 @@ const ProfilePage = () => {
               Download Resume
             </button>
           </div>
-          <div className="mx-2">
+          <div className="mx-2 overflow-x-hidden overflow-y-scroll scrollbar-thin md:overflow-y-hidden ">
             <ProfileAbout
               about={user.about ? user.about : ""}
               setCloseAbout={setCloseAbout}

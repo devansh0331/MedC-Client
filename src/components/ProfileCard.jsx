@@ -18,8 +18,8 @@ const ProfileCard = (props) => {
 
   return (
     <div
-      className={`bg-white pt-6 pb-2 rounded-xl flex flex-col items-center ${
-        props.profile ? `px-8 shadow-md` : `px-4 `
+      className={`bg-white md:pt-6 nd:pb-2 rounded-xl flex flex-col items-center ${
+        props.profile ? `px-4 md:px-8 shadow-md` : `px-4 `
       }`}
     >
       <img
@@ -32,7 +32,7 @@ const ProfileCard = (props) => {
           <div className="text-sm mx-auto text-gray-700">{props.bio}</div>
         )}
       </div>
-      <div className="flex flex-col mx-auto my-2 h-auto">
+      <div className="flex flex-col md:mx-auto my-2 h-auto">
         {props.location && (
           <div className="text-sm flex items-center text-gray-700 my-1">
             <IoLocationSharp className="w-4 h-4 mr-3" />

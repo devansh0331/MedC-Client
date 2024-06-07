@@ -18,8 +18,7 @@ const SinglePostCard = (props) => {
   const postId = props.postId;
   const user = props.userId;
 
-  useEffect(() => {   
-  })
+  useEffect(() => {});
   const getComments = async (comm) => {
     if (comm == true) {
       try {
@@ -83,15 +82,14 @@ const SinglePostCard = (props) => {
       } else {
         getComments(true);
       }
-    }catch (error) {
-        console.error(error.message);
-      }
+    } catch (error) {
+      console.error(error.message);
     }
-    
+  };
 
   return (
     <div>
-      <div className="w-3/4 m-auto border-b-2 pb-4 py-2 mt-4">
+      <div className=" md:w-3/4 m-auto border-b-2 pb-4 py-2 mt-4">
         {/* NAME AND DETAILS */}
         <div className="flex justify-between">
           <div className="flex">
@@ -100,17 +98,21 @@ const SinglePostCard = (props) => {
               alt="profile"
               className="rounded-full h-10 md:h-12 w-10 md:w-12"
             />
-            <div className="flex flex-col ml-4">
-              <p className="text-black font-semibold text-md">{props.name}</p>
-              <p className="text-gray-600 font-normal text-md">Technology</p>
+            <div className="flex flex-col ml-2 md:ml-4">
+              <p className="text-black font-semibold text-sm md:text-base ">
+                {props.name}
+              </p>
+              <p className="text-gray-600 font-normal text-sm md:text-md leading-3 md:leading-none">
+                Technology
+              </p>
             </div>
           </div>
           {/* TIME INFO */}
-          <div className="flex items-center">
-            <p className="text-gray-600 font-normal text-md">
+          <div className="flex flex-col-reverse md:flex-row items-end md:items-center">
+            <p className="text-gray-600 font-normal text-sm md:text-sm leading-3 md:leading-none">
               {props.postedAt}
             </p>
-            <HiOutlineDotsHorizontal className="text-gray-600 ml-4 w-6 h-6" />
+            <HiOutlineDotsHorizontal className="text-gray-600 ml-4 w-6 h-6 " />
           </div>
         </div>
 
@@ -131,17 +133,18 @@ const SinglePostCard = (props) => {
           )}
 
           {/* LIKE AND COMMENT INFO */}
-          <div className="flex justify-evenly pt-4">
+          <div className="flex justify-evenly text-sm md:text-md pt-4">
             <div
               onClick={props.handleLike}
               className="flex items-center cursor-pointer"
             >
               {props.isLiked ? (
-                <AiFillLike className="w-5 h-5 mr-4" />
+                <AiFillLike className="w-5 h-5 mr-2 md:mr-4" />
               ) : (
-                <AiOutlineLike className="w-5 h-5 mr-4" />
+                <AiOutlineLike className="w-5 h-5 mr-2 md:mr-4" />
               )}{" "}
-              {props.likes} {props.likes == 0 || props.likes == 1 ? "Like" : "Likes"}
+              {props.likes}{" "}
+              {props.likes == 0 || props.likes == 1 ? "Like" : "Likes"}
             </div>
             <button
               className="flex items-center cursor-pointer"
@@ -150,11 +153,12 @@ const SinglePostCard = (props) => {
                 getComments(!comm);
               }}
             >
-              <FaRegCommentAlt className="w-4 h-4 mr-4" /> {commentsCount ? commentsCount : ""}{" "}
+              <FaRegCommentAlt className="w-4 h-4 mr-2 md:mr-4" />{" "}
+              {commentsCount ? commentsCount : ""}{" "}
               {commentsCount === 1 ? "Comment" : "Comments"}
             </button>
             <div className="flex items-center cursor-pointer">
-              <IoPaperPlaneOutline className="w-4 h-4 mr-4" /> Share
+              <IoPaperPlaneOutline className="w-4 h-4 mr-2 md:mr-4" /> Share
             </div>
           </div>
 
@@ -182,14 +186,16 @@ const SinglePostCard = (props) => {
                       <div className="flex items-center">
                         <img src={profile} className="rounded-full h-6 w-6" />
                         <div className="flex w-full justify-between">
-                        <p className="ml-2 text-sm font-semibold text-gray-700">
-                          {comment.userId == null
-                            ? "Unknown User"
-                            : comment.userId.name}
-                        </p>
-                        {comment.userId._id === user && <button onClick={() => deleteComment(comment._id)}>
-                          <RiDeleteBin6Line className="w-4 h-4 mr-2" />
-                        </button>}
+                          <p className="ml-2 text-sm font-semibold text-gray-700">
+                            {comment.userId == null
+                              ? "Unknown User"
+                              : comment.userId.name}
+                          </p>
+                          {comment.userId._id === user && (
+                            <button onClick={() => deleteComment(comment._id)}>
+                              <RiDeleteBin6Line className="w-4 h-4 mr-2" />
+                            </button>
+                          )}
                         </div>
                       </div>
                       <p className="text-sm text-gray-700 ml-8">
