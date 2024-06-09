@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import EditExperience from "../components/EditExperience";
@@ -7,13 +7,30 @@ import EditCert from "../components/EditCert";
 import EditAchi from "../components/EditAchi";
 import { BsPersonCircle } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import { UserContext } from "../UserContext";
 const EditDetails = () => {
   const [section, setSection] = useState("Experience");
   const [editexp, setEditexp] = useState(false);
   const [editEdu, setEditEdu] = useState(false);
   const [editCert, setEditCert] = useState(false);
   const [editAchi, setEditAchi] = useState(false);
+
+  const [singleExperienceData, setSingleExperienceData] = useState({});
+
+  const { getUserExperience, userExperience } = useContext(UserContext);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getUserExperience();
+  }, []);
+
+  const setToast = (msg, success) => {
+    if (success) {
+      toast.success(msg);
+    } else toast.error(msg);
+  };
 
   const handleAdd = () => {
     if (section === "Experience") {
@@ -28,9 +45,17 @@ const EditDetails = () => {
   };
   return (
     <div className="w-full h-screen mx-auto bg-background pt-20 overflow-hidden relative">
-      {editexp && (
-        <EditExperience className="absolute" setEditexp={setEditexp} />
+      {editexp && singleExperienceData != {} && (
+        <EditExperience
+          className="absolute"
+          setToast={setToast}
+          setSingleExperienceData={setSingleExperienceData}
+          singleExperienceData={singleExperienceData}
+          setEditexp={setEditexp}
+          getUserExperience={getUserExperience}
+        />
       )}
+
       {editEdu && <EditEdu className="absolute" setEditEdu={setEditEdu} />}
       {editCert && <EditCert className="absolute" setEditCert={setEditCert} />}
       {editAchi && <EditAchi className="absolute" setEditAchi={setEditAchi} />}
@@ -81,22 +106,34 @@ const EditDetails = () => {
       <div className="w-3/4 overflow-y-scroll scrollbar-thin bg-white h-ful mx-auto">
         {section === "Experience" && (
           <div className=" px-3">
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <div className="flex justify-between">
-                <p className="text-base font-medium">Heart Surgeon</p>
-                <button className="" onClick={() => setEditexp(true)}>
-                  <FiEdit className="w-5 h-5" />
-                </button>
+            {userExperience.map((experience) => (
+              <div className="w-full grid grid-cols-1 my-1 px-3 py-2 border-b-2">
+                <div className="flex justify-between">
+                  <p className="text-base font-medium">{experience.post}</p>
+                  <button
+                    className=""
+                    onClick={() => {
+                      setSingleExperienceData(experience);
+                      setEditexp(true);
+                    }}
+                  >
+                    <FiEdit className="w-5 h-5" />
+                  </button>
+                </div>
+                <p className="text-sm text-gray-800">
+                  {experience.organization}
+                </p>
+                <p className="text-sm text-gray-600 italic">
+                  {experience.startingMonth.split("-")[1]},
+                  {experience.startingMonth.split("-")[0]} -{" "}
+                  {experience.endingMonth.split("-")[1]},
+                  {experience.endingMonth.split("-")[0]}
+                </p>
+                <p className="text-sm text-gray-700">
+                  {experience.description}
+                </p>
               </div>
-              <p className="text-sm text-gray-800">ABC Hospital</p>
-              <p className="text-sm text-gray-600 italic">(2020 - 2022)</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
-              </p>
-            </div>
+            ))}
           </div>
         )}
         {section === "Education" && (
@@ -160,6 +197,7 @@ const EditDetails = () => {
             Add
           </button>
         </div>
+        <Toaster position="top-right" />
       </div>
     </div>
   );

@@ -13,8 +13,98 @@ export function UserContextProvider({ children }) {
     email: "",
   });
   const [user, setUser] = useState({});
+  const [userExperience, setUserExperience] = useState([]);
+  const [userCertificate, setUserCertificate] = useState([]);
+  const [userAchievement, setUserAchievement] = useState([]);
+  const [userEducation, setUserEducation] = useState([]);
   const [posts, setPosts] = useState([]);
   const [userId, setUserId] = useState(null);
+
+  const getUserExperience = async () => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/auth/update-profile/get/experience`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const res = await response.json();
+
+      if (!res.success) {
+        console.error(res.error);
+      } else {
+        console.log(res.data);
+        setUserExperience(res.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch user experience");
+    }
+  };
+  const getUserCertificate = async () => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/auth/update-profile/get/certificate`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const res = await response.json();
+
+      if (!res.success) {
+        console.error(res.error);
+      } else {
+        setUserCertificate(res.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch user certificate");
+    }
+  };
+  const getUserAchievement = async () => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/auth/update-profile/get/achievement`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const res = await response.json();
+
+      if (!res.success) {
+        console.error(res.error);
+      } else {
+        setUserAchievement(res.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch user achievement");
+    }
+  };
+  const getUserEducation = async () => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/auth/update-profile/get/education`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const res = await response.json();
+
+      if (!res.success) {
+        console.error(res.error);
+      } else {
+        setUserEducation(res.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch user education");
+    }
+  };
 
   const getUser = async () => {
     try {
@@ -95,6 +185,14 @@ export function UserContextProvider({ children }) {
         userId,
         getPosts,
         handleLike,
+        getUserAchievement,
+        getUserExperience,
+        getUserEducation,
+        getUserCertificate,
+        userAchievement,
+        userExperience,
+        userEducation,
+        userCertificate,
       }}
     >
       {children}
