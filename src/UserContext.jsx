@@ -51,30 +51,30 @@ export function UserContextProvider({ children }) {
     }
   };
 
- 
-
-   const handleLike = async (postId) => {
-     try {
-       const res = await fetch(`${SERVER_URL}/post/single-post/like/${postId}`, {
-         method: "POST",
-         credentials: "include",
-       });
-       const parsedRes = await res.json();
-       if (!parsedRes.success) {
-         toast.error(parsedRes.error);
-       } else {
-         getPosts();
-       
-       }
-     } catch (error) {
-       toast.error("Failed to like post");
-     }
-   };
-
+  const handleLike = async (postId) => {
+    try {
+      const res = await fetch(`${SERVER_URL}/post/single-post/like/${postId}`, {
+        method: "POST",
+        credentials: "include",
+      });
+      const parsedRes = await res.json();
+      if (!parsedRes.success) {
+        toast.error(parsedRes.error);
+      } else {
+        getPosts();
+      }
+    } catch (error) {
+      toast.error("Failed to like post");
+    }
+  };
 
   useEffect(() => {
     const name = Cookies.get("name");
     const email = Cookies.get("email");
+
+    getUser();
+    console.log(user);
+
     if (name === undefined || email === undefined) {
       const state = false;
       setUserInfo({ state, name, email });

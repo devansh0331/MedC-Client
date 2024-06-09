@@ -12,8 +12,9 @@ const MinPost = () => {
     console.log(minJobs);
   };
 
-  const { getPosts, userId, posts, handleLike } = useContext(UserContext);
+  const { getPosts, userId, user, posts, handleLike } = useContext(UserContext);
 
+  console.log(userId);
   useEffect(() => {
     getPosts();
   }, []);
@@ -36,7 +37,7 @@ const MinPost = () => {
                 post.user && post.user.profileURL ? post.user.profileURL : ""
               }
               description={post.description}
-              isLiked={post.likes && userId && post.likes[userId]}
+              isLiked={post.likes && user._id && post.likes[user._id]}
               handleLike={() => handleLike(post._id)}
               postId={post._id}
             />

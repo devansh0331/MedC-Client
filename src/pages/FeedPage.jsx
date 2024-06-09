@@ -18,9 +18,9 @@ function FeedPage() {
   const navigate = useNavigate();
   const minJobs = useSelector((state) => state.feed.minJobs);
   const [open, setOpen] = useState(false);
-  const { userInfo } = useContext(UserContext);
+  const { userInfo, user } = useContext(UserContext);
   const handleOpen = () => setOpen(!open);
-
+  console.log(user._id);
   const handleLogout = (e) => {
     e.preventDefault();
     try {

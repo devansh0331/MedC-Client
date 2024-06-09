@@ -13,7 +13,7 @@ function SideBar(props) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const [profile, setProfile] = useState(false);
-  const { userInfo, user, getUser } = useContext(UserContext);
+  const { userInfo, user } = useContext(UserContext);
 
   useEffect(() => {
     if (props.route === "profile") {
@@ -21,7 +21,7 @@ function SideBar(props) {
     }
 
     if (props.route === "feed") {
-      getUser();
+      // getUser();
       setProfile(false);
     }
   }, []);

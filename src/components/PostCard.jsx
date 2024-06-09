@@ -17,10 +17,6 @@ function PostCard() {
     getPosts();
     console.log(posts);
   }, []);
-  useEffect(() => {
-    getUser();
-    console.log(posts);
-  }, []);
 
   const handleOpen = () => {
     setOpen(!open);
