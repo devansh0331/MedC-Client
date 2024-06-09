@@ -109,7 +109,7 @@ const ProfilePage = () => {
               Download Resume
             </button>
           </div>
-          <div className="mx-2 overflow-x-hidden overflow-y-scroll scrollbar-thin md:overflow-y-hidden ">
+          <div className="w-full mx-2 overflow-x-hidden overflow-y-scroll scrollbar-thin md:overflow-y-hidden ">
             <ProfileAbout
               about={user.about ? user.about : ""}
               setCloseAbout={setCloseAbout}
