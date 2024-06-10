@@ -1,1 +1,1 @@
-export const SERVER_URL = "https://medc-server.onrender.com";
+export const SERVER_URL = "http://localhost:5173";
