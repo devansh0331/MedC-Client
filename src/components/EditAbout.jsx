@@ -40,7 +40,7 @@ const EditAbout = (props) => {
               className="border-2 border-gray-400 rounded-md px-3 py-1 w-full h-5/6"
               id="about"
               value={about}
-              onChange={() => setAbout(document.getElementById("about").innerHTML)}
+              onChange={(e) => setAbout(e.target.value)}
             />
           </div>
         </div>
