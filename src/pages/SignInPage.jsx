@@ -1,6 +1,6 @@
 import { Button, Input } from "@material-tailwind/react";
 import Cookies from "js-cookie";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import emaillogo from "../assets/emaillogo.png";
@@ -8,6 +8,7 @@ import google from "../assets/google.png";
 import { SERVER_URL } from "../ServerURL";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { UserContext } from "../UserContext";
 
 function SignInPage() {
   // useNavigate Initialization
@@ -23,6 +24,7 @@ function SignInPage() {
     setShowPassword(!showPassword);
   };
 
+  const { getUser } = useContext(UserContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Function to signin
@@ -51,6 +53,7 @@ function SignInPage() {
           Cookies.set("email", parsedEmail, { expires: 365 });
           Cookies.set("token", parsedResponse.token, { expires: 365 });
           toast.success("Logged In Successfully");
+          getUser();
           setTimeout(() => {
             navigate("/feed");
             // location.reload();

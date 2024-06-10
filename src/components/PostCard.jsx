@@ -23,8 +23,8 @@ function PostCard() {
   };
 
   return (
-    <div className="flex flex-col w-full md:w-1/2 mx-auto mt-6 shadow-md bg-inherit  ">
-      <div className="flex  justify-evenly w-full bg-white py-2 items-center rounded-md">
+    <div className="flex flex-col w-full md:w-2/5  mx-auto mt-6  bg-inherit  ">
+      <div className="flex  justify-evenly w-full bg-white py-2 items-center rounded-md shadow-md">
         <img
           src={user.profileURL ? user.profileURL : altprofile}
           className="rounded-full h-10 md:h-11 w-10 md:w-11"

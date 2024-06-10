@@ -89,7 +89,7 @@ const SinglePostCard = (props) => {
 
   return (
     <div>
-      <div className="w-11/12 m-auto p-4 my-2 bg-white rounded-md">
+      <div className="w-full m-auto p-4 my-2 bg-white rounded-md shadow-md">
         {/* NAME AND DETAILS */}
         <div className="flex justify-between">
           <div className="flex">
@@ -128,9 +128,9 @@ const SinglePostCard = (props) => {
           {props.img && (
             <img
               src={props.img}
-              className="my-4 w-1/2 bg-gray-100  rounded-md"
+              className="my-4 w-1/2 mx-auto bg-gray-100  rounded-md shadow-lg"
             ></img>
-          )}  
+          )}
 
           {/* LIKE AND COMMENT INFO */}
           <div className="flex justify-around text-sm md:text-md pt-4">
