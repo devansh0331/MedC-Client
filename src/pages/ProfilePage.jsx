@@ -106,7 +106,7 @@ const ProfilePage = () => {
               // route="profile"
             />
             <button className="mx-auto text-white bg-primary px-3 py-1 rounded-full my-4 hover:bg-background hover:border-2 hover:border-primary hover:text-primary">
-              Download Resume
+              Upload Resume
             </button>
           </div>
           <div className="w-full mx-2 overflow-x-hidden overflow-y-scroll scrollbar-thin md:overflow-y-hidden ">

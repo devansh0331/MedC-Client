@@ -12,9 +12,7 @@ import altprofile from "../assets/altprofile.png";
 
 const ProfileCard = (props) => {
   const [check, setCheck] = useState(false);
-  const [linkedin, setLinkedin] = useState(
-    props.linkedin ? props.linkedin : ""
-  );
+  
 
   return (
     <div
@@ -54,7 +52,7 @@ const ProfileCard = (props) => {
         {props.linkedin && (
           <div className="text-sm flex items-center text-gray-700 my-1">
             <FaLinkedinIn className="w-4 h-4 mr-3" />
-            {linkedin}
+            {props.linkedin}
           </div>
         )}
         {props.twitter && (

@@ -23,8 +23,8 @@ function PostCard() {
   };
 
   return (
-    <div className="flex flex-col w-full md:w-1/2 mx-auto mt-6 border-b-2 shadow-md ">
-      <div className="flex justify-evenly w-full bg-white py-4 px-2 border-b-2 items-center">
+    <div className="flex flex-col w-full md:w-1/2 mx-auto mt-6 shadow-md bg-inherit  ">
+      <div className="flex  justify-evenly w-full bg-white py-2 items-center rounded-md">
         <img
           src={user.profileURL ? user.profileURL : altprofile}
           className="rounded-full h-10 md:h-11 w-10 md:w-11"
@@ -32,7 +32,7 @@ function PostCard() {
         />
         <input
           type="text"
-          className="w-3/5 border-2 border-gray-500 rounded-md px-4 py-1 md:py-2"
+          className="w-4/5 border-2 border-gray-500 rounded-md px-2 py-1 md:py-1"
           placeholder="Create Post"
           onClick={handleOpen}
         />
@@ -45,7 +45,7 @@ function PostCard() {
           getAllPosts={getPosts}
         />
       </div>
-      <div className="flex flex-col bg-white py-2 px-2 w-full h-screen md:h-full  overflow-y-scroll scrollbar-thin">
+      <div className="flex flex-col w-full h-screen md:h-full overflow-y-scroll scrollbar-thin">
         {posts.length === 0 ? (
           <div className="w-full h-full flex items-center justify-center">
             <p className="font-bold text-lg">No Posts Available!</p>

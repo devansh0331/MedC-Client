@@ -90,14 +90,14 @@ function SignInPage() {
               htmlFor="email"
               className="text-sm font-medium tracking-wider text-gray-700"
             >
-              Work Email
+              Email
             </label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               id="email"
               className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm"
-              placeholder="Work email"
+              placeholder="Email"
             />
           </div>
           <div className="relative">

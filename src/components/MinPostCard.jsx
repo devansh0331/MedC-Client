@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 const MinPostCard = (props) => {
   const navigate = useNavigate();
   return (
-    <div className="w-full m-auto border-b-2 pb-4 mt-4">
-      <div className="flex justify-between">
+    <div className="w-11/12 bg-white my-2 p-2 rounded-md">
+      <div className="flex justify-between  bg-white">
         {/* NAME AND DETAILS */}
         <div className="flex">
           <img
@@ -21,19 +21,19 @@ const MinPostCard = (props) => {
         <div className="flex items-center">
           <button onClick={props.handleLike}>
             {props.isLiked ? (
-              <AiFillLike className="w-5 h-5 mr-4" />
+              <AiFillLike className="w-5 h-5" />
             ) : (
-              <AiOutlineLike className="w-5 h-5 mr-4" />
+              <AiOutlineLike className="w-5 h-5 " />
             )}
           </button>
         </div>
       </div>
       {/* POST */}
       <div className="flex flex-col w-full mt-1">
-        <p className=" min-w-full text-md text-gray-700">
+        <p className=" min-w-full text-sm text-gray-700">
           {props.description}
           <br />
-          <button className="text-blue-500" onClick={()=> navigate(`/post/${props.postId}`)}>Show Post</button>
+          <button className="text-blue-500 text-sm" onClick={()=> navigate(`/post/${props.postId}`)}>Show Post</button>
         </p>
       </div>
     </div>

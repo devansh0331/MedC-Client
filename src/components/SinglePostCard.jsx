@@ -89,7 +89,7 @@ const SinglePostCard = (props) => {
 
   return (
     <div>
-      <div className=" md:w-3/4 m-auto border-b-2 pb-4 py-2 mt-4">
+      <div className="w-11/12 m-auto p-4 my-2 bg-white rounded-md">
         {/* NAME AND DETAILS */}
         <div className="flex justify-between">
           <div className="flex">
@@ -128,24 +128,25 @@ const SinglePostCard = (props) => {
           {props.img && (
             <img
               src={props.img}
-              className="my-4 w-full h-auto mx-auto bg-gray-100  rounded-md"
+              className="my-4 w-1/2 bg-gray-100  rounded-md"
             ></img>
-          )}
+          )}  
 
           {/* LIKE AND COMMENT INFO */}
-          <div className="flex justify-evenly text-sm md:text-md pt-4">
-            <div
+          <div className="flex justify-around text-sm md:text-md pt-4">
+            <button
               onClick={props.handleLike}
-              className="flex items-center cursor-pointer"
+              className="flex items-center justify-center cursor-pointer"
             >
               {props.isLiked ? (
-                <AiFillLike className="w-5 h-5 mr-2 md:mr-4" />
+                <AiFillLike className="w-5 h-5 mr-2" />
               ) : (
-                <AiOutlineLike className="w-5 h-5 mr-2 md:mr-4" />
+                <AiOutlineLike className="w-5 h-5 mr-2" />
               )}{" "}
               {props.likes}{" "}
               {props.likes == 0 || props.likes == 1 ? "Like" : "Likes"}
-            </div>
+            </button>
+
             <button
               className="flex items-center cursor-pointer"
               onClick={() => {
@@ -153,13 +154,14 @@ const SinglePostCard = (props) => {
                 getComments(!comm);
               }}
             >
-              <FaRegCommentAlt className="w-4 h-4 mr-2 md:mr-4" />{" "}
+              <FaRegCommentAlt className="w-4 h-4 mr-2" />{" "}
               {commentsCount ? commentsCount : ""}{" "}
               {commentsCount === 1 ? "Comment" : "Comments"}
             </button>
-            <div className="flex items-center cursor-pointer">
-              <IoPaperPlaneOutline className="w-4 h-4 mr-2 md:mr-4" /> Share
-            </div>
+
+            <button className="flex items-center cursor-pointer">
+              <IoPaperPlaneOutline className="w-4 h-4 mr-2" /> Share
+            </button>
           </div>
 
           {/* COMMENTS */}

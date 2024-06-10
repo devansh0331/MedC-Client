@@ -6,9 +6,9 @@ const ProfileDetails = () => {
   const [section, setSection] = useState("Experience");
   const navigate = useNavigate();
   return (
-    <div className="w-full h-full md:h-4/5 flex flex-col bg-white mt-4 mb-4 px-2 rounded-xl shadow-md font-open">
+    <div className="w-full h-full md:h-4/5 flex flex-col bg-white mt-4 mb-4 px-2 rounded-xl shadow-md">
       <div className="w-full flex justify-between border-b-2 py-2 text-md items-center">
-        <div className="flex  text-gray-800 ">
+        <div className="flex text-gray-800 font-medium2 ">
           <button
             className={`border-r-2 mx-1 px-2 border-gray-300 ${
               section === "Experience" ? "text-blue-600" : ""
@@ -18,7 +18,7 @@ const ProfileDetails = () => {
             Experience
           </button>
           <button
-            className={`border-r-2 mx-1 px-2 border-gray-300 font-medium ${
+            className={`border-r-2 mx-1 px-2 border-gray-300 ${
               section === "Education" ? "text-blue-600" : ""
             }`}
             onClick={() => setSection("Education")}

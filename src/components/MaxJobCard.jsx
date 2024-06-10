@@ -8,15 +8,14 @@ import { IoMdTimer } from "react-icons/io";
 import { FaRegCalendarAlt } from "react-icons/fa";
 const MaxJobCard = () => {
   return (
-    <div className="w-full md:w-11/12 flex flex-col bg-white p-2 mx-auto border-b-2">
+    <div className="w-full flex flex-col bg-white p-2 mx-auto border-b-2 my-2 rounded-md">
       {/* POST AND ORGANIZATION */}
       <div className="flex w-full justify-between px-0 md:px-5 my-2">
         <div className="flex flex-col">
-          <p className="text-xl font-medium">Senior Dentist</p>
-          <p className="text-gray-600">Deloitte Hospital</p>
+          <p className="text-xl font-medium1">Senior Dentist</p>
+          <p className="text-gray-600 font-normal">Deloitte Hospital</p>
         </div>
         <div className="flex">
-          <FaRegBookmark className="w-5 h-5 mx-2" />
           <IoPaperPlaneOutline className="w-6 h-6 mx-2" />
         </div>
       </div>

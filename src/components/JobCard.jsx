@@ -17,13 +17,16 @@ function JobCard() {
   };
 
   return (
-    <div className="w-1/3 bg-white h-2/3  overflow-y-scroll scrollbar-thin flex flex-col items-center px-6 py-3 mx-auto mt-6 shadow-md">
-      <div className="flex w-full justify-between items-center">
-        <p className="text-xl w-full border-b-2 font-semibold">Featured Jobs</p>
+    <div className="w-1/3 bg-inherit h-2/3  flex flex-col items-center mx-auto mt-6 shadow-md">
+      <div className="w-full flex items-center justify-center bg-white rounded-md">
+      <div className="flex w-11/12 my-1 justify-between items-center">
+        <p className="text-xl w-full font-semibold">Featured Jobs</p>
         <button onClick={() => handleExpand()}>
           <FaExpand />
         </button>
       </div>
+      </div>
+      <div className="w-full overflow-y-scroll scrollbar-thin flex flex-col items-center">
       <SingleJobCard />
       <SingleJobCard />
       <SingleJobCard />
@@ -32,6 +35,7 @@ function JobCard() {
       <SingleJobCard />
       <SingleJobCard />
       <SingleJobCard />
+      </div>
     </div>
   );
 }

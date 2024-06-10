@@ -3,7 +3,7 @@ import { CiStar } from "react-icons/ci";
 import profile from "../assets/profile.png";
 const SingleJobCard = () => {
   return (
-    <div className="w-full mt-3 border-b-2 pb-2">
+    <div className="w-11/12 bg-white rounded-md my-2 p-2">
       <div className="w-full flex items-center justify-between ">
         <div className="flex items-center justify-center">
           <img
@@ -16,17 +16,17 @@ const SingleJobCard = () => {
 
         {/* SAVE JOB */}
         <div className="flex items-center justify-center">
-          <CiStar className="text-2xl" />
+          <CiStar className="text-xl" />
         </div>
       </div>
 
       {/* LOCATION */}
       <div className="w-full flex items-center justify-start pt-1">
-        <p className="text-gray-600 text-md">Deloitte Hospital, Hyderabad</p>
+        <p className="text-gray-600 text-base">Deloitte Hospital, Hyderabad</p>
       </div>
 
       {/* SALARY AND DURATION OF JOB POSTING */}
-      <div className="w-full flex items-center justify-between text-gray-600 text-md">
+      <div className="w-full flex items-center justify-between text-gray-600 text-sm">
         {/* SALARY */}
         <div>
           <p>Rs. 2,000 - 5,000 / Hourly</p>

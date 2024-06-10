@@ -9,10 +9,25 @@ module.exports = withMT({
   ],
   theme: {
     extend: {
+      fontWeight: {
+        thin: '100',
+        extralight: '200',
+        light: '300',
+        normal: '400',
+        medium: '500',
+        medium1: '510',
+        medium2: '540',
+        medium3: '550',
+        medium4: '580',
+        semibold: '600',
+        bold: '700',
+        extrabold: '800',
+        black: '900',
+      },
       colors: {
         primary: "#4ED1F8",
         secondary: "#3c9184",
-        background: "#F6FCFE",
+        background: "#f6fafe",
         black: "#222222",
         white: "#ffffff",
         success: "#23d97e",
@@ -36,7 +51,7 @@ module.exports = withMT({
       fontSize: {
         'xs': '0.75rem',    // 12px
         'sm': '0.875rem',   // 14px
-        'base': '0.89rem',     // 16px
+        'base': '0.9rem',     // 16px
         'lg': '1.125rem',   // 18px
         'xl': '1.25rem',    // 20px
         '2xl': '1.5rem',    // 24px

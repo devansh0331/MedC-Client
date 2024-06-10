@@ -39,16 +39,16 @@ function HomePage() {
   return (
     <div className="w-full h-full flex flex-col box-border overflow-x-hidden">
       {/* MAIN HOME */}
-      <div className="w-screen h-full flex box-border md:flex-row flex-col justify-center items-center mt-20 md:mt-5">
-        <div className="md:w-1/2 w-10/12 h-4/5 flex flex-col p-4 box-border md:items-start items-center ">
-          <h1 className="xl:text-6xl lg:text-5xl text-4xl md:text-left text-center">
+      <div className="w-screen h-full flex box-border md:flex-row flex-col justify-around items-center md:mt-5 xl:mt-0">
+        <div className="md:w-1/2 w-10/12 flex flex-col p-4 lg:p-10 box-border md:items-start">
+          <h1 className="lg:text-5xl text-4xl md:text-left text-center">
             Connecting Careers, <br /> Healing Lives
           </h1>
-          <p className="text-gray-700 xl:text-2xl lg:text-xl text-base mt-5 md:text-left text-center">
+          <p className="text-gray-700 lg:text-xl text-base mt-5 md:text-left text-center">
             Interact with the best Medical Professionals, and <br /> make your
             presence in the Medical Community
           </p>
-          <div className="mt-10 lg:text-xl text-base flex justify-between">
+          <div className="mt-10 text-base flex justify-between">
             <button className="bg-primary text-white px-3 md:px-6 py-2 mr-5 rounded-full shadow-lg active:translate-x-0.5 active:translate-y-0.5"
             onClick={() => navigate("/signup")}>
               Get Started
@@ -60,7 +60,7 @@ function HomePage() {
             </button>
           </div>
         </div>
-        <div className="w-1/2 h-full box-border flex justify-center items-center ">
+        <div className="w-1/2 h-full box-border flex lg:p-10">
           <img src={mainIllus} alt="mainillus" className="w-full h-full m-auto"></img>
         </div>
       </div>
