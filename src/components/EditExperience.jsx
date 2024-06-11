@@ -4,25 +4,27 @@ import { SERVER_URL } from "../ServerURL";
 
 const EditExperience = (props) => {
   const [post, setPost] = useState(
-    props.singleExperienceData.post ? props.singleExperienceData.post : ""
+    props.singleExperienceData && props.singleExperienceData.post
+      ? props.singleExperienceData.post
+      : ""
   );
   const [organization, setOrganization] = useState(
-    props.singleExperienceData.organization
+    props.singleExperienceData && props.singleExperienceData.organization
       ? props.singleExperienceData.organization
       : ""
   );
   const [startingMonth, setStartingMonth] = useState(
-    props.singleExperienceData.startingMonth
+    props.singleExperienceData && props.singleExperienceData.startingMonth
       ? props.singleExperienceData.startingMonth
       : ""
   );
   const [endingMonth, setEndingMonth] = useState(
-    props.singleExperienceData.endingMonth
+    props.singleExperienceData && props.singleExperienceData.endingMonth
       ? props.singleExperienceData.endingMonth
       : ""
   );
   const [description, setDescription] = useState(
-    props.singleExperienceData.description
+    props.singleExperienceData && props.singleExperienceData.description
       ? props.singleExperienceData.description
       : ""
   );

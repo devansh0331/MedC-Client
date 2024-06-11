@@ -17,8 +17,20 @@ const EditDetails = () => {
   const [editAchi, setEditAchi] = useState(false);
 
   const [singleExperienceData, setSingleExperienceData] = useState({});
+  const [singleEducationData, setSingleEducationData] = useState({});
+  const [singleCertificateData, setSingleCertificateData] = useState({});
+  const [singleAcgievementData, setSingleAchievementData] = useState({});
 
-  const { getUserExperience, userExperience } = useContext(UserContext);
+  const {
+    getUserExperience,
+    userExperience,
+    getUserEducation,
+    userEducation,
+    getUserCertificate,
+    userCertificate,
+    getUserAchievement,
+    userAchievement,
+  } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -34,8 +46,10 @@ const EditDetails = () => {
 
   const handleAdd = () => {
     if (section === "Experience") {
+      setSingleExperienceData({});
       setEditexp(true);
     } else if (section === "Education") {
+      setSingleEducationData({});
       setEditEdu(true);
     } else if (section === "Certificates") {
       setEditCert(true);
@@ -56,8 +70,26 @@ const EditDetails = () => {
         />
       )}
 
-      {editEdu && <EditEdu className="absolute" setEditEdu={setEditEdu} />}
-      {editCert && <EditCert className="absolute" setEditCert={setEditCert} />}
+      {editEdu && singleEducationData != {} && (
+        <EditEdu
+          className="absolute"
+          setToast={setToast}
+          setSingleEducationData={setSingleEducationData}
+          singleEducationData={singleEducationData}
+          getUserEducation={getUserEducation}
+          setEditEdu={setEditEdu}
+        />
+      )}
+      {editCert && (
+        <EditCert
+          className="absolute"
+          setEditCert={setEditCert}
+          setToast={setToast}
+          setSingleCertificateData={setSingleCertificateData}
+          singleCertiicateData={singleCertificateData}
+          getUserCertificate={getUserCertificate}
+        />
+      )}
       {editAchi && <EditAchi className="absolute" setEditAchi={setEditAchi} />}
       <div className="w-3/4 bg-white flex justify-between border-b-2 py-2 text-lg mx-auto items-center">
         <div className="w-full flex justify-between items-center">
@@ -74,7 +106,10 @@ const EditDetails = () => {
               className={`border-r-2 mx-1 px-2 border-gray-300 ${
                 section === "Education" ? "text-blue-600" : ""
               }`}
-              onClick={() => setSection("Education")}
+              onClick={() => {
+                getUserEducation();
+                setSection("Education");
+              }}
             >
               Education
             </button>
@@ -82,7 +117,11 @@ const EditDetails = () => {
               className={`border-r-2 mx-1 px-2 border-gray-300 ${
                 section === "Certificates" ? "text-blue-600" : ""
               }`}
-              onClick={() => setSection("Certificates")}
+              onClick={() => {
+                getUserCertificate();
+                console.log("Certificate: ", userCertificate);
+                setSection("Certificates");
+              }}
             >
               Certificates
             </button>
@@ -138,37 +177,57 @@ const EditDetails = () => {
         )}
         {section === "Education" && (
           <div className=" px-3">
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <div className="flex justify-between">
-                <p className="text-base font-medium">
-                  Bhilai Institute of Technology, Durg
+            {userEducation.map((education, key) => (
+              <div className="w-full my-1 px-3 py-2 border-b-2">
+                <div className="flex justify-between">
+                  <p className="text-base font-medium">
+                    {education.organization}
+                  </p>
+                  <button
+                    className=""
+                    onClick={() => {
+                      setSingleEducationData(education);
+                      setEditEdu(true);
+                    }}
+                  >
+                    <FiEdit className="w-5 h-5" />
+                  </button>
+                </div>
+                <p className="text-sm text-gray-800">{education.course}</p>
+                <p className="text-sm text-gray-600 italic">
+                  ({education.startingMonth.split("-")[1]},
+                  {education.startingMonth.split("-")[0]} -{" "}
+                  {education.endingMonth.split("-")[1]},
+                  {education.endingMonth.split("-")[0]})
                 </p>
-                <button className="" onClick={() => setEditEdu(true)}>
-                  <FiEdit className="w-5 h-5" />
-                </button>
               </div>
-              <p className="text-sm text-gray-800">Bachelor's Degree</p>
-              <p className="text-sm text-gray-600 italic">(2020 - 2022)</p>
-            </div>
+            ))}
           </div>
         )}
         {section === "Certificates" && (
           <div className=" px-3">
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <div className="flex justify-between">
-                <p className="text-base font-medium">Certificate Title</p>
-                <button className="" onClick={() => setEditCert(true)}>
-                  <FiEdit className="w-5 h-5" />
-                </button>
-              </div>
-              <p className="text-sm text-gray-800">ABC Hospital</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
+            {userCertificate.length != 0 ? (
+              <p className="w-full my-1 px-3 py-2  text-base font-medium">
+                No Certificates Issued
               </p>
-            </div>
+            ) : (
+              userCertificate.map((certificate) => (
+                <div className="w-full my-1 px-3 py-2 border-b-2">
+                  <div className="flex justify-between">
+                    <p className="text-base font-medium">
+                      {certificate.certificate}
+                    </p>
+                    <button className="" onClick={() => setEditCert(true)}>
+                      <FiEdit className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <p className="text-sm text-gray-800">{certificate.issuer}</p>
+                  <p className="text-sm text-gray-700">
+                    {certificate.description}
+                  </p>
+                </div>
+              ))
+            )}
           </div>
         )}
         {section === "Achivements" && (

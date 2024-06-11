@@ -128,7 +128,7 @@ const SinglePostCard = (props) => {
           {props.img && (
             <img
               src={props.img}
-              className="my-4 w-1/2 mx-auto bg-gray-100  rounded-md shadow-lg"
+              className="my-4 w-full mx-auto bg-gray-100  rounded-md shadow-lg"
             ></img>
           )}
 
