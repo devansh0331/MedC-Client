@@ -52,6 +52,7 @@ const EditDetails = () => {
       setSingleEducationData({});
       setEditEdu(true);
     } else if (section === "Certificates") {
+      setSingleCertificateData({});
       setEditCert(true);
     } else if (section === "Achivements") {
       setEditAchi(true);
@@ -86,7 +87,7 @@ const EditDetails = () => {
           setEditCert={setEditCert}
           setToast={setToast}
           setSingleCertificateData={setSingleCertificateData}
-          singleCertiicateData={singleCertificateData}
+          singleCertificateData={singleCertificateData}
           getUserCertificate={getUserCertificate}
         />
       )}
@@ -119,7 +120,7 @@ const EditDetails = () => {
               }`}
               onClick={() => {
                 getUserCertificate();
-                console.log("Certificate: ", userCertificate);
+
                 setSection("Certificates");
               }}
             >
@@ -163,10 +164,21 @@ const EditDetails = () => {
                   {experience.organization}
                 </p>
                 <p className="text-sm text-gray-600 italic">
-                  {experience.startingMonth.split("-")[1]},
-                  {experience.startingMonth.split("-")[0]} -{" "}
-                  {experience.endingMonth.split("-")[1]},
-                  {experience.endingMonth.split("-")[0]}
+                  {experience.startingMonth
+                    ? experience.startingMonth.split("-")[1]
+                    : ""}
+                  ,
+                  {experience.startingMonth
+                    ? experience.startingMonth.split("-")[0]
+                    : ""}{" "}
+                  -{" "}
+                  {experience.endingMonth
+                    ? experience.endingMonth.split("-")[1]
+                    : ""}
+                  ,
+                  {experience.endingMonth
+                    ? experience.endingMonth.split("-")[0]
+                    : ""}
                 </p>
                 <p className="text-sm text-gray-700">
                   {experience.description}
@@ -206,18 +218,25 @@ const EditDetails = () => {
         )}
         {section === "Certificates" && (
           <div className=" px-3">
-            {userCertificate.length != 0 ? (
+            {userCertificate.length == 0 ? (
               <p className="w-full my-1 px-3 py-2  text-base font-medium">
                 No Certificates Issued
               </p>
             ) : (
-              userCertificate.map((certificate) => (
-                <div className="w-full my-1 px-3 py-2 border-b-2">
+              userCertificate.map((certificate, key) => (
+                <div key={key} className="w-full my-1 px-3 py-2 border-b-2">
                   <div className="flex justify-between">
                     <p className="text-base font-medium">
                       {certificate.certificate}
                     </p>
-                    <button className="" onClick={() => setEditCert(true)}>
+                    <button
+                      className=""
+                      onClick={() => {
+                        setSingleCertificateData(certificate);
+                        console.log("Single", singleCertificateData);
+                        setEditCert(true);
+                      }}
+                    >
                       <FiEdit className="w-5 h-5" />
                     </button>
                   </div>

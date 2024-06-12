@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
+import { SERVER_URL } from "../ServerURL";
 
 const EditCert = (props) => {
   const [certificate, setCertificate] = useState(
@@ -21,7 +22,8 @@ const EditCert = (props) => {
   );
 
   const handleCertificate = async () => {
-    if (props.singleCertificateData == undefined) {
+    console.log(certificate, issuer, description);
+    if (props.singleCertificateData._id == undefined) {
       try {
         const response = await fetch(
           `${SERVER_URL}/auth/update-profile/add/certificate`,
@@ -39,7 +41,7 @@ const EditCert = (props) => {
           }
         );
         const res = await response.json();
-        console.log(res);
+        console.log("Edit Cert: ", res);
         if (res.success) {
           props.getUserCertificate();
           props.setToast("Certificate added successfully", true);
@@ -67,7 +69,7 @@ const EditCert = (props) => {
         const res = await response.json();
         if (res.success) {
           props.getUserCertificate();
-          // props.setSingleEducationData({});
+          props.setSingleEducationData({});
           props.setToast("Education updated successfully", true);
         }
       } catch (error) {
@@ -90,8 +92,7 @@ const EditCert = (props) => {
         console.log(res.success);
         if (res.success) {
           console.log(res.success);
-          props.getUserEducation();
-          // props.setSingleEducation({});
+          props.getUserCertificate();
           props.setToast("Certificate deleted successfully", true);
         }
       } catch (error) {
