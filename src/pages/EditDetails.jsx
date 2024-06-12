@@ -19,7 +19,7 @@ const EditDetails = () => {
   const [singleExperienceData, setSingleExperienceData] = useState({});
   const [singleEducationData, setSingleEducationData] = useState({});
   const [singleCertificateData, setSingleCertificateData] = useState({});
-  const [singleAcgievementData, setSingleAchievementData] = useState({});
+  const [singleAchievementData, setSingleAchievementData] = useState({});
 
   const {
     getUserExperience,
@@ -36,6 +36,7 @@ const EditDetails = () => {
 
   useEffect(() => {
     getUserExperience();
+    console.log(userAchievement);
   }, []);
 
   const setToast = (msg, success) => {
@@ -55,6 +56,7 @@ const EditDetails = () => {
       setSingleCertificateData({});
       setEditCert(true);
     } else if (section === "Achivements") {
+      setSingleAchievementData({});
       setEditAchi(true);
     }
   };
@@ -91,7 +93,16 @@ const EditDetails = () => {
           getUserCertificate={getUserCertificate}
         />
       )}
-      {editAchi && <EditAchi className="absolute" setEditAchi={setEditAchi} />}
+      {editAchi && (
+        <EditAchi
+          className="absolute"
+          setEditAchi={setEditAchi}
+          setToast={setToast}
+          setSingleAchievementData={setSingleAchievementData}
+          singleAchievementData={singleAchievementData}
+          getUserAchievement={getUserAchievement}
+        />
+      )}
       <div className="w-3/4 bg-white flex justify-between border-b-2 py-2 text-lg mx-auto items-center">
         <div className="w-full flex justify-between items-center">
           <div className="flex  text-gray-800 ">
@@ -130,7 +141,10 @@ const EditDetails = () => {
               className={`mx-1 px-2 ${
                 section === "Achivements" ? "text-blue-600" : ""
               }`}
-              onClick={() => setSection("Achivements")}
+              onClick={() => {
+                getUserAchievement();
+                setSection("Achivements");
+              }}
             >
               Achivements
             </button>
@@ -146,74 +160,86 @@ const EditDetails = () => {
       <div className="w-3/4 overflow-y-scroll scrollbar-thin bg-white h-ful mx-auto">
         {section === "Experience" && (
           <div className=" px-3">
-            {userExperience.map((experience) => (
-              <div className="w-full grid grid-cols-1 my-1 px-3 py-2 border-b-2">
-                <div className="flex justify-between">
-                  <p className="text-base font-medium">{experience.post}</p>
-                  <button
-                    className=""
-                    onClick={() => {
-                      setSingleExperienceData(experience);
-                      setEditexp(true);
-                    }}
-                  >
-                    <FiEdit className="w-5 h-5" />
-                  </button>
+            {userExperience.length == 0 ? (
+              <p className="w-full my-1 px-3 py-2  text-base font-medium">
+                You don't have any experience
+              </p>
+            ) : (
+              userExperience.map((experience) => (
+                <div className="w-full grid grid-cols-1 my-1 px-3 py-2 border-b-2">
+                  <div className="flex justify-between">
+                    <p className="text-base font-medium">{experience.post}</p>
+                    <button
+                      className=""
+                      onClick={() => {
+                        setSingleExperienceData(experience);
+                        setEditexp(true);
+                      }}
+                    >
+                      <FiEdit className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <p className="text-sm text-gray-800">
+                    {experience.organization}
+                  </p>
+                  <p className="text-sm text-gray-600 italic">
+                    {experience.startingMonth
+                      ? experience.startingMonth.split("-")[1]
+                      : ""}
+                    ,
+                    {experience.startingMonth
+                      ? experience.startingMonth.split("-")[0]
+                      : ""}{" "}
+                    -{" "}
+                    {experience.endingMonth
+                      ? experience.endingMonth.split("-")[1]
+                      : ""}
+                    ,
+                    {experience.endingMonth
+                      ? experience.endingMonth.split("-")[0]
+                      : ""}
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    {experience.description}
+                  </p>
                 </div>
-                <p className="text-sm text-gray-800">
-                  {experience.organization}
-                </p>
-                <p className="text-sm text-gray-600 italic">
-                  {experience.startingMonth
-                    ? experience.startingMonth.split("-")[1]
-                    : ""}
-                  ,
-                  {experience.startingMonth
-                    ? experience.startingMonth.split("-")[0]
-                    : ""}{" "}
-                  -{" "}
-                  {experience.endingMonth
-                    ? experience.endingMonth.split("-")[1]
-                    : ""}
-                  ,
-                  {experience.endingMonth
-                    ? experience.endingMonth.split("-")[0]
-                    : ""}
-                </p>
-                <p className="text-sm text-gray-700">
-                  {experience.description}
-                </p>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         )}
         {section === "Education" && (
           <div className=" px-3">
-            {userEducation.map((education, key) => (
-              <div className="w-full my-1 px-3 py-2 border-b-2">
-                <div className="flex justify-between">
-                  <p className="text-base font-medium">
-                    {education.organization}
+            {userEducation.length == 0 ? (
+              <p className="w-full my-1 px-3 py-2  text-base font-medium">
+                You are illitrate
+              </p>
+            ) : (
+              userEducation.map((education, key) => (
+                <div className="w-full my-1 px-3 py-2 border-b-2">
+                  <div className="flex justify-between">
+                    <p className="text-base font-medium">
+                      {education.organization}
+                    </p>
+                    <button
+                      className=""
+                      onClick={() => {
+                        setSingleEducationData(education);
+                        setEditEdu(true);
+                      }}
+                    >
+                      <FiEdit className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <p className="text-sm text-gray-800">{education.course}</p>
+                  <p className="text-sm text-gray-600 italic">
+                    ({education.startingMonth.split("-")[1]},
+                    {education.startingMonth.split("-")[0]} -{" "}
+                    {education.endingMonth.split("-")[1]},
+                    {education.endingMonth.split("-")[0]})
                   </p>
-                  <button
-                    className=""
-                    onClick={() => {
-                      setSingleEducationData(education);
-                      setEditEdu(true);
-                    }}
-                  >
-                    <FiEdit className="w-5 h-5" />
-                  </button>
                 </div>
-                <p className="text-sm text-gray-800">{education.course}</p>
-                <p className="text-sm text-gray-600 italic">
-                  ({education.startingMonth.split("-")[1]},
-                  {education.startingMonth.split("-")[0]} -{" "}
-                  {education.endingMonth.split("-")[1]},
-                  {education.endingMonth.split("-")[0]})
-                </p>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         )}
         {section === "Certificates" && (
@@ -251,20 +277,33 @@ const EditDetails = () => {
         )}
         {section === "Achivements" && (
           <div className=" px-3">
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <div className="flex justify-between">
-                <p className="text-base font-medium">Certificate Title</p>
-                <button className="" onClick={() => setEditAchi(true)}>
-                  <FiEdit className="w-5 h-5" />
-                </button>
-              </div>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
+            {userAchievement.length == 0 ? (
+              <p className="w-full my-1 px-3 py-2  text-base font-medium">
+                No Achievements Mentioned
               </p>
-            </div>
+            ) : (
+              userAchievement.map((achievement, key) => (
+                <div key={key} className="w-full my-1 px-3 py-2 border-b-2">
+                  <div className="flex justify-between">
+                    <p className="text-base font-medium">
+                      {achievement.achievement}
+                    </p>
+                    <button
+                      className=""
+                      onClick={() => {
+                        setSingleAchievementData(achievement);
+                        setEditAchi(true);
+                      }}
+                    >
+                      <FiEdit className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <p className="text-sm text-gray-700">
+                    {achievement.description}
+                  </p>
+                </div>
+              ))
+            )}
           </div>
         )}
         <div className="w-full flex justify-end py-2 px-5">

@@ -69,8 +69,8 @@ const EditCert = (props) => {
         const res = await response.json();
         if (res.success) {
           props.getUserCertificate();
-          props.setSingleEducationData({});
-          props.setToast("Education updated successfully", true);
+          props.setSingleCertificate({});
+          props.setToast("Certificate updated successfully", true);
         }
       } catch (error) {
         props.setToast("Failed to update", false);
