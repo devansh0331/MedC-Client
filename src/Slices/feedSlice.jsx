@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    minJobs: false
+    minJobs: true,
+    open: false
 }
 
 export const feedSlice = createSlice({
@@ -11,9 +12,12 @@ export const feedSlice = createSlice({
         feedClick: (state, action)=>{
             state.minJobs = action.payload;
         },
+        handleOpen: (state, action)=>{
+            state.open = action.payload;
+        }
     }
 })
 
-export const {feedClick} = feedSlice.actions;
+export const {feedClick, handleOpen} = feedSlice.actions;
 
 export default feedSlice.reducer

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const MinPostCard = (props) => {
   const navigate = useNavigate();
   return (
-    <div className="w-11/12 bg-white my-2 p-2 rounded-md">
+    <div className="w-11/12 bg-white my-2 p-2  rounded-md">
       <div className="flex justify-between  bg-white">
         {/* NAME AND DETAILS */}
         <div className="flex">

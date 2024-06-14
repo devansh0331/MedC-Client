@@ -45,7 +45,7 @@ const MaxJobCard = () => {
       </div>
 
       {/* APPLY */}
-      <div className="w-full flex flex-col md:flex-row justify-between md:px-5 my-2">
+      <div className="w-full flex flex-col md:flex-row md:justify-between md:px-5 my-2">
         <div className="flex flex-col">
           <p className="text-sm text-gray-500">250 Applicants</p>
           <p className="text-sm text-gray-500">
@@ -54,11 +54,11 @@ const MaxJobCard = () => {
             2 Days Ago
           </p>
         </div>
-        <div className="flex justify-evenly mt-2 md:mt-0 gap-2 md:gap-0 ">
-          <button className="bg-primary text-white px-4 py-1 rounded-lg mx-2 shadow-md">
+        <div className="flex md:justify-evenly mt-2 md:mt-0 gap-2 md:gap-0 ">
+          <button className="bg-primary text-white px-4 py-1 rounded-lg mx-2 shadow-md text-sm md:text-base">
             Apply
           </button>
-          <button className="bg-white border-2 border-primary text-primary px-4 mx-2 py-1 rounded-lg shadow-md">
+          <button className="bg-white border-2 border-primary text-primary px-4 mx-2 py-1 rounded-lg shadow-md text-sm md:text-base">
             Save
           </button>
         </div>

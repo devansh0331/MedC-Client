@@ -41,7 +41,7 @@ function HomePage() {
       {/* MAIN HOME */}
       <div className="w-screen h-full flex box-border md:flex-row flex-col justify-around items-center md:mt-5 xl:mt-0">
         <div className="md:w-1/2 w-10/12 flex flex-col p-4 lg:p-10 box-border md:items-start">
-          <h1 className="lg:text-5xl text-4xl md:text-left text-center">
+          <h1 className="lg:text-5xl xl:text-6xl text-4xl md:text-left text-center">
             Connecting Careers, <br /> Healing Lives
           </h1>
           <p className="text-gray-700 lg:text-xl text-base mt-5 md:text-left text-center">

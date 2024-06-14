@@ -12,11 +12,13 @@ import React from "react";
 import { useState } from "react";
 import { SERVER_URL } from "../ServerURL";
 import toast, { Toaster } from "react-hot-toast";
+import { RiGalleryFill } from "react-icons/ri";
 function CreatePostPopUp(props) {
   const [audience, setAudience] = useState("Everyone");
   const [post, setPost] = useState("");
   const [file, setFile] = useState(null);
   const [userId, setUserID] = useState("");
+  
 
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -133,7 +135,7 @@ function CreatePostPopUp(props) {
               onChange={handleAudienceChange}
             />
             <label
-              for="default-radio-1"
+              htmlFor="default-radio-1"
               className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
             >
               Friends Only
@@ -158,38 +160,32 @@ function CreatePostPopUp(props) {
           </div>
         </div>
         <div className="grid gap-6">
-          {/* <Typography className="-mb-1" color="blue-gray" variant="h6">
-            Username
-          </Typography> */}
-          {/* <Input label="Username" /> */}
           <Textarea
             label="Share Your experience"
             value={post}
             onChange={(e) => setPost(e.target.value)}
+            required
           />
         </div>
 
-        <div className="grid gap-0 mt-5">
-          <label
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            for="file_input"
-          >
-            <Typography className=" text-lg">Upload file</Typography>
-          </label>
-          <input
-            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 p-1"
-            aria-describedby="file_input_help"
-            id="file_input"
-            type="file"
-            onChange={(e) => setFile(e.target.files[0])}
-          />
-          <p
-            className="mt-1 text-sm text-gray-500 dark:text-gray-300"
-            id="file_input_help"
-          >
-            SVG, PNG, JPG or GIF (MAX. 800x400px).
-          </p>
-        </div>
+      
+        <div className="flex flex-col my-1">
+              <label className="text-gray-700 text-sm">Upload File</label>
+              <div className="relative">
+                <input
+                  id="file-upload"
+                  className="hidden"
+                  type="file"
+                  onChange={(e) => setFile(e.target.files[0])}
+                />
+                <label
+                  htmlFor="file-upload"
+                  className="border-2 profilepic border-gray-400 rounded-md px-3 py-0.5 w-full h-full text-sm text-gray-700 flex items-center cursor-pointer"
+                >
+                  <RiGalleryFill className="w-5 h-5" /> <span className="ml-2">{file ? file.name : "Upload File"}</span>
+                </label>
+              </div>
+            </div>
       </DialogBody>
       <DialogFooter className="space-x-2">
         <Button

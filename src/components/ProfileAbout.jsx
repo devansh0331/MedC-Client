@@ -3,7 +3,7 @@ import { FiEdit } from "react-icons/fi";
 import { useState } from "react";
 const ProfileAbout = (props) => {
   return (
-    <div className="w-full h-full md:h-[28%] flex flex-col bg-white py-1 rounded-xl shadow-md">
+    <div className="w-full h-60 md:h-[28%] flex flex-col bg-white py-1 rounded-xl shadow-md">
       <div className="flex items-center justify-between pb-1 my-1 border-b-2  px-3">
         <p className="text-xl font-medium2 text-gray-700">About</p>
         <button onClick={() => props.setCloseAbout(true)}>

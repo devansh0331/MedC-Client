@@ -16,7 +16,7 @@ const ProfileCard = (props) => {
 
   return (
     <div
-      className={`bg-white md:pt-6 nd:pb-2 rounded-xl flex flex-col items-center ${
+      className={`bg-white pt-4 md:pt-6 nd:pb-2 rounded-xl flex flex-col items-center w-full sm:w-auto ${
         props.profile ? `px-4 md:px-8 shadow-md` : `px-4 `
       }`}
     >

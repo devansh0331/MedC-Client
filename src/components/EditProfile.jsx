@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { SERVER_URL } from "../ServerURL";
+import { RiGalleryFill } from "react-icons/ri";
 
 const EditProfile = (props) => {
   const [name, setName] = useState(props.name ? props.name : "");
@@ -81,7 +82,7 @@ const EditProfile = (props) => {
 
   return (
     <div className="w-full h-full z-100 bg-dialogueBg flex items-center justify-center">
-      <div className="w-11/12 md:w-2/5 h-4/5 md:mt-20 md:m-auto bg-white rounded-2xl flex flex-col p-1 md:p-3">
+      <div className="w-11/12 lg:w-4/5 xl:w-2/5 h-4/5 md:mt-20 md:m-auto bg-white rounded-2xl flex flex-col p-1 md:p-3">
         <div className="flex justify-between mx-4 mt-1">
           <p className="text-lg text-gray-700 font-medium">Edit Profile</p>
           <button onClick={() => props.setClose(false)}>
@@ -100,12 +101,20 @@ const EditProfile = (props) => {
             </div>
             <div className="flex flex-col my-1">
               <label className="text-gray-700 text-sm">Profile Picture</label>
-              <input
-                className="border-2 profilepic border-gray-400 rounded-md px-3 w-full h-full text-sm text-gray-700"
-                type="file"
-                // value={file}
-                onChange={(e) => setFile(e.target.files[0])}
-              />
+              <div className="relative">
+                <input
+                  id="file-upload"
+                  className="hidden"
+                  type="file"
+                  onChange={(e) => setFile(e.target.files[0])}
+                />
+                <label
+                  htmlFor="file-upload"
+                  className="border-2 profilepic border-gray-400 rounded-md px-3 py-0.5 w-full h-full text-sm text-gray-700 flex items-center justify-center cursor-pointer"
+                >
+                  <RiGalleryFill className="w-5 h-5" /> {file ? file.name : "Upload"}
+                </label>
+              </div>
             </div>
           </div>
           <div className="flex flex-col my-1">

@@ -15,7 +15,6 @@ function PostCard() {
 
   useEffect(() => {
     getPosts();
-    console.log(posts);
   }, []);
 
   const handleOpen = () => {
@@ -23,7 +22,7 @@ function PostCard() {
   };
 
   return (
-    <div className="flex flex-col w-full md:w-2/5  mx-auto mt-6  bg-inherit  ">
+    <div className="w-11/12 flex flex-col md:w-4/5 xl:w-2/5  mx-auto mt-6  bg-inherit  ">
       <div className="flex  justify-evenly w-full bg-white py-2 items-center rounded-md shadow-md">
         <img
           src={user.profileURL ? user.profileURL : altprofile}
@@ -36,9 +35,6 @@ function PostCard() {
           placeholder="Create Post"
           onClick={handleOpen}
         />
-        <button className="block md:hidden" onClick={() => handleExpand()}>
-          <FaExpand />
-        </button>
         <CreatePostPopUp
           open={open}
           handleOpen={handleOpen}

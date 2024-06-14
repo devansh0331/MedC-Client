@@ -43,15 +43,15 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className=" w-screen h-screen relative z-0 flex">
+    <div className="w-screen h-screen relative flex z-0">
       <SideBar
         name={userInfo.name}
         email={userInfo.email}
         handleLogout={handleLogout}
-        className="absolute z-20  h-screen left-0"
+        className="absolute z-20 h-screen left-0"
         route="profile"
       />
-      <div className="w-full h-full bg-background overflow-hidden ">
+      <div className="w-full h-full bg-background overflow-x-hidden absolute sm:pl-16">
         {close ? (
           <EditProfile
             name={user.name}
@@ -89,7 +89,7 @@ const ProfilePage = () => {
         ) : (
           ""
         )}
-        <div className="md:w-3/5 mx-auto flex flex-col md:flex-row justify-around pt-20">
+        <div className="w-full lg:w-4/5 xl:w-3/5 mx-auto flex flex-col md:flex-row justify-around pt-20">
           <div className="mx-2 items-center  flex flex-col">
             <ProfileCard
               profileURL={user.profileURL ? user.profileURL : ""}
@@ -103,7 +103,6 @@ const ProfilePage = () => {
               website={user.website ? user.website : ""}
               setClose={setClose}
               profile={true}
-              // route="profile"
             />
             <button className="mx-auto text-white bg-primary px-3 py-1 rounded-full my-4 hover:bg-background hover:border-2 hover:border-primary hover:text-primary">
               Upload Resume

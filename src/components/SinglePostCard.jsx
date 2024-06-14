@@ -17,6 +17,7 @@ const SinglePostCard = (props) => {
   const [commentsCount, setCommentsCount] = useState(0);
   const postId = props.postId;
   const user = props.userId;
+  const [postMenu, setPostMenu] = useState(false);
 
   useEffect(() => {});
   const getComments = async (comm) => {
@@ -96,7 +97,7 @@ const SinglePostCard = (props) => {
             <img
               src={props.profileURL != "" ? props.profileURL : altprofile}
               alt="profile"
-              className="rounded-full h-10 md:h-12 w-10 md:w-12"
+              className="rounded-full h-8 md:h-12 w-8 md:w-12"
             />
             <div className="flex flex-col ml-2 md:ml-4">
               <p className="text-black font-semibold text-sm md:text-base ">
@@ -112,7 +113,58 @@ const SinglePostCard = (props) => {
             <p className="text-gray-600 font-normal text-sm md:text-sm leading-3 md:leading-none">
               {props.postedAt}
             </p>
-            <HiOutlineDotsHorizontal className="text-gray-600 ml-4 w-6 h-6 " />
+            <button  onClick={() => setPostMenu(!postMenu)}>
+              <HiOutlineDotsHorizontal className="text-gray-600 ml-4 w-6 h-6" />
+            </button>
+          {postMenu && <div class="relative inline-block text-left">
+            <div
+              class="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-sm bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="menu-button"
+              tabindex="-1"
+            >
+              <div class="py-1" role="none">
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-gray-700"
+                  role="menuitem"
+                  tabindex="-1"
+                  id="menu-item-0"
+                >
+                  Edit
+                </a>
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-gray-700"
+                  role="menuitem"
+                  tabindex="-1"
+                  id="menu-item-1"
+                >
+                  Save
+                </a>
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-gray-700"
+                  role="menuitem"
+                  tabindex="-1"
+                  id="menu-item-1"
+                >
+                  Delete
+                </a>
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-gray-700"
+                  role="menuitem"
+                  tabindex="-1"
+                  id="menu-item-1"
+                >
+                  Repost
+                </a>
+               
+              </div>
+            </div>
+          </div>}
           </div>
         </div>
 

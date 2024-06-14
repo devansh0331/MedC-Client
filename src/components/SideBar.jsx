@@ -9,11 +9,14 @@ import { BsPersonCircle } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { MdHome } from "react-icons/md";
 import { UserContext } from "../UserContext";
+import { useSelector, useDispatch } from "react-redux";
+import { handleOpen } from "../Slices/feedSlice";
 function SideBar(props) {
-  const [open, setOpen] = useState(false);
+  const open = useSelector(state => state.feed.open);
   const navigate = useNavigate();
   const [profile, setProfile] = useState(false);
   const { userInfo, user } = useContext(UserContext);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (props.route === "profile") {
@@ -27,13 +30,13 @@ function SideBar(props) {
   }, []);
 
   const handleopen = () => {
-    setOpen(!open);
+    dispatch(handleOpen(!open));
   };
 
   return (
     <button
       className={`h-full z-10 flex flex-col px-4 shadow-lg bg-white ${
-        open ? `w-auto` : `w-16`
+        open ? `w-auto` : `w-16 hidden sm:flex`
       }`}
       onClick={() => handleopen()}
     >

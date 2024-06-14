@@ -9,18 +9,16 @@ const MinPost = () => {
   const minJobs = useSelector((state) => state.feed.minJobs);
   const handleExpand = () => {
     dispatch(feedClick(!minJobs));
-    console.log(minJobs);
   };
 
   const { getPosts, userId, user, posts, handleLike } = useContext(UserContext);
 
-  console.log(userId);
   useEffect(() => {
     getPosts();
   }, []);
 
   return (
-    <div className="w-1/3 bg-inherit h-2/3 flex flex-col items-center mx-auto mt-6 shadow-md">
+    <div className="w-1/3 bg-inherit h-2/3 flex-col items-center mx-auto mt-6 shadow-md lg:flex hidden">
       <div className="w-full bg-white flex justify-center items-center rounded-md">
       <div className="flex justify-between items-center w-11/12  py-1">
         <p className="text-xl w-full font-semibold">New Posts</p>
