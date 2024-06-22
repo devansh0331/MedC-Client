@@ -129,6 +129,9 @@ export function UserContextProvider({ children }) {
     try {
       const response = await fetch(`${SERVER_URL}/post/all-posts`, {
         credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
       });
       const res = await response.json();
       if (!res.success) {
