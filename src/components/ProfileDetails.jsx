@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../UserContext";
 const ProfileDetails = () => {
   const [section, setSection] = useState("Experience");
   const navigate = useNavigate();
+  const {
+    getUserExperience,
+    userExperience,
+    getUserEducation,
+    userEducation,
+    getUserCertificate,
+    userCertificate,
+    getUserAchievement,
+    userAchievement,
+  } = useContext(UserContext);
+  useEffect(() => {
+    getUserExperience();
+    getUserEducation();
+    getUserAchievement();
+    getUserCertificate();
+  }, []);
+  console.log("User Education : ", userEducation);
+
   return (
     <div className="w-full h-full md:h-4/5 flex flex-col bg-white mt-4 mb-4 px-2 rounded-xl shadow-md">
       <div className="w-full flex justify-between border-b-2 py-2 text-md items-center">
@@ -49,205 +68,123 @@ const ProfileDetails = () => {
       <div className="overflow-y-scroll scrollbar-thin mx-2 h-96">
         {section === "Experience" && (
           <div className=" px-3">
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Heart Surgeon</p>
-              <p className="text-base text-gray-800">ABC Hospital</p>
-              <p className="text-base text-gray-600 italic">(2020 - 2022)</p>
-              <p className="text-base text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
+            {userExperience.length == 0 ? (
+              <p className="w-full my-1 px-3 py-2  text-base font-medium">
+                You don't have any experience
               </p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Heart Surgeon</p>
-              <p className="text-sm text-gray-800">ABC Hospital</p>
-              <p className="text-sm text-gray-600 italic">(2020 - 2022)</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
-              </p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Heart Surgeon</p>
-              <p className="text-sm text-gray-800">ABC Hospital</p>
-              <p className="text-sm text-gray-600 italic">(2020 - 2022)</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
-              </p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Heart Surgeon</p>
-              <p className="text-sm text-gray-800">ABC Hospital</p>
-              <p className="text-sm text-gray-600 italic">(2020 - 2022)</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
-              </p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Heart Surgeon</p>
-              <p className="text-sm text-gray-800">ABC Hospital</p>
-              <p className="text-sm text-gray-600 italic">(2020 - 2022)</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
-              </p>
-            </div>
+            ) : (
+              userExperience.map((experience) => (
+                <div className="w-full grid grid-cols-1 my-1 px-3 py-2 border-b-2">
+                  <div className="flex justify-between">
+                    <p className="text-base font-medium">{experience.post}</p>
+                  </div>
+                  <p className="text-sm text-gray-800">
+                    {experience.organization}
+                  </p>
+                  <p className="text-sm text-gray-600 italic">
+                    {experience.startingMonth
+                      ? experience.startingMonth.split("-")[1]
+                      : ""}
+                    ,
+                    {experience.startingMonth
+                      ? experience.startingMonth.split("-")[0]
+                      : ""}{" "}
+                    -{" "}
+                    {experience.endingMonth
+                      ? experience.endingMonth.split("-")[1]
+                      : ""}
+                    ,
+                    {experience.endingMonth
+                      ? experience.endingMonth.split("-")[0]
+                      : ""}
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    {experience.description}
+                  </p>
+                </div>
+              ))
+            )}
           </div>
         )}
         {section === "Education" && (
           <div className=" px-3">
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">
-                Bhilai Institute of Technology, Durg
+            {userEducation.length == 0 ? (
+              <p className="w-full my-1 px-3 py-2  text-base font-medium">
+                You are illitrate
               </p>
-              <p className="text-sm text-gray-800">Bachelor's Degree</p>
-              <p className="text-sm text-gray-600 italic">(2020 - 2022)</p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">
-                Bhilai Institute of Technology, Durg
-              </p>
-              <p className="text-sm text-gray-800">Bachelor's Degree</p>
-              <p className="text-sm text-gray-600 italic">(2020 - 2022)</p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">
-                Bhilai Institute of Technology, Durg
-              </p>
-              <p className="text-sm text-gray-800">Bachelor's Degree</p>
-              <p className="text-sm text-gray-600 italic">(2020 - 2022)</p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">
-                Bhilai Institute of Technology, Durg
-              </p>
-              <p className="text-sm text-gray-800">Bachelor's Degree</p>
-              <p className="text-sm text-gray-600 italic">(2020 - 2022)</p>
-            </div>
+            ) : (
+              userEducation.map((education, key) => (
+                <div className="w-full my-1 px-3 py-2 border-b-2">
+                  <div className="flex justify-between">
+                    <p className="text-base font-medium">
+                      {education.organization}
+                    </p>
+                  </div>
+                  <p className="text-sm text-gray-800">{education.course}</p>
+                  <p className="text-sm text-gray-600 italic">
+                    ({education.startingMonth.split("-")[1]},
+                    {education.startingMonth.split("-")[0]} -{" "}
+                    {education.endingMonth.split("-")[1]},
+                    {education.endingMonth.split("-")[0]})
+                  </p>
+                </div>
+              ))
+            )}
           </div>
         )}
         {section === "Certificates" && (
           <div className=" px-3">
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Certificate Title</p>
-              <p className="text-sm text-gray-800">ABC Hospital</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
+            {" "}
+            {userCertificate.length == 0 ? (
+              <p className="w-full my-1 px-3 py-2  text-base font-medium">
+                No Certificates Issued
               </p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Certificate Title</p>
-              <p className="text-sm text-gray-800">ABC Hospital</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
-              </p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Certificate Title</p>
-              <p className="text-sm text-gray-800">ABC Hospital</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
-              </p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Certificate Title</p>
-              <p className="text-sm text-gray-800">ABC Hospital</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
-              </p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Certificate Title</p>
-              <p className="text-sm text-gray-800">ABC Hospital</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
-              </p>
-            </div>
+            ) : (
+              userCertificate.map((certificate, key) => (
+                <div key={key} className="w-full my-1 px-3 py-2 border-b-2">
+                  <div className="flex justify-between">
+                    <p className="text-base font-medium">
+                      {certificate.certificate}
+                    </p>
+                  </div>
+                  <p className="text-sm text-gray-800">{certificate.issuer}</p>
+                  <p className="text-sm text-gray-700">
+                    {certificate.description}
+                  </p>
+                </div>
+              ))
+            )}
           </div>
         )}
         {section === "Achivements" && (
           <div className=" px-3">
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Certificate Title</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
+            {userAchievement.length == 0 ? (
+              <p className="w-full my-1 px-3 py-2  text-base font-medium">
+                No Achievements Mentioned
               </p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Certificate Title</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
-              </p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Certificate Title</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
-              </p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Certificate Title</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
-              </p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Certificate Title</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
-              </p>
-            </div>
-            <div className="w-full my-1 px-3 py-2 border-b-2">
-              <p className="text-base font-medium">Certificate Title</p>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
-              </p>
-            </div>
+            ) : (
+              userAchievement.map((achievement, key) => (
+                <div key={key} className="w-full my-1 px-3 py-2 border-b-2">
+                  <div className="flex justify-between">
+                    <p className="text-base font-medium">
+                      {achievement.achievement}
+                    </p>
+                    <button
+                      className=""
+                      onClick={() => {
+                        setSingleAchievementData(achievement);
+                        setEditAchi(true);
+                      }}
+                    >
+                      <FiEdit className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <p className="text-sm text-gray-700">
+                    {achievement.description}
+                  </p>
+                </div>
+              ))
+            )}
           </div>
         )}
       </div>

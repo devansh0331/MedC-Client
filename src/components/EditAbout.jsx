@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { SERVER_URL } from "../ServerURL";
+import Cookies from "js-cookie";
 const EditAbout = (props) => {
   const [about, setAbout] = useState(props.about);
 
@@ -10,8 +11,10 @@ const EditAbout = (props) => {
         method: "POST",
         credentials: "include",
         headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
           "Content-Type": "application/json",
         },
+
         body: JSON.stringify({ about }),
       });
       const res = await response.json();

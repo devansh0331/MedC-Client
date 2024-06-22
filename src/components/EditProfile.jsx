@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { SERVER_URL } from "../ServerURL";
 import { RiGalleryFill } from "react-icons/ri";
+import Cookies from "js-cookie";
 
 const EditProfile = (props) => {
   const [name, setName] = useState(props.name ? props.name : "");
@@ -40,6 +41,9 @@ const EditProfile = (props) => {
           {
             method: "POST",
             credentials: "include",
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token")}`,
+            },
             body: formData,
           }
         );
@@ -64,6 +68,9 @@ const EditProfile = (props) => {
           {
             method: "POST",
             credentials: "include",
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token")}`,
+            },
             body: formData,
           }
         );
@@ -112,7 +119,8 @@ const EditProfile = (props) => {
                   htmlFor="file-upload"
                   className="border-2 profilepic border-gray-400 rounded-md px-3 py-0.5 w-full h-full text-sm text-gray-700 flex items-center justify-center cursor-pointer"
                 >
-                  <RiGalleryFill className="w-5 h-5" /> {file ? file.name : "Upload"}
+                  <RiGalleryFill className="w-5 h-5" />{" "}
+                  {file ? file.name : "Upload"}
                 </label>
               </div>
             </div>

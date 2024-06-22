@@ -6,6 +6,7 @@ import ReactTimeAgo from "react-time-ago";
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
 import SideBar from "../components/SideBar";
+import Cookies from "js-cookie";
 
 const SinglePost = () => {
   const [post, setPost] = useState({});
@@ -23,6 +24,9 @@ const SinglePost = () => {
       {
         method: "GET",
         credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
       }
     );
 
@@ -40,6 +44,9 @@ const SinglePost = () => {
       const res = await fetch(`${SERVER_URL}/post/single-post/like/${postId}`, {
         method: "POST",
         credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
       });
       const parsedRes = await res.json();
       if (!parsedRes.success) {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { SERVER_URL } from "../ServerURL";
+import Cookies from "js-cookie";
 
 const EditCert = (props) => {
   const [certificate, setCertificate] = useState(
@@ -30,8 +31,10 @@ const EditCert = (props) => {
           {
             method: "POST",
             credentials: "include",
+
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${Cookies.get("token")}`,
             },
             body: JSON.stringify({
               certificate,

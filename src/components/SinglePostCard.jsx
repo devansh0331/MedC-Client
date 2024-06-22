@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import profile from "../assets/profile3.png";
+import profile from "../assets/profile.png";
 import jobBuilding from "../assets/jobBuilding.png";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { AiFillLike } from "react-icons/ai";
@@ -10,6 +10,8 @@ import { AiOutlineLike } from "react-icons/ai";
 import { SERVER_URL } from "../ServerURL";
 import altprofile from "../assets/altprofile.png";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import Cookies from "js-cookie";
+
 const SinglePostCard = (props) => {
   const [comm, setComm] = useState(false);
   const [comment, setComment] = useState("");
@@ -51,6 +53,7 @@ const SinglePostCard = (props) => {
           credentials: "include",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
           },
           body: JSON.stringify({ comment }),
         }
@@ -75,6 +78,9 @@ const SinglePostCard = (props) => {
         {
           method: "POST",
           credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
         }
       );
       const res = await response.json();
@@ -239,7 +245,15 @@ const SinglePostCard = (props) => {
                   <div key={key} className="w-full flex flex-col my-1">
                     <div className="w-full border-t-2 mx-auto p-2">
                       <div className="flex items-center">
-                        <img src={profile} className="rounded-full h-6 w-6" />
+                        <img
+                          src={
+                            !comment.userId.profileURL
+                              ? profile
+                              : comment.userId.profileURL
+                          }
+                          alt="med-c user"
+                          className="rounded-full h-6 w-6"
+                        />
                         <div className="flex w-full justify-between">
                           <p className="ml-2 text-sm font-semibold text-gray-700">
                             {comment.userId == null

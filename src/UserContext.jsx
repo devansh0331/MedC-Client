@@ -27,6 +27,9 @@ export function UserContextProvider({ children }) {
         {
           method: "GET",
           credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
         }
       );
 
@@ -49,6 +52,9 @@ export function UserContextProvider({ children }) {
         {
           method: "GET",
           credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
         }
       );
 
@@ -70,6 +76,9 @@ export function UserContextProvider({ children }) {
         {
           method: "GET",
           credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
         }
       );
 
@@ -91,6 +100,9 @@ export function UserContextProvider({ children }) {
         {
           method: "GET",
           credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
         }
       );
 
@@ -111,6 +123,9 @@ export function UserContextProvider({ children }) {
       const response = await fetch(`${SERVER_URL}/auth/profile`, {
         method: "GET",
         credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
       });
 
       const res = await response.json();
@@ -149,6 +164,9 @@ export function UserContextProvider({ children }) {
       const res = await fetch(`${SERVER_URL}/post/single-post/like/${postId}`, {
         method: "POST",
         credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
       });
       const parsedRes = await res.json();
       if (!parsedRes.success) {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { SERVER_URL } from "../ServerURL";
+import Cookies from "js-cookie";
 
 const EditAchi = (props) => {
   const [achievement, setAchievement] = useState(
@@ -23,6 +24,7 @@ const EditAchi = (props) => {
             credentials: "include",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${Cookies.get("token")}`,
             },
             body: JSON.stringify({
               achievement,

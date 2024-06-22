@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { SERVER_URL } from "../ServerURL";
+import Cookies from "js-cookie";
 const EditEdu = (props) => {
   const [organization, setOrganization] = useState(
     props.singleEducationData && props.singleEducationData.organization
@@ -32,6 +33,7 @@ const EditEdu = (props) => {
             credentials: "include",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${Cookies.get("token")}`,
             },
             body: JSON.stringify({
               organization,
