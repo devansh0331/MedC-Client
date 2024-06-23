@@ -13,12 +13,12 @@ import { useState } from "react";
 import { SERVER_URL } from "../ServerURL";
 import toast, { Toaster } from "react-hot-toast";
 import { RiGalleryFill } from "react-icons/ri";
+import Cookies from "js-cookie";
 function CreatePostPopUp(props) {
   const [audience, setAudience] = useState("Everyone");
   const [post, setPost] = useState("");
   const [file, setFile] = useState(null);
   const [userId, setUserID] = useState("");
-  
 
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -36,6 +36,9 @@ function CreatePostPopUp(props) {
         const response = await fetch(`${SERVER_URL}/post/create-post`, {
           method: "POST",
           credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
           body: formData,
         });
 
@@ -65,6 +68,9 @@ function CreatePostPopUp(props) {
         const response = await fetch(`${SERVER_URL}/post/create-post-no-file`, {
           method: "POST",
           credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
           body: formData,
         });
 
@@ -168,24 +174,24 @@ function CreatePostPopUp(props) {
           />
         </div>
 
-      
         <div className="flex flex-col my-1">
-              <label className="text-gray-700 text-sm">Upload File</label>
-              <div className="relative">
-                <input
-                  id="file-upload"
-                  className="hidden"
-                  type="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                />
-                <label
-                  htmlFor="file-upload"
-                  className="border-2 profilepic border-gray-400 rounded-md px-3 py-0.5 w-full h-full text-sm text-gray-700 flex items-center cursor-pointer"
-                >
-                  <RiGalleryFill className="w-5 h-5" /> <span className="ml-2">{file ? file.name : "Upload File"}</span>
-                </label>
-              </div>
-            </div>
+          <label className="text-gray-700 text-sm">Upload File</label>
+          <div className="relative">
+            <input
+              id="file-upload"
+              className="hidden"
+              type="file"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+            <label
+              htmlFor="file-upload"
+              className="border-2 profilepic border-gray-400 rounded-md px-3 py-0.5 w-full h-full text-sm text-gray-700 flex items-center cursor-pointer"
+            >
+              <RiGalleryFill className="w-5 h-5" />{" "}
+              <span className="ml-2">{file ? file.name : "Upload File"}</span>
+            </label>
+          </div>
+        </div>
       </DialogBody>
       <DialogFooter className="space-x-2">
         <Button
