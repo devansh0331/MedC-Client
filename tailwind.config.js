@@ -27,7 +27,7 @@ module.exports = withMT({
       colors: {
         primary: "#4ED1F8",
         secondary: "#3c9184",
-        background: "#f6fafe",
+        background: "#f5f9fc",
         black: "#222222",
         white: "#ffffff",
         success: "#23d97e",
@@ -85,6 +85,12 @@ module.exports = withMT({
             cursor: 'pointer',
           },
         },
+        ".scrollbar-invisible":{
+            "&::-webkit-scrollbar": {
+              width: '0px',
+            height: '0px',
+            },
+          }
       }
 
       addUtilities(newUtilities, ['responsive'])

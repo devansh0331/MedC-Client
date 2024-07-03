@@ -19,6 +19,8 @@ import Privacypolicy from "./Privacypolicy";
 import SideBar from "../components/SideBar";
 import EditDetails from "./EditDetails";
 import SinglePost from "./SinglePost";
+import Connections from "./Connections";
+// import { NavbarWithSearch } from "./Nav";
 
 function Main() {
   return (
@@ -167,6 +169,23 @@ function Main() {
           </>
         }
       />
+      <Route
+        path="/connections"
+        element={
+          <>
+            <Navbar/>
+            <Connections/>
+          </>
+        }
+      />
+      {/* <Route
+        path="/navtry"
+        element={
+          <>
+            <NavbarWithSearch/>
+          </>
+        }
+      /> */}
     </Routes>
   );
 }
