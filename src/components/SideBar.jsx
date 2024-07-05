@@ -74,13 +74,13 @@ function SideBar(props) {
             </span>
           </button>
         )}
-        <button className="flex items-center justify-center ml-1 text-gray-800 -mt-8">
+        <button className="flex items-center justify-center ml-1 text-gray-800 -mt-8" onClick={() => navigate("/hire")}>
           <FaBriefcase className="cursor-pointer w-6 h-6" />
           <span className={`${open ? `block` : `hidden`} mx-3`}>Hire</span>
         </button>
-        <button className="flex items-center justify-center ml-1 text-gray-800">
+        <button className="flex items-center justify-center ml-1 text-gray-800" onClick={() => navigate("/connections")}>
           <FaUserFriends className="cursor-pointer w-6 h-6" />
-          <span className={`${open ? `block` : `hidden`} mx-3`}>Friends</span>
+          <span className={`${open ? `block` : `hidden`} mx-3`}>Connections</span>
         </button>
         <button className="flex items-center justify-center ml-1 text-gray-800">
           <IoSettingsSharp className="cursor-pointer w-6 h-6" />
