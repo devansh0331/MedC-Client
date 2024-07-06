@@ -20,10 +20,15 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaLink } from "react-icons/fa";
 import { IoMdSearch } from "react-icons/io";
 import YouMayKnow from "../components/YouMayKnow";
+
 const Connections = () => {
   return (
-    <div className="flex bg-background">
-      <div className="flex w-[75%] m-auto">
+    <div className="relative max-w-screen h-screen  flex bg-background">
+      <SideBar
+        className="z-20 absolute h-full left-0 sm:block hidden"
+        route="feed"
+      />
+      <div className=" flex w-[75%] m-auto">
         <div className="w-4/6 m-auto mt-20 mx-2">
           <div className="search">
             <Navbar className="flex flex-row" fullWidth shadow>
@@ -32,7 +37,7 @@ const Connections = () => {
                   type="search"
                   placeholder=""
                   className="pl-9 placeholder:text-blue-gray-100"
-                label="Search"
+                  label="Search"
                 />
                 <div className="!absolute right-3 top-[10px]">
                   <IoMdSearch className="w-5 h-5 text-gray-600" />

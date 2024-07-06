@@ -18,7 +18,7 @@ function FeedPage() {
   const navigate = useNavigate();
   const minJobs = useSelector((state) => state.feed.minJobs);
   const [open, setOpen] = useState(false);
-  const { userInfo, user } = useContext(UserContext);
+  const { userInfo, user, setUserInfo } = useContext(UserContext);
   const handleOpen = () => setOpen(!open);
 
   const handleLogout = (e) => {
@@ -27,7 +27,9 @@ function FeedPage() {
       Cookies.remove("token");
       Cookies.remove("name");
       Cookies.remove("email");
+      setUserInfo({ state: false });
       toast.success("Logged Out");
+
       setTimeout(() => {
         navigate("/signin");
       }, 1000);
@@ -37,9 +39,6 @@ function FeedPage() {
   };
 
   return (
-
-
-
     <div className="w-screen h-screen  bg-background relative flex z-0">
       <SideBar
         name={userInfo.name}
@@ -54,7 +53,7 @@ function FeedPage() {
         ) : (
           <PostCard className="w-full m-auto" />
         )}
-        {!minJobs ? <MinPost  /> : <JobCard className="lg:block hidden" />}
+        {!minJobs ? <MinPost /> : <JobCard className="lg:block hidden" />}
         <Toaster position="top-right" />
       </div>
     </div>

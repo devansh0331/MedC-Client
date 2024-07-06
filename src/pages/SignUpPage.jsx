@@ -1,17 +1,21 @@
 import { Button, Input } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import signup from "../assets/signup.png";
 import emaillogo from "../assets/emaillogo.png";
-import google from "../assets/google.png";
+
 import { Toaster, toast } from "react-hot-toast";
 import { SERVER_URL } from "../ServerURL";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { GoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
+import Cookies from "js-cookie";
+import { UserContext } from "../UserContext";
 
 function SignUpPage() {
   // useNavigate Initialization
   const navigate = useNavigate();
+
+  const { getUser } = useContext(UserContext);
 
   // useState Initialization
   const [fname, setFname] = useState("");
@@ -19,13 +23,49 @@ function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [bool, setBool] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const signInWithGoogle = async (token) => {
+    console.log(token);
+    try {
+      const response = await fetch(`${SERVER_URL}/auth/signin-with-google`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token }),
+      });
+      const parsedResponse = await response.json();
+      console.log(parsedResponse);
+      if (parsedResponse.success == true) {
+        const parsedName = await parsedResponse.user.name;
+        const parsedEmail = await parsedResponse.user.email;
+
+        console.log("Token: " + parsedResponse.token);
+        console.log("User: " + parsedEmail + " " + parsedName);
+        Cookies.set("name", parsedName, { expires: 365 });
+        Cookies.set("email", parsedEmail, { expires: 365 });
+        Cookies.set("token", parsedResponse.token, { expires: 365 });
+        toast.success(parsedResponse.message);
+        getUser();
+        setTimeout(() => {
+          navigate("/feed");
+          // location.reload();
+        }, 2000);
+      } else {
+        toast.error("Server Error: " + parsedResponse.error);
+      }
+    } catch (error) {
+      toast.error("Client Error: " + error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    // e.preventDefault();
     // Function to signup
     if (!fname || !lname || !email || !password) {
       toast.error("All credentials are mandatory");
@@ -42,16 +82,16 @@ function SignUpPage() {
 
         const parsedResponse = await response.json();
         console.log(parsedResponse);
-        if (parsedResponse.name == name) {
+        if (parsedResponse.success == false) {
+          toast.error(parsedResponse.error);
+        } else {
           toast.success("Account Created Successfully...");
           setTimeout(() => {
             navigate("/signin");
           }, 2000);
-        } else {
-          toast.error("Server Error: " + parsedResponse);
         }
       } catch (error) {
-        toast.error("Client Error: " + error);
+        toast.error(error);
       }
     }
   };
@@ -60,102 +100,112 @@ function SignUpPage() {
       <div className="w-full md:w-3/5 lg:w-1/2 h-full flex flex-col items-center justify-center mt-4">
         <div className="w-3/5 lg:w-1/2">
           <p className="w-full text-4xl tracking-wide text-center font-black mb-6 mt-4 font-open leading-custom">
-            Start Hiring <br/> With MEDC
+            Start Hiring <br /> With MEDC
           </p>
-          <button className="w-full rounded-full mb-3 flex items-center border border-1 border-gray-500 py-2 px-3">
+          <button
+            onClick={() => setBool(!bool)}
+            className="w-full rounded-full mb-3 flex items-center border border-1 border-gray-500 py-2 px-3"
+          >
             <img src={emaillogo} alt="email" className="h-7 w-7" />
             <p className="text-center text-base font-medium w-full">
               Continue with Email
             </p>
           </button>
-          <button className="w-full rounded-full mb-3 flex items-center border border-1 border-gray-500 py-2 px-3">
-            <img src={google} alt="google" className="h-7 w-7" />
-            <p className="text-center text-base w-full">Continue with Google</p>
-          </button>
-          <div className="line-with-text">
+          <div className="line-with-text w-full">
             <span className="line"></span>
             <span className="text-word">or</span>
             <span className="line"></span>
           </div>
-
-          <div className="flex my-0">
-            <div className="flex flex-col my-2 mr-2">
-              <label
-                htmlFor="fname"
-                className="text-sm font-medium tracking-wider text-gray-700"
-              >
-                First Name
-              </label>
-              <input
-                value={fname}
-                onChange={(e) => setFname(e.target.value)}
-                id="fname"
-                className="text-sm font-medium text-gray-800 p-2 border w-full border-gray-600 rounded-sm"
-                placeholder="First Name"
-              />
-            </div>
-            <div className="flex flex-col my-2">
-              <label
-                htmlFor="lname"
-                className="text-sm font-medium tracking-wider text-gray-700"
-              >
-                Last Name
-              </label>
-              <input
-                value={lname}
-                onChange={(e) => setLname(e.target.value)}
-                id="lname"
-                className="text-sm font-medium text-gray-800 p-2 border w-full border-gray-600 rounded-sm"
-                placeholder="Last Name"
-              />
-            </div>
-          </div>
-          <div className="flex flex-col my-2">
-            <label
-              htmlFor="email"
-              className="text-sm font-medium tracking-wider text-gray-700"
-            >
-              Email
-            </label>
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              id="email"
-              className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm"
-              placeholder="Email"
+          <div className="w-full flex justify-center mt-3">
+            <GoogleLogin
+              onSuccess={(res) => {
+                signInWithGoogle(res.credential);
+              }}
             />
           </div>
-          <div className="relative">
-            <label
-              htmlFor="password"
-              className="text-sm font-medium tracking-wider text-gray-700"
-            >
-              Password
-            </label>
-            <div className="relative">
-              <input
-                value={password}
-                type={showPassword ? "text" : "password"}
-                onChange={(e) => setPassword(e.target.value)}
-                id="password"
-                className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm w-full pr-10"
-                placeholder="Password"
-              />
-              <span
-                onClick={togglePasswordVisibility}
-                className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+
+          {bool && (
+            <>
+              <div className="flex my-0">
+                <div className="flex flex-col my-2 mr-2">
+                  <label
+                    htmlFor="fname"
+                    className="text-sm font-medium tracking-wider text-gray-700"
+                  >
+                    First Name
+                  </label>
+                  <input
+                    value={fname}
+                    onChange={(e) => setFname(e.target.value)}
+                    id="fname"
+                    className="text-sm font-medium text-gray-800 p-2 border w-full border-gray-600 rounded-sm"
+                    placeholder="First Name"
+                  />
+                </div>
+                <div className="flex flex-col my-2">
+                  <label
+                    htmlFor="lname"
+                    className="text-sm font-medium tracking-wider text-gray-700"
+                  >
+                    Last Name
+                  </label>
+                  <input
+                    value={lname}
+                    onChange={(e) => setLname(e.target.value)}
+                    id="lname"
+                    className="text-sm font-medium text-gray-800 p-2 border w-full border-gray-600 rounded-sm"
+                    placeholder="Last Name"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col my-2">
+                <label
+                  htmlFor="email"
+                  className="text-sm font-medium tracking-wider text-gray-700"
+                >
+                  Email
+                </label>
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  id="email"
+                  className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm"
+                  placeholder="Email"
+                />
+              </div>
+              <div className="relative">
+                <label
+                  htmlFor="password"
+                  className="text-sm font-medium tracking-wider text-gray-700"
+                >
+                  Password
+                </label>
+                <div className="relative">
+                  <input
+                    value={password}
+                    type={showPassword ? "text" : "password"}
+                    onChange={(e) => setPassword(e.target.value)}
+                    id="password"
+                    className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm w-full pr-10"
+                    placeholder="Password"
+                  />
+                  <span
+                    onClick={togglePasswordVisibility}
+                    className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                  >
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  </span>
+                </div>
+              </div>
+              <Button
+                onClick={handleSubmit}
+                color="#01bcf4"
+                className="w-full md:w-full bg-primary text-white  rounded-full mt-4"
               >
-                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-              </span>
-            </div>
-          </div>
-          <Button
-            onClick={handleSubmit}
-            color="#01bcf4"
-            className="w-full md:w-full bg-primary text-white  rounded-full mt-4"
-          >
-            Create Account
-          </Button>
+                Create Account
+              </Button>
+            </>
+          )}
           <p className="text-center mt-2 text-gray-600 text-sm">
             Already have an account?{" "}
             <button
@@ -168,14 +218,14 @@ function SignUpPage() {
         </div>
       </div>
       <div className="md:block hidden  w-2/5 lg:w-1/2">
-      <div className="bg-offWhite h-full flex flex-col items-center justify-center">
-        <div className="md:h-full md:w-4/5 md:flex md:flex-col md:items-center md:justify-center">
-          <img src={signup} alt="" />
-          <p className="font-extrabold text-xl text-center">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-          </p>
+        <div className="bg-offWhite h-full flex flex-col items-center justify-center">
+          <div className="md:h-full md:w-4/5 md:flex md:flex-col md:items-center md:justify-center">
+            {/* <img src={signup} alt="" /> */}
+            <p className="font-extrabold text-xl text-center">
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            </p>
+          </div>
         </div>
-      </div>
       </div>
       <Toaster position="top-right" />
     </div>

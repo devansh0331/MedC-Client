@@ -12,6 +12,8 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 import ru from "javascript-time-ago/locale/ru";
 
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 TimeAgo.addDefaultLocale(en);
 TimeAgo.addLocale(ru);
 
@@ -21,7 +23,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <React.StrictMode>
           <ThemeProvider>
-            <App />
+            <GoogleOAuthProvider clientId="666618568574-dsqu9thgjrhn16ud5cvvn3rlddd261o1.apps.googleusercontent.com">
+              <App />
+            </GoogleOAuthProvider>
           </ThemeProvider>
         </React.StrictMode>
       </BrowserRouter>

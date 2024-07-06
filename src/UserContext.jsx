@@ -133,6 +133,16 @@ export function UserContextProvider({ children }) {
       if (!res.success) {
         console.error(res.error);
       } else {
+        const name = Cookies.get("name");
+        const email = Cookies.get("email");
+
+        if (name === undefined || email === undefined) {
+          const state = false;
+          setUserInfo({ state, name, email });
+        } else {
+          const state = true;
+          setUserInfo({ state, name, email });
+        }
         setUser(res.data);
       }
     } catch (error) {
@@ -180,19 +190,19 @@ export function UserContextProvider({ children }) {
   };
 
   useEffect(() => {
-    const name = Cookies.get("name");
-    const email = Cookies.get("email");
+    // const name = Cookies.get("name");
+    // const email = Cookies.get("email");
 
     getUser();
-    console.log(user);
+    // console.log(user);
 
-    if (name === undefined || email === undefined) {
-      const state = false;
-      setUserInfo({ state, name, email });
-    } else {
-      const state = true;
-      setUserInfo({ state, name, email });
-    }
+    // if (name === undefined || email === undefined) {
+    //   const state = false;
+    //   setUserInfo({ state, name, email });
+    // } else {
+    //   const state = true;
+    //   setUserInfo({ state, name, email });
+    // }
   }, []);
 
   return (
