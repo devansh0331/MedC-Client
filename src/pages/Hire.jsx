@@ -24,25 +24,29 @@ const Hire = () => {
     <div className="relative flex w-screen h-screen overflow-hidden z-0 bg-background">
       <SideBar route="feed" />
       <div className="flex xl:w-[75%] w-[90%] m-auto">
-        <div className="w-4/6 m-auto mt-20 mx-2">
+        <div className="w-full md:w-4/6 m-auto mt-0 md:mt-20 mx-2">
           <div className="search">
-            <Navbar className="flex flex-row" fullWidth shadow>
-              <div className="relative flex w-3/5 mr-2">
+            <Navbar
+              className="flex flex-col md:flex-row rounded-md"
+              fullWidth
+              shadow
+            >
+              <div className="relative flex w-full md:w-3/5 mr-2">
                 <Input
                   type="search"
                   placeholder=""
-                  className="pl-9 placeholder:text-blue-gray-100"
-                  label="Search"
+                  className=" placeholder:text-blue-gray-100"
+                  label="Search Name"
                 />
                 <div className="!absolute right-3 top-[10px]">
                   <IoMdSearch className="w-5 h-5 text-gray-600" />
                 </div>
               </div>
-              <div className="relative flex w-2/5 mr-2">
+              <div className="relative flex w-full md:w-3/5 mr-2">
                 <Input
                   type="search"
                   placeholder="Search Location"
-                  className="  pl-9 placeholder:text-blue-gray-100 "
+                  className="  placeholder:text-blue-gray-100 "
                   label="Search Location"
                 />
                 <div className="!absolute right-3 top-[11px]">
@@ -54,7 +58,7 @@ const Hire = () => {
               </Button>
             </Navbar>
           </div>
-          <div className="grid grid-cols-3 max-h-[80vh] overflow-y-scroll scrollbar-thin w-full mt-1">
+          <div className="grid md:grid-cols-3 max-h-[78vh] md:max-h-[80vh] overflow-y-scroll scrollbar-thin w-full mt-1">
             <Card className="p-3 m-3">
               <CardHeader
                 floated={false}
@@ -135,7 +139,7 @@ const Hire = () => {
                 </Button>
               </CardFooter>
             </Card>
-            <Card className="p-3 m-3">
+            <Card className=" p-3 m-3">
               <CardHeader
                 floated={false}
                 shadow={false}
@@ -257,7 +261,7 @@ const Hire = () => {
             </Card>
           </div>
         </div>
-        <div className="w-2/6 mt-20 mx-2">
+        <div className="hidden md:block w-2/6 mt-20 mx-2">
           <ProfileExpand />
         </div>
       </div>
