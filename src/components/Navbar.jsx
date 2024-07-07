@@ -16,23 +16,23 @@ function Navbar(props) {
   const navigate = useNavigate();
   const { userInfo } = useContext(UserContext);
   const dispatch = useDispatch();
-  const minJobs = useSelector((state) => state.feed.minJobs); 
+  const minJobs = useSelector((state) => state.feed.minJobs);
   const open = useSelector((state) => state.feed.open);
-  
+
   const handleExpand = () => {
     dispatch(feedClick(!minJobs));
   };
 
   const handleSidebar = () => {
     dispatch(handleOpen(!open));
-  }
+  };
   const handleLogoNavigate = (e) => {
     e.preventDefault();
     navigate("/");
   };
 
   return (
-    <nav className="fixed top-0 h-16 flex justify-center w-screen overflow-hidden bg-white z-20 shadow-sm">
+    <nav className="fixed top-0 h-16 flex justify-center w-screen overflow-hidden bg-white z-10 shadow-sm">
       <div className="w-full flex items-center justify-between">
         <div onClick={handleLogoNavigate} className="cursor-pointer md:ml-10">
           <img src={logo} alt="" className="w-5/6" />
@@ -59,11 +59,17 @@ function Navbar(props) {
             <button className="w-7 h-7 mx-2">
               <FaMessage className="w-5 h-5" />
             </button>
-            <button className="w-7 h-7 mx-2 lg:hidden" onClick={()=> handleExpand()}>
-            <FaArrowsRotate className="w-5 h-5" />
+            <button
+              className="w-7 h-7 mx-2 lg:hidden"
+              onClick={() => handleExpand()}
+            >
+              <FaArrowsRotate className="w-5 h-5" />
             </button>
-            <button className="w-7 h-7 mx-2 sm:hidden" onClick={()=> handleSidebar()}>
-            <FiMenu className="w-5 h-5" />
+            <button
+              className="w-7 h-7 mx-2 sm:hidden"
+              onClick={() => handleSidebar()}
+            >
+              <FiMenu className="w-5 h-5" />
             </button>
           </div>
         )}

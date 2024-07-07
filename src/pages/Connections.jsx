@@ -21,11 +21,8 @@ import YouMayKnow from "../components/YouMayKnow";
 
 const Connections = () => {
   return (
-    <div className="relative max-w-screen h-screen  flex bg-background">
-      <SideBar
-        className="z-20 absolute h-full left-0 sm:block hidden"
-        route="feed"
-      />
+    <div className="relative w-screen h-screen overflow-hidden flex bg-background z-0">
+      <SideBar route="feed" />
       <div className=" flex xl:w-[75%] w-[90%] m-auto justify-center">
         <div className="min-[1050px]:w-4/6 lg:w-5/6 w-full m-auto mt-20 mx-2">
           <div className="search">
