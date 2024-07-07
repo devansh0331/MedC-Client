@@ -13,6 +13,7 @@ export function UserContextProvider({ children }) {
     email: "",
   });
   const [user, setUser] = useState({});
+  const [allUsers, setAllUsers] = useState([]);
   const [userExperience, setUserExperience] = useState([]);
   const [userCertificate, setUserCertificate] = useState([]);
   const [userAchievement, setUserAchievement] = useState([]);
@@ -185,7 +186,27 @@ export function UserContextProvider({ children }) {
         getPosts();
       }
     } catch (error) {
-      toast.error("Failed to like post");
+      console.error("Failed to like post");
+    }
+  };
+
+  const getAllUsers = async () => {
+    try {
+      const res = await fetch(`${SERVER_URL}/users/all-user`, {
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
+      const parsedRes = await res.json();
+      console.log(parsedRes);
+      if (!parsedRes.success) {
+        console.error(parsedRes.error);
+      } else {
+        setAllUsers(parsedRes.data);
+      }
+    } catch (error) {
+      console.error("Failed to get users");
     }
   };
 
@@ -224,6 +245,8 @@ export function UserContextProvider({ children }) {
         userExperience,
         userEducation,
         userCertificate,
+        getAllUsers,
+        allUsers,
       }}
     >
       {children}
