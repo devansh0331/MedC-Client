@@ -121,7 +121,7 @@ export function UserContextProvider({ children }) {
 
   const getUser = async () => {
     try {
-      const response = await fetch(`${SERVER_URL}/auth/profile`, {
+      const response = await fetch(`${SERVER_URL}/users/single-user/ `, {
         method: "GET",
         credentials: "include",
         headers: {
