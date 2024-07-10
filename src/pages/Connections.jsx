@@ -10,6 +10,15 @@ import {
   Navbar,
   Button,
   Input,
+  List,
+  ListItem,
+  ListItemPrefix,
+  Chip,
+  ListItemSuffix,
+  Badge,
+  Tabs,
+  TabsHeader,
+  Tab
 } from "@material-tailwind/react";
 import altprofile from "../assets/altprofile.png";
 import { IoLocationSharp } from "react-icons/io5";
@@ -19,6 +28,9 @@ import { ImProfile } from "react-icons/im";
 import { IoPersonAddOutline } from "react-icons/io5";
 import YouMayKnow from "../components/YouMayKnow";
 import { UserContext } from "../UserContext";
+import { FaUserFriends } from "react-icons/fa";
+import { FaUserClock } from "react-icons/fa";
+import { MdPresentToAll } from "react-icons/md";
 
 const Connections = () => {
   const { getAllUsers, allUsers } = useContext(UserContext);
@@ -28,10 +40,29 @@ const Connections = () => {
   console.log("All Users: ", allUsers);
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden flex bg-background z-0">
-      <SideBar route="feed" />
-      <div className=" flex xl:w-[75%] w-[90%] m-auto justify-center">
-        <div className="min-[1050px]:w-4/6 lg:w-5/6 w-full m-auto mt-20 mx-2">
+    <div className="w-screen h-screen overflow-hidden bg-background">
+      {/* <SideBar route="feed" /> */}
+      <div className="flex w-full m-auto justify-center">
+        <Card shadow={false} floated={false}  className="mt-20 mx-2 h-40 hidden lg:block">
+          <List className=" bg-white rounded-lg mr-2">
+            <ListItem>
+              <ListItemPrefix><FaUserClock /></ListItemPrefix>
+              <Typography className="mr-2">Pending Invites</Typography>
+              <ListItemSuffix><Chip color="blue" size="sm" value="10" /></ListItemSuffix>
+            </ListItem>
+            <ListItem>
+              <ListItemPrefix><FaUserFriends /></ListItemPrefix>
+              <Typography className="mr-2">Connections</Typography>
+              <ListItemSuffix>100</ListItemSuffix>
+            </ListItem>
+            <ListItem>
+              <ListItemPrefix><MdPresentToAll /></ListItemPrefix>
+              <Typography className="mr-2">Sent requests</Typography>
+              <ListItemSuffix>100</ListItemSuffix>
+            </ListItem>
+          </List>
+        </Card>
+        <div className="xl:w-3/6 lg:w-4/6 w-5/6 m-auto mt-20 mx-2">
           <div className="search">
             <Navbar className="flex flex-row" fullWidth shadow>
               <div className="flex md:flex-row flex-col md:w-full w-11/12 mr-2">
@@ -46,14 +77,14 @@ const Connections = () => {
                     <IoMdSearch className="w-5 h-5 text-gray-600" />
                   </div>
                 </div>
-                <div className="relative flex md:w-2/5 w-full mr-2 max-[768px]:mt-2">
+                <div className="relative flex md:w-2/5 w-full mr-2 mt-2 md:mt-0 ">
                   <Input
                     type="search"
                     placeholder="Search Location"
-                    className="  pl-9 placeholder:text-blue-gray-100 "
+                    className="lg:pl-9 pl-2 placeholder:text-blue-gray-100 "
                     label="Search Location"
                   />
-                  <div className="!absolute right-3 top-[11px]">
+                  <div className="!absolute lg:right-3 right-1 top-[11px]">
                     <IoLocationSharp className="w-5 h-4 text-gray-600" />
                   </div>
                 </div>
@@ -61,14 +92,18 @@ const Connections = () => {
               <Button
                 size="sm"
                 variant="outline"
-                className="md:px-4 p-2 md:rounded-lg rounded-full  max-[768px]:w-8 max-[768px]:h-8 max-[768px]:mx-auto max-[768px]:ml-2"
+                className="p-2 rounded-full w-8 h-8 my-auto ml-2"
               >
-                <span className="md:hidden">
+                <span className="">
                   <IoMdSearch className="w-4 h-4" />
                 </span>
-                <span className="hidden md:block">Search</span>
               </Button>
             </Navbar>
+            <Tabs>
+              <Tab>Pending</Tab>
+              <Tab>Connections</Tab>
+              <Tab>Sent Requests</Tab>
+            </Tabs>
           </div>
           <div className="flex flex-col max-h-[80vh] overflow-y-scroll scrollbar-thin w-full mt-1">
             {!allUsers ? (
@@ -81,7 +116,7 @@ const Connections = () => {
                   <CardHeader
                     shadow={false}
                     floated={false}
-                    className="m-0 shrink-0 rounded-r-none flex flex-col w-3/5"
+                    className="m-0 shrink-0 rounded-r-none flex flex-col lg:w-3/6 w-4/6"
                   >
                     <div className="flex flex-row gap-3 items-center">
                       <Avatar
@@ -126,25 +161,25 @@ const Connections = () => {
                     <Button
                       size="sm"
                       color="light-blue"
-                      className="mr-2 md:px-4 p-2 md:rounded-lg rounded-full"
+                      className="mr-2 xl:px-4 p-2 md:rounded-lg rounded-full"
                       shadow
                       hover
                     >
-                      <span className="md:hidden">
+                      <span className="xl:hidden">
                         <IoPersonAddOutline className="w-4 h-4" />
                       </span>
-                      <span className="hidden md:block">Connect</span>
+                      <span className="hidden xl:block">Connect</span>
                     </Button>
                     <Button
                       size="sm"
                       color="light-blue"
                       variant="outlined"
-                      className="md:px-4 p-2 md:rounded-lg rounded-full"
+                      className="xl:px-4 p-2 xl:rounded-lg rounded-full"
                     >
-                      <span className="md:hidden">
+                      <span className="xl:hidden">
                         <ImProfile className="w-4 h-4" />
                       </span>
-                      <span className="hidden md:block">View Profile</span>
+                      <span className="hidden xl:block">View Profile</span>
                     </Button>
                   </CardBody>
                 </Card>
@@ -152,7 +187,7 @@ const Connections = () => {
             )}
           </div>
         </div>
-        <div className="w-2/6 mt-20 mx-2 lg:block hidden">
+        <div className="w-80 mt-20 mx-2 xl:block hidden">
           <YouMayKnow data={allUsers} />
         </div>
       </div>

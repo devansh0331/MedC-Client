@@ -26,20 +26,20 @@ const YouMayKnow = (props) => {
               <ListItem>
                 <ListItemPrefix>
                   <Avatar
-                    className="w-10 h-10"
+                    className="w-9 h-9"
                     src={user.profileURL ? user.profileURL : altprofile}
                     alt="altprofile"
                   />
                 </ListItemPrefix>
                 <div className="flex flex-col">
-                  <Typography className="font-bold">{user.name}</Typography>
+                  <Typography className="font-medium text-sm">{user.name}</Typography>
                   {user.bio && (
-                    <Typography>{user.bio ? user.bio : "New User"}</Typography>
+                    <Typography className="text-sm text-gray-600">{user.bio ? user.bio : "New User"}</Typography>
                   )}
                 </div>
                 <ListItemSuffix>
                   <div className="border-[1px] p-1 rounded-full border-gray-400">
-                    <IoPersonAddOutline className="w-5 h-5 text-gray-500" />
+                    <IoPersonAddOutline className="w-4 h-4 text-gray-500" />
                   </div>
                 </ListItemSuffix>
               </ListItem>
