@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
 import {
   Card,
@@ -18,7 +18,9 @@ import {
   Badge,
   Tabs,
   TabsHeader,
-  Tab
+  Tab,
+  TabsBody,
+  TabPanel
 } from "@material-tailwind/react";
 import altprofile from "../assets/altprofile.png";
 import { IoLocationSharp } from "react-icons/io5";
@@ -33,6 +35,7 @@ import { FaUserClock } from "react-icons/fa";
 import { MdPresentToAll } from "react-icons/md";
 
 const Connections = () => {
+  const [activeTab,setActiveTab] = useState("Pending")
   const { getAllUsers, allUsers } = useContext(UserContext);
   useEffect(() => {
     getAllUsers();
@@ -41,21 +44,20 @@ const Connections = () => {
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-background">
-      {/* <SideBar route="feed" /> */}
       <div className="flex w-full m-auto justify-center">
         <Card shadow={false} floated={false}  className="mt-20 mx-2 h-40 hidden lg:block">
           <List className=" bg-white rounded-lg mr-2">
-            <ListItem>
+            <ListItem selected={activeTab === "Pending"} onClick={()=>setActiveTab("Pending")}>
               <ListItemPrefix><FaUserClock /></ListItemPrefix>
               <Typography className="mr-2">Pending Invites</Typography>
-              <ListItemSuffix><Chip color="blue" size="sm" value="10" /></ListItemSuffix>
+              <ListItemSuffix><Chip color="teal" size="sm" value="10" /></ListItemSuffix>
             </ListItem>
-            <ListItem>
+            <ListItem selected={activeTab === "Connections"} onClick={()=>setActiveTab("Connections")}>
               <ListItemPrefix><FaUserFriends /></ListItemPrefix>
               <Typography className="mr-2">Connections</Typography>
               <ListItemSuffix>100</ListItemSuffix>
             </ListItem>
-            <ListItem>
+            <ListItem selected={activeTab === "Sent"} onClick={()=>setActiveTab("Sent")}>
               <ListItemPrefix><MdPresentToAll /></ListItemPrefix>
               <Typography className="mr-2">Sent requests</Typography>
               <ListItemSuffix>100</ListItemSuffix>
@@ -64,46 +66,54 @@ const Connections = () => {
         </Card>
         <div className="xl:w-3/6 lg:w-4/6 w-5/6 m-auto mt-20 mx-2">
           <div className="search">
-            <Navbar className="flex flex-row" fullWidth shadow>
-              <div className="flex md:flex-row flex-col md:w-full w-11/12 mr-2">
-                <div className="relative flex md:w-3/5 w-full mr-2">
+            <Navbar className="flex md:flex-row flex-col items-center justify-center " fullWidth shadow>
+                <div className="relative flex md:w-3/5 w-full mr-0 md:mr-2 ">
                   <Input
                     type="search"
                     placeholder=""
                     className="pl-9 placeholder:text-blue-gray-100"
                     label="Search"
+                    size="sm"
                   />
                   <div className="!absolute right-3 top-[10px]">
                     <IoMdSearch className="w-5 h-5 text-gray-600" />
                   </div>
                 </div>
-                <div className="relative flex md:w-2/5 w-full mr-2 mt-2 md:mt-0 ">
+                <div className="relative flex md:w-2/5 w-full mr-0 md:mr-2 mt-2 md:mt-0 ">
                   <Input
                     type="search"
                     placeholder="Search Location"
                     className="lg:pl-9 pl-2 placeholder:text-blue-gray-100 "
                     label="Search Location"
+                    size="sm"
                   />
                   <div className="!absolute lg:right-3 right-1 top-[11px]">
                     <IoLocationSharp className="w-5 h-4 text-gray-600" />
                   </div>
                 </div>
-              </div>
+             
               <Button
                 size="sm"
                 variant="outline"
-                className="p-2 rounded-full w-8 h-8 my-auto ml-2"
+                className="rounded-md mt-2 md:my-auto"
               >
-                <span className="">
-                  <IoMdSearch className="w-4 h-4" />
-                </span>
+                  Search
               </Button>
             </Navbar>
-            <Tabs>
-              <Tab>Pending</Tab>
-              <Tab>Connections</Tab>
-              <Tab>Sent Requests</Tab>
-            </Tabs>
+            <div className="p-2 bg-gray-100 justify-between block lg:hidden"
+            style={{transition:"all 0.5s ease"}}>
+              <div className="flex w-full justify-between mx-auto">
+              <div className={`flex px-2 py-1 w-1/3 mx-1 ${activeTab === "Pending" ? "shadow-md bg-white" : ""} justify-center items-center rounded-md cursor-pointer`} onClick={()=>setActiveTab("Pending")}>
+                <Typography className="text-gray-700 text-sm">Pending</Typography>
+              </div>
+              <div className={`flex px-2 py-1 w-1/3 mx-1 ${activeTab === "Connections" ? "shadow-md bg-white" : ""} justify-center items-center rounded-md cursor-pointer`} onClick={()=>setActiveTab("Connections")} >
+                <Typography className="text-gray-700 text-sm">Connections</Typography>
+              </div>
+              <div className={`flex px-2 py-1 w-1/3 mx-1 ${activeTab === "Sent" ? "shadow-md bg-white" : ""} justify-center items-center rounded-md cursor-pointer`} onClick={()=>setActiveTab("Sent")} >
+                <Typography className="text-gray-700 text-sm">Sent Invites</Typography>
+              </div>
+              </div>
+            </div>
           </div>
           <div className="flex flex-col max-h-[80vh] overflow-y-scroll scrollbar-thin w-full mt-1">
             {!allUsers ? (

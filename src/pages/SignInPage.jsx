@@ -112,21 +112,7 @@ function SignInPage() {
         <p className="w-full text-4xl tracking-wide text-center font-black mb-6 mt-4 font-open leading-custom">
           Sign In
         </p>
-        <button className="w-full rounded-full mb-3 flex items-center border border-1 border-gray-500 py-2 px-3">
-          <img src={emaillogo} alt="email" className="h-7 w-7" />
-          <p
-            onClick={() => setBool(!bool)}
-            className="text-center text-base font-medium w-full"
-          >
-            Continue with Email
-          </p>
-        </button>
-        <div className="line-with-text w-full">
-          <span className="line"></span>
-          <span className="text-word">or</span>
-          <span className="line"></span>
-        </div>
-        <div className="mt-3">
+        <div className="my-3">
           <GoogleLogin
             onSuccess={(res) => {
               let parsedResponse = jwtDecode(res.credential);
@@ -135,12 +121,24 @@ function SignInPage() {
             className="w-full rounded-full my-3 flex items-center border border-1 border-gray-500 py-2 px-3"
           />
         </div>
+        <div className="line-with-text w-full">
+          <span className="line"></span>
+          <span className="text-word">or</span>
+          <span className="line"></span>
+        </div>
+        {/* <button className="w-full rounded-full mb-3 flex items-center border border-1 border-gray-500 py-2 px-3">
+          <img src={emaillogo} alt="email" className="h-7 w-7" />
+          <p
+            onClick={() => setBool(!bool)}
+            className="text-center text-base font-medium w-full"
+          >
+            Continue with Email
+          </p>
+        </button> */}
+      
         {/* <img src={google} alt="google" className="h-7 w-7" />
           <p className="text-center text-base w-full">Continue with Google</p> */}
-        {/* </GoogleLogin> */}
-
-        {bool && (
-          <>
+        {/* </GoogleLogin> */}  
             <div className="w-full">
               <div className="flex flex-col my-2">
                 <label
@@ -155,6 +153,11 @@ function SignInPage() {
                   id="email"
                   className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm"
                   placeholder="Email"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleSubmit();
+                    }
+                  }}
                 />
               </div>
               <div className="relative">
@@ -172,6 +175,11 @@ function SignInPage() {
                     id="password"
                     className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm w-full pr-10"
                     placeholder="Password"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleSubmit();
+                      }
+                    }}
                   />
                   <span
                     onClick={togglePasswordVisibility}
@@ -192,11 +200,12 @@ function SignInPage() {
             <Link to="/reset-password" className="mt-2 text-sm text-primary">
               Forgot your password?
             </Link>
-          </>
-        )}
+          
+        {/* {bool && (
+        )} */}
         <p className="text-sm text-gray-600 mt-4">
           Don't have an account?{" "}
-          <button className="text-primary" onClick={() => navigate("/signup")}>
+          <button className="text-primary" onClick={() => navigate("/signup")} id="signup">
             Sign Up
           </button>
         </p>
