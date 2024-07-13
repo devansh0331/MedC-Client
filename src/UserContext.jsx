@@ -130,7 +130,7 @@ export function UserContextProvider({ children }) {
       });
 
       const res = await response.json();
-
+      console.log("User context: ", res);
       if (!res.success) {
         console.error(res.error);
       } else {
@@ -192,7 +192,7 @@ export function UserContextProvider({ children }) {
 
   const getAllUsers = async () => {
     try {
-      const res = await fetch(`${SERVER_URL}/users/all-user`, {
+      const res = await fetch(`${SERVER_URL}/user/all-user`, {
         credentials: "include",
         headers: {
           Authorization: `Bearer ${Cookies.get("token")}`,
