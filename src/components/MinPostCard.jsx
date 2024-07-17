@@ -1,7 +1,7 @@
 import React from "react";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import altprofile from "../assets/altprofile.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const MinPostCard = (props) => {
   const navigate = useNavigate();
   return (
@@ -9,13 +9,17 @@ const MinPostCard = (props) => {
       <div className="flex justify-between  bg-white">
         {/* NAME AND DETAILS */}
         <div className="flex">
-          <img
-            src={props.profileURL != "" ? props.profileURL : altprofile}
-            alt="profile"
-            className="rounded-full h-6 md:h-7 w-6 md:w-7"
-          />
+          <Link to={`/user/${props.profileId}`}>
+            <img
+              src={props.profileURL != "" ? props.profileURL : altprofile}
+              alt="profile"
+              className="rounded-full h-6 md:h-7 w-6 md:w-7"
+            />
+          </Link>
           <div className="flex flex-col ml-2">
-            <p className="text-black font-normal text-md">{props.name}</p>
+            <Link to={`/user/${props.profileId}`}>
+              <p className="text-black font-normal text-md">{props.name}</p>
+            </Link>
           </div>
         </div>
         <div className="flex items-center">
@@ -33,7 +37,12 @@ const MinPostCard = (props) => {
         <p className=" min-w-full text-sm text-gray-700">
           {props.description}
           <br />
-          <button className="text-blue-500 text-sm" onClick={()=> navigate(`/post/${props.postId}`)}>Show Post</button>
+          <button
+            className="text-blue-500 text-sm"
+            onClick={() => navigate(`/post/${props.postId}`)}
+          >
+            Show Post
+          </button>
         </p>
       </div>
     </div>

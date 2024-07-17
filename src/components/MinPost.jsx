@@ -20,32 +20,33 @@ const MinPost = () => {
   return (
     <div className="w-1/3 bg-inherit h-2/3 flex-col items-center mx-auto mt-6 shadow-md lg:flex hidden">
       <div className="w-full bg-white flex justify-center items-center rounded-md">
-      <div className="flex justify-between items-center w-11/12  py-1">
-        <p className="text-xl w-full font-semibold">New Posts</p>
-        <button onClick={() => handleExpand()}>
-          <FaExpand />
-        </button>
-      </div>
+        <div className="flex justify-between items-center w-11/12  py-1">
+          <p className="text-xl w-full font-semibold">New Posts</p>
+          <button onClick={() => handleExpand()}>
+            <FaExpand />
+          </button>
+        </div>
       </div>
 
       <div className="overflow-y-scroll scrollbar-thin w-full h-full flex flex-col items-center">
-      {posts.map(
-        (post, key) =>
-          post.fileURL == "" && (
+        {posts.map(
+          (post, key) =>
+            post.fileURL == "" && (
               <MinPostCard
                 key={key}
                 name={post.user ? post.user.name : "Unknown User"}
                 profileURL={
                   post.user && post.user.profileURL ? post.user.profileURL : ""
                 }
+                profileId={post.user && post.user._id ? post.user._id : ""}
                 description={post.description}
                 isLiked={post.likes && user._id && post.likes[user._id]}
                 handleLike={() => handleLike(post._id)}
                 postId={post._id}
               />
-              )
-              )}
-            </div>
+            )
+        )}
+      </div>
     </div>
   );
 };

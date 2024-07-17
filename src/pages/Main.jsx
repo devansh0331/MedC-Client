@@ -20,6 +20,7 @@ import EditDetails from "./EditDetails";
 import SinglePost from "./SinglePost";
 import Connections from "./Connections";
 import Hire from "./Hire";
+import SingleUserProfilePage from "./SingleUserProfilePage";
 // import { NavbarWithSearch } from "./Nav";
 
 function Main() {
@@ -98,11 +99,20 @@ function Main() {
         }
       />
       <Route
+        path="/user/:id"
+        element={
+          <>
+            <Navbar route="profile" />
+            <SingleUserProfilePage />
+          </>
+        }
+      />
+      <Route
         path="/jobs"
         element={
           <>
             <Navbar route="profile" />
-            <JobPage/>
+            <JobPage />
           </>
         }
       />
@@ -111,7 +121,7 @@ function Main() {
         element={
           <>
             <Navbar route="profile" />
-            <PostJobPage/>
+            <PostJobPage />
           </>
         }
       />
@@ -120,7 +130,7 @@ function Main() {
         element={
           <>
             <Navbar route="profile" />
-            <AboutPage/>
+            <AboutPage />
           </>
         }
       />
@@ -129,7 +139,7 @@ function Main() {
         element={
           <>
             <Navbar route="profile" />
-            <Faq/>
+            <Faq />
           </>
         }
       />
@@ -138,7 +148,7 @@ function Main() {
         element={
           <>
             <Navbar route="profile" />
-            <Privacypolicy/>
+            <Privacypolicy />
           </>
         }
       />
@@ -147,7 +157,7 @@ function Main() {
         element={
           <>
             <Navbar route="profile" />
-            <EditDetails/>
+            <EditDetails />
           </>
         }
       />
@@ -156,16 +166,16 @@ function Main() {
         element={
           <>
             <Navbar route="profile" />
-            <SinglePost/>
+            <SinglePost />
           </>
         }
       />
       <Route
         path="/connections"
-        element={ 
+        element={
           <>
-            <Navbar/>
-            <Connections/>
+            <Navbar />
+            <Connections />
           </>
         }
       />
@@ -173,12 +183,11 @@ function Main() {
         path="/hire"
         element={
           <>
-          <Navbar/>
-          <Hire/>
+            <Navbar />
+            <Hire />
           </>
         }
       />
-      
     </Routes>
   );
 }

@@ -11,6 +11,7 @@ import { BsBuildingsFill } from "react-icons/bs";
 import { ImProfile } from "react-icons/im";
 import { IoLocationSharp, IoPersonAddOutline } from "react-icons/io5";
 import altprofile from "../assets/altprofile.png";
+import { Link } from "react-router-dom";
 
 function SinglePeopleCardHorizontal({ user }) {
   return (
@@ -21,14 +22,18 @@ function SinglePeopleCardHorizontal({ user }) {
         className="m-0 shrink-0 rounded-r-none flex flex-col lg:w-3/6 w-4/6"
       >
         <div className="flex flex-row gap-3 items-center">
-          <Avatar
-            src={user.profileURL ? user.profileURL : altprofile}
-            alt="Profile"
-            size="lg"
-            className="w-12 h-12 md:w-16 md:h-16"
-          />
+          <Link to={`/user/${user._id}`}>
+            <Avatar
+              src={user.profileURL ? user.profileURL : altprofile}
+              alt="Profile"
+              size="lg"
+              className="w-12 h-12 md:w-16 md:h-16"
+            />
+          </Link>
           <div className="">
-            <Typography className="font-bold">{user.name}</Typography>
+            <Link to={`/user/${user._id}`}>
+              <Typography className="font-bold">{user.name}</Typography>
+            </Link>
             {user.bio && (
               <Typography>{user.bio ? user.bio : "New User"}</Typography>
             )}

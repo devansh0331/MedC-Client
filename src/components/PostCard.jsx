@@ -55,6 +55,7 @@ function PostCard() {
               profileURL={
                 post.user && post.user.profileURL ? post.user.profileURL : ""
               }
+              profileId={post.user && post.user._id ? post.user._id : ""}
               description={post.description}
               likes={post.likes ? Object.keys(post.likes).length : "0"}
               isLiked={post.likes && user._id && post.likes[user._id]}

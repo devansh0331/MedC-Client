@@ -11,6 +11,7 @@ import { SERVER_URL } from "../ServerURL";
 import altprofile from "../assets/altprofile.png";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 const SinglePostCard = (props) => {
   const [comm, setComm] = useState(false);
@@ -100,15 +101,19 @@ const SinglePostCard = (props) => {
         {/* NAME AND DETAILS */}
         <div className="flex justify-between">
           <div className="flex">
-            <img
-              src={props.profileURL != "" ? props.profileURL : altprofile}
-              alt="profile"
-              className="rounded-full h-8 md:h-12 w-8 md:w-12"
-            />
+            <Link to={`/user/${props.profileId}`}>
+              <img
+                src={props.profileURL != "" ? props.profileURL : altprofile}
+                alt="profile"
+                className="rounded-full h-8 md:h-12 w-8 md:w-12"
+              />
+            </Link>
             <div className="flex flex-col ml-2 md:ml-4">
-              <p className="text-black font-semibold text-sm md:text-base ">
-                {props.name}
-              </p>
+              <Link to={`/user/${props.profileId}`}>
+                <p className="text-black font-semibold text-sm md:text-base ">
+                  {props.name}
+                </p>
+              </Link>
               <p className="text-gray-600 font-normal text-sm md:text-md leading-3 md:leading-none">
                 Technology
               </p>

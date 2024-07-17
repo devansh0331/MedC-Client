@@ -130,7 +130,7 @@ export function UserContextProvider({ children }) {
       });
 
       const res = await response.json();
-      console.log("User context: ", res);
+
       if (!res.success) {
         console.error(res.error);
       } else {

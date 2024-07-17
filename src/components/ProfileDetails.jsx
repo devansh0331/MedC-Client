@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
-const ProfileDetails = () => {
+const ProfileDetails = (props) => {
   const [section, setSection] = useState("Experience");
   const navigate = useNavigate();
   const {
@@ -22,7 +22,6 @@ const ProfileDetails = () => {
     getUserAchievement();
     getUserCertificate();
   }, []);
-  console.log("User Education : ", userEducation);
 
   return (
     <div className="w-full h-full md:h-4/5 flex flex-col bg-white mt-4 mb-4 px-2 rounded-xl shadow-md">
@@ -61,9 +60,11 @@ const ProfileDetails = () => {
             Achivements
           </button>
         </div>
-        <button className="" onClick={() => navigate("/editdetails")}>
-          <FiEdit className="w-5 h-5" />
-        </button>
+        {props.isExisting && (
+          <button className="" onClick={() => navigate("/editdetails")}>
+            <FiEdit className="w-5 h-5" />
+          </button>
+        )}
       </div>
       <div className="overflow-y-scroll scrollbar-thin mx-2 h-96">
         {section === "Experience" && (
