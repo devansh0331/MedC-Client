@@ -21,10 +21,10 @@ import SideBar from "../components/SideBar";
 
 const Hire = () => {
   return (
-    <div className="relative flex w-screen h-screen overflow-hidden z-0 bg-background">
+    <div className="flex overflow-hidden z-0 bg-background">
       <SideBar route="feed" />
-      <div className="flex xl:w-[75%] w-[90%] m-auto">
-        <div className="w-full md:w-4/6 m-auto mt-0 md:mt-20 mx-2">
+      <div className="flex xl:w-[75%] w-[90%] mx-auto">
+        <div className="w-full md:w-4/6 m-auto mt-4 mx-2">
           <div className="search">
             <Navbar
               className="flex flex-col md:flex-row rounded-md"
@@ -261,7 +261,7 @@ const Hire = () => {
             </Card>
           </div>
         </div>
-        <div className="hidden md:block w-2/6 mt-20 mx-2">
+        <div className="hidden md:block w-2/6 mt-4 mx-2">
           <ProfileExpand />
         </div>
       </div>

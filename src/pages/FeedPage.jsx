@@ -41,16 +41,16 @@ function FeedPage() {
   };
 
   return (
-    <div className="w-full flex h-screen bg-background">
+    <div className="w-full flex bg-background">
       <SideBar
         name={userInfo.name}
         email={userInfo.email}
         handleLogout={handleLogout}
-        className="h-screen left-0 sm:block hidden"
+        className="left-0 sm:block hidden"
         route="feed"
         userId={user._id}
       />
-      <div className="w-full h-full flex flex-col md:flex-row pt-16 fixed z-0 sm:pl-16 md:pl-20">
+      <div className="w-full h-full flex flex-col md:flex-row fixed z-0 sm:pl-16 md:pl-20">
         {!minJobs ? (
           <MaxJob className="w-full m-auto" />
         ) : (

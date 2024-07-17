@@ -10,6 +10,7 @@ import SideBar from "../components/SideBar";
 import EditDetails from "../components/EditExperience";
 import toast, { Toaster } from "react-hot-toast";
 import { SERVER_URL } from "../ServerURL";
+import NavMain from "../components/NavMain";
 
 const ProfilePage = () => {
   const [close, setClose] = useState(false);
@@ -42,16 +43,17 @@ const ProfilePage = () => {
     }
   };
 
-  return (
-    <div className="w-screen h-screen relative flex z-0">
+    return (
+      <>
+    <div className=" flex overflow-hidden">
       <SideBar
         name={userInfo.name}
         email={userInfo.email}
         handleLogout={handleLogout}
-        className="absolute z-20 h-screen left-0"
+        className="h-screen left-0 z-10"
         route="profile"
-      />
-      <div className="w-full h-full bg-background overflow-x-hidden absolute sm:pl-16">
+        />
+      <div className="w-full h-full bg-background overflow-x-hidden sm:pl-16 z-0">
         {close ? (
           <EditProfile
             name={user.name}
@@ -89,7 +91,7 @@ const ProfilePage = () => {
         ) : (
           ""
         )}
-        <div className="w-full lg:w-4/5 xl:w-3/5 mx-auto flex flex-col md:flex-row justify-around pt-20">
+        <div className="w-full lg:w-4/5 xl:w-3/5 mx-auto flex flex-col md:flex-row justify-around">
           <div className="mx-2 items-center  flex flex-col">
             <ProfileCard
               profileURL={user.profileURL ? user.profileURL : ""}
@@ -119,6 +121,7 @@ const ProfilePage = () => {
         <Toaster position="top-right" />
       </div>
     </div>
+      </>
   );
 };
 

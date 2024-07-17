@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import SignInPage from "./SignInPage";
 import ResetPassword from "./ResetPassword";
 import HomePage from "./HomePage";
@@ -21,6 +20,10 @@ import SinglePost from "./SinglePost";
 import Connections from "./Connections";
 import Hire from "./Hire";
 import SingleUserProfilePage from "./SingleUserProfilePage";
+import Jobs from "./Jobs";
+import NavMain from "../components/NavMain";
+import PostJob from "./PostJob";
+import Settings from "./Settings";
 // import { NavbarWithSearch } from "./Nav";
 
 function Main() {
@@ -30,7 +33,7 @@ function Main() {
         path="/"
         element={
           <>
-            <Navbar route="signup" />
+            <NavMain />
             <HomePage />
           </>
         }
@@ -39,7 +42,7 @@ function Main() {
         path="/signup"
         element={
           <>
-            <Navbar route="signin" />
+            <NavMain route="signin" />
             <SignUpPage />
           </>
         }
@@ -48,7 +51,7 @@ function Main() {
         path="/signin"
         element={
           <>
-            <Navbar route="signup" />
+            <NavMain route="signup" />
             <SignInPage />
           </>
         }
@@ -57,7 +60,7 @@ function Main() {
         path="/reset-password"
         element={
           <>
-            <Navbar route="signup" />
+            <NavMain route="signup" />
             <ResetPassword />
           </>
         }
@@ -66,7 +69,7 @@ function Main() {
         path="/otp-verification"
         element={
           <>
-            <Navbar route="signup" />
+            <NavMain route="signup" />
             <OTPVerification />
           </>
         }
@@ -75,7 +78,7 @@ function Main() {
         path="/new-password"
         element={
           <>
-            <Navbar route="signup" />
+            <NavMain route="signup" />
             <NewPassword />
           </>
         }
@@ -84,8 +87,17 @@ function Main() {
         path="/feed"
         element={
           <>
-            <Navbar route="signup" />
+            <NavMain route="signup" />
             <FeedPage />
+          </>
+        }
+      />
+      <Route
+        path="/jobs"
+        element={
+          <>
+            <NavMain route="signup" />
+            <Jobs />
           </>
         }
       />
@@ -93,7 +105,7 @@ function Main() {
         path="/profile"
         element={
           <>
-            <Navbar route="profile" />
+            <NavMain route="profile" />
             <ProfilePage />
           </>
         }
@@ -102,7 +114,7 @@ function Main() {
         path="/user/:id"
         element={
           <>
-            <Navbar route="profile" />
+            <NavMain route="profile" />
             <SingleUserProfilePage />
           </>
         }
@@ -111,7 +123,7 @@ function Main() {
         path="/jobs"
         element={
           <>
-            <Navbar route="profile" />
+            <NavMain route="profile" />
             <JobPage />
           </>
         }
@@ -120,7 +132,7 @@ function Main() {
         path="/postjob"
         element={
           <>
-            <Navbar route="profile" />
+            <NavMain route="profile" />
             <PostJobPage />
           </>
         }
@@ -129,7 +141,7 @@ function Main() {
         path="/about"
         element={
           <>
-            <Navbar route="profile" />
+            <NavMain route="profile" />
             <AboutPage />
           </>
         }
@@ -138,7 +150,7 @@ function Main() {
         path="/faq"
         element={
           <>
-            <Navbar route="profile" />
+            <NavMain route="profile" />
             <Faq />
           </>
         }
@@ -147,7 +159,7 @@ function Main() {
         path="/privacypolicy"
         element={
           <>
-            <Navbar route="profile" />
+            <NavMain route="profile" />
             <Privacypolicy />
           </>
         }
@@ -156,7 +168,7 @@ function Main() {
         path="/editdetails"
         element={
           <>
-            <Navbar route="profile" />
+            <NavMain route="profile" />
             <EditDetails />
           </>
         }
@@ -165,7 +177,7 @@ function Main() {
         path="/post/:id"
         element={
           <>
-            <Navbar route="profile" />
+            <NavMain route="profile" />
             <SinglePost />
           </>
         }
@@ -174,7 +186,7 @@ function Main() {
         path="/connections"
         element={
           <>
-            <Navbar />
+            <NavMain />
             <Connections />
           </>
         }
@@ -183,8 +195,26 @@ function Main() {
         path="/hire"
         element={
           <>
-            <Navbar />
+            <NavMain />
             <Hire />
+          </>
+        }
+      />
+      <Route
+        path="/postajob"
+        element={
+          <>
+            <NavMain />
+            <PostJob />
+          </>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <>
+            <NavMain />
+            <Settings />
           </>
         }
       />

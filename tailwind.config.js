@@ -1,3 +1,4 @@
+const { List, ListItem } = require("@material-tailwind/react");
 const withMT = require("@material-tailwind/react/utils/withMT");
 
 module.exports = withMT({
@@ -63,6 +64,14 @@ module.exports = withMT({
         '8xl': '6rem',      // 96px
         '9xl': '8rem',      // 128px
       },
+      list: {
+        styles: {
+          selected: {
+            backgroundColor: 'bg-blue-500',
+            color: '#FFF',
+          }
+        }
+      }
     },
   },
   plugins: [

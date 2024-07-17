@@ -9,73 +9,66 @@ import { FaLink } from "react-icons/fa";
 import { useState } from "react";
 import EditProfile from "./EditProfile";
 import altprofile from "../assets/altprofile.png";
+import { FaRegEdit } from "react-icons/fa";
+import { 
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Avatar,
+  Button,
+  IconButton,
+ } from "@material-tailwind/react";
 
 const ProfileCard = (props) => {
   const [check, setCheck] = useState(false);
 
   return (
-    <div
-      className={`bg-white pt-4 md:pt-6 nd:pb-2 rounded-xl flex flex-col items-center w-full sm:w-auto ${
-        props.profile ? `px-4 md:px-8 shadow-md` : `px-4 `
-      }`}
+    <>
+    <Card className="">
+      <div className="flex justify-end pt-2 px-2 m-0 cursor-pointer"><FaRegEdit /></div>
+   <Card className="flex min-w-96 bg-white p-4 flex-row">
+    <CardHeader
+     className="flex flex-col items-center m-0 w-2/5 rounded-none border-r-2"
+     floated={false}
+     shadow={false}
+     color="transparent"
+     animate={{
+      mount: { scale: 1, y: 0 },
+      unmount: { scale: 0.9, y: -100 },
+     }}
     >
-      <img
-        src={props.profileURL ? props.profileURL : altprofile}
-        className="rounded-full h-20 w-20"
-      />
-      <div className="flex flex-col mx-auto my-2 h-auto pb-2 border-b-2">
-        <div className="text-md font-semibold mx-auto mb-1">{props.name}</div>
-        {props.bio && (
-          <div className="text-sm mx-auto text-gray-700">{props.bio}</div>
-        )}
+      <Avatar src={altprofile} size="xl" className="mx-auto mb-3"/>
+      <Typography className="text-lg font-semibold">John Doe</Typography>
+      <Typography className="text-md">Developer</Typography>
+     </CardHeader>
+     <CardBody className="flex flex-col w-3/5 px-4 py-1">
+      <div className="flex flex-row gap-1 items-center mb-1">
+          <IoLocationSharp/>
+          <Typography className="ml-2">Bhilai, Chattissgarh</Typography>
       </div>
-      <div className="flex flex-col md:mx-auto my-2 h-auto">
-        {props.location && (
-          <div className="text-sm flex items-center text-gray-700 my-1">
-            <IoLocationSharp className="w-4 h-4 mr-3" />
-            {props.location}
-          </div>
-        )}
-        {props.contact && (
-          <div className="text-sm flex items-center text-gray-700 my-1">
-            <FaPhoneAlt className="w-4 h-4 mr-3" />
-            {props.contact}
-          </div>
-        )}
-        {props.email && (
-          <div className="text-sm flex items-center text-gray-700 my-1">
-            <MdEmail className="w-4 h-4 mr-3" />
-            {props.email}
-          </div>
-        )}
-        {props.linkedin && (
-          <div className="text-sm flex items-center text-gray-700 my-1">
-            <FaLinkedinIn className="w-4 h-4 mr-3" />
-            {props.linkedin}
-          </div>
-        )}
-        {props.twitter && (
-          <div className="text-sm flex items-center text-gray-700 my-1">
-            <FaXTwitter className="w-4 h-4 mr-3" />
-            {props.twitter}
-          </div>
-        )}
-        {props.website && (
-          <div className="text-sm flex items-center text-gray-700 my-1">
-            <FaLink className="w-4 h-4 mr-3" />
-            {props.website}
-          </div>
-        )}
-        {props.profile && props.isExisting && (
-          <button
-            className="mx-auto text-blue-600 underline my-2"
-            onClick={() => props.setClose(true)}
-          >
-            Edit Profile
-          </button>
-        )}
+      <div className="flex flex-row gap-1 items-center mb-1">
+          <MdEmail/>
+          <Typography className="ml-2">johndoe@gmail.com</Typography>
       </div>
-    </div>
+      <div className="flex flex-row gap-1 items-center mb-1">
+          <FaPhoneAlt/>
+          <Typography className="ml-2">+91 123456789</Typography>
+      </div>
+      <div className="flex flex-row gap-1 items-center mb-1">
+          <FaLinkedinIn/>
+          <Typography className="ml-2">linkedin</Typography>
+      </div>
+      <div className="flex flex-row gap-1 items-center mb-1">
+          <FaXTwitter/>
+          <Typography className="ml-2">twitter</Typography>
+      </div>
+     </CardBody>
+   </Card>
+    </Card>
+    </>
+
   );
 };
 
