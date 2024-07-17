@@ -79,7 +79,7 @@ function SingleUserProfilePage() {
             website={user.website ? user.website : ""}
             twitter={user.twitter ? user.twitter : ""}
             setToast={setToast}
-            getUser={getUser}
+            getSingleUser={getSingleUser}
             close={close}
             setClose={setClose}
           />
@@ -89,7 +89,7 @@ function SingleUserProfilePage() {
         {closeAbout ? (
           <EditAbout
             about={user.about}
-            getUser={getUser}
+            getUser={getSingleUser}
             setToast={setToast}
             closeAbout={closeAbout}
             setCloseAbout={setCloseAbout}
