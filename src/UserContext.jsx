@@ -211,19 +211,7 @@ export function UserContextProvider({ children }) {
   };
 
   useEffect(() => {
-    // const name = Cookies.get("name");
-    // const email = Cookies.get("email");
-
     getUser();
-    // console.log(user);
-
-    // if (name === undefined || email === undefined) {
-    //   const state = false;
-    //   setUserInfo({ state, name, email });
-    // } else {
-    //   const state = true;
-    //   setUserInfo({ state, name, email });
-    // }
   }, []);
 
   return (

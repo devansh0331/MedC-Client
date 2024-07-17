@@ -65,7 +65,7 @@ function SideBar(props) {
             >
               {!open && <BsPersonCircle className="cursor-pointer w-6 h-6" />}
               <span
-                onClick={() => navigate("/profile")}
+                onClick={() => navigate(`/user/${props.userId}`)}
                 className={`${open ? `block` : `hidden`}`}
               >
                 <ProfileCard
