@@ -51,8 +51,8 @@ const EditProfile = (props) => {
         const res = await response.json();
         console.log(res);
         if (res.success) {
+          props.getSingleUser();
           props.setToast("Profile updated successfully", true);
-          props.getUser();
         }
       } catch (error) {
         props.setToast("Failed to update", false);
@@ -77,9 +77,11 @@ const EditProfile = (props) => {
 
         const res = await response.json();
         console.log(res);
-        if (res.success) {
+        if (!res.success) {
+          props.setToast("Failed to update", false);
+        } else {
+          props.getSingleUser();
           props.setToast("Profile updated successfully", true);
-          props.getUser();
         }
       } catch (error) {
         props.setToast("Failed to update", false);

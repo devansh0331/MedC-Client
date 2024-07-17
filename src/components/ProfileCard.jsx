@@ -12,7 +12,6 @@ import altprofile from "../assets/altprofile.png";
 
 const ProfileCard = (props) => {
   const [check, setCheck] = useState(false);
-  
 
   return (
     <div
@@ -67,7 +66,7 @@ const ProfileCard = (props) => {
             {props.website}
           </div>
         )}
-        {props.profile && (
+        {props.profile && props.isExisting && (
           <button
             className="mx-auto text-blue-600 underline my-2"
             onClick={() => props.setClose(true)}

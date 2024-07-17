@@ -192,7 +192,7 @@ export function UserContextProvider({ children }) {
 
   const getAllUsers = async () => {
     try {
-      const res = await fetch(`${SERVER_URL}/users/all-user`, {
+      const res = await fetch(`${SERVER_URL}/user/all-user`, {
         credentials: "include",
         headers: {
           Authorization: `Bearer ${Cookies.get("token")}`,
@@ -211,19 +211,7 @@ export function UserContextProvider({ children }) {
   };
 
   useEffect(() => {
-    // const name = Cookies.get("name");
-    // const email = Cookies.get("email");
-
     getUser();
-    // console.log(user);
-
-    // if (name === undefined || email === undefined) {
-    //   const state = false;
-    //   setUserInfo({ state, name, email });
-    // } else {
-    //   const state = true;
-    //   setUserInfo({ state, name, email });
-    // }
   }, []);
 
   return (

@@ -3,15 +3,13 @@ import altprofile from "../assets/altprofile.png";
 import SinglePostCard from "./SinglePostCard";
 import CreatePostPopUp from "./CreatePostPopUp";
 import ReactTimeAgo from "react-time-ago";
-import { SERVER_URL } from "../ServerURL";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { UserContext } from "../UserContext";
-import { FaExpand } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function PostCard() {
   const [open, setOpen] = useState(false);
-  const { getPosts, userId, posts, handleLike, getUser, user } =
-    useContext(UserContext);
+  const { getPosts, posts, handleLike, user } = useContext(UserContext);
 
   useEffect(() => {
     getPosts();
@@ -24,11 +22,13 @@ function PostCard() {
   return (
     <div className="w-11/12 flex flex-col md:w-4/5 xl:w-2/5  mx-auto mt-6  bg-inherit  ">
       <div className="flex  justify-evenly w-full bg-white py-2 items-center rounded-md shadow-md">
-        <img
-          src={user.profileURL ? user.profileURL : altprofile}
-          className="rounded-full h-10 md:h-11 w-10 md:w-11"
-          alt="profile"
-        />
+        <Link to={`/user/${user._id}`}>
+          <img
+            src={user.profileURL ? user.profileURL : altprofile}
+            className="rounded-full h-10 md:h-11 w-10 md:w-11"
+            alt="profile"
+          />
+        </Link>
         <input
           type="text"
           className="w-4/5 border-2 border-gray-500 rounded-md px-2 py-1 md:py-1"
@@ -55,6 +55,7 @@ function PostCard() {
               profileURL={
                 post.user && post.user.profileURL ? post.user.profileURL : ""
               }
+              profileId={post.user && post.user._id ? post.user._id : ""}
               description={post.description}
               likes={post.likes ? Object.keys(post.likes).length : "0"}
               isLiked={post.likes && user._id && post.likes[user._id]}
