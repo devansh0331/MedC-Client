@@ -16,7 +16,8 @@ function SingleUserProfilePage() {
   const [close, setClose] = useState(false);
   const [closeAbout, setCloseAbout] = useState(false);
   const [closeDetails, setCloseDetails] = useState(false);
-  const { userInfo, getUser } = useContext(UserContext);
+  const { userInfo, getUser, checkFriendStatus, statusValue, friendStatus } =
+    useContext(UserContext);
   const [isExisting, setIsExisting] = useState(false);
   const [user, setUser] = useState();
 
@@ -41,10 +42,12 @@ function SingleUserProfilePage() {
       else {
         setUser(data.data);
         setIsExisting(data.isExisting);
-        console.log("User Details: ", user, isExisting);
+        await checkFriendStatus(data.data._id);
+
+        console.log(statusValue);
       }
     } catch (error) {
-      toast.error(error.message);
+      console.error(error.message);
     }
   };
 
@@ -63,12 +66,13 @@ function SingleUserProfilePage() {
       <SideBar
         name={userInfo.name}
         email={userInfo.email}
+        Durg
         // handleLogout={handleLogout}
         className="absolute z-20 h-screen left-0"
         route="profile"
       />
       <div className="w-full h-full bg-background overflow-x-hidden absolute sm:pl-16">
-        {close ? (
+        {isExisting && close ? (
           <EditProfile
             name={user.name}
             email={user.email}
@@ -86,7 +90,7 @@ function SingleUserProfilePage() {
         ) : (
           ""
         )}
-        {closeAbout ? (
+        {isExisting && closeAbout ? (
           <EditAbout
             about={user.about}
             getUser={getSingleUser}
@@ -97,7 +101,7 @@ function SingleUserProfilePage() {
         ) : (
           ""
         )}
-        {closeDetails ? (
+        {isExisting && closeDetails ? (
           <EditDetails
             closeDetails={closeDetails}
             setCloseDetails={setCloseDetails}
@@ -125,15 +129,22 @@ function SingleUserProfilePage() {
                 isExisting={isExisting}
               />
             )}
-            {isExisting ? (
-              <button className="mx-auto text-white bg-primary px-3 py-1 rounded-full my-4 hover:bg-background hover:border-2 hover:border-primary hover:text-primary">
-                Upload Resume
-              </button>
-            ) : (
-              <button className="mx-auto text-white bg-primary px-3 py-1 rounded-full my-4 hover:bg-background hover:border-2 hover:border-primary hover:text-primary">
-                Download Resume
-              </button>
-            )}
+            <div className="w-full flex justify-evenly">
+              {isExisting ? (
+                <button className="mx-auto text-white bg-primary px-3 py-1 rounded-full my-4 border-2 border-primary hover:bg-background hover:border-2 hover:border-primary hover:text-primary shadow-md">
+                  Upload Resume
+                </button>
+              ) : (
+                <button className="mx-auto text-white bg-primary px-3 py-1 rounded-full my-4 border-2 border-primary hover:bg-background hover:border-2 hover:border-primary hover:text-primary shadow-md">
+                  Download Resume
+                </button>
+              )}
+              {!isExisting && (
+                <button className="mx-auto text-white bg-primary px-3 py-1 rounded-full my-4 border-2 border-primary hover:bg-background hover:border-2 hover:border-primary hover:text-primary shadow-md">
+                  {statusValue}
+                </button>
+              )}
+            </div>
           </div>
           <div className="w-full mx-2 overflow-x-hidden overflow-y-scroll scrollbar-thin md:overflow-y-hidden ">
             {user && (

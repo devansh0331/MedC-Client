@@ -20,6 +20,8 @@ export function UserContextProvider({ children }) {
   const [userEducation, setUserEducation] = useState([]);
   const [posts, setPosts] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [friendStatus, setFriendStatus] = useState(0);
+  const [statusValue, setStatusValue] = useState("");
 
   const getUserExperience = async () => {
     try {
@@ -210,6 +212,38 @@ export function UserContextProvider({ children }) {
     }
   };
 
+  const checkFriendStatus = async (id) => {
+    try {
+      console.log(id);
+      const res = await fetch(`${SERVER_URL}/user/check-status/${id}`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
+
+      const parsedRes = await res.json();
+      if (!parsedRes) console.error(parsedRes.error);
+      else {
+        console.log(parsedRes);
+        setFriendStatus(parsedRes.data);
+        console.log("Friend Statussss: ", friendStatus);
+        if (parsedRes.data == 0) {
+          setStatusValue("Connect");
+        } else if (parsedRes.data == 1) {
+          setStatusValue("Requested");
+        } else if (parsedRes.data == 2) {
+          setStatusValue("Accept Request");
+        } else if (parsedRes.data == 3) {
+          setStatusValue("Connected");
+        }
+      }
+    } catch (error) {
+      console.error("Failed to check status");
+    }
+  };
+
   useEffect(() => {
     getUser();
   }, []);
@@ -235,6 +269,9 @@ export function UserContextProvider({ children }) {
         userCertificate,
         getAllUsers,
         allUsers,
+        checkFriendStatus,
+        friendStatus,
+        statusValue,
       }}
     >
       {children}
