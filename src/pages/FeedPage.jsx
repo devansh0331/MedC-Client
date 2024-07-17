@@ -13,6 +13,7 @@ import { feedClick } from "../Slices/feedSlice";
 import MaxJob from "../components/MaxJob";
 import Cookies from "js-cookie";
 import { UserContext } from "../UserContext";
+import { Button, Drawer } from "@material-tailwind/react";
 
 function FeedPage() {
   const navigate = useNavigate();
@@ -20,7 +21,8 @@ function FeedPage() {
   const [open, setOpen] = useState(false);
   const { userInfo, user, setUserInfo } = useContext(UserContext);
   const handleOpen = () => setOpen(!open);
-
+  const [openSide, setOpenSide] = useState(false);
+  
   const handleLogout = (e) => {
     e.preventDefault();
     try {
@@ -39,12 +41,12 @@ function FeedPage() {
   };
 
   return (
-    <div className="w-screen h-screen  bg-background relative flex z-0">
+    <div className="w-full flex h-screen bg-background">
       <SideBar
         name={userInfo.name}
         email={userInfo.email}
         handleLogout={handleLogout}
-        className="z-20 absolute h-screen left-0 sm:block hidden"
+        className="h-screen left-0 sm:block hidden"
         route="feed"
         userId={user._id}
       />

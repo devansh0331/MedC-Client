@@ -2,7 +2,8 @@ import { Button } from "@material-tailwind/react";
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../UserContext";
-import logo from "../assets/logo/medc-logo.png";
+// import logo from "../assets/logo/medclogo.png";
+import logo from "../assets/logofoot.png"
 import { FaCirclePlus } from "react-icons/fa6";
 import { FaBell } from "react-icons/fa6";
 import { FaMessage } from "react-icons/fa6";
@@ -35,7 +36,7 @@ function Navbar(props) {
     <nav className="fixed top-0 h-16 flex justify-center w-screen overflow-hidden bg-white z-10 shadow-sm">
       <div className="w-full flex items-center justify-between">
         <div onClick={handleLogoNavigate} className="cursor-pointer md:ml-10">
-          <img src={logo} alt="" className="w-5/6" />
+          <img src={logo} alt="" className="w-24" />
         </div>
         {!userInfo.state && (
           <div className="flex items-center justify-end">
