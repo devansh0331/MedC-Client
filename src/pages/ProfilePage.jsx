@@ -45,7 +45,7 @@ const ProfilePage = () => {
 
     return (
       <>
-    <div className=" flex overflow-hidden">
+    <div className="flex overflow-hidden">
       <SideBar
         name={userInfo.name}
         email={userInfo.email}
