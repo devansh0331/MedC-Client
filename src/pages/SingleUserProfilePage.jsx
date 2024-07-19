@@ -16,8 +16,7 @@ function SingleUserProfilePage() {
   const [close, setClose] = useState(false);
   const [closeAbout, setCloseAbout] = useState(false);
   const [closeDetails, setCloseDetails] = useState(false);
-  const { userInfo, getUser, checkFriendStatus, statusValue, friendStatus } =
-    useContext(UserContext);
+  const { userInfo, checkFriendStatus, statusValue } = useContext(UserContext);
   const [isExisting, setIsExisting] = useState(false);
   const [user, setUser] = useState();
 
@@ -66,9 +65,9 @@ function SingleUserProfilePage() {
       <SideBar
         name={userInfo.name}
         email={userInfo.email}
-        Durg
         // handleLogout={handleLogout}
-        className="absolute z-20 h-screen left-0"
+        // className="absolute z-20 h-screen left-0"
+        className="left-0 sm:block hidden"
         route="profile"
       />
       <div className="w-full h-full bg-background overflow-x-hidden absolute sm:pl-16">
@@ -109,8 +108,8 @@ function SingleUserProfilePage() {
         ) : (
           ""
         )}
-        <div className="w-full lg:w-4/5 xl:w-3/5 mx-auto flex flex-col md:flex-row justify-around pt-20">
-          <div className="mx-2 items-center  flex flex-col">
+        <div className="w-full  lg:w-4/5 mx-auto flex flex-col md:flex-row justify-around pt-20">
+          <div className="mx-2  items-center w-full md:w-5/6  flex flex-col">
             {user && (
               <ProfileCard
                 profileURL={user.profileURL ? user.profileURL : ""}
