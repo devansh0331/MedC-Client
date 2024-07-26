@@ -25,10 +25,9 @@ const ProfileCard = (props) => {
   const [check, setCheck] = useState(false);
 
   return (
-    <>
-    <Card className="">
-      <div className="flex justify-end pt-2 px-2 m-0 cursor-pointer"><FaRegEdit /></div>
-   <Card className="flex min-w-96 bg-white p-4 flex-row">
+   <Card className="min-w-96 bg-white p-4 h-min">
+      <div className="flex justify-end pt-2 px-2 -mt-4 -mr-4  cursor-pointer"><FaRegEdit /></div>
+      <div className="flex">
     <CardHeader
      className="flex flex-col items-center m-0 w-2/5 rounded-none border-r-2"
      floated={false}
@@ -65,10 +64,8 @@ const ProfileCard = (props) => {
           <Typography className="ml-2">twitter</Typography>
       </div>
      </CardBody>
+      </div>
    </Card>
-    </Card>
-    </>
-
   );
 };
 

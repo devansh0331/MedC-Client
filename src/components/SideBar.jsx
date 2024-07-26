@@ -50,7 +50,7 @@ function SideBar() {
               </ListItemPrefix>
             </div>
             <div className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer`}
-            onClick={() => navigate("/profile")}>
+            onClick={() => {navigate("/profile"); closeDrawer();}}>
               <ListItemPrefix className="mx-auto">
               <CgProfile className="w-6 h-6"/>
               </ListItemPrefix>

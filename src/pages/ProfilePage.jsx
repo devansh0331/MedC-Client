@@ -44,84 +44,15 @@ const ProfilePage = () => {
   };
 
     return (
-      <>
-    <div className="flex overflow-hidden">
-      <SideBar
-        name={userInfo.name}
-        email={userInfo.email}
-        handleLogout={handleLogout}
-        className="h-screen left-0 z-10"
-        route="profile"
-        />
-      <div className="w-full h-full bg-background overflow-x-hidden sm:pl-16 z-0">
-        {close ? (
-          <EditProfile
-            name={user.name}
-            email={user.email}
-            bio={user.bio ? user.bio : ""}
-            contact={user.contact ? user.contact : ""}
-            location={user.location ? user.location : ""}
-            linkedin={user.linkedin ? user.linkedin : ""}
-            website={user.website ? user.website : ""}
-            twitter={user.twitter ? user.twitter : ""}
-            setToast={setToast}
-            getUser={getUser}
-            close={close}
-            setClose={setClose}
-          />
-        ) : (
-          ""
-        )}
-        {closeAbout ? (
-          <EditAbout
-            about={user.about}
-            getUser={getUser}
-            setToast={setToast}
-            closeAbout={closeAbout}
-            setCloseAbout={setCloseAbout}
-          />
-        ) : (
-          ""
-        )}
-        {closeDetails ? (
-          <EditDetails
-            closeDetails={closeDetails}
-            setCloseDetails={setCloseDetails}
-          />
-        ) : (
-          ""
-        )}
-        <div className="w-full lg:w-4/5 xl:w-3/5 mx-auto flex flex-col md:flex-row justify-around">
-          <div className="mx-2 items-center  flex flex-col">
-            <ProfileCard
-              profileURL={user.profileURL ? user.profileURL : ""}
-              contact={user.contact ? user.contact : ""}
-              location={user.location ? user.location : ""}
-              name={user.name ? user.name : ""}
-              email={user.email ? user.email : ""}
-              bio={user.bio ? user.bio : ""}
-              linkedin={user.linkedin ? "/" + user.linkedin.split("/")[4] : ""}
-              twitter={user.twitter ? "/" + user.twitter.split("/")[3] : ""}
-              website={user.website ? user.website : ""}
-              setClose={setClose}
-              profile={true}
-            />
-            <button className="mx-auto text-white bg-primary px-3 py-1 rounded-full my-4 hover:bg-background hover:border-2 hover:border-primary hover:text-primary">
-              Upload Resume
-            </button>
-          </div>
-          <div className="w-full mx-2 overflow-x-hidden overflow-y-scroll scrollbar-thin md:overflow-y-hidden ">
-            <ProfileAbout
-              about={user.about ? user.about : ""}
-              setCloseAbout={setCloseAbout}
-            />
-            <ProfileDetails setCloseDetails={setCloseDetails} />
+      <div className="bg-background w-full overflow-x-hidden h-screen">
+        <div className="flex">
+          <SideBar/>
+          <div className="w-[80%] flex mx-auto mt-5 gap-5">
+            <ProfileCard />
+            <ProfileDetails />
           </div>
         </div>
-        <Toaster position="top-right" />
       </div>
-    </div>
-      </>
   );
 };
 
