@@ -10,7 +10,7 @@ import { useState } from "react";
 import EditProfile from "./EditProfile";
 import altprofile from "../assets/altprofile.png";
 import { FaRegEdit } from "react-icons/fa";
-import { 
+import {
   Card,
   CardHeader,
   CardBody,
@@ -19,7 +19,7 @@ import {
   Avatar,
   Button,
   IconButton,
- } from "@material-tailwind/react";
+} from "@material-tailwind/react";
 
 const ProfileCard = (props) => {
   const [check, setCheck] = useState(false);
