@@ -5,10 +5,16 @@ import MinPost from '../components/MinPost'
 
 const Jobs = () => {
   return (
-    <div className='flex'>
+    <div className="w-full flex h-[90vh] bg-background">
       <SideBar/>
-      <MaxJob/>
-      <MinPost/>
+      <div className="flex w-[80%] mx-auto h-[90vh] gap-4">
+        <div className="w-3/5">
+        <MaxJob/>
+        </div>
+        <div className="w-2/5">
+        <MinPost />
+        </div>
+      </div>
     </div>
   )
 }

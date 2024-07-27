@@ -4,8 +4,11 @@ import { FaExpand } from "react-icons/fa";
 import { feedClick } from "../Slices/feedSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { UserContext } from "../UserContext";
+import { Card, Typography } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 const MinPost = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const minJobs = useSelector((state) => state.feed.minJobs);
   const handleExpand = () => {
     dispatch(feedClick(!minJobs));
@@ -18,15 +21,15 @@ const MinPost = () => {
   }, []);
 
   return (
-    <div className="w-1/3 bg-inherit h-2/3 flex-col items-center mx-auto mt-6 shadow-md lg:flex hidden">
-      <div className="w-full bg-white flex justify-center items-center rounded-md">
-        <div className="flex justify-between items-center w-11/12  py-1">
-          <p className="text-xl w-full font-semibold">New Posts</p>
-          <button onClick={() => handleExpand()}>
+    <Card className="w-full bg-inherit h-2/3 flex-col items-center mx-auto mt-5 shadow-md lg:flex hidden">
+      <Card className="w-full flex items-center justify-center bg-white rounded-md">
+        <div className="flex w-11/12 my-1 justify-between items-center">
+          <Typography className="text-xl w-full font-semibold">New Posts</Typography>
+          <button onClick={()=> navigate('/feed')}>
             <FaExpand />
           </button>
         </div>
-      </div>
+      </Card>
 
       <div className="overflow-y-scroll scrollbar-thin w-full h-full flex flex-col items-center">
         {posts.map(
@@ -47,7 +50,7 @@ const MinPost = () => {
             )
         )}
       </div>
-    </div>
+    </Card>
   );
 };
 

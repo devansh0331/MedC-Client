@@ -6,6 +6,7 @@ import ReactTimeAgo from "react-time-ago";
 import { Toaster } from "react-hot-toast";
 import { UserContext } from "../UserContext";
 import { Link } from "react-router-dom";
+import { Avatar, Card, Input } from "@material-tailwind/react";
 
 function PostCard() {
   const [open, setOpen] = useState(false);
@@ -20,19 +21,19 @@ function PostCard() {
   };
 
   return (
-    <div className="w-11/12 flex flex-col md:w-4/5 xl:w-2/5  mx-auto mt-6  bg-inherit  ">
-      <div className="flex  justify-evenly w-full bg-white py-2 items-center rounded-md shadow-md">
+    <div className="w-full flex flex-col  mx-auto mt-5  bg-inherit ">
+      <Card className="flex flex-row gap-4 w-full bg-white py-2 items-center rounded-md shadow-md px-4">
         <Link to={`/user/${user._id}`}>
-          <img
+          <Avatar
             src={user.profileURL ? user.profileURL : altprofile}
             className="rounded-full h-10 md:h-11 w-10 md:w-11"
             alt="profile"
           />
         </Link>
-        <input
+        <Input
           type="text"
           className="w-4/5 border-2 border-gray-500 rounded-md px-2 py-1 md:py-1"
-          placeholder="Create Post"
+          label="Create Post"
           onClick={handleOpen}
         />
         <CreatePostPopUp
@@ -40,8 +41,8 @@ function PostCard() {
           handleOpen={handleOpen}
           getAllPosts={getPosts}
         />
-      </div>
-      <div className="flex flex-col w-full h-screen md:h-full overflow-y-scroll scrollbar-thin">
+      </Card>
+      <div className="flex flex-col w-full h-[78vh] overflow-y-scroll scrollbar-thin mt-2">
         {posts.length === 0 ? (
           <div className="w-full h-full flex items-center justify-center">
             <p className="font-bold text-lg">No Posts Available!</p>

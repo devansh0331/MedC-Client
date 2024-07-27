@@ -6,14 +6,15 @@ import { MdOutlineLocationCity } from "react-icons/md";
 import { FaMoneyBill } from "react-icons/fa6";
 import { IoMdTimer } from "react-icons/io";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { Button, Card, Typography } from "@material-tailwind/react";
 const MaxJobCard = () => {
   return (
-    <div className="w-full flex flex-col bg-white p-2 mx-auto border-b-2 my-2 rounded-md">
+    <Card className="w-full flex flex-col bg-white p-4 my-2">
       {/* POST AND ORGANIZATION */}
-      <div className="flex w-full justify-between px-0 md:px-5 my-2">
+      <div className="flex w-full justify-between px-0 ">
         <div className="flex flex-col">
-          <p className="text-xl font-medium1">Senior Dentist</p>
-          <p className="text-gray-600 font-normal">Deloitte Hospital</p>
+          <Typography className="text-xl">Senior Dentist</Typography>
+          <Typography className="text-md text-gray-600">Deloitte Hospital</Typography>
         </div>
         <div className="flex">
           <IoPaperPlaneOutline className="w-6 h-6 mx-2" />
@@ -21,49 +22,45 @@ const MaxJobCard = () => {
       </div>
 
       {/* SALARY AND OTHER DETAILS */}
-      <div className="flex flex-col text-gray-700 w-full md:px-5 my-2">
-        <div className="flex items-center">
+      <div className="flex flex-col text-gray-700 w-full px-2 my-1">
+        <Typography className="flex items-center">
           <TiDocumentText className="w-5 h-5" />
           <span className="ml-3">1-5 Yrs Experience</span>
-        </div>
-        <div className="flex items-center">
+        </Typography>
+        <Typography className="flex items-center">
           <MdOutlineLocationCity className="w-5 h-5" />
           <span className="ml-3">Jaipur</span>
-        </div>
-        <div className="flex items-center">
+        </Typography>
+        <Typography className="flex items-center">
           <FaMoneyBill className="w-5 h-5" />
           <span className="ml-3">Rs. 30,000 - 45,000 /month</span>
-        </div>
-        <div className="flex items-center">
+        </Typography>
+        <Typography className="flex items-center">
           <IoMdTimer className="w-5 h-5" />
           <span className="ml-3">Immediate Joining</span>
-        </div>
-        <div className="flex items-center">
+        </Typography>
+        <Typography className="flex items-center">
           <FaRegCalendarAlt className="w-5 h-5" />
           <span className="ml-3">Last Date: 30 May</span>
-        </div>
+        </Typography>
       </div>
 
       {/* APPLY */}
-      <div className="w-full flex flex-col md:flex-row md:justify-between md:px-5 my-2">
+      <div className="w-full flex flex-col md:flex-row md:justify-between my-2">
         <div className="flex flex-col">
-          <p className="text-sm text-gray-500">250 Applicants</p>
-          <p className="text-sm text-gray-500">
+          <Typography className="text-gray-600">250 Applicants</Typography>
+          <Typography className="text-gray-600">
             Posted By:{" "}
-            <span className="text-blue-400 cursor-pointer">Aman Mishra</span> |
+            <span className="text-blue-500 cursor-pointer">Aman Mishra</span> |
             2 Days Ago
-          </p>
+          </Typography>
         </div>
-        <div className="flex md:justify-evenly mt-2 md:mt-0 gap-2 md:gap-0 ">
-          <button className="bg-primary text-white px-4 py-1 rounded-lg mx-2 shadow-md text-sm md:text-base">
-            Apply
-          </button>
-          <button className="bg-white border-2 border-primary text-primary px-4 mx-2 py-1 rounded-lg shadow-md text-sm md:text-base">
-            Save
-          </button>
+        <div className="flex items-end gap-4">
+          <Button size="sm" variant="outlined" color="blue">Save</Button>
+          <Button size="sm" color="blue">Apply</Button>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

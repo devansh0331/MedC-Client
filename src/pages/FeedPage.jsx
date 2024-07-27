@@ -41,7 +41,7 @@ function FeedPage() {
   };
 
   return (
-    <div className="w-full flex bg-background">
+    <div className="w-full flex h-[90vh] bg-background">
       <SideBar
         name={userInfo.name}
         email={userInfo.email}
@@ -50,14 +50,13 @@ function FeedPage() {
         route="feed"
         userId={user._id}
       />
-      <div className="w-full h-full flex flex-col md:flex-row fixed z-0 sm:pl-16 md:pl-20">
-        {!minJobs ? (
-          <MaxJob className="w-full m-auto" />
-        ) : (
-          <PostCard className="w-full m-auto" />
-        )}
-        {!minJobs ? <MinPost /> : <JobCard className="lg:block hidden" />}
-        <Toaster position="top-right" />
+      <div className="flex w-[80%] mx-auto h-[90vh] gap-4">
+        <div className="w-3/5">
+        <PostCard/>
+        </div>
+        <div className="w-2/5">
+        <JobCard />
+        </div>
       </div>
     </div>
   );
