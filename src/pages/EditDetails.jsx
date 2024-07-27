@@ -9,17 +9,47 @@ import { BsPersonCircle } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { UserContext } from "../UserContext";
+import About from "../assets/About.png";
+import Experience from "../assets/Experience.png";
+import Education from "../assets/Education.png";
+import Certificates from "../assets/Certificates.png";
+import Achievements from "../assets/Achievements.png";
+import Posts from "../assets/Posts.png";
+import { FaRegEdit } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Avatar,
+  Button,
+  Dialog,
+} from "@material-tailwind/react";
+import SideBar from "../components/SideBar";
 const EditDetails = () => {
-  const [section, setSection] = useState("Experience");
-  const [editexp, setEditexp] = useState(false);
-  const [editEdu, setEditEdu] = useState(false);
-  const [editCert, setEditCert] = useState(false);
+  const [section, setSection] = useState("About");
+  const [openAboutEdit, setOpenAboutEdit] = useState(false);
+  const [openExpEdit, setOpenExpEdit] = useState(false);
+  const [openEduEdit, setOpenEduEdit] = useState(false);
   const [editAchi, setEditAchi] = useState(false);
-
   const [singleExperienceData, setSingleExperienceData] = useState({});
   const [singleEducationData, setSingleEducationData] = useState({});
   const [singleCertificateData, setSingleCertificateData] = useState({});
   const [singleAchievementData, setSingleAchievementData] = useState({});
+
+  const handleAboutEdit = () => {
+    setOpenAboutEdit(!openAboutEdit);
+  };
+
+  const handleExpEdit = () => {
+    setOpenExpEdit(!openExpEdit);
+  };
+
+  const handleEduEdit = () => {
+    setOpenEduEdit(!openEduEdit);
+  };
 
   const {
     getUserExperience,
@@ -39,283 +69,397 @@ const EditDetails = () => {
     console.log(userAchievement);
   }, []);
 
-  const setToast = (msg, success) => {
-    if (success) {
-      toast.success(msg);
-    } else toast.error(msg);
-  };
+  // const setToast = (msg, success) => {
+  //   if (success) {
+  //     toast.success(msg);
+  //   } else toast.error(msg);
+  // };
 
-  const handleAdd = () => {
-    if (section === "Experience") {
-      setSingleExperienceData({});
-      setEditexp(true);
-    } else if (section === "Education") {
-      setSingleEducationData({});
-      setEditEdu(true);
-    } else if (section === "Certificates") {
-      setSingleCertificateData({});
-      setEditCert(true);
-    } else if (section === "Achivements") {
-      setSingleAchievementData({});
-      setEditAchi(true);
-    }
-  };
+  // const handleAdd = () => {
+  //   if (section === "Experience") {
+  //     setSingleExperienceData({});
+  //     setEditexp(true);
+  //   } else if (section === "Education") {
+  //     setSingleEducationData({});
+  //     setEditEdu(true);
+  //   } else if (section === "Certificates") {
+  //     setSingleCertificateData({});
+  //     setEditCert(true);
+  //   } else if (section === "Achivements") {
+  //     setSingleAchievementData({});
+  //     setEditAchi(true);
+  //   }
+  // };
+
   return (
-    <div className="w-full h-screen mx-auto bg-background pt-20 overflow-hidden relative">
-      {editexp && singleExperienceData != {} && (
-        <EditExperience
-          className="absolute"
-          setToast={setToast}
-          setSingleExperienceData={setSingleExperienceData}
-          singleExperienceData={singleExperienceData}
-          setEditexp={setEditexp}
-          getUserExperience={getUserExperience}
-        />
-      )}
+    <div className="flex overflow-hidden bg-background h-screen">
+      <SideBar />
+      <Card className="w-[80%] h-full scrollbar-thin bg-white relative mx-auto mt-5">
+        <div
+          className="absolute top-1 right-4 z-10 bg-white cursor-pointer text-blue-400 underline"
+          onClick={() => navigate("/profile")}
+        >
+          Back to Profile
+        </div>
 
-      {editEdu && singleEducationData != {} && (
-        <EditEdu
-          className="absolute"
-          setToast={setToast}
-          setSingleEducationData={setSingleEducationData}
-          singleEducationData={singleEducationData}
-          getUserEducation={getUserEducation}
-          setEditEdu={setEditEdu}
-        />
-      )}
-      {editCert && (
-        <EditCert
-          className="absolute"
-          setEditCert={setEditCert}
-          setToast={setToast}
-          setSingleCertificateData={setSingleCertificateData}
-          singleCertificateData={singleCertificateData}
-          getUserCertificate={getUserCertificate}
-        />
-      )}
-      {editAchi && (
-        <EditAchi
-          className="absolute"
-          setEditAchi={setEditAchi}
-          setToast={setToast}
-          setSingleAchievementData={setSingleAchievementData}
-          singleAchievementData={singleAchievementData}
-          getUserAchievement={getUserAchievement}
-        />
-      )}
-      <div className="w-3/4 bg-white flex justify-between border-b-2 py-2 text-lg mx-auto items-center">
-        <div className="w-full flex justify-between items-center">
-          <div className="flex  text-gray-800 ">
-            <button
-              className={`border-r-2 mx-1 px-2 border-gray-300 ${
-                section === "Experience" ? "text-blue-600" : ""
+        <CardHeader
+          floated={false}
+          shadow={false}
+          color="transparent"
+          className="rounded-none"
+        >
+          <div className="flex w-full justify-between bg-gray-50 p-1 rounded-md mt-4">
+            <div
+              className={`w-full text-center rounded-md cursor-pointer  ${
+                section === "About" ? "bg-blue-400 text-white" : ""
+              }`}
+              onClick={() => setSection("About")}
+            >
+              <Typography className={`text-md mx-auto py-1 `}>About</Typography>
+            </div>
+            <div
+              className={`w-full text-center rounded-md cursor-pointer ${
+                section === "Experience" ? "bg-blue-400 text-white" : ""
               }`}
               onClick={() => setSection("Experience")}
             >
-              Experience
-            </button>
-            <button
-              className={`border-r-2 mx-1 px-2 border-gray-300 ${
-                section === "Education" ? "text-blue-600" : ""
+              <Typography className={`text-md mx-auto py-1 `}>
+                Experience
+              </Typography>
+            </div>
+            <div
+              className={`w-full text-center rounded-md cursor-pointer ${
+                section === "Education" ? "bg-blue-400 text-white" : ""
               }`}
-              onClick={() => {
-                getUserEducation();
-                setSection("Education");
-              }}
+              onClick={() => setSection("Education")}
             >
-              Education
-            </button>
-            <button
-              className={`border-r-2 mx-1 px-2 border-gray-300 ${
-                section === "Certificates" ? "text-blue-600" : ""
+              <Typography className={`text-md mx-auto py-1 `}>
+                Education
+              </Typography>
+            </div>
+            <div
+              className={`w-full text-center rounded-md cursor-pointer ${
+                section === "Certificates" ? "bg-blue-400 text-white" : ""
               }`}
-              onClick={() => {
-                getUserCertificate();
+              onClick={() => setSection("Certificates")}
+            >
+              <Typography className={`text-md mx-auto py-1 `}>
+                Certificates
+              </Typography>
+            </div>
+            <div
+              className={`w-full text-center rounded-md cursor-pointer ${
+                section === "Achievements" ? "bg-blue-400 text-white" : ""
+              }`}
+              onClick={() => setSection("Achievements")}
+            >
+              <Typography className={`text-md mx-auto py-1 `}>
+                Achievements
+              </Typography>
+            </div>
+            <div
+              className={`w-full text-center rounded-md cursor-pointer ${
+                section === "Posts" ? "bg-blue-400 text-white" : ""
+              }`}
+              onClick={() => setSection("Posts")}
+            >
+              <Typography className={`text-md mx-auto py-1 `}>Posts</Typography>
+            </div>
+          </div>
+        </CardHeader>
 
-                setSection("Certificates");
-              }}
+        <CardBody className="w-full max-h-[80vh] overflow-y-scroll scrollbar-thin ">
+          {section === "About" && (
+            <div className="relative">
+              <div
+                className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
+                onClick={handleAboutEdit}
+              >
+                <FaRegEdit />
+              </div>
+              <div className="pt-6">
+                <Typography className="text-gray-800 text-md">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Beatae assumenda consequuntur, explicabo reprehenderit
+                  voluptates a, veritatis nostrum velit excepturi dolore illo,
+                  quos atque? Accusamus repudiandae error iure suscipit,
+                  sapiente magni voluptatum sequi reiciendis odio sed, nemo quia
+                  amet et. Veniam.
+                </Typography>
+                <Typography className="text-gray-800 text-md">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Beatae assumenda consequuntur, explicabo reprehenderit
+                  voluptates a, veritatis nostrum velit excepturi dolore illo,
+                  quos atque? Accusamus repudiandae error iure suscipit,
+                  sapiente magni voluptatum sequi reiciendis odio sed, nemo quia
+                  amet et. Veniam.
+                </Typography>
+              </div>
+              <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
+            </div>
+          )}
+          {section === "Experience" && (
+            <div className="">
+              <div className="pt-2">
+              <Card
+                shadow={false}
+                className="pb-2 mb-2 border-b-2 rounded-none relative"
+              >
+                <div
+                className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
+                onClick={handleExpEdit}
+              >
+                <FaRegEdit />
+              </div>
+                <Typography className="text-gray-800 text-md">Title</Typography>
+                <Typography className="text-gray-600 text-base">
+                  Organisation
+                </Typography>
+                <Typography className="text-gray-800 text-base my-2">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
+                  error! Rem ullam accusamus voluptatum recusandae dolores
+                  reprehenderit quos facere mollitia.
+                </Typography>
+                <Typography className="text-gray-500 text-base italic">
+                  MM/YYYY - MM/YYYY
+                </Typography>
+              </Card>
+              </div>
+              <div className="w-full flex justify-end">
+              <Button
+                className="mt-2 z-10 cursor-pointer"
+                onClick={handleExpEdit}
+                color="blue"
+                size="sm"
+                >
+                Add Experience
+              </Button>
+                </div>
+              <img
+                src={Experience}
+                className="w-1/2 mx-auto mt-10 opacity-30"
+              />
+            </div>
+          )}
+          {section === "Education" && (
+            <div className="">
+            <div className="pt-2">
+            <Card
+              shadow={false}
+              className="pb-2 mb-2 border-b-2 rounded-none relative"
             >
-              Certificates
-            </button>
-            <button
-              className={`mx-1 px-2 ${
-                section === "Achivements" ? "text-blue-600" : ""
-              }`}
-              onClick={() => {
-                getUserAchievement();
-                setSection("Achivements");
-              }}
+              <div
+              className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
+              onClick={setOpenEduEdit}
             >
-              Achivements
-            </button>
+              <FaRegEdit />
+            </div>
+              <Typography className="text-gray-800 text-md">Title</Typography>
+              <Typography className="text-gray-600 text-base">
+                Organisation
+              </Typography>
+              <Typography className="text-gray-800 text-base my-2">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
+                error! Rem ullam accusamus voluptatum recusandae dolores
+                reprehenderit quos facere mollitia.
+              </Typography>
+              <Typography className="text-gray-500 text-base italic">
+                MM/YYYY - MM/YYYY
+              </Typography>
+            </Card>
+            </div>
+            <div className="w-full flex justify-end">
+            <Button
+              className="mt-2 z-10 cursor-pointer"
+              onClick={setOpenEduEdit}
+              color="blue"
+              size="sm"
+              >
+              Add Education
+            </Button>
+              </div>
+            <img
+              src={Experience}
+              className="w-1/2 mx-auto mt-10 opacity-30"
+            />
           </div>
-          <button
-            className="mr-3 text-gray-700"
-            onClick={() => navigate("/profile")}
-          >
-            <BsPersonCircle className=" w-6 h-6" />
-          </button>
+          )}
+          {section === "Certificates" && (
+            <div>
+              <Card
+                shadow={false}
+                className="pb-2 mb-2 border-b-2 rounded-none"
+              >
+                <Typography className="text-gray-800 text-md">Title</Typography>
+                <Typography className="text-gray-600 text-base">
+                  Organisation
+                </Typography>
+                <Typography className="text-gray-800 text-base my-2">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
+                  error! Rem ullam accusamus voluptatum recusandae dolores
+                  reprehenderit quos facere mollitia.
+                </Typography>
+              </Card>
+              <Card
+                shadow={false}
+                className="pb-2 mb-2 border-b-2 rounded-none"
+              >
+                <Typography className="text-gray-800 text-md">Title</Typography>
+                <Typography className="text-gray-600 text-base">
+                  Organisation
+                </Typography>
+                <Typography className="text-gray-800 text-base my-2">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
+                  error! Rem ullam accusamus voluptatum recusandae dolores
+                  reprehenderit quos facere mollitia.
+                </Typography>
+              </Card>
+              <Card
+                shadow={false}
+                className="pb-2 mb-2 border-b-2 rounded-none"
+              >
+                <Typography className="text-gray-800 text-md">Title</Typography>
+                <Typography className="text-gray-600 text-base">
+                  Organisation
+                </Typography>
+                <Typography className="text-gray-800 text-base my-2">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
+                  error! Rem ullam accusamus voluptatum recusandae dolores
+                  reprehenderit quos facere mollitia.
+                </Typography>
+              </Card>
+              <Card
+                shadow={false}
+                className="pb-2 mb-2 border-b-2 rounded-none"
+              >
+                <Typography className="text-gray-800 text-md">Title</Typography>
+                <Typography className="text-gray-600 text-base">
+                  Organisation
+                </Typography>
+                <Typography className="text-gray-800 text-base my-2">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
+                  error! Rem ullam accusamus voluptatum recusandae dolores
+                  reprehenderit quos facere mollitia.
+                </Typography>
+              </Card>
+              <img
+                src={Certificates}
+                className="w-1/2 mx-auto mt-10 opacity-30"
+              />
+            </div>
+          )}
+          {section === "Achievements" && (
+            <>
+              <Card
+                shadow={false}
+                className="pb-2 mb-2 border-b-2 rounded-none"
+              >
+                <Typography className="text-gray-800 text-md">Title</Typography>
+                <Typography className="text-gray-800 text-base my-2">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
+                  error! Rem ullam accusamus voluptatum recusandae dolores
+                  reprehenderit quos facere mollitia.
+                </Typography>
+              </Card>
+              <Card
+                shadow={false}
+                className="pb-2 mb-2 border-b-2 rounded-none"
+              >
+                <Typography className="text-gray-800 text-md">Title</Typography>
+                <Typography className="text-gray-800 text-base my-2">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
+                  error! Rem ullam accusamus voluptatum recusandae dolores
+                  reprehenderit quos facere mollitia.
+                </Typography>
+              </Card>
+              <Card
+                shadow={false}
+                className="pb-2 mb-2 border-b-2 rounded-none"
+              >
+                <Typography className="text-gray-800 text-md">Title</Typography>
+                <Typography className="text-gray-800 text-base my-2">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
+                  error! Rem ullam accusamus voluptatum recusandae dolores
+                  reprehenderit quos facere mollitia.
+                </Typography>
+              </Card>
+              <Card
+                shadow={false}
+                className="pb-2 mb-2 border-b-2 rounded-none"
+              >
+                <Typography className="text-gray-800 text-md">Title</Typography>
+                <Typography className="text-gray-800 text-base my-2">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
+                  error! Rem ullam accusamus voluptatum recusandae dolores
+                  reprehenderit quos facere mollitia.
+                </Typography>
+              </Card>
+              <Card
+                shadow={false}
+                className="pb-2 mb-2 border-b-2 rounded-none"
+              >
+                <Typography className="text-gray-800 text-md">Title</Typography>
+                <Typography className="text-gray-800 text-base my-2">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
+                  error! Rem ullam accusamus voluptatum recusandae dolores
+                  reprehenderit quos facere mollitia.
+                </Typography>
+              </Card>
+              <Card
+                shadow={false}
+                className="pb-2 mb-2 border-b-2 rounded-none"
+              >
+                <Typography className="text-gray-800 text-md">Title</Typography>
+                <Typography className="text-gray-800 text-base my-2">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
+                  error! Rem ullam accusamus voluptatum recusandae dolores
+                  reprehenderit quos facere mollitia.
+                </Typography>
+              </Card>
+              <Card
+                shadow={false}
+                className="pb-2 mb-2 border-b-2 rounded-none"
+              >
+                <Typography className="text-gray-800 text-md">Title</Typography>
+                <Typography className="text-gray-800 text-base my-2">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
+                  error! Rem ullam accusamus voluptatum recusandae dolores
+                  reprehenderit quos facere mollitia.
+                </Typography>
+              </Card>
+              <img
+                src={Achievements}
+                className="w-1/2 mx-auto mt-10 opacity-30"
+              />
+            </>
+          )}
+          {section === "Posts" && (
+            <>
+              <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
+            </>
+          )}
+        </CardBody>
+      </Card>
+
+      {/* ABOUT EDIT */}
+      <Dialog open={openAboutEdit} handler={handleAboutEdit} className="p-4">
+        <div className="flex w-full justify-between items-start">
+          <Typography className="text-2xl font-bold">Edit About</Typography>
+          <IoClose
+            className="cursor-pointer w-6 h-6"
+            onClick={handleAboutEdit}
+          />
         </div>
-      </div>
-      <div className="w-3/4 overflow-y-scroll scrollbar-thin bg-white h-ful mx-auto">
-        {section === "Experience" && (
-          <div className=" px-3">
-            {userExperience.length == 0 ? (
-              <p className="w-full my-1 px-3 py-2  text-base font-medium">
-                You don't have any experience
-              </p>
-            ) : (
-              userExperience.map((experience) => (
-                <div className="w-full grid grid-cols-1 my-1 px-3 py-2 border-b-2">
-                  <div className="flex justify-between">
-                    <p className="text-base font-medium">{experience.post}</p>
-                    <button
-                      className=""
-                      onClick={() => {
-                        setSingleExperienceData(experience);
-                        setEditexp(true);
-                      }}
-                    >
-                      <FiEdit className="w-5 h-5" />
-                    </button>
-                  </div>
-                  <p className="text-sm text-gray-800">
-                    {experience.organization}
-                  </p>
-                  <p className="text-sm text-gray-600 italic">
-                    {experience.startingMonth
-                      ? experience.startingMonth.split("-")[1]
-                      : ""}
-                    ,
-                    {experience.startingMonth
-                      ? experience.startingMonth.split("-")[0]
-                      : ""}{" "}
-                    -{" "}
-                    {experience.endingMonth
-                      ? experience.endingMonth.split("-")[1]
-                      : ""}
-                    ,
-                    {experience.endingMonth
-                      ? experience.endingMonth.split("-")[0]
-                      : ""}
-                  </p>
-                  <p className="text-sm text-gray-700">
-                    {experience.description}
-                  </p>
-                </div>
-              ))
-            )}
-          </div>
-        )}
-        {section === "Education" && (
-          <div className=" px-3">
-            {userEducation.length == 0 ? (
-              <p className="w-full my-1 px-3 py-2  text-base font-medium">
-                You are illitrate
-              </p>
-            ) : (
-              userEducation.map((education, key) => (
-                <div className="w-full my-1 px-3 py-2 border-b-2">
-                  <div className="flex justify-between">
-                    <p className="text-base font-medium">
-                      {education.organization}
-                    </p>
-                    <button
-                      className=""
-                      onClick={() => {
-                        setSingleEducationData(education);
-                        setEditEdu(true);
-                      }}
-                    >
-                      <FiEdit className="w-5 h-5" />
-                    </button>
-                  </div>
-                  <p className="text-sm text-gray-800">{education.course}</p>
-                  <p className="text-sm text-gray-600 italic">
-                    ({education.startingMonth.split("-")[1]},
-                    {education.startingMonth.split("-")[0]} -{" "}
-                    {education.endingMonth.split("-")[1]},
-                    {education.endingMonth.split("-")[0]})
-                  </p>
-                </div>
-              ))
-            )}
-          </div>
-        )}
-        {section === "Certificates" && (
-          <div className=" px-3">
-            {userCertificate.length == 0 ? (
-              <p className="w-full my-1 px-3 py-2  text-base font-medium">
-                No Certificates Issued
-              </p>
-            ) : (
-              userCertificate.map((certificate, key) => (
-                <div key={key} className="w-full my-1 px-3 py-2 border-b-2">
-                  <div className="flex justify-between">
-                    <p className="text-base font-medium">
-                      {certificate.certificate}
-                    </p>
-                    <button
-                      className=""
-                      onClick={() => {
-                        setSingleCertificateData(certificate);
-                        console.log("Single", singleCertificateData);
-                        setEditCert(true);
-                      }}
-                    >
-                      <FiEdit className="w-5 h-5" />
-                    </button>
-                  </div>
-                  <p className="text-sm text-gray-800">{certificate.issuer}</p>
-                  <p className="text-sm text-gray-700">
-                    {certificate.description}
-                  </p>
-                </div>
-              ))
-            )}
-          </div>
-        )}
-        {section === "Achivements" && (
-          <div className=" px-3">
-            {userAchievement.length == 0 ? (
-              <p className="w-full my-1 px-3 py-2  text-base font-medium">
-                No Achievements Mentioned
-              </p>
-            ) : (
-              userAchievement.map((achievement, key) => (
-                <div key={key} className="w-full my-1 px-3 py-2 border-b-2">
-                  <div className="flex justify-between">
-                    <p className="text-base font-medium">
-                      {achievement.achievement}
-                    </p>
-                    <button
-                      className=""
-                      onClick={() => {
-                        setSingleAchievementData(achievement);
-                        setEditAchi(true);
-                      }}
-                    >
-                      <FiEdit className="w-5 h-5" />
-                    </button>
-                  </div>
-                  <p className="text-sm text-gray-700">
-                    {achievement.description}
-                  </p>
-                </div>
-              ))
-            )}
-          </div>
-        )}
-        <div className="w-full flex justify-end py-2 px-5">
-          <button
-            className="bg-primary text-white px-3 py-1 rounded-full"
-            onClick={() => handleAdd()}
-          >
-            Add
-          </button>
-        </div>
-        <Toaster position="top-right" />
-      </div>
+        <textarea className="border-[1px] border-gray-400 w-full rounded-md min-h-32 max-h-80 mt-4"></textarea>
+        <Button size="sm" color="blue" className="mt-4">
+          Save
+        </Button>
+      </Dialog>
+
+      {/* EXPERIENCE EDIT */}
+      <Dialog open={openExpEdit} handler={handleExpEdit}>
+        fskjsjk
+      </Dialog>
     </div>
   );
 };

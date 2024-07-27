@@ -39,7 +39,7 @@ const ProfilePage = () => {
         navigate("/signin");
       }, 1000);
     } catch (error) {
-      toast.error(error);
+      toast.error(error); 
     }
   };
 

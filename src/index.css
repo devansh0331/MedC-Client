@@ -33,6 +33,11 @@
   -webkit-appearance: none;
   margin: 0;
 }
+.numberInput::-webkit-outer-spin-button,
+.numberInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .first{
     background-image: linear-gradient(to right, #04B4E8 , #9CE0FF), url('./assets/WhiteDoodle2.png');
     background-size: contain;
@@ -59,6 +64,12 @@
   color:#FFFFFF
 }
 .profilepic::file-selector-button{
+  padding: 1px 1px;
+  font-size: small;
+  margin: 0px 3px;
+  margin-right: 5px;
+}
+.fileInput::file-selector-button{
   padding: 1px 1px;
   font-size: small;
   margin: 0px 3px;
