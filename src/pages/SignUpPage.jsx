@@ -102,30 +102,18 @@ function SignUpPage() {
           <p className="w-full text-4xl tracking-wide text-center font-black mb-6 mt-4 font-open leading-custom">
             Start Hiring <br /> With MEDC
           </p>
-          <button
-            onClick={() => setBool(!bool)}
-            className="w-full rounded-full mb-3 flex items-center border border-1 border-gray-500 py-2 px-3"
-          >
-            <img src={emaillogo} alt="email" className="h-7 w-7" />
-            <p className="text-center text-base font-medium w-full">
-              Continue with Email
-            </p>
-          </button>
-          <div className="line-with-text w-full">
-            <span className="line"></span>
-            <span className="text-word">or</span>
-            <span className="line"></span>
-          </div>
-          <div className="w-full flex justify-center mt-3">
+          <div className="w-full flex justify-center my-3">
             <GoogleLogin
               onSuccess={(res) => {
                 signInWithGoogle(res.credential);
               }}
             />
           </div>
-
-          {bool && (
-            <>
+          <div className="line-with-text w-full">
+            <span className="line"></span>
+            <span className="text-word">or</span>
+            <span className="line"></span>
+          </div>
               <div className="flex my-0">
                 <div className="flex flex-col my-2 mr-2">
                   <label
@@ -204,8 +192,6 @@ function SignUpPage() {
               >
                 Create Account
               </Button>
-            </>
-          )}
           <p className="text-center mt-2 text-gray-600 text-sm">
             Already have an account?{" "}
             <button

@@ -26,6 +26,8 @@ import {
   Avatar,
   Button,
   Dialog,
+  Input,
+  Textarea,
 } from "@material-tailwind/react";
 import SideBar from "../components/SideBar";
 const EditDetails = () => {
@@ -33,7 +35,8 @@ const EditDetails = () => {
   const [openAboutEdit, setOpenAboutEdit] = useState(false);
   const [openExpEdit, setOpenExpEdit] = useState(false);
   const [openEduEdit, setOpenEduEdit] = useState(false);
-  const [editAchi, setEditAchi] = useState(false);
+  const [openCertEdit, setOpenCertEdit] = useState(false);
+  const [openAchiEdit, setOpenAchiEdit] = useState(false);
   const [singleExperienceData, setSingleExperienceData] = useState({});
   const [singleEducationData, setSingleEducationData] = useState({});
   const [singleCertificateData, setSingleCertificateData] = useState({});
@@ -49,6 +52,14 @@ const EditDetails = () => {
 
   const handleEduEdit = () => {
     setOpenEduEdit(!openEduEdit);
+  };
+
+  const handleCertEdit = () => {
+    setOpenCertEdit(!openCertEdit);
+  };
+
+  const handleAchiEdit = () => {
+    setOpenAchiEdit(!openAchiEdit);
   };
 
   const {
@@ -201,40 +212,42 @@ const EditDetails = () => {
           {section === "Experience" && (
             <div className="">
               <div className="pt-2">
-              <Card
-                shadow={false}
-                className="pb-2 mb-2 border-b-2 rounded-none relative"
-              >
-                <div
-                className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
-                onClick={handleExpEdit}
-              >
-                <FaRegEdit />
-              </div>
-                <Typography className="text-gray-800 text-md">Title</Typography>
-                <Typography className="text-gray-600 text-base">
-                  Organisation
-                </Typography>
-                <Typography className="text-gray-800 text-base my-2">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                  error! Rem ullam accusamus voluptatum recusandae dolores
-                  reprehenderit quos facere mollitia.
-                </Typography>
-                <Typography className="text-gray-500 text-base italic">
-                  MM/YYYY - MM/YYYY
-                </Typography>
-              </Card>
+                <Card
+                  shadow={false}
+                  className="pb-2 mb-2 border-b-2 rounded-none relative"
+                >
+                  <div
+                    className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
+                    onClick={handleExpEdit}
+                  >
+                    <FaRegEdit />
+                  </div>
+                  <Typography className="text-gray-800 text-md">
+                    Title
+                  </Typography>
+                  <Typography className="text-gray-600 text-base">
+                    Organisation
+                  </Typography>
+                  <Typography className="text-gray-800 text-base my-2">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Id, error! Rem ullam accusamus voluptatum recusandae dolores
+                    reprehenderit quos facere mollitia.
+                  </Typography>
+                  <Typography className="text-gray-500 text-base italic">
+                    MM/YYYY - MM/YYYY
+                  </Typography>
+                </Card>
               </div>
               <div className="w-full flex justify-end">
-              <Button
-                className="mt-2 z-10 cursor-pointer"
-                onClick={handleExpEdit}
-                color="blue"
-                size="sm"
+                <Button
+                  className="mt-2 z-10 cursor-pointer"
+                  onClick={handleExpEdit}
+                  color="blue"
+                  size="sm"
                 >
-                Add Experience
-              </Button>
-                </div>
+                  Add Experience
+                </Button>
+              </div>
               <img
                 src={Experience}
                 className="w-1/2 mx-auto mt-10 opacity-30"
@@ -243,105 +256,85 @@ const EditDetails = () => {
           )}
           {section === "Education" && (
             <div className="">
-            <div className="pt-2">
-            <Card
-              shadow={false}
-              className="pb-2 mb-2 border-b-2 rounded-none relative"
-            >
-              <div
-              className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
-              onClick={setOpenEduEdit}
-            >
-              <FaRegEdit />
-            </div>
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-600 text-base">
-                Organisation
-              </Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-              <Typography className="text-gray-500 text-base italic">
-                MM/YYYY - MM/YYYY
-              </Typography>
-            </Card>
-            </div>
-            <div className="w-full flex justify-end">
-            <Button
-              className="mt-2 z-10 cursor-pointer"
-              onClick={setOpenEduEdit}
-              color="blue"
-              size="sm"
-              >
-              Add Education
-            </Button>
+              <div className="pt-2">
+                <Card
+                  shadow={false}
+                  className="pb-2 mb-2 border-b-2 rounded-none relative"
+                >
+                  <div
+                    className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
+                    onClick={handleEduEdit}
+                  >
+                    <FaRegEdit />
+                  </div>
+                  <Typography className="text-gray-800 text-md">
+                    Title
+                  </Typography>
+                  <Typography className="text-gray-600 text-base">
+                    Organisation
+                  </Typography>
+                  <Typography className="text-gray-800 text-base my-2">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Id, error! Rem ullam accusamus voluptatum recusandae dolores
+                    reprehenderit quos facere mollitia.
+                  </Typography>
+                  <Typography className="text-gray-500 text-base italic">
+                    MM/YYYY - MM/YYYY
+                  </Typography>
+                </Card>
               </div>
-            <img
-              src={Experience}
-              className="w-1/2 mx-auto mt-10 opacity-30"
-            />
-          </div>
+              <div className="w-full flex justify-end">
+                <Button
+                  className="mt-2 z-10 cursor-pointer"
+                  onClick={handleEduEdit}
+                  color="blue"
+                  size="sm"
+                >
+                  Add Education
+                </Button>
+              </div>
+              <img
+                src={Experience}
+                className="w-1/2 mx-auto mt-10 opacity-30"
+              />
+            </div>
           )}
           {section === "Certificates" && (
-            <div>
-              <Card
-                shadow={false}
-                className="pb-2 mb-2 border-b-2 rounded-none"
-              >
-                <Typography className="text-gray-800 text-md">Title</Typography>
-                <Typography className="text-gray-600 text-base">
-                  Organisation
-                </Typography>
-                <Typography className="text-gray-800 text-base my-2">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                  error! Rem ullam accusamus voluptatum recusandae dolores
-                  reprehenderit quos facere mollitia.
-                </Typography>
-              </Card>
-              <Card
-                shadow={false}
-                className="pb-2 mb-2 border-b-2 rounded-none"
-              >
-                <Typography className="text-gray-800 text-md">Title</Typography>
-                <Typography className="text-gray-600 text-base">
-                  Organisation
-                </Typography>
-                <Typography className="text-gray-800 text-base my-2">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                  error! Rem ullam accusamus voluptatum recusandae dolores
-                  reprehenderit quos facere mollitia.
-                </Typography>
-              </Card>
-              <Card
-                shadow={false}
-                className="pb-2 mb-2 border-b-2 rounded-none"
-              >
-                <Typography className="text-gray-800 text-md">Title</Typography>
-                <Typography className="text-gray-600 text-base">
-                  Organisation
-                </Typography>
-                <Typography className="text-gray-800 text-base my-2">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                  error! Rem ullam accusamus voluptatum recusandae dolores
-                  reprehenderit quos facere mollitia.
-                </Typography>
-              </Card>
-              <Card
-                shadow={false}
-                className="pb-2 mb-2 border-b-2 rounded-none"
-              >
-                <Typography className="text-gray-800 text-md">Title</Typography>
-                <Typography className="text-gray-600 text-base">
-                  Organisation
-                </Typography>
-                <Typography className="text-gray-800 text-base my-2">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                  error! Rem ullam accusamus voluptatum recusandae dolores
-                  reprehenderit quos facere mollitia.
-                </Typography>
-              </Card>
+            <div className="">
+              <div className="pt-2">
+                <Card
+                  shadow={false}
+                  className="pb-2 mb-2 border-b-2 rounded-none"
+                >
+                  <div
+                    className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
+                    onClick={handleCertEdit}
+                  >
+                    <FaRegEdit />
+                  </div>
+                  <Typography className="text-gray-800 text-md">
+                    Title
+                  </Typography>
+                  <Typography className="text-gray-600 text-base">
+                    Organisation
+                  </Typography>
+                  <Typography className="text-gray-800 text-base my-2">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Id, error! Rem ullam accusamus voluptatum recusandae dolores
+                    reprehenderit quos facere mollitia.
+                  </Typography>
+                </Card>
+              </div>
+              <div className="w-full flex justify-end">
+                <Button
+                  className="mt-2 z-10 cursor-pointer"
+                  onClick={handleCertEdit}
+                  color="blue"
+                  size="sm"
+                >
+                  Add Certificates
+                </Button>
+              </div>
               <img
                 src={Certificates}
                 className="w-1/2 mx-auto mt-10 opacity-30"
@@ -354,6 +347,12 @@ const EditDetails = () => {
                 shadow={false}
                 className="pb-2 mb-2 border-b-2 rounded-none"
               >
+                <div
+                    className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
+                    onClick={handleAchiEdit}
+                  >
+                    <FaRegEdit />
+                  </div>
                 <Typography className="text-gray-800 text-md">Title</Typography>
                 <Typography className="text-gray-800 text-base my-2">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
@@ -361,72 +360,16 @@ const EditDetails = () => {
                   reprehenderit quos facere mollitia.
                 </Typography>
               </Card>
-              <Card
-                shadow={false}
-                className="pb-2 mb-2 border-b-2 rounded-none"
-              >
-                <Typography className="text-gray-800 text-md">Title</Typography>
-                <Typography className="text-gray-800 text-base my-2">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                  error! Rem ullam accusamus voluptatum recusandae dolores
-                  reprehenderit quos facere mollitia.
-                </Typography>
-              </Card>
-              <Card
-                shadow={false}
-                className="pb-2 mb-2 border-b-2 rounded-none"
-              >
-                <Typography className="text-gray-800 text-md">Title</Typography>
-                <Typography className="text-gray-800 text-base my-2">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                  error! Rem ullam accusamus voluptatum recusandae dolores
-                  reprehenderit quos facere mollitia.
-                </Typography>
-              </Card>
-              <Card
-                shadow={false}
-                className="pb-2 mb-2 border-b-2 rounded-none"
-              >
-                <Typography className="text-gray-800 text-md">Title</Typography>
-                <Typography className="text-gray-800 text-base my-2">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                  error! Rem ullam accusamus voluptatum recusandae dolores
-                  reprehenderit quos facere mollitia.
-                </Typography>
-              </Card>
-              <Card
-                shadow={false}
-                className="pb-2 mb-2 border-b-2 rounded-none"
-              >
-                <Typography className="text-gray-800 text-md">Title</Typography>
-                <Typography className="text-gray-800 text-base my-2">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                  error! Rem ullam accusamus voluptatum recusandae dolores
-                  reprehenderit quos facere mollitia.
-                </Typography>
-              </Card>
-              <Card
-                shadow={false}
-                className="pb-2 mb-2 border-b-2 rounded-none"
-              >
-                <Typography className="text-gray-800 text-md">Title</Typography>
-                <Typography className="text-gray-800 text-base my-2">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                  error! Rem ullam accusamus voluptatum recusandae dolores
-                  reprehenderit quos facere mollitia.
-                </Typography>
-              </Card>
-              <Card
-                shadow={false}
-                className="pb-2 mb-2 border-b-2 rounded-none"
-              >
-                <Typography className="text-gray-800 text-md">Title</Typography>
-                <Typography className="text-gray-800 text-base my-2">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                  error! Rem ullam accusamus voluptatum recusandae dolores
-                  reprehenderit quos facere mollitia.
-                </Typography>
-              </Card>
+              <div className="w-full flex justify-end">
+                <Button
+                  className="mt-2 z-10 cursor-pointer"
+                  onClick={handleAchiEdit}
+                  color="blue"
+                  size="sm"
+                >
+                  Add Achievements
+                </Button>
+              </div>
               <img
                 src={Achievements}
                 className="w-1/2 mx-auto mt-10 opacity-30"
@@ -457,8 +400,84 @@ const EditDetails = () => {
       </Dialog>
 
       {/* EXPERIENCE EDIT */}
-      <Dialog open={openExpEdit} handler={handleExpEdit}>
-        fskjsjk
+      <Dialog open={openExpEdit} handler={handleExpEdit} className="p-4">
+        <div className="flex w-full justify-between items-start">
+          <Typography className="text-2xl font-bold">
+            Edit Experience
+          </Typography>
+          <IoClose className="cursor-pointer w-6 h-6" onClick={handleExpEdit} />
+        </div>
+        <div className="mt-2 grid grid-cols-2 gap-4">
+          <div className="col-span-2">
+            <Input label="Job Title" size="" />
+          </div>
+          <div className="col-span-2">
+            <Input label="Company Name" size="" />
+          </div>
+          <div className="col-span-2">
+            <Textarea label="Description" size="" />
+          </div>
+          <Input label="Start Date" size="" type="month" />
+          <Input label="End Date" size="" type="month" />
+        </div>
+        <Button size="sm" color="blue" className="mt-4">
+          Save
+        </Button>
+      </Dialog>
+
+      {/* EDUCATION EDIT */}
+      <Dialog open={openEduEdit} handler={handleEduEdit} className="p-4">
+        <div className="flex w-full justify-between items-start">
+          <Typography className="text-2xl font-bold">Edit Education</Typography>
+          <IoClose className="cursor-pointer w-6 h-6" onClick={handleEduEdit} />
+        </div>
+        <div className="mt-2 grid grid-cols-2 gap-4">
+          <div className="col-span-2">
+            <Input label="Job Title" size="" />
+          </div>
+          <div className="col-span-2">
+            <Input label="Company Name" size="" />
+          </div>
+          <div className="col-span-2">
+            <Textarea label="Description" size="" />
+          </div>
+          <Input label="Start Date" size="" type="month" />
+          <Input label="End Date" size="" type="month" />
+        </div>
+        <Button size="sm" color="blue" className="mt-4">
+          Save
+        </Button>
+      </Dialog>
+
+      {/* EDIT CERTIFICATES */}
+      <Dialog open={openCertEdit} handler={handleCertEdit} className="p-4">
+        <div className="flex w-full justify-between items-start">
+          <Typography className="text-2xl font-bold">Edit Certificates</Typography>
+          <IoClose className="cursor-pointer w-6 h-6" onClick={handleCertEdit} />
+        </div>
+        <div className="mt-2 grid grid-cols-1 gap-4">
+            <Input label="Job Title" size="" />
+            <Input label="Company Name" size="" />
+            <Textarea label="Description" size="" />
+        </div>
+        <Button size="sm" color="blue" className="mt-4">
+          Save
+        </Button>
+      </Dialog>
+
+      {/* EDIT ACHIEVEMENTS */}
+      <Dialog open={openAchiEdit} handler={handleAchiEdit} className="p-4">
+        <div className="flex w-full justify-between items-start">
+          <Typography className="text-2xl font-bold">Edit Achievements</Typography>
+          <IoClose className="cursor-pointer w-6 h-6" onClick={handleAchiEdit} />
+        </div>
+        <div className="mt-2 grid grid-cols-1 gap-4">
+            <Input label="Job Title" size="" />
+            <Textarea label="Description" size="" />
+        </div>
+        <Button size="sm" color="blue" className="mt-4">
+          Save
+        </Button>
       </Dialog>
     </div>
   );
