@@ -97,6 +97,7 @@ const ProfileCard = (props) => {
               <Typography className="ml-2">twitter</Typography>
             </div>
           </CardBody>
+          {props.route === "single-post" ? "" :
           <CardBody className="flex flex-col px-4 py-2 border-b-2">
             <div className="flex flex-row gap-1 items-center mb-1 justify-between">
               <Typography className="">Saved Jobs</Typography>
@@ -111,8 +112,11 @@ const ProfileCard = (props) => {
               <Typography className="text-base text-white bg-blue-500 px-2 rounded-full" >30</Typography>
             </div>
           </CardBody>
+          }
           <CardFooter className="flex px-4 py-2 justify-between mt-2">
+            {props.route === "single-post" ? "" :
             <Button variant="outlined" size="sm" color="blue">Resume</Button>
+            }
             <Button variant="filled" size="sm" color="blue">Connect</Button>
           </CardFooter>
         </div>

@@ -7,6 +7,8 @@ import { useContext } from "react";
 import { UserContext } from "../UserContext";
 import SideBar from "../components/SideBar";
 import Cookies from "js-cookie";
+import ProfileCard from "../components/ProfileCard";
+import MorefromThem from "../components/MorefromThem";
 
 const SinglePost = () => {
   const [post, setPost] = useState({});
@@ -60,9 +62,13 @@ const SinglePost = () => {
   };
 
   return (
-    <div className="w-full h-screen flex overflow-hidden">
+    <div className="w-full h-[90vh] flex overflow-hidden bg-background">
       <SideBar className="h-screen" route={"profile"} />
-      <div className="w-4/5 h-full mt-20 mx-auto">
+      <div className="flex h-full gap-6 justify-center">
+        <div className="w-80 mt-5">
+        <ProfileCard route="single-post"/>
+        </div>
+        <div className="w-2/5 mt-3">  
         <SinglePostCard
           img={post.fileURL == "" ? null : post.fileURL}
           name={post.user ? post.user.name : "Unknown User"}
@@ -83,6 +89,10 @@ const SinglePost = () => {
           userId={currentUserId}
           className="shadow-md"
         />
+        </div>
+        <div className="w-96">
+        <MorefromThem/>
+        </div>
       </div>
     </div>
   );

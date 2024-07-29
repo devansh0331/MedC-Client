@@ -24,6 +24,7 @@ import Jobs from "./Jobs";
 import NavMain from "../components/NavMain";
 import PostJob from "./PostJob";
 import Settings from "./Settings";
+import SingleJob from "./SingleJob";
 // import { NavbarWithSearch } from "./Nav";
 
 function Main() {
@@ -179,6 +180,15 @@ function Main() {
           <>
             <NavMain route="profile" />
             <SinglePost />
+          </>
+        }
+      />
+      <Route
+        path="/job"
+        element={
+          <>
+            <NavMain route="profile" />
+            <SingleJob />
           </>
         }
       />

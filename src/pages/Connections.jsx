@@ -112,11 +112,11 @@ const Connections = () => {
         <div className="z-40">
         <SideBar className="" />
         </div>
-      <div className="flex w-full justify-between">
+      <div className="flex w-full gap-6 justify-center">
         <Card
           shadow={false}
           floated={false}
-          className="mt-4 mx-2 h-40 hidden lg:block"
+          className="mt-4 h-40 hidden lg:block"
         >
           <List className=" bg-white rounded-lg mr-2">
             <ListItem
@@ -162,7 +162,7 @@ const Connections = () => {
             </ListItem>
           </List>
         </Card>
-        <div className="xl:w-3/6 lg:w-4/6 w-5/6 mt-4 mx-2">
+        <div className="xl:w-3/6 lg:w-4/6 w-5/6 mt-4 ">
           <div className="search">
             <Navbar
               className="flex md:flex-row flex-col items-center justify-center "
@@ -254,7 +254,7 @@ const Connections = () => {
             )}
           </div>
         </div>
-        <div className="w-80 mt-4 mx-2 xl:block hidden">
+        <div className="w-80 mt-4 xl:block hidden">
           <YouMayKnow data={allUsers} />
         </div>
         <Toaster position="top-right" />
