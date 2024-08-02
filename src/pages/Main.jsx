@@ -9,7 +9,6 @@ import SignUpPage from "./SignUpPage";
 import FeedPage from "./FeedPage";
 import "../index.css";
 import ProfilePage from "./ProfilePage";
-import JobPage from "./JobPage";
 import PostJobPage from "./PostJobPage";
 import AboutPage from "./AboutPage";
 import Faq from "./Faq";
@@ -22,7 +21,6 @@ import Hire from "./Hire";
 import SingleUserProfilePage from "./SingleUserProfilePage";
 import Jobs from "./Jobs";
 import NavMain from "../components/NavMain";
-import PostJob from "./PostJob";
 import Settings from "./Settings";
 import SingleJob from "./SingleJob";
 // import { NavbarWithSearch } from "./Nav";
@@ -120,7 +118,7 @@ function Main() {
           </>
         }
       />
-      <Route
+      {/* <Route
         path="/jobs"
         element={
           <>
@@ -128,7 +126,7 @@ function Main() {
             <JobPage />
           </>
         }
-      />
+      /> */}
       <Route
         path="/postjob"
         element={
@@ -207,15 +205,6 @@ function Main() {
           <>
             <NavMain />
             <Hire />
-          </>
-        }
-      />
-      <Route
-        path="/postajob"
-        element={
-          <>
-            <NavMain />
-            <PostJob />
           </>
         }
       />

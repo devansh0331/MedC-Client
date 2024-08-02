@@ -59,7 +59,7 @@ function SideBar() {
   };
   return (
     <>
-      <div className="w-16 cursor-pointer z-40 hidden lg:block sticky h-[90vh]">
+      <div className="w-16 cursor-pointer z-40 hidden lg:block sticky">
         <Card
           className="flex flex-col items-start h-full w-full rounded-none "
           shadow={false}
@@ -119,7 +119,7 @@ function SideBar() {
               </div>
               <div
                 className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer`}
-                onClick={() => navigate("/postajob")}
+                onClick={() => navigate("/postjob")}
               >
                 <ListItemPrefix className="mx-auto">
                   <FaSquarePlus className="w-6 h-6" />
@@ -224,7 +224,7 @@ function SideBar() {
               <div
                 className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer`}
                 onClick={() => {
-                  navigate("/postajob");
+                  navigate("/postjob");
                   closeDrawer();
                 }}
               >

@@ -178,7 +178,7 @@ function SignInPage() {
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         handleSubmit();
-                      }
+                      } 
                     }}
                   />
                   <span

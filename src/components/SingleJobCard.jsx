@@ -22,7 +22,7 @@ const SingleJobCard = () => {
       </div>
 
       {/* LOCATION */}
-      <div className="w-full flex items-center justify-start pt-1">
+      <div className="w-full flex items-center justify-start pt-2">
         <Typography className="text-base">Deloitte Hospital, Hyderabad</Typography>
       </div>
 

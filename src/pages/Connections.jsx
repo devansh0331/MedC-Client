@@ -176,10 +176,8 @@ const Connections = () => {
                   className="pl-9 placeholder:text-blue-gray-100"
                   label="Search"
                   size="sm"
+                  icon={<IoMdSearch />} 
                 />
-                <div className="!absolute right-3 top-[10px]">
-                  <IoMdSearch className="w-5 h-5 text-gray-600" />
-                </div>
               </div>
               <div className="relative flex md:w-2/5 w-full mr-0 md:mr-2 mt-2 md:mt-0 ">
                 <Input
@@ -188,19 +186,14 @@ const Connections = () => {
                   className="lg:pl-9 pl-2 placeholder:text-blue-gray-100 "
                   label="Search Location"
                   size="sm"
+                  icon={<IoLocationSharp />}
                 />
-                <div className="!absolute lg:right-3 right-1 top-[11px]">
-                  <IoLocationSharp className="w-5 h-4 text-gray-600" />
-                </div>
               </div>
-
-              <Button
-                size="sm"
-                variant="outline"
-                className="rounded-md mt-2 md:my-auto"
+              <button
+                className="select-none rounded-lg bg-blue-500 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               >
                 Search
-              </Button>
+              </button>
             </Navbar>
             <div
               className="p-2 bg-gray-100 justify-between block lg:hidden"
@@ -264,50 +257,3 @@ const Connections = () => {
 };
 
 export default Connections;
-
-{
-  /* <Card className="Connections my-2">
-<CardBody
-  shadow={false}
-  floated={false}
-  className="m-0 shrink-0 rounded-r-none flex p-4"
->
-  <div className="flex flex-row gap-3 items-center w-1/2 border-r-2">
-    <Avatar src={altprofile} alt="profile" size="xl" />
-    <div className="">
-      <Typography className="font-bold">John Doe</Typography>
-      <Typography>Developer</Typography>
-    </div>
-  </div>
-
-  <div className="flex flex-col w-1/2">
-    <ul className="pl-4">
-      <li className="flex items-center my-1">
-        <IoLocationSharp />
-        <Typography className="ml-2">
-          Bhilai, Chattissgarh
-        </Typography>
-      </li>
-      <li className="flex items-center my-1">
-        <BsBuildingsFill />
-        <Typography className="ml-2">ABC Hospital</Typography>
-      </li>
-    </ul>
-  </div>
-</CardBody>
-<CardFooter className="flex -mt-3">
-  <Button
-    size="sm"
-    color="light-blue"
-    className="mr-2"
-    shadow
-    hover
-  >
-    Connect
-  </Button>
-  <Button size="sm" color="light-blue" variant="outlined">
-    View Profile
-  </Button>
-</CardFooter>
-</Card> */
-}

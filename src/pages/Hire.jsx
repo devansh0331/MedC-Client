@@ -27,7 +27,7 @@ const Hire = () => {
         <div className="w-full md:w-4/6 m-auto mt-4 mx-2">
           <div className="search">
             <Navbar
-              className="flex flex-col md:flex-row rounded-md"
+              className="flex flex-col md:flex-row rounded-md items-center"
               fullWidth
               shadow
             >
@@ -37,10 +37,8 @@ const Hire = () => {
                   placeholder=""
                   className=" placeholder:text-blue-gray-100"
                   label="Search Name"
+                  icon={<IoMdSearch/>}
                 />
-                <div className="!absolute right-3 top-[10px]">
-                  <IoMdSearch className="w-5 h-5 text-gray-600" />
-                </div>
               </div>
               <div className="relative flex w-full md:w-3/5 mr-2">
                 <Input
@@ -48,14 +46,12 @@ const Hire = () => {
                   placeholder="Search Location"
                   className="  placeholder:text-blue-gray-100 "
                   label="Search Location"
+                  icon={<IoLocationSharp />}
                 />
-                <div className="!absolute right-3 top-[11px]">
-                  <IoLocationSharp className="w-5 h-4 text-gray-600" />
-                </div>
               </div>
-              <Button size="sm" variant="outline">
+              <button type="button" className="select-none rounded-lg bg-blue-500 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
                 Search
-              </Button>
+              </button>
             </Navbar>
           </div>
           <div className="grid md:grid-cols-3 max-h-[78vh] md:max-h-[80vh] overflow-y-scroll scrollbar-thin w-full mt-1">
