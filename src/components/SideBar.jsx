@@ -23,7 +23,7 @@ import { FaGear } from "react-icons/fa6";
 import { IoPowerSharp } from "react-icons/io5";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { handleOpen } from "../Slices/feedSlice";
 import Cookies from "js-cookie";
@@ -40,6 +40,9 @@ function SideBar() {
   const selected = "bg-blue-500 text-white";
   const navigate = useNavigate();
   const { setUserInfo, userInfo, user } = useContext(UserContext);
+  const active = "bg-blue-500 text-white";
+  const currentPage = useLocation().pathname;
+  // console.log(currentPage);
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -78,7 +81,7 @@ function SideBar() {
                 </ListItemPrefix>
               </div>
               <div
-                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer`}
+                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer  ${currentPage.includes("/user") ? active : ""}`}
                 onClick={() => navigate(`/user/${user._id}`)}
               >
                 <ListItemPrefix className="mx-auto">
@@ -86,7 +89,7 @@ function SideBar() {
                 </ListItemPrefix>
               </div>
               <div
-                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer`}
+                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer ${currentPage.includes("/feed") ? active : ""}`}
                 onClick={() => navigate("/feed")}
               >
                 <ListItemPrefix className="mx-auto">
@@ -94,7 +97,7 @@ function SideBar() {
                 </ListItemPrefix>
               </div>
               <div
-                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer`}
+                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer ${currentPage.includes("/jobs") ? active : ""}`}
                 onClick={() => navigate("/jobs")}
               >
                 <ListItemPrefix className="mx-auto">
@@ -102,7 +105,7 @@ function SideBar() {
                 </ListItemPrefix>
               </div>
               <div
-                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer`}
+                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer ${currentPage.includes("/hire") ? active : ""}`}
                 onClick={() => navigate("/hire")}
               >
                 <ListItemPrefix className="mx-auto">
@@ -110,7 +113,7 @@ function SideBar() {
                 </ListItemPrefix>
               </div>
               <div
-                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer`}
+                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer ${currentPage.includes("/connections") ? active : ""}`}
                 onClick={() => navigate("/connections")}
               >
                 <ListItemPrefix className="mx-auto">
@@ -118,7 +121,7 @@ function SideBar() {
                 </ListItemPrefix>
               </div>
               <div
-                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer`}
+                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer ${currentPage.includes("/postjob") ? active : ""}`}
                 onClick={() => navigate("/postjob")}
               >
                 <ListItemPrefix className="mx-auto">
@@ -126,7 +129,7 @@ function SideBar() {
                 </ListItemPrefix>
               </div>
               <div
-                className={`hidden lg:flex items-center justify-center px-4 py-3 rounded-md my-1 cursor-pointer`}
+                className={`hidden lg:flex items-center justify-center px-4 py-3 rounded-md my-1 cursor-pointer ${currentPage.includes("/settings") ? active : ""}`}
                 onClick={() => navigate("/settings")}
               >
                 <ListItemPrefix className="mx-auto">
@@ -134,7 +137,7 @@ function SideBar() {
                 </ListItemPrefix>
               </div>
               <div
-                className={`hidden lg:flex items-center justify-center px-4 py-3 rounded-md my-1 cursor-pointer`}
+                className={`hidden lg:flex items-center justify-center px-4 py-3 rounded-md my-1 cursor-pointer text-red-800`}
                 onClick={(e) => handleLogout(e)}
               >
                 <ListItemPrefix className="mx-auto">
@@ -156,7 +159,7 @@ function SideBar() {
             className="flex flex-col w-full m-0"
           >
             <div
-              className="flex items-center border-b-2 mt-4 p-4 cursor-pointer hover:bg-blue-gray-50 rounded-xl"
+              className={`flex items-center border-b-2 mt-4 p-4 cursor-pointer hover:bg-blue-gray-50 rounded-xl ${currentPage.includes("/user") ? active : ""}`}
               onClick={() => navigate(`/user/${user._id}`)}
             >
               <Avatar
@@ -174,7 +177,7 @@ function SideBar() {
           <CardBody className="p-0 w-full">
             <div className="mt-2 p-2  border-b-2 mx-2">
               <div
-                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer`}
+                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer ${currentPage.includes("/feed") ? active : ""}`}
                 onClick={() => {
                   navigate("/feed");
                   closeDrawer();
@@ -186,7 +189,7 @@ function SideBar() {
                 <Typography className="ml-2">Posts</Typography>
               </div>
               <div
-                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer`}
+                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer ${currentPage.includes("/jobs") ? active : ""}`}
                 onClick={() => {
                   navigate("/jobs");
                   closeDrawer();
@@ -198,7 +201,7 @@ function SideBar() {
                 <Typography className="ml-2">Jobs</Typography>
               </div>
               <div
-                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer`}
+                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer ${currentPage.includes("/hire") ? active : ""}`}
                 onClick={() => {
                   navigate("/hire");
                   closeDrawer();
@@ -210,7 +213,7 @@ function SideBar() {
                 <Typography className="ml-2">Hire</Typography>
               </div>
               <div
-                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer`}
+                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer ${currentPage.includes("/connections") ? active : ""}`}
                 onClick={() => {
                   navigate("/connections");
                   closeDrawer();
@@ -222,7 +225,7 @@ function SideBar() {
                 <Typography className="ml-2">Connections</Typography>
               </div>
               <div
-                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer`}
+                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer ${currentPage.includes("/postjob") ? active : ""}`}
                 onClick={() => {
                   navigate("/postjob");
                   closeDrawer();
@@ -236,7 +239,7 @@ function SideBar() {
             </div>
             <div className="mt-2 p-2">
               <div
-                className={`flex items-center px-4 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer`}
+                className={`flex items-center px-4 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer ${currentPage.includes("/settings") ? active : ""}`}
                 onClick={() => {
                   navigate("/settings");
                   closeDrawer();
@@ -248,7 +251,7 @@ function SideBar() {
                 <Typography className="ml-2">Settings</Typography>
               </div>
               <div
-                className={`flex items-center px-4 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer`}
+                className={`flex items-center px-4 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer text-red-800`}
                 onClick={(e) => handleLogout(e)}
               >
                 <ListItemPrefix>
