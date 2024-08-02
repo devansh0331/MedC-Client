@@ -76,3 +76,6 @@
   margin-right: 5px;
 }
 
+.react-quill::-webkit-scrollbar{
+  display: none;
+}

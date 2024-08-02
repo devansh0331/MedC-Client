@@ -25,7 +25,7 @@ const JobCardSingle = () => {
         className="p-2 m-0 flex justify-between"
       >
         <div className="flex flex-col">
-          <Typography className="text-2xl leading-5 tracking-wide text-black w-full font-semibold">
+          <Typography className="text-2xl tracking-wide text-black w-full font-semibold">
             Job Title, Company
           </Typography>
           <Typography className="flex text-lg text-gray-800">
@@ -36,7 +36,7 @@ const JobCardSingle = () => {
           <Typography className="text-sm">250 Applicants</Typography>
           <Typography className="text-sm">
             Posted by,{" "}
-            <span className="text-blue-500 cursor-pointer">Deloitte</span>
+            <span className="text-blue-500 cursor-pointer">Aman Mishra</span>
           </Typography>
         </div>
       </CardHeader>

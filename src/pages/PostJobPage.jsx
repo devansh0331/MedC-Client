@@ -7,7 +7,7 @@ const PostJobPage = () => {
     <div className='w-full flex bg-background h-[89vh]'>
       <SideBar/>
       <div className="flex w-full gap-4 justify-center mt-5">
-        <div className="w-3/4">
+        <div className="w-4/5">
         <PostJobCard/>
         </div>
       </div>
