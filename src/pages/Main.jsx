@@ -23,6 +23,7 @@ import Jobs from "./Jobs";
 import NavMain from "../components/NavMain";
 import Settings from "./Settings";
 import SingleJob from "./SingleJob";
+import Admin from "./Admin";
 // import { NavbarWithSearch } from "./Nav";
 
 function Main() {
@@ -214,6 +215,15 @@ function Main() {
           <>
             <NavMain />
             <Settings />
+          </>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <>
+            <NavMain />
+            <Admin />
           </>
         }
       />

@@ -117,8 +117,8 @@ const SinglePostCard = (props) => {
             <Avatar src={altprofile} alt="profile" size="lg" />
           </div>
           <div className="ml-4">
-            <Typography className="text-base font-bold">John Doe</Typography>
-            <Typography>Developer</Typography>
+            <Typography className="text-base font-bold text-gray-900">John Doe</Typography>
+            <Typography className="text-base text-gray-900">Developer</Typography>
           </div>
         </div>
         <div className="ml-auto flex gap-2">
@@ -129,7 +129,7 @@ const SinglePostCard = (props) => {
         </div>
       </CardHeader>
       <CardBody className="m-0 p-0">
-        <Typography className="py-4 px-2">
+        <Typography className="py-4 px-2 text-gray-800">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
           placeat unde at inventore vero aperiam quod aliquam nemo vitae,
           repellat cum deserunt assumenda quaerat necessitatibus reiciendis
