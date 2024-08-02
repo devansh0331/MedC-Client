@@ -12,7 +12,7 @@ const SingleJobCard = () => {
             alt=""
             size="sm"
           />
-          <Typography className="text-[17px] font-medium">Senior Dentist</Typography>
+          <Typography className="text-[19px] font-medium text-gray-900">Senior Dentist</Typography>
         </div>
 
         {/* SAVE JOB */}
@@ -22,12 +22,12 @@ const SingleJobCard = () => {
       </div>
 
       {/* LOCATION */}
-      <div className="w-full flex items-center justify-start pt-1">
-        <Typography className="text-base">Deloitte Hospital, Hyderabad</Typography>
+      <div className="w-full flex items-center justify-start pt-2">
+        <Typography className="text-base text-gray-800">Deloitte Hospital, Hyderabad</Typography>
       </div>
 
       {/* SALARY AND DURATION OF JOB POSTING */}
-      <div className="w-full flex items-center justify-between text-gray-600 text-sm">
+      <div className="w-full flex items-center justify-between text-gray-700 text-sm">
         {/* SALARY */}
         <div>
           <Typography>Rs. 2,000 - 5,000 / Hourly</Typography>

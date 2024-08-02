@@ -8,12 +8,14 @@ import JobNav from '../components/JobNav'
 
 const SingleJob = () => {
   return (
-    <div className='w-full h-[90vh] flex overflow-hidden bg-background'>
+    <div className='w-full h-[90vh] flex bg-background'>
       <SideBar/>
       <div className="flex w-full h-full gap-6 justify-center">
         <div className="w-3/5 mt-5 flex flex-col gap-4">
         <JobNav/>
+        <div className=' overflow-y-scroll scrollbar-thin'>
         <JobCardSingle/>
+        </div>
         </div>
         <div className="w-96">
         <MoreLikeThis/>

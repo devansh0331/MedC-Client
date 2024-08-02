@@ -19,7 +19,7 @@ const MinPostCard = (props) => {
           </Link>
           <div className="flex flex-col">
             <Link to={`/user/${props.profileId}`}>
-              <Typography className="text-[17px]">{props.name}</Typography>
+              <Typography className="text-[17px] text-gray-900">{props.name}</Typography>
             </Link>
           </div>
         </div>
@@ -35,7 +35,7 @@ const MinPostCard = (props) => {
       </div>
       {/* POST */}
       <div className="flex flex-col w-full mt-2">
-        <Typography className=" min-w-full">
+        <Typography className="min-w-full text-gray-800">
           {props.description}
           <br />
           <button
