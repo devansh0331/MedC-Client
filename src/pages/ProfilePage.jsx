@@ -21,7 +21,7 @@ const ProfilePage = () => {
   useEffect(() => {
     getUser();
   }, []);
-
+  console.log("UseR:" + user);
   const setToast = (msg, success) => {
     if (success) {
       toast.success(msg);
@@ -39,20 +39,20 @@ const ProfilePage = () => {
         navigate("/signin");
       }, 1000);
     } catch (error) {
-      toast.error(error); 
+      toast.error(error);
     }
   };
 
-    return (
-      <div className="bg-background w-full overflow-x-hidden">
-        <div className="flex">
-          <SideBar/>
-          <div className="w-[80%] flex mx-auto mt-5 gap-5">
-            <ProfileCard />
-            <ProfileDetails />
-          </div>
+  return (
+    <div className="bg-background w-full overflow-x-hidden">
+      <div className="flex">
+        <SideBar />
+        <div className="w-[80%] flex mx-auto mt-5 gap-5">
+          <ProfileCard />
+          <ProfileDetails />
         </div>
       </div>
+    </div>
   );
 };
 

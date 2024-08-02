@@ -103,12 +103,12 @@ const EditDetails = () => {
   // };
 
   return (
-    <div className="flex overflow-hidden bg-background h-screen">
+    <div className=" flex overflow-hidden bg-background h-screen">
       <SideBar />
       <Card className="w-[80%] h-full scrollbar-thin bg-white relative mx-auto mt-5">
         <div
           className="absolute top-1 right-4 z-10 bg-white cursor-pointer text-blue-400 underline"
-          onClick={() => navigate("/profile")}
+          onClick={() => navigate(-1)}
         >
           Back to Profile
         </div>
@@ -132,7 +132,11 @@ const EditDetails = () => {
               className={`w-full text-center rounded-md cursor-pointer ${
                 section === "Experience" ? "bg-blue-400 text-white" : ""
               }`}
-              onClick={() => setSection("Experience")}
+              onClick={() => {
+                getUserExperience();
+                console.log(userExperience);
+                setSection("Experience");
+              }}
             >
               <Typography className={`text-md mx-auto py-1 `}>
                 Experience
@@ -142,7 +146,11 @@ const EditDetails = () => {
               className={`w-full text-center rounded-md cursor-pointer ${
                 section === "Education" ? "bg-blue-400 text-white" : ""
               }`}
-              onClick={() => setSection("Education")}
+              onClick={() => {
+                getUserEducation();
+                console.log(userEducation);
+                setSection("Education");
+              }}
             >
               <Typography className={`text-md mx-auto py-1 `}>
                 Education
@@ -152,7 +160,11 @@ const EditDetails = () => {
               className={`w-full text-center rounded-md cursor-pointer ${
                 section === "Certificates" ? "bg-blue-400 text-white" : ""
               }`}
-              onClick={() => setSection("Certificates")}
+              onClick={() => {
+                getUserCertificate();
+                console.log(userCertificate);
+                setSection("Certificates");
+              }}
             >
               <Typography className={`text-md mx-auto py-1 `}>
                 Certificates
@@ -162,7 +174,10 @@ const EditDetails = () => {
               className={`w-full text-center rounded-md cursor-pointer ${
                 section === "Achievements" ? "bg-blue-400 text-white" : ""
               }`}
-              onClick={() => setSection("Achievements")}
+              onClick={() => {
+                getUserAchievement();
+                setSection("Achievements");
+              }}
             >
               <Typography className={`text-md mx-auto py-1 `}>
                 Achievements
@@ -197,50 +212,15 @@ const EditDetails = () => {
                   sapiente magni voluptatum sequi reiciendis odio sed, nemo quia
                   amet et. Veniam.
                 </Typography>
-                <Typography className="text-gray-800 text-md">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Beatae assumenda consequuntur, explicabo reprehenderit
-                  voluptates a, veritatis nostrum velit excepturi dolore illo,
-                  quos atque? Accusamus repudiandae error iure suscipit,
-                  sapiente magni voluptatum sequi reiciendis odio sed, nemo quia
-                  amet et. Veniam.
-                </Typography>
               </div>
               <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
             </div>
           )}
           {section === "Experience" && (
             <div className="">
-              <div className="pt-2">
-                <Card
-                  shadow={false}
-                  className="pb-2 mb-2 border-b-2 rounded-none relative"
-                >
-                  <div
-                    className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
-                    onClick={handleExpEdit}
-                  >
-                    <FaRegEdit />
-                  </div>
-                  <Typography className="text-gray-800 text-md">
-                    Title
-                  </Typography>
-                  <Typography className="text-gray-600 text-base">
-                    Organisation
-                  </Typography>
-                  <Typography className="text-gray-800 text-base my-2">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Id, error! Rem ullam accusamus voluptatum recusandae dolores
-                    reprehenderit quos facere mollitia.
-                  </Typography>
-                  <Typography className="text-gray-500 text-base italic">
-                    MM/YYYY - MM/YYYY
-                  </Typography>
-                </Card>
-              </div>
               <div className="w-full flex justify-end">
                 <Button
-                  className="mt-2 z-10 cursor-pointer"
+                  className="my-2 z-10 cursor-pointer"
                   onClick={handleExpEdit}
                   color="blue"
                   size="sm"
@@ -248,44 +228,56 @@ const EditDetails = () => {
                   Add Experience
                 </Button>
               </div>
-              <img
-                src={Experience}
-                className="w-1/2 mx-auto mt-10 opacity-30"
-              />
+              <div className="pt-2">
+                {userExperience ? (
+                  <>
+                    {userExperience.map((experience, key) => (
+                      <Card
+                        key={key}
+                        shadow={false}
+                        className="pb-2 mb-2 border-b-2 rounded-none relative"
+                      >
+                        <div
+                          className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
+                          onClick={handleExpEdit}
+                        >
+                          <FaRegEdit />
+                        </div>
+                        {experience.post && (
+                          <Typography className="text-gray-800 text-md">
+                            {experience.post}
+                          </Typography>
+                        )}
+                        {experience.organization && (
+                          <Typography className="text-gray-600 text-base">
+                            {experience.organization}
+                          </Typography>
+                        )}
+                        {experience.description && (
+                          <Typography className="text-gray-800 text-base my-2">
+                            {experience.description}
+                          </Typography>
+                        )}
+                        <Typography className="text-gray-500 text-base italic">
+                          {experience.startingMonth} - {experience.endingMonth}
+                        </Typography>
+                      </Card>
+                    ))}
+                  </>
+                ) : (
+                  <img
+                    src={Experience}
+                    className="w-1/2 mx-auto mt-10 opacity-30"
+                  />
+                )}
+              </div>
             </div>
           )}
           {section === "Education" && (
             <div className="">
-              <div className="pt-2">
-                <Card
-                  shadow={false}
-                  className="pb-2 mb-2 border-b-2 rounded-none relative"
-                >
-                  <div
-                    className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
-                    onClick={handleEduEdit}
-                  >
-                    <FaRegEdit />
-                  </div>
-                  <Typography className="text-gray-800 text-md">
-                    Title
-                  </Typography>
-                  <Typography className="text-gray-600 text-base">
-                    Organisation
-                  </Typography>
-                  <Typography className="text-gray-800 text-base my-2">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Id, error! Rem ullam accusamus voluptatum recusandae dolores
-                    reprehenderit quos facere mollitia.
-                  </Typography>
-                  <Typography className="text-gray-500 text-base italic">
-                    MM/YYYY - MM/YYYY
-                  </Typography>
-                </Card>
-              </div>
               <div className="w-full flex justify-end">
                 <Button
-                  className="mt-2 z-10 cursor-pointer"
+                  className="my-2 z-10 cursor-pointer"
                   onClick={handleEduEdit}
                   color="blue"
                   size="sm"
@@ -293,41 +285,56 @@ const EditDetails = () => {
                   Add Education
                 </Button>
               </div>
-              <img
-                src={Experience}
-                className="w-1/2 mx-auto mt-10 opacity-30"
-              />
+              <div className="pt-2">
+                {userEducation ? (
+                  <>
+                    {userEducation.map((education, key) => (
+                      <Card
+                        shadow={false}
+                        key={key}
+                        className="pb-2 mb-2 border-b-2 rounded-none relative"
+                      >
+                        <div
+                          className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
+                          onClick={handleEduEdit}
+                        >
+                          <FaRegEdit />
+                        </div>
+                        {education.course && (
+                          <Typography className="text-gray-800 text-md">
+                            {education.course}
+                          </Typography>
+                        )}
+                        {education.organization && (
+                          <Typography className="text-gray-600 text-base">
+                            {education.organization}
+                          </Typography>
+                        )}
+                        {education.description && (
+                          <Typography className="text-gray-800 text-base my-2">
+                            {education.description}
+                          </Typography>
+                        )}
+                        <Typography className="text-gray-500 text-base italic">
+                          {education.startingMonth} - {education.endingMonth}
+                        </Typography>
+                      </Card>
+                    ))}
+                  </>
+                ) : (
+                  <img
+                    src={Experience}
+                    className="w-1/2 mx-auto mt-10 opacity-30"
+                  />
+                )}
+              </div>
             </div>
           )}
           {section === "Certificates" && (
             <div className="">
-              <div className="pt-2">
-                <Card
-                  shadow={false}
-                  className="pb-2 mb-2 border-b-2 rounded-none"
-                >
-                  <div
-                    className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
-                    onClick={handleCertEdit}
-                  >
-                    <FaRegEdit />
-                  </div>
-                  <Typography className="text-gray-800 text-md">
-                    Title
-                  </Typography>
-                  <Typography className="text-gray-600 text-base">
-                    Organisation
-                  </Typography>
-                  <Typography className="text-gray-800 text-base my-2">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Id, error! Rem ullam accusamus voluptatum recusandae dolores
-                    reprehenderit quos facere mollitia.
-                  </Typography>
-                </Card>
-              </div>
               <div className="w-full flex justify-end">
                 <Button
-                  className="mt-2 z-10 cursor-pointer"
+                  className="my-2 z-10 cursor-pointer"
                   onClick={handleCertEdit}
                   color="blue"
                   size="sm"
@@ -335,46 +342,97 @@ const EditDetails = () => {
                   Add Certificates
                 </Button>
               </div>
-              <img
-                src={Certificates}
-                className="w-1/2 mx-auto mt-10 opacity-30"
-              />
+              <div className="pt-2">
+                {userCertificate.length != 0 ? (
+                  <>
+                    {userCertificate.map((certificate, key) => (
+                      <Card
+                        shadow={false}
+                        className="pb-2 mb-2 border-b-2 rounded-none"
+                      >
+                        <div
+                          className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
+                          onClick={handleCertEdit}
+                        >
+                          <FaRegEdit />
+                        </div>
+                        {certificate.certificate && (
+                          <Typography className="text-gray-800 text-md">
+                            {certificate.certificate}
+                          </Typography>
+                        )}
+                        {certificate.issuer && (
+                          <Typography className="text-gray-600 text-base">
+                            {certificate.issuer}
+                          </Typography>
+                        )}
+                        {certificate.description && (
+                          <Typography className="text-gray-800 text-base my-2">
+                            {certificate.description}
+                          </Typography>
+                        )}
+                      </Card>
+                    ))}
+                  </>
+                ) : (
+                  <img
+                    src={Certificates}
+                    className="w-1/2 mx-auto mt-10 opacity-30"
+                  />
+                )}
+              </div>
             </div>
           )}
           {section === "Achievements" && (
-            <>
-              <Card
-                shadow={false}
-                className="pb-2 mb-2 border-b-2 rounded-none"
-              >
-                <div
-                    className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
+            <div>
+              <div className="">
+                <div className="w-full flex justify-end">
+                  <Button
+                    className="my-2 z-10 cursor-pointer"
                     onClick={handleAchiEdit}
+                    color="blue"
+                    size="sm"
                   >
-                    <FaRegEdit />
-                  </div>
-                <Typography className="text-gray-800 text-md">Title</Typography>
-                <Typography className="text-gray-800 text-base my-2">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                  error! Rem ullam accusamus voluptatum recusandae dolores
-                  reprehenderit quos facere mollitia.
-                </Typography>
-              </Card>
-              <div className="w-full flex justify-end">
-                <Button
-                  className="mt-2 z-10 cursor-pointer"
-                  onClick={handleAchiEdit}
-                  color="blue"
-                  size="sm"
-                >
-                  Add Achievements
-                </Button>
+                    Add Achievements
+                  </Button>
+                </div>
+                <div className="pt-2">
+                  {userAchievement.length != 0 ? (
+                    <>
+                      {userAchievement.map((achievement, key) => (
+                        <Card
+                          key={key}
+                          shadow={false}
+                          className="pb-2 mb-2 border-b-2 rounded-none"
+                        >
+                          <div
+                            className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
+                            onClick={handleAchiEdit}
+                          >
+                            <FaRegEdit />
+                          </div>
+                          {achievement.title && (
+                            <Typography className="text-gray-800 text-md">
+                              {achievement.title}
+                            </Typography>
+                          )}
+                          {achievement.description && (
+                            <Typography className="text-gray-800 text-base my-2">
+                              {achievement.description}
+                            </Typography>
+                          )}
+                        </Card>
+                      ))}
+                    </>
+                  ) : (
+                    <img
+                      src={Achievements}
+                      className="w-1/2 mx-auto mt-10 opacity-30"
+                    />
+                  )}
+                </div>
               </div>
-              <img
-                src={Achievements}
-                className="w-1/2 mx-auto mt-10 opacity-30"
-              />
-            </>
+            </div>
           )}
           {section === "Posts" && (
             <>
@@ -400,31 +458,12 @@ const EditDetails = () => {
       </Dialog>
 
       {/* EXPERIENCE EDIT */}
-      <Dialog open={openExpEdit} handler={handleExpEdit} className="p-4">
-        <div className="flex w-full justify-between items-start">
-          <Typography className="text-2xl font-bold">
-            Edit Experience
-          </Typography>
-          <IoClose className="cursor-pointer w-6 h-6" onClick={handleExpEdit} />
-        </div>
-        <div className="mt-2 grid grid-cols-2 gap-4">
-          <div className="col-span-2">
-            <Input label="Job Title" size="" />
-          </div>
-          <div className="col-span-2">
-            <Input label="Company Name" size="" />
-          </div>
-          <div className="col-span-2">
-            <Textarea label="Description" size="" />
-          </div>
-          <Input label="Start Date" size="" type="month" />
-          <Input label="End Date" size="" type="month" />
-        </div>
-        <Button size="sm" color="blue" className="mt-4">
-          Save
-        </Button>
-      </Dialog>
-
+      {openExpEdit && (
+        <EditExperience
+          setOpenExpEdit={setOpenExpEdit}
+          openExpEdit={openExpEdit}
+        />
+      )}
       {/* EDUCATION EDIT */}
       <Dialog open={openEduEdit} handler={handleEduEdit} className="p-4">
         <div className="flex w-full justify-between items-start">
@@ -452,13 +491,18 @@ const EditDetails = () => {
       {/* EDIT CERTIFICATES */}
       <Dialog open={openCertEdit} handler={handleCertEdit} className="p-4">
         <div className="flex w-full justify-between items-start">
-          <Typography className="text-2xl font-bold">Edit Certificates</Typography>
-          <IoClose className="cursor-pointer w-6 h-6" onClick={handleCertEdit} />
+          <Typography className="text-2xl font-bold">
+            Edit Certificates
+          </Typography>
+          <IoClose
+            className="cursor-pointer w-6 h-6"
+            onClick={handleCertEdit}
+          />
         </div>
         <div className="mt-2 grid grid-cols-1 gap-4">
-            <Input label="Job Title" size="" />
-            <Input label="Company Name" size="" />
-            <Textarea label="Description" size="" />
+          <Input label="Job Title" size="" />
+          <Input label="Company Name" size="" />
+          <Textarea label="Description" size="" />
         </div>
         <Button size="sm" color="blue" className="mt-4">
           Save
@@ -468,12 +512,17 @@ const EditDetails = () => {
       {/* EDIT ACHIEVEMENTS */}
       <Dialog open={openAchiEdit} handler={handleAchiEdit} className="p-4">
         <div className="flex w-full justify-between items-start">
-          <Typography className="text-2xl font-bold">Edit Achievements</Typography>
-          <IoClose className="cursor-pointer w-6 h-6" onClick={handleAchiEdit} />
+          <Typography className="text-2xl font-bold">
+            Edit Achievements
+          </Typography>
+          <IoClose
+            className="cursor-pointer w-6 h-6"
+            onClick={handleAchiEdit}
+          />
         </div>
         <div className="mt-2 grid grid-cols-1 gap-4">
-            <Input label="Job Title" size="" />
-            <Textarea label="Description" size="" />
+          <Input label="Job Title" size="" />
+          <Textarea label="Description" size="" />
         </div>
         <Button size="sm" color="blue" className="mt-4">
           Save
