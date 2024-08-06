@@ -7,18 +7,20 @@ import { RiMenuFold2Line } from "react-icons/ri";
 import { handleOpen } from "../Slices/feedSlice";
 import { useDispatch, useSelector } from "react-redux";
 import SideBar from "./SideBar";
+import { useNavigate } from "react-router-dom";
 
 const NavMain = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const open = useSelector((state) => state.feed.open);
     const handleExpand = () => {
         console.log(open);
       dispatch(handleOpen(!open));
     };
   return (
-    <Navbar className="sticky top-0 z-20 max-w-full rounded-none px-2 py-2 lg:px-8 lg:py-2 border-0 text-gray-800">
+    <Navbar className="sticky top-0 z-20 max-w-full rounded-none px-2 py-2 lg:px-8 lg:py-2 border-0 text-gray-800 h-[10vh]">
       <div className="w-11/12 mx-auto flex justify-between items-center">
-        <img src={logofoot} alt="logo" className="h-12" />
+        <img src={logofoot} alt="logo" className="h-12 cursor-pointer" onClick={() => navigate("/")} />
         <div className="flex items-center justify-between">
           <FaRegBell className="w-6 h-6 mx-2" />
           <FaRegMessage className="w-6 h-6 mx-2" />

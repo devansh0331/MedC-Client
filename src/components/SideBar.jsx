@@ -62,7 +62,7 @@ function SideBar() {
   };
   return (
     <>
-      <div className="w-16 cursor-pointer z-40 hidden lg:block sticky">
+      <div className="absolute top-[10vh] w-16 cursor-pointer z-40 hidden lg:block">
         <Card
           className="flex flex-col items-start h-full w-full rounded-none "
           shadow={false}
@@ -159,7 +159,7 @@ function SideBar() {
             className="flex flex-col w-full m-0"
           >
             <div
-              className={`flex items-center border-b-2 mt-4 p-4 cursor-pointer hover:bg-blue-gray-50 rounded-xl ${currentPage.includes("/user") ? active : ""}`}
+              className={`flex items-center border-b-2 mt-4 p-4 cursor-pointer hover:bg-opacity-90 rounded-xl ${currentPage.includes("/user") ? active : ""}`}
               onClick={() => navigate(`/user/${user._id}`)}
             >
               <Avatar
@@ -167,7 +167,7 @@ function SideBar() {
                 size="md"
               />
               <div className=" flex flex-col ml-3">
-                <Typography className="text-black font-semibold">
+                <Typography className={`font-semibold ${currentPage.includes("/user") ? "text-white" : "text-black"}`}>
                   {userInfo.name}
                 </Typography>
                 <Typography className="text-sm">{user.bio}</Typography>
@@ -177,7 +177,7 @@ function SideBar() {
           <CardBody className="p-0 w-full">
             <div className="mt-2 p-2  border-b-2 mx-2">
               <div
-                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer ${currentPage.includes("/feed") ? active : ""}`}
+                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-opacity-90 cursor-pointer ${currentPage.includes("/feed") ? active : ""}`}
                 onClick={() => {
                   navigate("/feed");
                   closeDrawer();
@@ -189,7 +189,7 @@ function SideBar() {
                 <Typography className="ml-2">Posts</Typography>
               </div>
               <div
-                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer ${currentPage.includes("/jobs") ? active : ""}`}
+                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-opacity-90 cursor-pointer ${currentPage.includes("/jobs") ? active : ""}`}
                 onClick={() => {
                   navigate("/jobs");
                   closeDrawer();
@@ -201,7 +201,7 @@ function SideBar() {
                 <Typography className="ml-2">Jobs</Typography>
               </div>
               <div
-                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer ${currentPage.includes("/hire") ? active : ""}`}
+                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-opacity-90 cursor-pointer ${currentPage.includes("/hire") ? active : ""}`}
                 onClick={() => {
                   navigate("/hire");
                   closeDrawer();
@@ -213,7 +213,7 @@ function SideBar() {
                 <Typography className="ml-2">Hire</Typography>
               </div>
               <div
-                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer ${currentPage.includes("/connections") ? active : ""}`}
+                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-opacity-90 cursor-pointer ${currentPage.includes("/connections") ? active : ""}`}
                 onClick={() => {
                   navigate("/connections");
                   closeDrawer();
@@ -225,7 +225,7 @@ function SideBar() {
                 <Typography className="ml-2">Connections</Typography>
               </div>
               <div
-                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer ${currentPage.includes("/postjob") ? active : ""}`}
+                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-opacity-90 cursor-pointer ${currentPage.includes("/postjob") ? active : ""}`}
                 onClick={() => {
                   navigate("/postjob");
                   closeDrawer();
@@ -239,7 +239,7 @@ function SideBar() {
             </div>
             <div className="mt-2 p-2">
               <div
-                className={`flex items-center px-4 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer ${currentPage.includes("/settings") ? active : ""}`}
+                className={`flex items-center px-4 py-3 rounded-md my-1 hover:bg-opacity-90 cursor-pointer ${currentPage.includes("/settings") ? active : ""}`}
                 onClick={() => {
                   navigate("/settings");
                   closeDrawer();
@@ -251,7 +251,7 @@ function SideBar() {
                 <Typography className="ml-2">Settings</Typography>
               </div>
               <div
-                className={`flex items-center px-4 py-3 rounded-md my-1 hover:bg-blue-gray-50 cursor-pointer text-red-800`}
+                className={`flex items-center px-4 py-3 rounded-md my-1 hover:bg-opacity-90 cursor-pointer text-red-800`}
                 onClick={(e) => handleLogout(e)}
               >
                 <ListItemPrefix>

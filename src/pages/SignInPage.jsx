@@ -107,7 +107,7 @@ function SignInPage() {
     }
   };
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-[90vh]">
       <div className="w-10/12 md:w-2/5 lg:w-1/5 m-auto h-full flex flex-col items-center justify-center">
         <p className="w-full text-4xl tracking-wide text-center font-black mb-6 mt-4 font-open leading-custom">
           Sign In

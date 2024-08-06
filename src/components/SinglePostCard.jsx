@@ -30,6 +30,7 @@ const SinglePostCard = (props) => {
   const postId = props.postId;
   const user = props.userId;
   const [postMenu, setPostMenu] = useState(false);
+console.log(props);
 
   useEffect(() => {});
   const getComments = async (comm) => {
@@ -105,7 +106,7 @@ const SinglePostCard = (props) => {
   };
 
   return (
-    <Card className="w-full p-4 my-2">
+    <Card className="w-full p-4 my-2 mx-auto">
       <CardHeader
         floated={false}
         shadow={false}
@@ -135,11 +136,13 @@ const SinglePostCard = (props) => {
           repellat cum deserunt assumenda quaerat necessitatibus reiciendis
           totam magnam asperiores odio?
         </Typography>
-        <img
-          src={jobBuilding}
+        {props.img != "" && <img
+          src={`${props.img != "" ? props.img :jobBuilding}`}
+// src="https://res.cloudinary.com/dn7l5h2gk/image/upload/v1717411078/l9tx5dc0bkuqyn1zuw5l.jpg"
+
           alt="jobBuilding"
-          className="w-72 h-7w-72 rounded-md my-2"
-        />
+          className="w-full  rounded-md my-2 object-cover mx-auto"
+        />}
         <div className="flex items-center px-6 py-4 gap-6">
           <div className="flex items-center gap-2 cursor-pointer">
             <AiOutlineLike className="w-5 h-5 text-blue-600" />

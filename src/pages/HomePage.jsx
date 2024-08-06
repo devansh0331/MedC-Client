@@ -11,6 +11,7 @@ import whyus4 from "../assets/whyus4.png";
 import professional from "../assets/professional.png";
 import jobs from "../assets/jobs.png";
 import logofoot from "../assets/logofoot.png";
+import maindoodle from "../assets/maindoodle.png";
 
 function HomePage() {
   const { userInfo, setUserInfo } = useContext(UserContext);
@@ -40,24 +41,25 @@ function HomePage() {
   return (
     <div className="w-full h-full flex flex-col box-border overflow-x-hidden">
       {/* MAIN HOME */}
-      <div className="w-screen h-full flex box-border md:flex-row flex-col justify-around items-center md:mt-5 xl:mt-0">
-        <div className="md:w-1/2 w-10/12 flex flex-col px-4 lg:px-10 box-border md:items-start">
-          <h1 className="lg:text-5xl xl:text-6xl text-4xl md:text-left text-center">
+      <div className="main absolute w-full h-[90vh] z-0 opacity-35"></div>
+      <div className="h-[90vh] grid grid-cols-12 grid-rows-6 relative z-10">
+        <div className="3xl:col-start-2 col-span-12 md:col-span-6 lg:row-start-2 row-span-3 md:row-span-6 lg:row-span-4 flex flex-col px-4 lg:px-10 box-border md:items-start justify-center">
+          <h1 className="lg:text-[2.7rem] xl:text-[3rem] 2xl:text-6xl text-4xl md:text-left text-center text-shadow">
             Connecting Careers, <br /> Healing Lives
           </h1>
-          <p className="text-gray-700 lg:text-xl text-base mt-5 md:text-left text-center">
+          <p className="text-gray-700 2xl:text-xl lg:text-lg text-base mt-5 md:text-left text-center text-shadowmd">
             Interact with the best Medical Professionals, and <br /> make your
             presence in the Medical Community
           </p>
-          <div className="mt-10 text-base flex justify-between">
+          <div className="mt-10 text-base flex justify-between md:justify-start w-4/5 sm:w-1/2  mx-auto md:w-full">
             <button
-              className="bg-primary text-white px-3 md:px-6 py-2 mr-5 rounded-full shadow-lg active:translate-x-0.5 active:translate-y-0.5"
+              className="bg-primary text-white px-3 md:px-6 py-2 mr-5 rounded-full shadow-lg active:translate-x-0.5 active:translate-y-0.5 drop-shadow-xl"
               onClick={() => navigate("/signup")}
             >
               Get Started
             </button>
             <button
-              className="border-2 border-primary text-primary mx-5 px-3 md:px-6 py-2 rounded-full shadow-lg active:translate-x-0.5 active:translate-y-0.5 hover:bg-primary hover:text-white"
+              className="drop-shadow-xl border-2 border-primary text-primary mx-5 px-3 md:px-6 py-2 rounded-full shadow-lg active:translate-x-0.5 active:translate-y-0.5 hover:bg-primary hover:text-white"
               style={{ transition: "color 0.5s, background-color 0.5s" }}
               onClick={() => navigate((window.location.href = "#jobs"))}
             >
@@ -65,11 +67,11 @@ function HomePage() {
             </button>
           </div>
         </div>
-        <div className="w-1/2 h-full box-border flex lg:p-10">
+        <div className="col-span-12 md:col-span-5 2xl:col-span-6 md:col-start-7 row-span-3 md:row-span-6 lg:row-start-2 2xl:row-start-1 lg:-translate-y-8 2xl:translate-y-0 box-border flex h-full justify-center items-center lg:items-start 2xl:items-center">
           <img
             src={mainIllus}
             alt="mainillus"
-            className="w-full h-full mx-auto"
+            className="h-full md:h-min md:w-full aspect-square mx-auto"
           ></img>
         </div>
       </div>

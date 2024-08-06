@@ -15,13 +15,15 @@ function PostCard() {
   useEffect(() => {
     getPosts();
   }, []);
+  console.log(posts);
+  
 
   const handleOpen = () => {
     setOpen(!open);
   };
 
   return (
-    <div className="w-full flex flex-col  mx-auto mt-5  bg-inherit ">
+    <div className="w-full flex flex-col mx-auto mt-5  bg-inherit ">
       <Card className="flex flex-row gap-4 w-full bg-white py-2 items-center rounded-md shadow-md px-4">
         <Link to={`/user/${user._id}`}>
           <Avatar

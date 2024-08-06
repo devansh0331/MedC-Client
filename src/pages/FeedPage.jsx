@@ -50,11 +50,11 @@ function FeedPage() {
         route="feed"
         userId={user._id}
       />
-      <div className="flex w-[80%] mx-auto h-[90vh] gap-4">
-        <div className="w-3/5">
+      <div className="flex w-[80%] mx-auto h-[90vh] gap-4 justify-center">
+        <div className="w-1/2">
         <PostCard/>
         </div>
-        <div className="w-2/5">
+        <div className="w-1/3">
         <JobCard />
         </div>
       </div>

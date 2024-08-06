@@ -59,18 +59,22 @@ module.exports = withMT({
         '3xl': '1.9rem',  // 30px
         '4xl': '2.3rem',   // 36px
         '5xl': '3rem',      // 48px
-        '6xl': '3.75rem',   // 60px
+        '6xl': '3.5rem',   // 60px
         '7xl': '4.5rem',    // 72px
         '8xl': '6rem',      // 96px
         '9xl': '8rem',      // 128px
       },
-      list: {
-        styles: {
-          selected: {
-            backgroundColor: 'bg-blue-500',
-            color: '#FFF',
-          }
-        }
+      screens: {
+        '5xl': '1800px',
+        '4xl': '1500px',
+        '3xl': '1300px',
+        '2xl': '1200px',
+        'xl': '1100px',
+        'lg': '980px',
+        'md': '768px',
+        'sm': '576px',
+        'xs': '480px',
+        'nos': '200px',
       }
     },
   },

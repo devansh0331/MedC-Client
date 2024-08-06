@@ -7,7 +7,7 @@ const Jobs = () => {
   return (
     <div className="w-full flex h-[90vh] bg-background">
       <SideBar/>
-      <div className="flex w-[80%] mx-auto h-[90vh] gap-4">
+      <div className="flex w-[80%] mx-auto  gap-4">
         <div className="w-3/5">
         <MaxJob/>
         </div>

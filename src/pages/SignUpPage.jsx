@@ -96,7 +96,7 @@ function SignUpPage() {
     }
   };
   return (
-    <div className="w-screen h-screen flex overflow-hidden">
+    <div className="w-screen h-[90vh] flex overflow-hidden">
       <div className="w-full md:w-3/5 lg:w-1/2 h-full flex flex-col items-center justify-center mt-4">
         <div className="w-3/5 lg:w-1/2">
           <p className="w-full text-4xl tracking-wide text-center font-black mb-6 mt-4 font-open leading-custom">

@@ -66,7 +66,7 @@ const SinglePost = () => {
       <SideBar className="h-screen" route={"profile"} />
       <div className="flex h-full gap-6 justify-center">
         <div className="w-80 mt-5">
-        <ProfileCard route="single-post"/>
+        {/* <ProfileCard route="single-post"/> */}
         </div>
         <div className="w-2/5 mt-3">  
         <SinglePostCard
