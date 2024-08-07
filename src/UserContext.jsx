@@ -244,6 +244,41 @@ export function UserContextProvider({ children }) {
     }
   };
 
+  const sendRequest = async (friendId) => {
+    try {
+      console.log("Friend Id: " + friendId);
+      const res = await fetch(`${SERVER_URL}/user/send-request/${friendId}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
+      const parsedRes = await res.json();
+      if (!parsedRes) console.error(parsedRes.error);
+      else await checkFriendStatus(friendId);
+    } catch (error) {
+      console.error("Failed to send request");
+    }
+  };
+  const acceptRequest = async (friendId) => {
+    try {
+      console.log("Friend Id: " + friendId);
+      const res = await fetch(`${SERVER_URL}/user/accept-request/${friendId}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
+      const parsedRes = await res.json();
+      if (!parsedRes) console.error(parsedRes.error);
+      else await checkFriendStatus(friendId);
+    } catch (error) {
+      console.error("Failed to accept request");
+    }
+  };
+
   useEffect(() => {
     getUser();
   }, []);
@@ -272,6 +307,8 @@ export function UserContextProvider({ children }) {
         checkFriendStatus,
         friendStatus,
         statusValue,
+        sendRequest,
+        acceptRequest,
       }}
     >
       {children}

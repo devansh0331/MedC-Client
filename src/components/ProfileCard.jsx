@@ -144,8 +144,43 @@ const ProfileCard = (props) => {
                 Resume
               </Button>
             )}
-            {props.statusValue && (
-              <Button variant="filled" size="sm" color="blue">
+            {props.statusValue == "Connect" && (
+              <Button
+                variant="filled"
+                onClick={() => props.sendRequest(props.user._id)}
+                size="sm"
+                color="blue"
+              >
+                {props.statusValue}
+              </Button>
+            )}
+            {props.statusValue == "Accept Request" && (
+              <Button
+                variant="filled"
+                onClick={() => props.acceptRequest(props.user._id)}
+                size="sm"
+                color="blue"
+              >
+                {props.statusValue}
+              </Button>
+            )}
+            {props.statusValue == "Connected" && (
+              <Button
+                variant="filled"
+                onClick={() => props.sendRequest(props.user._id)}
+                size="sm"
+                color="blue"
+              >
+                {props.statusValue}
+              </Button>
+            )}
+            {props.statusValue == "Requested" && (
+              <Button
+                variant="filled"
+                onClick={() => props.sendRequest(props.user._id)}
+                size="sm"
+                color="blue"
+              >
                 {props.statusValue}
               </Button>
             )}

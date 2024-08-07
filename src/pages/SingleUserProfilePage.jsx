@@ -16,7 +16,13 @@ function SingleUserProfilePage() {
   const [close, setClose] = useState(false);
   const [closeAbout, setCloseAbout] = useState(false);
   const [closeDetails, setCloseDetails] = useState(false);
-  const { userInfo, checkFriendStatus, statusValue } = useContext(UserContext);
+  const {
+    userInfo,
+    checkFriendStatus,
+    statusValue,
+    sendRequest,
+    acceptRequest,
+  } = useContext(UserContext);
   const [isExisting, setIsExisting] = useState(false);
   const [user, setUser] = useState();
 
@@ -67,6 +73,8 @@ function SingleUserProfilePage() {
             getSingleUser={getSingleUser}
             isExisting={isExisting}
             statusValue={statusValue}
+            sendRequest={sendRequest}
+            acceptRequest={acceptRequest}
           />
           <ProfileDetails
             user={user ? user : {}}
