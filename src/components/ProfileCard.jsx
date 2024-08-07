@@ -159,7 +159,7 @@ const ProfileCard = (props) => {
                 variant="filled"
                 onClick={() => props.acceptRequest(props.user._id)}
                 size="sm"
-                color="blue"
+                color="light-blue"
               >
                 {props.statusValue}
               </Button>
@@ -169,17 +169,17 @@ const ProfileCard = (props) => {
                 variant="filled"
                 onClick={() => props.sendRequest(props.user._id)}
                 size="sm"
-                color="blue"
+                color="green"
               >
                 {props.statusValue}
               </Button>
             )}
             {props.statusValue == "Requested" && (
               <Button
-                variant="filled"
+                variant="outlined"
                 onClick={() => props.sendRequest(props.user._id)}
                 size="sm"
-                color="blue"
+                color="black"
               >
                 {props.statusValue}
               </Button>

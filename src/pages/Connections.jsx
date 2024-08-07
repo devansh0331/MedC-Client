@@ -26,12 +26,18 @@ import Cookies from "js-cookie";
 
 const Connections = () => {
   const [activeTab, setActiveTab] = useState("Pending");
-  const { getAllUsers, allUsers } = useContext(UserContext);
+  const {
+    getAllUsers,
+    allUsers,
+    sendRequest,
+    checkFriendStatus,
+    acceptRequest,
+  } = useContext(UserContext);
 
   const [data, setData] = useState([]);
   const [message, setMessage] = useState("");
 
-  const getPendingRequests = async (req, res) => {
+  const getPendingRequests = async () => {
     try {
       setData([]);
       const res = await fetch(`${SERVER_URL}/user/received-requests`, {
@@ -54,7 +60,7 @@ const Connections = () => {
       toast.error("Error: " + error.message);
     }
   };
-  const getSentRequests = async (req, res) => {
+  const getSentRequests = async () => {
     try {
       setData([]);
       const res = await fetch(`${SERVER_URL}/user/sent-requests`, {
@@ -77,7 +83,7 @@ const Connections = () => {
       toast.error("Error: " + error.message);
     }
   };
-  const getConnections = async (req, res) => {
+  const getConnections = async () => {
     try {
       setData([]);
       const res = await fetch(`${SERVER_URL}/user/connections`, {
@@ -101,6 +107,12 @@ const Connections = () => {
     }
   };
 
+  const setToast = (msg, success) => {
+    if (success) {
+      toast.success(msg);
+    } else toast.error(msg);
+  };
+
   useEffect(() => {
     getPendingRequests();
     getAllUsers();
@@ -109,9 +121,9 @@ const Connections = () => {
 
   return (
     <div className="flex overflow-hidden bg-background">
-        <div className="z-40">
+      <div className="z-40">
         <SideBar className="" />
-        </div>
+      </div>
       <div className="flex w-full gap-6 justify-center">
         <Card
           shadow={false}
@@ -176,7 +188,7 @@ const Connections = () => {
                   className="pl-9 placeholder:text-blue-gray-100"
                   label="Search"
                   size="sm"
-                  icon={<IoMdSearch />} 
+                  icon={<IoMdSearch />}
                 />
               </div>
               <div className="relative flex md:w-2/5 w-full mr-0 md:mr-2 mt-2 md:mt-0 ">
@@ -189,9 +201,7 @@ const Connections = () => {
                   icon={<IoLocationSharp />}
                 />
               </div>
-              <button
-                className="select-none rounded-lg bg-blue-500 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              >
+              <button className="select-none rounded-lg bg-blue-500 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
                 Search
               </button>
             </Navbar>
@@ -241,7 +251,16 @@ const Connections = () => {
             ) : (
               data.map((user) => (
                 <>
-                  <SinglePeopleCardHorizontal user={user} />
+                  <SinglePeopleCardHorizontal
+                    activeTab={activeTab}
+                    user={user}
+                    sendRequest={sendRequest}
+                    acceptRequest={acceptRequest}
+                    setToast={setToast}
+                    getConnections={getConnections}
+                    getPendingRequests={getPendingRequests}
+                    getSentRequests={getSentRequests}
+                  />
                 </>
               ))
             )}

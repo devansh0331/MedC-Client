@@ -13,7 +13,15 @@ import { IoLocationSharp, IoPersonAddOutline } from "react-icons/io5";
 import altprofile from "../assets/altprofile.png";
 import { Link } from "react-router-dom";
 
-function SinglePeopleCardHorizontal({ user }) {
+function SinglePeopleCardHorizontal({
+  user,
+  activeTab,
+  sendRequest,
+  acceptRequest,
+  getConnections,
+  getSentRequests,
+  getPendingRequests,
+}) {
   return (
     <Card className="Connections my-2 flex flex-row p-4">
       <CardHeader
@@ -59,18 +67,61 @@ function SinglePeopleCardHorizontal({ user }) {
       </CardHeader>
 
       <CardBody className="p-0 ml-auto">
-        <Button
-          size="sm"
-          color="light-blue"
-          className="mr-2 xl:px-4 p-2 md:rounded-lg rounded-full"
-          shadow
-          hover
-        >
-          <span className="xl:hidden">
-            <IoPersonAddOutline className="w-4 h-4" />
-          </span>
-          <span className="hidden xl:block">Connect</span>
-        </Button>
+        {activeTab == "Pending" && (
+          <Button
+            size="sm"
+            color="light-blue"
+            className="mr-2 xl:px-4 p-2 md:rounded-lg rounded-full"
+            shadow
+            hover
+            onClick={async () => {
+              await acceptRequest(user._id);
+              getPendingRequests();
+            }}
+          >
+            <span className="xl:hidden">
+              <IoPersonAddOutline className="w-4 h-4" />
+            </span>
+            <span className="hidden xl:block">Accept Request</span>
+          </Button>
+        )}
+        {activeTab == "Connections" && (
+          <Button
+            size="sm"
+            color="green"
+            className="mr-2 xl:px-4 p-2 md:rounded-lg rounded-full"
+            shadow
+            hover
+            onClick={async () => {
+              await sendRequest(user._id);
+              getConnections();
+            }}
+          >
+            <span className="xl:hidden">
+              <IoPersonAddOutline className="w-4 h-4" />
+            </span>
+            <span className="hidden xl:block">Connected</span>
+          </Button>
+        )}
+        {activeTab == "Sent" && (
+          <Button
+            variant="outlined"
+            size="sm"
+            color="black"
+            className="mr-2 xl:px-4 p-2 md:rounded-lg rounded-full"
+            shadow
+            hover
+            onClick={async () => {
+              await sendRequest(user._id);
+              getSentRequests();
+            }}
+          >
+            <span className="xl:hidden">
+              <IoPersonAddOutline className="w-4 h-4" />
+            </span>
+            <span className="hidden xl:block">Requested</span>
+          </Button>
+        )}
         <Button
           size="sm"
           color="light-blue"
