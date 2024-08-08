@@ -11,7 +11,7 @@ import { SERVER_URL } from "../ServerURL";
 import altprofile from "../assets/altprofile.png";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Cookies from "js-cookie";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -30,7 +30,7 @@ const SinglePostCard = (props) => {
   const postId = props.postId;
   const user = props.userId;
   const [postMenu, setPostMenu] = useState(false);
-  console.log(props);
+  const navigate = useNavigate();
 
   useEffect(() => {});
   const getComments = async (comm) => {
@@ -119,9 +119,14 @@ const SinglePostCard = (props) => {
               src={props.profileURL ? props.profileURL : altprofile}
               alt="profile"
               size="lg"
+              className="cursor-pointer"
+              onClick={() => navigate(`/user/${props.profileId}`)}
             />
           </div>
-          <div className="ml-4">
+          <div
+            className="ml-4 cursor-pointer"
+            onClick={() => navigate(`/user/${props.profileId}`)}
+          >
             <Typography className="text-sm md:text-base font-bold text-gray-900">
               {props.name}
             </Typography>
@@ -153,7 +158,7 @@ const SinglePostCard = (props) => {
             // src="https://res.cloudinary.com/dn7l5h2gk/image/upload/v1717411078/l9tx5dc0bkuqyn1zuw5l.jpg"
 
             alt="jobBuilding"
-            className="w-full  rounded-md my-2 object-cover mx-auto"
+            className="w-full rounded-md my-2 object-contain mx-auto bg-black"
           />
         )}
         <div className="flex items-center px-6 py-4 gap-6">
