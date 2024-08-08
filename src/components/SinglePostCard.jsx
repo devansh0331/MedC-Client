@@ -126,7 +126,7 @@ const SinglePostCard = (props) => {
               {props.name}
             </Typography>
             {props.bio && (
-              <Typography className="text-xs md:text-[13px] italic text-gray-700">
+              <Typography className="text-xs md:text-[14px]  font-bold font-serif text-gray-700">
                 {props.bio}
               </Typography>
             )}
