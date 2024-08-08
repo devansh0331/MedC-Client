@@ -14,13 +14,13 @@ function PostCard() {
 
   useEffect(() => {
     getPosts();
+    console.log(posts);
   }, []);
-  console.log(posts);
-  
 
   const handleOpen = () => {
     setOpen(!open);
   };
+  console.log(posts);
 
   return (
     <div className="w-full flex flex-col mx-auto mt-5  bg-inherit ">
@@ -55,6 +55,7 @@ function PostCard() {
               key={key}
               img={post.fileURL == "" ? null : post.fileURL}
               name={post.user ? post.user.name : "Unknown User"}
+              bio={post.user && post.user.bio ? post.user.bio : "User"}
               profileURL={
                 post.user && post.user.profileURL ? post.user.profileURL : ""
               }

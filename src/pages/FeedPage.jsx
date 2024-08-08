@@ -22,7 +22,7 @@ function FeedPage() {
   const { userInfo, user, setUserInfo } = useContext(UserContext);
   const handleOpen = () => setOpen(!open);
   const [openSide, setOpenSide] = useState(false);
-  
+
   const handleLogout = (e) => {
     e.preventDefault();
     try {
@@ -50,12 +50,12 @@ function FeedPage() {
         route="feed"
         userId={user._id}
       />
-      <div className="flex w-[80%] mx-auto h-[90vh] gap-4 justify-center">
-        <div className="w-1/2">
-        <PostCard/>
+      <div className="flex w-[95%] md:w-[80%] mx-auto h-[90vh] gap-4 justify-center">
+        <div className="w-full md:w-2/5">
+          <PostCard />
         </div>
-        <div className="w-1/3">
-        <JobCard />
+        <div className="hidden md:block w-1/4">
+          <JobCard />
         </div>
       </div>
     </div>

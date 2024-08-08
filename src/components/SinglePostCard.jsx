@@ -19,7 +19,7 @@ import {
   CardFooter,
   Typography,
   Avatar,
-  Input
+  Input,
 } from "@material-tailwind/react";
 
 const SinglePostCard = (props) => {
@@ -30,7 +30,7 @@ const SinglePostCard = (props) => {
   const postId = props.postId;
   const user = props.userId;
   const [postMenu, setPostMenu] = useState(false);
-console.log(props);
+  console.log(props);
 
   useEffect(() => {});
   const getComments = async (comm) => {
@@ -115,57 +115,79 @@ console.log(props);
       >
         <div className="flex items-center">
           <div className="">
-            <Avatar src={altprofile} alt="profile" size="lg" />
+            <Avatar
+              src={props.profileURL ? props.profileURL : altprofile}
+              alt="profile"
+              size="lg"
+            />
           </div>
           <div className="ml-4">
-            <Typography className="text-base font-bold text-gray-900">John Doe</Typography>
-            <Typography className="text-base text-gray-900">Developer</Typography>
+            <Typography className="text-sm md:text-base font-bold text-gray-900">
+              {props.name}
+            </Typography>
+            {props.bio && (
+              <Typography className="text-xs md:text-[13px] italic text-gray-700">
+                {props.bio}
+              </Typography>
+            )}
           </div>
         </div>
-        <div className="ml-auto flex gap-2">
-          <Typography className="text-base">2 hours ago</Typography>
-          <Typography className="text-base">
-            <HiOutlineDotsHorizontal className="cursor-pointer w-6 h-6" />
+        <div className="ml-auto flex flex-col-reverse md:flex-row items-end md:items-center md:gap-2">
+          <Typography className="text-xs md:text-base">
+            {props.postedAt}
+          </Typography>
+          <Typography className="text-sm md:text-base text-gray-900 md:text-gray-700">
+            <HiOutlineDotsHorizontal className="cursor-pointer  w-4 h-4 md:w-6 md:h-6" />
           </Typography>
         </div>
       </CardHeader>
       <CardBody className="m-0 p-0">
-        <Typography className="py-4 px-2 text-gray-800">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-          placeat unde at inventore vero aperiam quod aliquam nemo vitae,
-          repellat cum deserunt assumenda quaerat necessitatibus reiciendis
-          totam magnam asperiores odio?
-        </Typography>
-        {props.img != "" && <img
-          src={`${props.img != "" ? props.img :jobBuilding}`}
-// src="https://res.cloudinary.com/dn7l5h2gk/image/upload/v1717411078/l9tx5dc0bkuqyn1zuw5l.jpg"
+        {props.description && (
+          <Typography className="py-4 px-2 text-gray-800">
+            {props.description}
+          </Typography>
+        )}
+        {props.img && (
+          <img
+            src={props.img}
+            // src="https://res.cloudinary.com/dn7l5h2gk/image/upload/v1717411078/l9tx5dc0bkuqyn1zuw5l.jpg"
 
-          alt="jobBuilding"
-          className="w-full  rounded-md my-2 object-cover mx-auto"
-        />}
+            alt="jobBuilding"
+            className="w-full  rounded-md my-2 object-cover mx-auto"
+          />
+        )}
         <div className="flex items-center px-6 py-4 gap-6">
-          <div className="flex items-center gap-2 cursor-pointer">
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => props.handleLike()}
+          >
             <AiOutlineLike className="w-5 h-5 text-blue-600" />
             <Typography className="text-base text-gray-800">2 Likes</Typography>
           </div>
           <div className="flex items-center gap-2 cursor-pointer">
             <FaRegCommentAlt className="w-5 h-5 text-blue-600" />
-            <Typography className="text-base text-gray-800">2 Comments</Typography>
+            <Typography className="text-base text-gray-800">
+              2 Comments
+            </Typography>
           </div>
           <div className="flex items-center gap-2 cursor-pointer">
             <IoPaperPlaneOutline className="w-5 h-5 text-blue-600" />
-            <Typography className="text-base text-gray-800">2 Likes</Typography>
+            {/* <Typography className="text-base text-gray-800">2 Likes</Typography> */}
           </div>
         </div>
       </CardBody>
       <CardFooter className="m-0 px-2 py-0">
         <div className="flex justify-between items-center relative">
           <Input label="Add Comment" />
-          <Typography className="text-base absolute right-4 cursor-pointer text-blue-500">Post</Typography>
+          <Typography className="text-base absolute right-4 cursor-pointer text-blue-500">
+            Post
+          </Typography>
         </div>
-        <div className="flex justify-between items-center my-2 px-2">
+        <div className="flex justify-between  items-center my-2 px-2">
           <Typography>This is a comment</Typography>
-          <Typography><RiDeleteBin6Line/></Typography>
+          <Typography>
+            <RiDeleteBin6Line />
+          </Typography>
         </div>
       </CardFooter>
     </Card>
