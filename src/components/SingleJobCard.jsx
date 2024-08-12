@@ -2,9 +2,11 @@ import React from "react";
 import { CiStar } from "react-icons/ci";
 import alt from "../assets/altprofile.png";
 import { Avatar, Card, Typography } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 const SingleJobCard = () => {
+  const navigate = useNavigate();
   return (
-    <Card className="w-full bg-white my-2 p-4">
+    <Card className="w-full bg-white my-2 p-4 cursor-pointer" onClick={() => navigate("/job")}>
       <div className="w-full flex items-center justify-between ">
         <div className="flex gap-3 items-center justify-center">
           <Avatar

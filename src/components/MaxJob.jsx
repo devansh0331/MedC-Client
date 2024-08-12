@@ -8,7 +8,7 @@ import { Button, Card, Input } from "@material-tailwind/react";
 const MaxJob = () => {
   return (
     <Card className="w-full flex flex-col mx-auto mt-5 py-1 bg-white rounded-md shadow-md">
-      <Card className="w-full flex flex-row items-center justify-center gap-3 px-3 py-2 rounded-md">
+      <Card className="w-full min-w-96 flex flex-col md:flex-row items-center justify-center gap-3 px-3 py-2 rounded-md">
         <Input
         label="Search Jobs"
         icon={<IoMdSearch />}

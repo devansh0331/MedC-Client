@@ -160,7 +160,7 @@ function SideBar() {
           >
             <div
               className={`flex items-center border-b-2 mt-4 p-4 cursor-pointer hover:bg-opacity-90 rounded-xl ${currentPage.includes("/user") ? active : ""}`}
-              onClick={() => navigate(`/user/${user._id}`)}
+              onClick={() => {navigate(`/user/${user._id}`);  closeDrawer();}}
             >
               <Avatar
                 src={user.profileURL ? user.profileURL : altprofile}

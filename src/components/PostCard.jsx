@@ -23,7 +23,7 @@ function PostCard() {
   console.log(posts);
 
   return (
-    <div className="w-full flex flex-col mx-auto mt-5  bg-inherit ">
+    <div className="w-full flex flex-col mx-auto mt-5 bg-inherit ">
       <Card className="flex flex-row gap-4 w-full bg-white py-2 items-center rounded-md shadow-md px-4">
         <Link to={`/user/${user._id}`}>
           <Avatar
@@ -44,7 +44,7 @@ function PostCard() {
           getAllPosts={getPosts}
         />
       </Card>
-      <div className="flex flex-col w-full h-[70vh] overflow-y-scroll scrollbar-thin">
+      <div className="flex flex-col w-full h-[75vh] overflow-y-scroll scrollbar-thin">
         {posts.length === 0 ? (
           <div className="w-full h-full flex items-center justify-center">
             <p className="font-bold text-lg">No Posts Available!</p>

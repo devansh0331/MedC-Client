@@ -46,7 +46,7 @@ const MaxJobCard = () => {
       </div>
 
       {/* APPLY */}
-      <div className="w-full flex flex-col md:flex-row md:justify-between my-2">
+      <div className="w-full flex flex-col md:flex-row md:justify-between mt-2 md:mt-0 md:my-2">
         <div className="flex flex-col">
           <Typography className="text-gray-700">250 Applicants</Typography>
           <Typography className="text-gray-700">
@@ -55,7 +55,7 @@ const MaxJobCard = () => {
             2 Days Ago
           </Typography>
         </div>
-        <div className="flex items-end gap-4">
+        <div className="flex md:justify-end items-end gap-4 mt-2 md:mt-0">
           <Button size="sm" variant="outlined" color="blue">Save</Button>
           <Button size="sm" color="blue">Apply</Button>
         </div>

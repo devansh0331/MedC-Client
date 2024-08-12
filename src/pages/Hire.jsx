@@ -21,7 +21,7 @@ import SideBar from "../components/SideBar";
 
 const Hire = () => {
   return (
-    <div className="flex overflow-hidden z-0 bg-background">
+    <div className="flex overflow-y-hidden z-0 bg-background">
       <SideBar route="feed" />
       <div className="flex xl:w-[75%] w-[90%] mx-auto">
         <div className="w-full md:w-4/6 m-auto mt-4 mx-2">
@@ -54,7 +54,7 @@ const Hire = () => {
               </button>
             </Navbar>
           </div>
-          <div className="grid md:grid-cols-3 max-h-[78vh] md:max-h-[80vh] overflow-y-scroll scrollbar-thin w-full mt-1">
+          <div className="grid md:grid-cols-3 overflow-y-scroll max-h-[75vh] scrollbar-thin w-full mt-1">
             <Card className="p-3 m-3">
               <CardHeader
                 floated={false}
