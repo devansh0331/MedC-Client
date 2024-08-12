@@ -20,17 +20,31 @@ import {
   Typography,
   Avatar,
   Input,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Button,
 } from "@material-tailwind/react";
+import { UserContext } from "../UserContext";
 
 const SinglePostCard = (props) => {
   const [comm, setComm] = useState(false);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [commentsCount, setCommentsCount] = useState(0);
+  const [commentbox, setCommentbox] = useState(false);
+  const [menuopen, setMenuopen] = useState(false);
+  // const { getPosts, posts, handleLike, user } = useContext(UserContext);
+  // const currUserId = 
   const postId = props.postId;
   const user = props.userId;
   const [postMenu, setPostMenu] = useState(false);
   const navigate = useNavigate();
+
+  const menuHandle = () => {
+    setMenuopen(!menuopen);
+  };
 
   useEffect(() => {});
   const getComments = async (comm) => {
@@ -141,12 +155,25 @@ const SinglePostCard = (props) => {
           <Typography className="text-xs md:text-base">
             {props.postedAt}
           </Typography>
+          {user === props.profileId && 
           <Typography className="text-sm md:text-base text-gray-900 md:text-gray-700">
-            <HiOutlineDotsHorizontal className="cursor-pointer  w-4 h-4 md:w-6 md:h-6" />
+            <Menu placement="bottom-start">
+              <MenuHandler>
+                <button>
+                  <HiOutlineDotsHorizontal className="cursor-pointer  w-4 h-4 md:w-6 md:h-6" />
+                </button>
+              </MenuHandler>
+              <MenuList>
+                <MenuItem>Edit</MenuItem>
+                <MenuItem>Delete</MenuItem>  
+              </MenuList>
+            </Menu>
           </Typography>
+          }
+
         </div>
       </CardHeader>
-      <CardBody className="m-0 p-0">
+      <CardBody className="m-0 p-0 z-0">
         {props.description && (
           <Typography className="py-4 px-2 text-gray-800">
             {props.description}
@@ -161,7 +188,7 @@ const SinglePostCard = (props) => {
             className="w-full rounded-md my-2 object-contain mx-auto bg-black"
           />
         )}
-        <div className="flex items-center px-6 py-4 gap-6">
+        <div className="flex items-center px-6 py-4 gap-6 justify-between">
           <div
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => props.handleLike()}
@@ -169,7 +196,10 @@ const SinglePostCard = (props) => {
             <AiOutlineLike className="w-5 h-5 text-blue-600" />
             <Typography className="text-base text-gray-800">2 Likes</Typography>
           </div>
-          <div className="flex items-center gap-2 cursor-pointer">
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => setCommentbox(!commentbox)}
+          >
             <FaRegCommentAlt className="w-5 h-5 text-blue-600" />
             <Typography className="text-base text-gray-800">
               2 Comments
@@ -177,24 +207,26 @@ const SinglePostCard = (props) => {
           </div>
           <div className="flex items-center gap-2 cursor-pointer">
             <IoPaperPlaneOutline className="w-5 h-5 text-blue-600" />
-            {/* <Typography className="text-base text-gray-800">2 Likes</Typography> */}
+            <Typography className="text-base text-gray-800">Share</Typography>
           </div>
         </div>
       </CardBody>
-      <CardFooter className="m-0 px-2 py-0">
-        <div className="flex justify-between items-center relative">
-          <Input label="Add Comment" />
-          <Typography className="text-base absolute right-4 cursor-pointer text-blue-500">
-            Post
-          </Typography>
-        </div>
-        <div className="flex justify-between  items-center my-2 px-2">
-          <Typography>This is a comment</Typography>
-          <Typography>
-            <RiDeleteBin6Line />
-          </Typography>
-        </div>
-      </CardFooter>
+      {commentbox && (
+        <CardFooter className="m-0 px-2 py-0">
+          <div className="flex justify-between items-center relative">
+            <Input label="Add Comment" />
+            <Typography className="text-base absolute right-4 cursor-pointer text-blue-500">
+              Post
+            </Typography>
+          </div>
+          <div className="flex justify-between  items-center my-2 px-2">
+            <Typography>This is a comment</Typography>
+            <Typography>
+              <RiDeleteBin6Line />
+            </Typography>
+          </div>
+        </CardFooter>
+      )}
     </Card>
   );
 };

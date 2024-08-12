@@ -62,7 +62,7 @@ function SideBar() {
   };
   return (
     <>
-      <div className="absolute top-[10vh] w-16 cursor-pointer z-40 hidden lg:block">
+      <div className="fixed top-[10vh] w-16 cursor-pointer z-40 hidden lg:block">
         <Card
           className="flex flex-col items-start h-full w-full rounded-none "
           shadow={false}

@@ -88,6 +88,7 @@ function Main() {
         element={
           <>
             <NavMain route="signup" />
+            {/* <SideBar/> */}
             <FeedPage />
           </>
         }

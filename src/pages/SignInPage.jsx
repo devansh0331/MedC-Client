@@ -99,7 +99,7 @@ function SignInPage() {
           setTimeout(() => {
             navigate("/feed");
             // location.reload();
-          }, 2000);
+          }, 1000);
         }
       } catch (error) {
         toast.error("Client Error: " + error);
@@ -178,7 +178,7 @@ function SignInPage() {
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         handleSubmit();
-                      } 
+                      }
                     }}
                   />
                   <span

@@ -26,6 +26,7 @@ import Cookies from "js-cookie";
 
 const Connections = () => {
   const [activeTab, setActiveTab] = useState("Pending");
+  const [pendingCount, setPendingCount] = useState(0);
   const {
     getAllUsers,
     allUsers,
@@ -54,6 +55,7 @@ const Connections = () => {
         console.log(message);
       } else {
         setData(data.data);
+        setPendingCount(data.data.length);
         console.log(data);
       }
     } catch (error) {
@@ -120,7 +122,7 @@ const Connections = () => {
   console.log("All Users: ", allUsers);
 
   return (
-    <div className="flex overflow-hidden bg-background">
+    <div className="flex overflow-hidden bg-background h-[90vh]">
       <div className="z-40">
         <SideBar className="" />
       </div>
@@ -143,7 +145,7 @@ const Connections = () => {
               </ListItemPrefix>
               <Typography className="mr-2">Pending Invites</Typography>
               <ListItemSuffix>
-                <Chip color="teal" size="sm" value="10" />
+                <Chip color="teal" size="sm" value={pendingCount} />
               </ListItemSuffix>
             </ListItem>
             <ListItem
