@@ -2,7 +2,7 @@ import { Button, Input } from "@material-tailwind/react";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import emaillogo from "../assets/emaillogo.png";
-
+import professional from "../assets/professional.png";
 import { Toaster, toast } from "react-hot-toast";
 import { SERVER_URL } from "../ServerURL";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -206,7 +206,7 @@ function SignUpPage() {
       <div className="md:block hidden  w-2/5 lg:w-1/2">
         <div className="bg-offWhite h-full flex flex-col items-center justify-center">
           <div className="md:h-full md:w-4/5 md:flex md:flex-col md:items-center md:justify-center">
-            {/* <img src={signup} alt="" /> */}
+            <img src={professional} alt="" className="rounded-lg mb-2" />
             <p className="font-extrabold text-xl text-center">
               Sed ut perspiciatis unde omnis iste natus error sit voluptatem
             </p>

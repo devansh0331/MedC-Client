@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import profile2 from "../assets/profile2.png";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
@@ -26,6 +26,7 @@ import {
   CardFooter,
 } from "@material-tailwind/react";
 import EditProfileNew from "./EditProfileNew";
+import { UserContext } from "../UserContext";
 
 const ProfileCard = (props) => {
   const [check, setCheck] = useState(false);
@@ -35,6 +36,7 @@ const ProfileCard = (props) => {
   const StateArr = State.getStatesOfCountry("IN");
   const handleOpenProfile = () => setOpenProfile(!openProfile);
   const handleOpenEdit = () => setOpenEdit(!openEdit);
+  const {user} = useContext(UserContext);
 
   const [resume, setResume] = useState(null);
   const [number, setNumber] = useState("");
@@ -82,7 +84,7 @@ const ProfileCard = (props) => {
               <Typography className="text-md">{props.user.bio}</Typography>
             </div>
           </CardHeader>
-          <CardBody className="flex flex-col px-4 py-1 border-b-2">
+          <CardBody className={`flex flex-col px-4 py-1 ${props.route === "single-post" ? "" :border-b-2}`}>
             {props.user.location && (
               <div className="flex flex-row gap-1 items-center mb-1">
                 <IoLocationSharp className="text-gray-700" />
@@ -114,8 +116,8 @@ const ProfileCard = (props) => {
           </CardBody>
           {props.route === "single-post" ? (
             ""
-          ) : (
-            <CardBody className="flex flex-col px-4 py-2 border-b-2">
+          ) : (props.user._id === user._id ? 
+           (<CardBody className="flex flex-col px-4 py-2 border-b-2">
               <div className="flex flex-row gap-1 items-center mb-1 justify-between">
                 <Typography className="">Saved Jobs</Typography>
                 <Typography className="text-base text-white bg-blue-500 px-2 rounded-full">
@@ -128,22 +130,31 @@ const ProfileCard = (props) => {
                   08
                 </Typography>
               </div>
-              <div className="flex flex-row gap-1 items-center mb-1 justify-between">
+              <div className={`flex flex-row gap-1 items-center mb-1 justify-between`}>
                 <Typography className="text-base">Applied Jobs</Typography>
                 <Typography className="text-base text-white bg-blue-500 px-2 rounded-full">
                   30
                 </Typography>
               </div>
             </CardBody>
+            )
+            : 
+            ""              
           )}
-          <CardFooter className="flex px-4 py-2 justify-between mt-2">
+
+          <CardFooter className={`flex px-4 py-2 mt-2  ${props.user._id === user._id ? "justify-center" : "justify-between" }`}>
             {props.route === "single-post" ? (
               ""
             ) : (
               <Button variant="outlined" size="sm" color="blue">
                 Resume
               </Button>
-            )}
+            )
+            }
+            {props.user._id === user._id ? 
+            ""
+            : 
+            <>
             {props.statusValue == "Connect" && (
               <Button
                 variant="filled"
@@ -184,6 +195,8 @@ const ProfileCard = (props) => {
                 {props.statusValue}
               </Button>
             )}
+            </>
+          }
           </CardFooter>
         </div>
       </Card>

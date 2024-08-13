@@ -4,9 +4,11 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Dialog,
+  DialogBody,
   Typography,
 } from "@material-tailwind/react";
-import React from "react";
+import React, { useState } from "react";
 import { BsBuildingsFill } from "react-icons/bs";
 import { ImProfile } from "react-icons/im";
 import { IoLocationSharp, IoPersonAddOutline } from "react-icons/io5";
@@ -21,7 +23,12 @@ function SinglePeopleCardHorizontal({
   getConnections,
   getSentRequests,
   getPendingRequests,
-}) {
+}) 
+{
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(!open);
+
   return (
     <Card className="Connections my-2 flex flex-row p-4">
       <CardHeader
@@ -92,10 +99,11 @@ function SinglePeopleCardHorizontal({
             className="mr-2 xl:px-4 p-2 md:rounded-lg rounded-full"
             shadow
             hover
-            onClick={async () => {
-              await sendRequest(user._id);
-              getConnections();
-            }}
+            // onClick={async () => {
+            //   await sendRequest(user._id);
+            //   getConnections();
+            // }}
+            onClick={() => handleOpen()}
           >
             <span className="xl:hidden">
               <IoPersonAddOutline className="w-4 h-4" />
@@ -134,6 +142,26 @@ function SinglePeopleCardHorizontal({
           <span className="hidden xl:block">View Profile</span>
         </Button>
       </CardBody>
+      <Dialog size="xs" open={open} handler={handleOpen} className="">
+        <DialogBody className="flex flex-col">
+          <Typography className="text-gray-800 text-lg mb-8">Are you sure you want to remove connection?</Typography>
+          <div className="flex justify-between">
+            <Button
+            color="blue"
+            variant="outlined"
+            size="sm"
+            >Cancel</Button>
+            <Button
+            color="blue"
+            size="sm"
+             onClick={async () => {
+              await sendRequest(user._id);
+              getConnections();
+            }}
+            >Remove Connection</Button>
+          </div>
+        </DialogBody>
+      </Dialog>
     </Card>
   );
 }

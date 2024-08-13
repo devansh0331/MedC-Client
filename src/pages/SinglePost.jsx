@@ -12,6 +12,7 @@ import MorefromThem from "../components/MorefromThem";
 
 const SinglePost = () => {
   const [post, setPost] = useState({});
+  const [postUser, setPostUser] = useState({});
   const postId = useParams();
   const [currentUserId, setCurrentuserId] = useState(null);
   const { getPosts, userId, posts, getUser, user } = useContext(UserContext);
@@ -38,6 +39,7 @@ const SinglePost = () => {
     } else {
       setPost(res.data);
       setCurrentuserId(user._id);
+      setPostUser(res.data.user);
     }
   };
 
@@ -64,9 +66,17 @@ const SinglePost = () => {
   return (
     <div className="w-full h-[90vh] flex overflow-hidden bg-background">
       <SideBar className="h-screen" route={"profile"} />
-      <div className="flex h-full gap-6 justify-center">
+
+      <div className="flex h-full gap-6 justify-center mx-auto">
         <div className="w-80 mt-5">
-        {/* <ProfileCard route="single-post"/> */}
+        <ProfileCard 
+        route="single-post" 
+        user={postUser}
+        profileURL={
+          // post.user && post.user.profileURL ? post.user.profileURL : ""
+          postUser._id
+        }
+        />
         </div>
         <div className="w-2/5 mt-3">  
         <SinglePostCard

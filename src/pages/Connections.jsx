@@ -187,7 +187,7 @@ const Connections = () => {
                 <Input
                   type="search"
                   placeholder=""
-                  className="pl-9 placeholder:text-blue-gray-100"
+                  className=""
                   label="Search"
                   size="sm"
                   icon={<IoMdSearch />}
@@ -197,7 +197,7 @@ const Connections = () => {
                 <Input
                   type="search"
                   placeholder="Search Location"
-                  className="lg:pl-9 pl-2 placeholder:text-blue-gray-100 "
+                  className=""
                   label="Search Location"
                   size="sm"
                   icon={<IoLocationSharp />}
