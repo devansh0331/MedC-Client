@@ -64,7 +64,7 @@ const ProfileDetails = (props) => {
           >
             <Typography className={`text-md mx-auto py-1 `}>About</Typography>
           </div>
-          <div
+          <div  
             className={`w-full text-center rounded-md cursor-pointer ${
               section === "Experience" ? "bg-blue-400 text-white" : ""
             }`}
@@ -121,6 +121,7 @@ const ProfileDetails = (props) => {
             {props.user.about ? (
               <Typography className="text-gray-800 text-md">
                 {props.user.about}
+                <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
               </Typography>
             ) : (
               <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />

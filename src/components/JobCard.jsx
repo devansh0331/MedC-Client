@@ -21,10 +21,10 @@ function JobCard() {
 
   return (
     <Card className=" bg-inherit h-2/3 lg:flex hidden flex-col items-center mx-auto mt-5 shadow-md">
-      <Card className="w-full flex items-center justify-center bg-white rounded-md">
+      <Card className="w-full flex items-center justify-center bg-white rounded-md cursor-pointer" onClick={()=> navigate('/jobs')}>
         <div className="flex w-11/12 my-1 justify-between items-center">
           <Typography className="text-xl w-full font-semibold">Featured Jobs</Typography>
-          <button onClick={()=> navigate('/jobs')}>
+          <button>
             <FaExpand />
           </button>
         </div>

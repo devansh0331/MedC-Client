@@ -14,6 +14,7 @@ import MaxJob from "../components/MaxJob";
 import Cookies from "js-cookie";
 import { UserContext } from "../UserContext";
 import { Button, Drawer } from "@material-tailwind/react";
+import BlogCard from "../components/BlogCard";
 
 function FeedPage() {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ function FeedPage() {
   };
 
   return (
-    <div className="w-full flex h-[90vh] bg-background">
+    <div className="w-full flex h-[90vh] bg-background overflow-y-hidden">
       <SideBar
         name={userInfo.name}
         email={userInfo.email}
@@ -50,11 +51,14 @@ function FeedPage() {
         route="feed"
         userId={user._id}
       />
-      <div className="flex w-[95%] md:w-[80%] mx-auto gap-4 justify-center">
-        <div className="w-full md:w-2/5">
+      <div className="flex mx-auto gap-4 justify-center">
+        <div className="hidden md:block w-56">
+          <BlogCard/>
+        </div>
+        <div className="w-full md:w-2/6">
           <PostCard />
         </div>
-        <div className="hidden md:block w-1/4">
+        <div className="hidden md:block w-96">
           <JobCard />
         </div>
       </div>
