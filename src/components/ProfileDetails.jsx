@@ -38,16 +38,16 @@ const ProfileDetails = (props) => {
     getUserCertificate();
   }, []);
 
-  console.log(props.user);
-
   return (
     <Card className="w-full h-full scrollbar-thin bg-white relative">
-      <div
-        className="absolute top-2 right-2 z-10 bg-white cursor-pointer"
-        onClick={() => navigate("/editdetails")}
-      >
-        <FaRegEdit />
-      </div>
+      {props.isExisting && (
+        <div
+          className="absolute top-2 right-2 z-10 bg-white cursor-pointer"
+          onClick={() => navigate("/editdetails")}
+        >
+          <FaRegEdit />
+        </div>
+      )}
 
       <CardHeader
         floated={false}

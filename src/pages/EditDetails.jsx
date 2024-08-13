@@ -30,7 +30,22 @@ import {
   Textarea,
 } from "@material-tailwind/react";
 import SideBar from "../components/SideBar";
+import { SERVER_URL } from "../ServerURL";
+import Cookies from "js-cookie";
 const EditDetails = () => {
+  const {
+    getUserExperience,
+    userExperience,
+    getUserEducation,
+    userEducation,
+    getUserCertificate,
+    userCertificate,
+    getUserAchievement,
+    userAchievement,
+    getUser,
+    user,
+  } = useContext(UserContext);
+
   const [section, setSection] = useState("About");
   const [openAboutEdit, setOpenAboutEdit] = useState(false);
   const [openExpEdit, setOpenExpEdit] = useState(false);
@@ -62,22 +77,12 @@ const EditDetails = () => {
     setOpenAchiEdit(!openAchiEdit);
   };
 
-  const {
-    getUserExperience,
-    userExperience,
-    getUserEducation,
-    userEducation,
-    getUserCertificate,
-    userCertificate,
-    getUserAchievement,
-    userAchievement,
-  } = useContext(UserContext);
+  const [about, setAbout] = useState(user.about);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     getUserExperience();
-    console.log(userAchievement);
   }, []);
 
   // const setToast = (msg, success) => {
@@ -101,6 +106,35 @@ const EditDetails = () => {
   //     setEditAchi(true);
   //   }
   // };
+
+  const setToast = (msg, success) => {
+    if (success) {
+      toast.success(msg);
+    } else toast.error(msg);
+  };
+
+  const handleSaveAbout = async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/auth/update-profile/about`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({ about }),
+      });
+      const res = await response.json();
+      if (res.success) {
+        getUser();
+        handleAboutEdit();
+        setToast("About updated successfully", true);
+      }
+    } catch (error) {
+      setToast("Failed to update", false);
+    }
+  };
 
   return (
     <div className=" flex overflow-hidden bg-background h-screen">
@@ -203,17 +237,15 @@ const EditDetails = () => {
               >
                 <FaRegEdit />
               </div>
-              <div className="pt-6">
-                <Typography className="text-gray-800 text-md">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Beatae assumenda consequuntur, explicabo reprehenderit
-                  voluptates a, veritatis nostrum velit excepturi dolore illo,
-                  quos atque? Accusamus repudiandae error iure suscipit,
-                  sapiente magni voluptatum sequi reiciendis odio sed, nemo quia
-                  amet et. Veniam.
-                </Typography>
-              </div>
-              <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
+              {user && user.about ? (
+                <div className="pt-6">
+                  <Typography className="text-gray-800 text-md">
+                    {user.about}
+                  </Typography>
+                </div>
+              ) : (
+                <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
+              )}
             </div>
           )}
           {section === "Experience" && (
@@ -239,7 +271,10 @@ const EditDetails = () => {
                       >
                         <div
                           className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
-                          onClick={handleExpEdit}
+                          onClick={() => {
+                            setSingleExperienceData(experience);
+                            handleExpEdit();
+                          }}
                         >
                           <FaRegEdit />
                         </div>
@@ -296,7 +331,10 @@ const EditDetails = () => {
                       >
                         <div
                           className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
-                          onClick={handleEduEdit}
+                          onClick={() => {
+                            setSingleEducationData(education);
+                            handleEduEdit();
+                          }}
                         >
                           <FaRegEdit />
                         </div>
@@ -448,11 +486,23 @@ const EditDetails = () => {
           <Typography className="text-2xl font-bold">Edit About</Typography>
           <IoClose
             className="cursor-pointer w-6 h-6"
-            onClick={handleAboutEdit}
+            onClick={() => {
+              setAbout(user.about);
+              handleAboutEdit();
+            }}
           />
         </div>
-        <textarea className="border-[1px] border-gray-400 w-full rounded-md min-h-32 max-h-80 mt-4"></textarea>
-        <Button size="sm" color="blue" className="mt-4">
+        <textarea
+          value={about}
+          onChange={(e) => setAbout(e.target.value)}
+          className="border-[1px] border-gray-400 w-full rounded-md min-h-32 max-h-80 mt-4"
+        ></textarea>
+        <Button
+          onClick={handleSaveAbout}
+          size="sm"
+          color="blue"
+          className="mt-4"
+        >
           Save
         </Button>
       </Dialog>
@@ -462,31 +512,22 @@ const EditDetails = () => {
         <EditExperience
           setOpenExpEdit={setOpenExpEdit}
           openExpEdit={openExpEdit}
+          singleExperienceData={singleExperienceData}
+          getUserExperience={getUserExperience}
+          setSingleExperienceData={setSingleExperienceData}
+          setToast={setToast}
+          handleExpEdit={handleExpEdit}
         />
       )}
       {/* EDUCATION EDIT */}
-      <Dialog open={openEduEdit} handler={handleEduEdit} className="p-4">
-        <div className="flex w-full justify-between items-start">
-          <Typography className="text-2xl font-bold">Edit Education</Typography>
-          <IoClose className="cursor-pointer w-6 h-6" onClick={handleEduEdit} />
-        </div>
-        <div className="mt-2 grid grid-cols-2 gap-4">
-          <div className="col-span-2">
-            <Input label="Job Title" size="" />
-          </div>
-          <div className="col-span-2">
-            <Input label="Company Name" size="" />
-          </div>
-          <div className="col-span-2">
-            <Textarea label="Description" size="" />
-          </div>
-          <Input label="Start Date" size="" type="month" />
-          <Input label="End Date" size="" type="month" />
-        </div>
-        <Button size="sm" color="blue" className="mt-4">
-          Save
-        </Button>
-      </Dialog>
+      <EditEdu
+        setOpenEduEdit={setOpenEduEdit}
+        openEduEdit={openEduEdit}
+        singleEducationData={singleEducationData}
+        getUserEducation={getUserEducation}
+        setSingleEducationData={setSingleEducationData}
+        setToast={setToast}
+      />
 
       {/* EDIT CERTIFICATES */}
       <Dialog open={openCertEdit} handler={handleCertEdit} className="p-4">
@@ -528,6 +569,7 @@ const EditDetails = () => {
           Save
         </Button>
       </Dialog>
+      <Toaster position="top-right" />
     </div>
   );
 };

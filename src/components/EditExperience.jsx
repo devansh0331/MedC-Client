@@ -37,7 +37,6 @@ const EditExperience = (props) => {
       ? props.singleExperienceData.description
       : ""
   );
-  console.log(props);
   const handleExpEdit = () => {
     props.setOpenExpEdit(!props.openExpEdit);
   };
@@ -66,6 +65,7 @@ const EditExperience = (props) => {
         if (res.success) {
           props.getUserExperience();
           props.setSingleExperienceData({});
+          props.handleExpEdit();
           props.setToast("Experience added successfully", true);
         }
       } catch (error) {
@@ -94,6 +94,7 @@ const EditExperience = (props) => {
         if (res.success) {
           props.getUserExperience();
           props.setSingleExperienceData({});
+          props.handleExpEdit();
           props.setToast("Experience updated successfully", true);
         }
       } catch (error) {
@@ -115,6 +116,7 @@ const EditExperience = (props) => {
         if (res.success) {
           props.getUserExperience();
           props.setSingleExperienceData({});
+          props.handleExpEdit();
           props.setToast("Experience deleted successfully", true);
         }
       } catch (error) {
@@ -131,20 +133,63 @@ const EditExperience = (props) => {
       </div>
       <div className="mt-2 grid grid-cols-2 gap-4">
         <div className="col-span-2">
-          <Input label="Job Title" size="" />
+          <Input
+            value={post}
+            onChange={(e) => setPost(e.target.value)}
+            label="Job Title"
+            size=""
+          />
         </div>
         <div className="col-span-2">
-          <Input label="Company Name" size="" />
+          <Input
+            value={organization}
+            onChange={(e) => setOrganization(e.target.value)}
+            label="Company Name"
+            size=""
+          />
         </div>
         <div className="col-span-2">
-          <Textarea label="Description" size="" />
+          <Textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            label="Description"
+            size=""
+          />
         </div>
-        <Input label="Start Date" size="" type="month" />
-        <Input label="End Date" size="" type="month" />
+        <Input
+          value={startingMonth}
+          onChange={(e) => setStartingMonth(e.target.value)}
+          label="Start Date"
+          size=""
+          type="month"
+        />
+        <Input
+          value={endingMonth}
+          onChange={(e) => setEndingMonth(e.target.value)}
+          label="End Date"
+          size=""
+          type="month"
+        />
       </div>
-      <Button size="sm" color="blue" className="mt-4">
-        Save
-      </Button>
+      <div className="flex justify-start items-center">
+        <Button
+          onClick={handleExperience}
+          size="sm"
+          color="blue"
+          className="mt-4"
+        >
+          Save
+        </Button>
+        <Button
+          onClick={handleDeleteExperience}
+          size="sm"
+          variant="outlined"
+          color="red"
+          className="mt-4 ml-4"
+        >
+          Delete
+        </Button>
+      </div>
     </Dialog>
   );
 };

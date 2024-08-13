@@ -2,7 +2,19 @@ import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { SERVER_URL } from "../ServerURL";
 import Cookies from "js-cookie";
+import {
+  Button,
+  Dialog,
+  Input,
+  Textarea,
+  Typography,
+} from "@material-tailwind/react";
+import { IoClose } from "react-icons/io5";
 const EditEdu = (props) => {
+  console.log("Education" + props.singleEducationData.organization);
+  const handleEduEdit = () => {
+    props.setOpenEduEdit(!props.openEduEdit);
+  };
   const [organization, setOrganization] = useState(
     props.singleEducationData && props.singleEducationData.organization
       ? props.singleEducationData.organization
@@ -110,90 +122,48 @@ const EditEdu = (props) => {
   };
 
   return (
-    <div className="w-screen h-screen z-100 bg-dialogueBg flex">
-      <div className="w-2/5 h-3/5 mx-auto mt-24 bg-white rounded-2xl flex flex-col p-3 justify-between">
-        <div className="flex justify-between mx-4 mt-2">
-          <p className="text-lg text-gray-700 font-medium">Edit Education</p>
-          <button onClick={() => props.setEditEdu(false)}>
-            <MdClose className="w-6 h-6 text-gray-700 font-medium" />
-          </button>
-        </div>
-        <div className="flex flex-col mx-4 my-1">
-          <div className="flex flex-col my-1">
-            <label className="text-gray-700 text-md">Organization</label>
-            <input
-              type="text"
-              className="border-2 border-gray-400 rounded-md px-3 py-1 w-2/3"
-              value={organization}
-              onChange={(e) => setOrganization(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col h-1/2 my-1">
-            <label className="text-gray-700 text-md">Course</label>
-            <input
-              type="text"
-              className="border-2 border-gray-400 rounded-md px-3 py-1 w-full"
-              value={course}
-              onChange={(e) => setCourse(e.target.value)}
-            />
-          </div>
-          <div className="flex w-full">
-            <div className="flex flex-col h-1/2 my-1 mr-2 w-1/2">
-              <label className="text-gray-700 text-md">Starting Month</label>
-              <div className="relative">
-                <input
-                  className="border-2 border-gray-400 rounded-md px-3 py-1 w-full"
-                  type="month"
-                  value={startingMonth}
-                  onChange={(e) => setStartingMonth(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="flex flex-col h-1/2 my-1 w-1/2">
-              <label className="text-gray-700 text-md">Ending Month</label>
-              <div className="relative">
-                <input
-                  className="border-2 border-gray-400 rounded-md px-3 py-1 w-full"
-                  type="month"
-                  value={endingMonth}
-                  onChange={(e) => setEndingMonth(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-between ">
-          <div className="mx-4 mt-2">
-            <button
-              className="text-red-400 border-2 border-red-400 px-3 py-1 rounded-md"
-              onClick={() => {
-                handleDeleteEducation();
-                props.setEditEdu(false);
-              }}
-            >
-              Delete
-            </button>
-          </div>
-          <div className="mx-4 mt-2">
-            <button
-              className="text-primary border-2 border-primary px-3 py-1 rounded-md"
-              onClick={() => props.setEditEdu(false)}
-            >
-              Cancel
-            </button>
-            <button
-              onClick={() => {
-                handleEducation();
-                props.setEditEdu(false);
-              }}
-              className="text-white bg-primary px-3 py-1 rounded-md ml-3"
-            >
-              Save
-            </button>
-          </div>
-        </div>
+    <Dialog open={props.openEduEdit} handler={handleEduEdit} className="p-4">
+      <div className="flex w-full justify-between items-start">
+        <Typography className="text-2xl font-bold">Edit Education</Typography>
+        <IoClose className="cursor-pointer w-6 h-6" onClick={handleEduEdit} />
       </div>
-    </div>
+      <div className="mt-2 grid grid-cols-2 gap-4">
+        <div className="col-span-2">
+          <Input
+            value={organization}
+            onChange={(e) => setOrganization(e.target.value)}
+            label="Organization"
+            size=""
+          />
+        </div>
+        <div className="col-span-2">
+          <Input
+            value={course}
+            onChange={(e) => setCourse(e.target.value)}
+            label="Course"
+            size=""
+          />
+        </div>
+
+        <Input
+          value={startingMonth}
+          onChange={(e) => setStartingMonth(e.target.value)}
+          label="Start Date"
+          size=""
+          type="month"
+        />
+        <Input
+          value={endingMonth}
+          onChange={(e) => setEndingMonth(e.target.value)}
+          label="End Date"
+          size=""
+          type="month"
+        />
+      </div>
+      <Button size="sm" color="blue" className="mt-4">
+        Save
+      </Button>
+    </Dialog>
   );
 };
 
