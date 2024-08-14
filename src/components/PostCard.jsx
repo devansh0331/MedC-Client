@@ -14,13 +14,11 @@ function PostCard() {
 
   useEffect(() => {
     getPosts();
-    console.log(posts);
   }, []);
 
   const handleOpen = () => {
     setOpen(!open);
   };
-  console.log(posts);
 
   return (
     <div className="w-full flex flex-col mx-auto mt-5 bg-inherit ">

@@ -31,12 +31,6 @@ const ProfileDetails = (props) => {
     getUserAchievement,
     userAchievement,
   } = useContext(UserContext);
-  useEffect(() => {
-    getUserExperience();
-    getUserEducation();
-    getUserAchievement();
-    getUserCertificate();
-  }, []);
 
   return (
     <Card className="w-full h-full scrollbar-thin bg-white relative">
@@ -64,11 +58,14 @@ const ProfileDetails = (props) => {
           >
             <Typography className={`text-md mx-auto py-1 `}>About</Typography>
           </div>
-          <div  
+          <div
             className={`w-full text-center rounded-md cursor-pointer ${
               section === "Experience" ? "bg-blue-400 text-white" : ""
             }`}
-            onClick={() => setSection("Experience")}
+            onClick={() => {
+              getUserExperience();
+              setSection("Experience");
+            }}
           >
             <Typography className={`text-md mx-auto py-1 `}>
               Experience
@@ -78,7 +75,10 @@ const ProfileDetails = (props) => {
             className={`w-full text-center rounded-md cursor-pointer ${
               section === "Education" ? "bg-blue-400 text-white" : ""
             }`}
-            onClick={() => setSection("Education")}
+            onClick={() => {
+              getUserEducation();
+              setSection("Education");
+            }}
           >
             <Typography className={`text-md mx-auto py-1 `}>
               Education
@@ -88,7 +88,10 @@ const ProfileDetails = (props) => {
             className={`w-full text-center rounded-md cursor-pointer ${
               section === "Certificates" ? "bg-blue-400 text-white" : ""
             }`}
-            onClick={() => setSection("Certificates")}
+            onClick={() => {
+              getUserCertificate();
+              setSection("Certificates");
+            }}
           >
             <Typography className={`text-md mx-auto py-1 `}>
               Certificates
@@ -98,7 +101,10 @@ const ProfileDetails = (props) => {
             className={`w-full text-center rounded-md cursor-pointer ${
               section === "Achievements" ? "bg-blue-400 text-white" : ""
             }`}
-            onClick={() => setSection("Achievements")}
+            onClick={() => {
+              getUserAchievement();
+              setSection("Achievements");
+            }}
           >
             <Typography className={`text-md mx-auto py-1 `}>
               Achievements
@@ -121,7 +127,6 @@ const ProfileDetails = (props) => {
             {props.user.about ? (
               <Typography className="text-gray-800 text-md">
                 {props.user.about}
-                <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
               </Typography>
             ) : (
               <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
@@ -130,240 +135,137 @@ const ProfileDetails = (props) => {
         )}
         {section === "Experience" && (
           <>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-600 text-base">
-                Organisation
-              </Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-              <Typography className="text-gray-500 text-base italic">
-                MM/YYYY - MM/YYYY
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-600 text-base">
-                Organisation
-              </Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-              <Typography className="text-gray-500 text-base italic">
-                MM/YYYY - MM/YYYY
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-600 text-base">
-                Organisation
-              </Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-              <Typography className="text-gray-500 text-base italic">
-                MM/YYYY - MM/YYYY
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-600 text-base">
-                Organisation
-              </Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-              <Typography className="text-gray-500 text-base italic">
-                MM/YYYY - MM/YYYY
-              </Typography>
-            </Card>
-            <img src={Experience} className="w-1/2 mx-auto mt-10 opacity-30" />
+            {userExperience.length > 0 ? (
+              <>
+                {userExperience.map((exp, key) => (
+                  <Card
+                    shadow={false}
+                    className="pb-2 mb-2 border-b-2 rounded-none"
+                  >
+                    {exp.post && (
+                      <Typography className="text-gray-800 text-md">
+                        {exp.post}
+                      </Typography>
+                    )}
+                    {exp.organization && (
+                      <Typography className="text-gray-600 text-base">
+                        {exp.organization}
+                      </Typography>
+                    )}
+                    {exp.description && (
+                      <Typography className="text-gray-800 text-base my-2">
+                        {exp.description}
+                      </Typography>
+                    )}
+                    {exp.startingMonth && (
+                      <Typography className="text-gray-500 text-base italic">
+                        {exp.startingMonth} -{" "}
+                        {exp.endingMonth ? exp.endingMonth : "present"}
+                      </Typography>
+                    )}
+                  </Card>
+                ))}
+              </>
+            ) : (
+              <img
+                src={Experience}
+                className="w-1/2 mx-auto mt-10 opacity-30"
+              />
+            )}
           </>
         )}
         {section === "Education" && (
           <>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-600 text-base">
-                Organisation
-              </Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-              <Typography className="text-gray-500 text-base italic">
-                MM/YYYY - MM/YYYY
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-600 text-base">
-                Organisation
-              </Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-              <Typography className="text-gray-500 text-base italic">
-                MM/YYYY - MM/YYYY
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-600 text-base">
-                Organisation
-              </Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-              <Typography className="text-gray-500 text-base italic">
-                MM/YYYY - MM/YYYY
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-600 text-base">
-                Organisation
-              </Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-              <Typography className="text-gray-500 text-base italic">
-                MM/YYYY - MM/YYYY
-              </Typography>
-            </Card>
-            <img src={Education} className="w-1/2 mx-auto mt-10 opacity-30" />
+            {userEducation.length > 0 ? (
+              <>
+                {userEducation.map((edu, key) => (
+                  <Card
+                    shadow={false}
+                    className="pb-2 mb-2 border-b-2 rounded-none"
+                  >
+                    {edu.course && (
+                      <Typography className="text-gray-800 text-md">
+                        {edu.course}
+                      </Typography>
+                    )}
+                    {edu.organization && (
+                      <Typography className="text-gray-600 text-base">
+                        {edu.organization}
+                      </Typography>
+                    )}
+
+                    {edu.startingMonth && (
+                      <Typography className="text-gray-500 text-base italic">
+                        {edu.startingMonth} -{" "}
+                        {edu.endingMonth ? edu.endingMonth : "present"}
+                      </Typography>
+                    )}
+                  </Card>
+                ))}
+              </>
+            ) : (
+              <img src={Education} className="w-1/2 mx-auto mt-10 opacity-30" />
+            )}
           </>
         )}
+
         {section === "Certificates" && (
           <>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-600 text-base">
-                Organisation
-              </Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-600 text-base">
-                Organisation
-              </Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-600 text-base">
-                Organisation
-              </Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-600 text-base">
-                Organisation
-              </Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-            </Card>
-            <img
-              src={Certificates}
-              className="w-1/2 mx-auto mt-10 opacity-30"
-            />
+            {userCertificate.length > 0 ? (
+              <>
+                {userCertificate.map((cert, key) => (
+                  <Card
+                    shadow={false}
+                    className="pb-2 mb-2 border-b-2 rounded-none"
+                  >
+                    <Typography className="text-gray-800 text-md">
+                      Title
+                    </Typography>
+                    <Typography className="text-gray-600 text-base">
+                      Organisation
+                    </Typography>
+                    <Typography className="text-gray-800 text-base my-2">
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                      Id, error! Rem ullam accusamus voluptatum recusandae
+                      dolores reprehenderit quos facere mollitia.
+                    </Typography>
+                  </Card>
+                ))}
+              </>
+            ) : (
+              <img
+                src={Certificates}
+                className="w-1/2 mx-auto mt-10 opacity-30"
+              />
+            )}
           </>
         )}
         {section === "Achievements" && (
           <>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-            </Card>
-            <Card shadow={false} className="pb-2 mb-2 border-b-2 rounded-none">
-              <Typography className="text-gray-800 text-md">Title</Typography>
-              <Typography className="text-gray-800 text-base my-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id,
-                error! Rem ullam accusamus voluptatum recusandae dolores
-                reprehenderit quos facere mollitia.
-              </Typography>
-            </Card>
-            <img
-              src={Achievements}
-              className="w-1/2 mx-auto mt-10 opacity-30"
-            />
+            {userAchievement.length > 0 ? (
+              <>
+                {userAchievement.map((ach, key) => (
+                  <Card
+                    shadow={false}
+                    className="pb-2 mb-2 border-b-2 rounded-none"
+                  >
+                    <Typography className="text-gray-800 text-md">
+                      Title
+                    </Typography>
+                    <Typography className="text-gray-800 text-base my-2">
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                      Id, error! Rem ullam accusamus voluptatum recusandae
+                      dolores reprehenderit quos facere mollitia.
+                    </Typography>
+                  </Card>
+                ))}
+              </>
+            ) : (
+              <img
+                src={Achievements}
+                className="w-1/2 mx-auto mt-10 opacity-30"
+              />
+            )}
           </>
         )}
         {section === "Posts" && (
