@@ -84,7 +84,8 @@ function SignInPage() {
         const parsedResponse = await response.json();
         console.log(parsedResponse);
         if (parsedResponse.success == false) {
-          toast.error("Server Message: " + parsedResponse.error);
+          console.log(parsedResponse.message);
+          toast.error("Server Message: " + parsedResponse.message);
         } else {
           const parsedName = await parsedResponse.user.name;
           const parsedEmail = await parsedResponse.user.email;

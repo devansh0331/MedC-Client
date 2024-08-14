@@ -120,15 +120,6 @@ function Main() {
           </>
         }
       />
-      {/* <Route
-        path="/jobs"
-        element={
-          <>
-            <NavMain route="profile" />
-            <JobPage />
-          </>
-        }
-      /> */}
       <Route
         path="/postjob"
         element={
@@ -184,7 +175,7 @@ function Main() {
         }
       />
       <Route
-        path="/job"
+        path="/job/:id"
         element={
           <>
             <NavMain route="profile" />

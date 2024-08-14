@@ -5,8 +5,13 @@ import MoreLikeThis from '../components/MoreLikeThis'
 import SingleJobCard from '../components/SingleJobCard'
 import JobCardSingle from '../components/JobCardSingle'
 import JobNav from '../components/JobNav'
+import { useParams } from 'react-router-dom'
 
-const SingleJob = () => {
+const SingleJob = (props) => {
+  const jobId = useParams()
+
+  console.log(jobId.id)
+
   return (
     <div className='w-full h-[90vh] flex bg-background'>
       <SideBar/>

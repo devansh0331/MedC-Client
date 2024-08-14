@@ -5,16 +5,22 @@ import { TiDocumentText } from "react-icons/ti";
 import { MdOutlineLocationCity } from "react-icons/md";
 import { FaMoneyBill } from "react-icons/fa6";
 import { IoMdTimer } from "react-icons/io";
+import { FaGraduationCap } from "react-icons/fa6";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { Button, Card, Typography } from "@material-tailwind/react";
-const MaxJobCard = () => {
+import { useNavigate } from "react-router-dom";
+const MaxJobCard = (props) => {
+
+  const navigate = useNavigate();
+
   return (
-    <Card className="w-full flex flex-col bg-white p-4 my-2">
+    <Card className="w-full flex flex-col bg-white p-4 my-2 cursor-pointer" 
+    onClick={() => navigate(`/job/${props.job._id}`)}>
       {/* POST AND ORGANIZATION */}
       <div className="flex w-full justify-between px-0 ">
         <div className="flex flex-col">
-          <Typography className="text-xl text-gray-900">Senior Dentist</Typography>
-          <Typography className="text-md text-gray-800">Deloitte Hospital</Typography>
+          <Typography className="text-xl text-gray-900">{props.job.jobTitle}</Typography>
+          <Typography className="text-md text-gray-800">{props.job.organziationName}</Typography>
         </div>
         <div className="flex">
           <IoPaperPlaneOutline className="w-6 h-6 mx-2" />
@@ -25,23 +31,27 @@ const MaxJobCard = () => {
       <div className="flex flex-col text-gray-800 w-full px-2 my-1">
         <Typography className="flex items-center">
           <TiDocumentText className="w-5 h-5" />
-          <span className="ml-3">1-5 Yrs Experience</span>
+          <span className="ml-3">{props.job.experience} Experience</span>
         </Typography>
         <Typography className="flex items-center">
           <MdOutlineLocationCity className="w-5 h-5" />
-          <span className="ml-3">Jaipur</span>
+          <span className="ml-3">{props.job.location}</span>
         </Typography>
         <Typography className="flex items-center">
           <FaMoneyBill className="w-5 h-5" />
-          <span className="ml-3">Rs. 30,000 - 45,000 /month</span>
+          <span className="ml-3">{props.job.salaryRange}</span>
         </Typography>
         <Typography className="flex items-center">
           <IoMdTimer className="w-5 h-5" />
-          <span className="ml-3">Immediate Joining</span>
+          <span className="ml-3">{props.job.workTiming}</span>
         </Typography>
+        {props.job.requiredQualification && <Typography className="flex items-center">
+          <FaGraduationCap className="w-5 h-5" />
+          <span className="ml-3">{props.job.requiredQualification}</span>
+        </Typography>}
         <Typography className="flex items-center">
           <FaRegCalendarAlt className="w-5 h-5" />
-          <span className="ml-3">Last Date: 30 May</span>
+          <span className="ml-3">31 August 2024</span>
         </Typography>
       </div>
 
@@ -65,3 +75,16 @@ const MaxJobCard = () => {
 };
 
 export default MaxJobCard;
+
+
+// jobTitle: String,
+// organziationName: String,
+// location: String,
+// salaryRange: String,
+// requiredQualification: String,
+// benefits: String,
+// skills: String,
+// experience: String,
+// workTiming: String,
+// jobType: String,
+// jobDescription: String,
