@@ -127,6 +127,7 @@ const ProfileDetails = (props) => {
             {props.user.about ? (
               <Typography className="text-gray-800 text-md">
                 {props.user.about}
+                <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
               </Typography>
             ) : (
               <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
@@ -165,6 +166,10 @@ const ProfileDetails = (props) => {
                     )}
                   </Card>
                 ))}
+              <img
+                src={Experience}
+                className="w-1/2 mx-auto mt-10 opacity-30"
+              />
               </>
             ) : (
               <img
@@ -202,6 +207,7 @@ const ProfileDetails = (props) => {
                     )}
                   </Card>
                 ))}
+              <img src={Education} className="w-1/2 mx-auto mt-10 opacity-30" />
               </>
             ) : (
               <img src={Education} className="w-1/2 mx-auto mt-10 opacity-30" />
@@ -231,6 +237,10 @@ const ProfileDetails = (props) => {
                     </Typography>
                   </Card>
                 ))}
+              <img
+                src={Certificates}
+                className="w-1/2 mx-auto mt-10 opacity-30"
+              />
               </>
             ) : (
               <img
@@ -259,6 +269,10 @@ const ProfileDetails = (props) => {
                     </Typography>
                   </Card>
                 ))}
+              <img
+                src={Achievements}
+                className="w-1/2 mx-auto mt-10 opacity-30"
+              />
               </>
             ) : (
               <img

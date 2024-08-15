@@ -81,7 +81,7 @@ function SideBar() {
                 </ListItemPrefix>
               </div>
               <div
-                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer  ${currentPage.includes("/user") ? active : ""}`}
+                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer  ${currentPage.includes(`/user/${user._id}`) ? active : ""}`}
                 onClick={() => navigate(`/user/${user._id}`)}
               >
                 <ListItemPrefix className="mx-auto">
@@ -159,7 +159,7 @@ function SideBar() {
             className="flex flex-col w-full m-0"
           >
             <div
-              className={`flex items-center border-b-2 mt-4 p-4 cursor-pointer hover:bg-opacity-90 rounded-xl ${currentPage.includes("/user") ? active : ""}`}
+              className={`flex items-center border-b-2 mt-4 p-4 cursor-pointer hover:bg-opacity-90 rounded-xl ${currentPage.includes(`/user/${user._id}`) ? active : ""}`}
               onClick={() => {navigate(`/user/${user._id}`);  closeDrawer();}}
             >
               <Avatar
@@ -167,7 +167,7 @@ function SideBar() {
                 size="md"
               />
               <div className=" flex flex-col ml-3">
-                <Typography className={`font-semibold ${currentPage.includes("/user") ? "text-white" : "text-black"}`}>
+                <Typography className={`font-semibold ${currentPage.includes(`/user/${user._id}`) ? "text-white" : "text-black"}`}>
                   {userInfo.name}
                 </Typography>
                 <Typography className="text-sm">{user.bio}</Typography>

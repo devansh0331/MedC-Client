@@ -27,6 +27,7 @@ import {
 } from "@material-tailwind/react";
 import EditProfileNew from "./EditProfileNew";
 import { UserContext } from "../UserContext";
+import Resume from "../assets/Resume.pdf";
 
 const ProfileCard = (props) => {
   const [check, setCheck] = useState(false);
@@ -38,10 +39,20 @@ const ProfileCard = (props) => {
   const handleOpenEdit = () => setOpenEdit(!openEdit);
   const { user } = useContext(UserContext);
 
-  const [resume, setResume] = useState(null);
+  const [resume, setResume] = useState(Resume);
   const [number, setNumber] = useState("");
 
-  console.log(props.user);
+  // console.log(props.user);
+
+  const handleResumeDownload = () => {
+    const pdfUrl = resume;
+    const link = document.createElement("a");  
+    link.href = pdfUrl;
+    link.download = `${props.user.name} Resume.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
 
   const handleNumber = (num) => {
     if (num.length <= 10) {
@@ -155,7 +166,7 @@ const ProfileCard = (props) => {
             {props.route === "single-post" ? (
               ""
             ) : (
-              <Button variant="outlined" size="sm" color="blue">
+              <Button variant="outlined" size="sm" color="blue" onClick={handleResumeDownload}>
                 Resume
               </Button>
             )}

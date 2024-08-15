@@ -12,6 +12,7 @@ import EditProfile from "./EditProfile";
 import altprofile from "../assets/altprofile.png";
 import { FaRegEdit } from "react-icons/fa";
 import { RiGalleryFill } from "react-icons/ri";
+import Resume from "../assets/Resume.pdf";
 import { IoClose } from "react-icons/io5";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { Country, State, City } from "country-state-city";
@@ -41,7 +42,7 @@ function EditProfileNew({
   const CityArr = City.getCitiesOfCountry("IN");
   const StateArr = State.getStatesOfCountry("IN");
   console.log(user);
-  const [resume, setResume] = useState(null);
+  const [resume, setResume] = useState(Resume);
   const [number, setNumber] = useState("");
   const [fName, setFName] = useState(user.name ? user.name.split(" ")[0] : "");
   const [lName, setLName] = useState(user.name ? user.name.split(" ")[1] : "");
@@ -55,6 +56,7 @@ function EditProfileNew({
   const [linkedin, setLinkedin] = useState(user.linkedin ? user.linkedin : "");
   const [twitter, setTwitter] = useState(user.twitter ? user.twitter : "");
   const [website, setWebsite] = useState(user.website ? user.website : "");
+
   const handleSaveProfile = async () => {
     console.log(location);
     const formData = new FormData();
@@ -130,6 +132,27 @@ function EditProfileNew({
       }
     }
   };
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (!selectedFile || selectedFile.type !== "application/pdf") {
+      setResume(null);
+      alert("Please select a PDF file!");
+      return;
+    }
+    setResume(selectedFile);
+  };
+
+//   const onButtonClick = () => {
+//     const pdfUrl = URL.createObjectURL(resume);
+//     const link = document.createElement("a");
+//     link.href = pdfUrl;
+//     link.download = "document.pdf"; // specify the filename
+//     document.body.appendChild(link);
+//     link.click();
+//     document.body.removeChild(link);
+// };
+
   return (
     <Dialog
       open={openEdit}
@@ -144,13 +167,13 @@ function EditProfileNew({
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-2 relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
           <input
-            id="file-upload"
+            id="file-upload-image"
             className="hidden"
             type="file"
             accept="image/*"
             onChange={(e) => setFile(e.target.files[0])}
           />
-          <label htmlFor="file-upload">
+          <label htmlFor="file-upload-image">
             <RiGalleryFill className="w-5 h-5  absolute left-4 top-1/2 -translate-y-1/2" />{" "}
             <span className="ml-8 absolute top-1/2 -translate-y-1/2">
               {file ? file.name : "Upload Profile Picture"}
@@ -215,25 +238,25 @@ function EditProfileNew({
           onChange={(e) => setTwitter(e.target.value)}
           className="col-span-1"
         />
-        {/* <div className="col-span-2 relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
-            <input
-              id="file-upload"
-              className="hidden"
-              type="file"
-              accept="pdf/*"
-              onChange={(e) => setResume(e.target.files[0])}
-            />
-            <label htmlFor="file-upload">
-              <IoDocumentTextSharp className="w-5 h-5  absolute left-4 top-1/2 -translate-y-1/2" />{" "}
-              <span className="ml-8 absolute top-1/2 -translate-y-1/2">
-                {resume ? resume.name : "Upload Resume"}
-              </span>
-            </label>
-            <IoClose
-              className="w-5 h-5 absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
-              onClick={() => setResume(null)}
-            />
-          </div> */}
+        <div className="col-span-2 relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
+          <input
+            id="file-upload"
+            className="hidden"
+            type="file"
+            accept=".pdf"
+            onChange={handleFileChange}
+          />
+          <label htmlFor="file-upload" className="">
+            <IoDocumentTextSharp className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2" />{" "}
+            <span className="ml-8 absolute top-1/2 -translate-y-1/2">
+              {resume ? resume.name : "Upload Resume"}
+            </span>
+          </label>
+          <IoClose
+            className="w-5 h-5 absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+            onClick={() => setResume(null)}
+          />
+        </div>
         <div>
           <Button
             onClick={() => handleSaveProfile()}

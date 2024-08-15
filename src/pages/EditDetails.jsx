@@ -17,6 +17,7 @@ import Achievements from "../assets/Achievements.png";
 import Posts from "../assets/Posts.png";
 import { FaRegEdit } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import { RiGalleryFill } from "react-icons/ri";
 import {
   Card,
   CardHeader,
@@ -56,6 +57,7 @@ const EditDetails = () => {
   const [singleEducationData, setSingleEducationData] = useState({});
   const [singleCertificateData, setSingleCertificateData] = useState({});
   const [singleAchievementData, setSingleAchievementData] = useState({});
+  const [file, setFile] = useState(null);
 
   const handleAboutEdit = () => {
     setOpenAboutEdit(!openAboutEdit);
@@ -242,6 +244,7 @@ const EditDetails = () => {
                   <Typography className="text-gray-800 text-md">
                     {user.about}
                   </Typography>
+                  <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
                 </div>
               ) : (
                 <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
@@ -298,6 +301,10 @@ const EditDetails = () => {
                         </Typography>
                       </Card>
                     ))}
+                  <img
+                    src={Experience}
+                    className="w-1/2 mx-auto mt-10 opacity-30"
+                  />
                   </>
                 ) : (
                   <img
@@ -358,6 +365,10 @@ const EditDetails = () => {
                         </Typography>
                       </Card>
                     ))}
+                  <img
+                    src={Experience}
+                    className="w-1/2 mx-auto mt-10 opacity-30"
+                  />
                   </>
                 ) : (
                   <img
@@ -411,6 +422,10 @@ const EditDetails = () => {
                         )}
                       </Card>
                     ))}
+                  <img
+                    src={Certificates}
+                    className="w-1/2 mx-auto mt-10 opacity-30"
+                  />
                   </>
                 ) : (
                   <img
@@ -461,6 +476,10 @@ const EditDetails = () => {
                           )}
                         </Card>
                       ))}
+                    <img
+                      src={Achievements}
+                      className="w-1/2 mx-auto mt-10 opacity-30"
+                    />
                     </>
                   ) : (
                     <img
@@ -541,9 +560,28 @@ const EditDetails = () => {
           />
         </div>
         <div className="mt-2 grid grid-cols-1 gap-4">
-          <Input label="Job Title" size="" />
-          <Input label="Company Name" size="" />
+          <Input label="Title" size="" />
+          <Input label="Issuer" size="" />
           <Textarea label="Description" size="" />
+          <div className="relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
+          <input
+            id="file-upload-image"
+            className="hidden"
+            type="file"
+            accept=".pdf"
+            onChange={(e) => setFile(e.target.files[0])}
+          />
+          <label htmlFor="file-upload-image">
+            <RiGalleryFill className="w-5 h-5  absolute left-4 top-1/2 -translate-y-1/2" />{" "}
+            <span className="ml-8 absolute top-1/2 -translate-y-1/2">
+              {file ? file.name : "Upload Certificate"}
+            </span>
+          </label>
+          <IoClose
+            className="w-5 h-5 absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+            onClick={() => setFile(null)}
+          />
+        </div>
         </div>
         <Button size="sm" color="blue" className="mt-4">
           Save
