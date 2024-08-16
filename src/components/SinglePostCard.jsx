@@ -46,7 +46,7 @@ const SinglePostCard = (props) => {
     setMenuopen(!menuopen);
   };
 
-  useEffect(() => {});
+  // useEffect(() => {});
   const getComments = async (comm) => {
     if (comm == true) {
       try {
@@ -58,9 +58,11 @@ const SinglePostCard = (props) => {
         const res = await response.json();
 
         if (!res.success) {
+          setComments([]);
           console.log(res.error);
         } else {
           setComments(res.data);
+          console.log(res.data);
           setCommentsCount(res.data.length);
         }
       } catch (error) {
@@ -203,11 +205,14 @@ const SinglePostCard = (props) => {
           </div>
           <div
             className="flex items-center gap-2 cursor-pointer"
-            onClick={() => setCommentbox(!commentbox)}
+            onClick={() => {
+              getComments(true);
+              setCommentbox(!commentbox);
+            }}
           >
             <FaRegCommentAlt className="w-5 h-5 text-blue-600" />
             <Typography className="text-base text-gray-800">
-              2 Comments
+              {comments.length > 0 && comments.length} Comments
             </Typography>
           </div>
           <div className="flex items-center gap-2 cursor-pointer">
@@ -218,17 +223,68 @@ const SinglePostCard = (props) => {
       </CardBody>
       {commentbox && (
         <CardFooter className="m-0 px-2 py-0">
-          <div className="flex justify-between items-center relative">
-            <Input label="Add Comment" />
-            <Typography className="text-base absolute right-4 cursor-pointer text-blue-500">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              addComment();
+            }}
+            className="flex justify-between items-center relative"
+          >
+            <Input
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              label="Add Comment"
+            />
+            <Typography
+              onClick={() => addComment()}
+              className="text-base absolute right-4 cursor-pointer text-blue-500"
+            >
               Post
             </Typography>
-          </div>
-          <div className="flex justify-between  items-center my-2 px-2">
-            <Typography>This is a comment</Typography>
-            <Typography>
-              <RiDeleteBin6Line />
-            </Typography>
+          </form>
+          <div className="w-full grid grid-cols-1 gap-2 my-4">
+            {comments.length > 0 && (
+              <>
+                {comments.map((commentDetail, key) => (
+                  <div className="flex justify-between text-black rounded-md bg-background items-center  p-2 px-2">
+                    <div className="flex items-start">
+                      <Avatar
+                        src={
+                          commentDetail.userId.profileURL
+                            ? commentDetail.userId.profileURL
+                            : altprofile
+                        }
+                        alt="profile"
+                        size="sm"
+                        className="cursor-pointer"
+                        onClick={() =>
+                          navigate(`/user/${commentDetail.userId._id}`)
+                        }
+                      />
+                      <div className="ml-2">
+                        <Typography
+                          className="text-xs font-semibold cursor-pointer"
+                          onClick={() =>
+                            navigate(`/user/${commentDetail.userId._id}`)
+                          }
+                        >
+                          {commentDetail.userId.name}
+                        </Typography>
+                        <Typography>{commentDetail.comment}</Typography>
+                      </div>
+                    </div>
+                    {user == commentDetail.userId._id && (
+                      <Typography>
+                        <RiDeleteBin6Line
+                          className="cursor-pointer"
+                          onClick={() => deleteComment(commentDetail._id)}
+                        />
+                      </Typography>
+                    )}
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </CardFooter>
       )}
