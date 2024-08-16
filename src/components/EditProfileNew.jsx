@@ -50,6 +50,7 @@ function EditProfileNew({
   const [bio, setBio] = useState(user.bio ? user.bio : "");
   const [location, setLocation] = useState(user.location ? user.location : "");
   const [file, setFile] = useState(user.profileURL ? user.profileURL : altprofile);
+  const [uploadedFile, setUploadedFile] = useState(null);
   const [contact, setContact] = useState(
     user.contact ? parseInt(user.contact) : ""
   );
@@ -161,7 +162,7 @@ function EditProfileNew({
       className="p-5 flex flex-row gap-4 w-full"
     >
       <div className="w-2/5 flex items-center">
-      <Avatar src={file} className="aspect-square w-full h-min"/>
+      <Avatar src={uploadedFile ? URL.createObjectURL(uploadedFile) : file } className="aspect-square w-full h-min"/>
       </div>
       <div className="w-3/5 flex flex-col">
       <div className="flex w-full justify-between items-start">
@@ -175,7 +176,9 @@ function EditProfileNew({
             className="hidden"
             type="file"
             accept="image/*"
-            onChange={(e) => setFile(e.target.files[0])}
+            onChange={(e) => {setUploadedFile(e.target.files[0])
+              setFile(e.target.files[0])
+            }}
           />
           <label htmlFor="file-upload-image">
             <RiGalleryFill className="w-5 h-5  absolute left-4 top-1/2 -translate-y-1/2" />{" "}
@@ -185,7 +188,7 @@ function EditProfileNew({
           </label>
           <IoClose
             className="w-5 h-5 absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
-            onClick={() => setFile(null)}
+            onClick={() => {setFile(null); setUploadedFile(null)}}
           />
         </div>
         <Input

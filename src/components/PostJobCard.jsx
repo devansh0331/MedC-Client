@@ -15,16 +15,16 @@ const PostJobCard = () => {
   const [preview, setPreview] = useState(false);
   const modules = {
     toolbar: [
-      [{ header: "1" }, { header: "2" }],
+      // [{ header: "1" }, { header: "2" }],
       [{ size: [] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
+      ["bold", "italic", "underline"],
       [
-        { list: "ordered" },
+        // { list: "ordered" },
         { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
+        // { indent: "-1" },
+        // { indent: "+1" },
       ],
-      ["link", "image", "video"],
+      ["link"],
       ["clean"],
     ],
     // clipboard: {
@@ -55,6 +55,9 @@ const PostJobCard = () => {
         label='Salary / CTC'
         className='w-full'
         />
+        {/* Employment type */}
+        {/* Educational requirement */}
+        {/* Salary ranges */}
         <Input
         type='number'
         label='Minimum Experience' 

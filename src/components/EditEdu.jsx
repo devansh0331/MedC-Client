@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { SERVER_URL } from "../ServerURL";
 import Cookies from "js-cookie";
@@ -35,6 +35,29 @@ const EditEdu = (props) => {
       ? props.singleEducationData.endingMonth
       : ""
   );
+
+  useEffect(() => {
+    setOrganization(
+      props.singleEducationData && props.singleEducationData.organization
+        ? props.singleEducationData.organization
+        : ""
+    );
+    setCourse(
+      props.singleEducationData && props.singleEducationData.course
+        ? props.singleEducationData.course
+        : ""
+    );
+    setStartingMonth(
+      props.singleEducationData && props.singleEducationData.startingMonth
+        ? props.singleEducationData.startingMonth
+        : ""
+    );
+    setEndingMonth(
+      props.singleEducationData && props.singleEducationData.endingMonth
+        ? props.singleEducationData.endingMonth
+        : ""
+    );
+  }, [props.singleEducationData]);
   const handleEducation = async () => {
     if (props.singleEducationData._id == undefined) {
       try {
@@ -73,11 +96,11 @@ const EditEdu = (props) => {
             credentials: "include",
             headers: {
               "Content-Type": "application/json",
-            },
+            }, 
             body: JSON.stringify({
               organization,
               course,
-              startingMonth,
+              startingMonth,  
               endingMonth,
             }),
           }

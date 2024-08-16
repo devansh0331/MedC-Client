@@ -44,7 +44,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="bg-background w-full overflow-x-hidden">
+    <div className="bg-black w-full overflow-x-hidden h-screen">
       <div className="flex">
         <SideBar />
         <div className="w-[80%] flex mx-auto mt-5 gap-5">

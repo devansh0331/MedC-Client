@@ -27,7 +27,7 @@ function SingleUserProfilePage() {
   const [user, setUser] = useState();
 
   const userId = useParams();
-  console.log(userId.id);
+  // console.log(userId.id);
 
   const getSingleUser = async () => {
     try {
@@ -55,7 +55,8 @@ function SingleUserProfilePage() {
 
   useEffect(() => {
     getSingleUser();
-  }, []);
+    // console.log(user);
+  }, [userId]);
   const setToast = (msg, success) => {
     if (success) {
       toast.success(msg);

@@ -153,7 +153,7 @@ const ProfileCard = (props) => {
               <Typography className="ml-2">{props.user.email}</Typography>
             </div>
             {props.user.contact && (
-              <div className="flex flex-row gap-1 items-center mb-1">
+              <div className="flex flex-row gap-1 items-center mb-1 cursor-pointer" onClick={() => window.open(`tel:${props.user.contact}`)}>
                 <FaPhoneAlt className="text-gray-700" />
                 <Typography className="ml-2">{props.user.contact}</Typography>
               </div>
