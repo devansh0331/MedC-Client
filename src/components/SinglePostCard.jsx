@@ -36,7 +36,7 @@ const SinglePostCard = (props) => {
   const [commentbox, setCommentbox] = useState(false);
   const [menuopen, setMenuopen] = useState(false);
   // const { getPosts, posts, handleLike, user } = useContext(UserContext);
-  // const currUserId = 
+  // const currUserId =
   const postId = props.postId;
   const user = props.userId;
   const [postMenu, setPostMenu] = useState(false);
@@ -155,22 +155,21 @@ const SinglePostCard = (props) => {
           <Typography className="text-xs md:text-base">
             {props.postedAt}
           </Typography>
-          {user === props.profileId && 
-          <Typography className="text-sm md:text-base text-gray-900 md:text-gray-700">
-            <Menu placement="bottom-start">
-              <MenuHandler>
-                <button>
-                  <HiOutlineDotsHorizontal className="cursor-pointer  w-4 h-4 md:w-6 md:h-6" />
-                </button>
-              </MenuHandler>
-              <MenuList>
-                <MenuItem>Edit</MenuItem>
-                <MenuItem>Delete</MenuItem>  
-              </MenuList>
-            </Menu>
-          </Typography>
-          }
-
+          {user === props.profileId && (
+            <Typography className="text-sm md:text-base text-gray-900 md:text-gray-700">
+              <Menu placement="bottom-start">
+                <MenuHandler>
+                  <button>
+                    <HiOutlineDotsHorizontal className="cursor-pointer  w-4 h-4 md:w-6 md:h-6" />
+                  </button>
+                </MenuHandler>
+                <MenuList>
+                  <MenuItem>Edit</MenuItem>
+                  <MenuItem>Delete</MenuItem>
+                </MenuList>
+              </Menu>
+            </Typography>
+          )}
         </div>
       </CardHeader>
       <CardBody className="m-0 p-0 z-0">
@@ -193,8 +192,14 @@ const SinglePostCard = (props) => {
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => props.handleLike()}
           >
-            <AiOutlineLike className="w-5 h-5 text-blue-600" />
-            <Typography className="text-base text-gray-800">2 Likes</Typography>
+            {props.isLiked ? (
+              <AiFillLike className="w-5 h-5 text-blue-600" />
+            ) : (
+              <AiOutlineLike className="w-5 h-5 text-blue-600" />
+            )}
+            <Typography className="text-base text-gray-800">
+              {props.likes} Likes
+            </Typography>
           </div>
           <div
             className="flex items-center gap-2 cursor-pointer"
