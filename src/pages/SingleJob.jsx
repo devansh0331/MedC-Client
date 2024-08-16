@@ -13,12 +13,12 @@ const SingleJob = (props) => {
   console.log(jobId.id)
 
   return (
-    <div className='w-full h-[90vh] flex bg-background'>
+    <div className='w-full h-[90vh] flex bg-background overflow-y-hidden'>
       <SideBar/>
-      <div className="flex w-full h-full gap-6 justify-center">
-        <div className="w-3/5 mt-5 flex flex-col gap-4">
+      <div className="flex w-[90%] mx-auto h-full gap-6 justify-center mt-5">
+        <div className="w-3/5 flex flex-col gap-3">
         <JobNav/>
-        <div className=' overflow-y-scroll scrollbar-thin'>
+        <div className='overflow-y-scroll scrollbar-thin'>
         <JobCardSingle/>
         </div>
         </div>

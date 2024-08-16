@@ -49,7 +49,7 @@ function EditProfileNew({
   const [email, setEmail] = useState(user.email ? user.email : "");
   const [bio, setBio] = useState(user.bio ? user.bio : "");
   const [location, setLocation] = useState(user.location ? user.location : "");
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(user.profileURL ? user.profileURL : altprofile);
   const [contact, setContact] = useState(
     user.contact ? parseInt(user.contact) : ""
   );
@@ -157,9 +157,13 @@ function EditProfileNew({
     <Dialog
       open={openEdit}
       handler={handleOpenEdit}
-      size="md"
-      className="p-5 flex flex-col gap-4"
+      size="lg"
+      className="p-5 flex flex-row gap-4 w-full"
     >
+      <div className="w-2/5 flex items-center">
+      <Avatar src={file} className="aspect-square w-full h-min"/>
+      </div>
+      <div className="w-3/5 flex flex-col">
       <div className="flex w-full justify-between items-start">
         <Typography className="text-2xl font-bold">Edit Profile</Typography>
         <IoClose className="cursor-pointer w-6 h-6" onClick={handleOpenEdit} />
@@ -176,7 +180,7 @@ function EditProfileNew({
           <label htmlFor="file-upload-image">
             <RiGalleryFill className="w-5 h-5  absolute left-4 top-1/2 -translate-y-1/2" />{" "}
             <span className="ml-8 absolute top-1/2 -translate-y-1/2">
-              {file ? file.name : "Upload Profile Picture"}
+              {file ? "Change Profile Picture" : "Upload Profile Picture"}
             </span>
           </label>
           <IoClose
@@ -267,6 +271,7 @@ function EditProfileNew({
             Save
           </Button>
         </div>
+      </div>
       </div>
     </Dialog>
   );

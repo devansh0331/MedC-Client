@@ -1,5 +1,3 @@
-// const { createContext, useState, default: React } = require("react");
-
 import Cookies from "js-cookie";
 import { createContext, useEffect, useState } from "react";
 import { SERVER_URL } from "./ServerURL";

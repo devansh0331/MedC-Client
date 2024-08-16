@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const SingleJobCard = () => {
   const navigate = useNavigate();
   return (
-    <Card className="w-full bg-white my-2 p-4 cursor-pointer" onClick={() => navigate("/job")}>
+    <Card className="w-full bg-white my-2 p-4 cursor-pointer" onClick={() => navigate("/job/:id")}>
       <div className="w-full flex items-center justify-between ">
         <div className="flex gap-3 items-center justify-center">
           <Avatar

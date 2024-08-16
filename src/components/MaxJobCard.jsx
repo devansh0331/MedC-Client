@@ -19,8 +19,8 @@ const MaxJobCard = (props) => {
       {/* POST AND ORGANIZATION */}
       <div className="flex w-full justify-between px-0 ">
         <div className="flex flex-col">
-          <Typography className="text-xl text-gray-900">{props.job.jobTitle}</Typography>
-          <Typography className="text-md text-gray-800">{props.job.organziationName}</Typography>
+          <Typography className="text-xl text-gray-900">{props.job?.jobTitle ? props.job.jobTitle : "N/A"}</Typography>
+          <Typography className="text-md text-gray-800">{props.job?.organziationName ? props.job.organziationName : "N/A"}</Typography>
         </div>
         <div className="flex">
           <IoPaperPlaneOutline className="w-6 h-6 mx-2" />
@@ -31,23 +31,23 @@ const MaxJobCard = (props) => {
       <div className="flex flex-col text-gray-800 w-full px-2 my-1">
         <Typography className="flex items-center">
           <TiDocumentText className="w-5 h-5" />
-          <span className="ml-3">{props.job.experience} Experience</span>
+          <span className="ml-3">{props.job?.experience ? props.job.experience : "N/A"} Experience</span>
         </Typography>
         <Typography className="flex items-center">
           <MdOutlineLocationCity className="w-5 h-5" />
-          <span className="ml-3">{props.job.location}</span>
+          <span className="ml-3">{props.job?.location ? props.job.location : "N/A"}</span>
         </Typography>
         <Typography className="flex items-center">
           <FaMoneyBill className="w-5 h-5" />
-          <span className="ml-3">{props.job.salaryRange}</span>
+          <span className="ml-3">{props.job?.salaryRange ? props.job.salaryRange : "N/A"}</span>
         </Typography>
         <Typography className="flex items-center">
           <IoMdTimer className="w-5 h-5" />
-          <span className="ml-3">{props.job.workTiming}</span>
+          <span className="ml-3">{props.job?.workTiming ? props.job.workTiming : "N/A"}</span>
         </Typography>
-        {props.job.requiredQualification && <Typography className="flex items-center">
+        {props.job?.requiredQualification && <Typography className="flex items-center">
           <FaGraduationCap className="w-5 h-5" />
-          <span className="ml-3">{props.job.requiredQualification}</span>
+          <span className="ml-3">{props.job?.requiredQualification ? props.job.requiredQualification : "N/A"}</span>
         </Typography>}
         <Typography className="flex items-center">
           <FaRegCalendarAlt className="w-5 h-5" />

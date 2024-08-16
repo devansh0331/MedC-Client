@@ -28,6 +28,7 @@ import {
 import EditProfileNew from "./EditProfileNew";
 import { UserContext } from "../UserContext";
 import Resume from "../assets/Resume.pdf";
+import { useNavigate } from "react-router-dom";
 
 const ProfileCard = (props) => {
   const [check, setCheck] = useState(false);
@@ -38,21 +39,62 @@ const ProfileCard = (props) => {
   const handleOpenProfile = () => setOpenProfile(!openProfile);
   const handleOpenEdit = () => setOpenEdit(!openEdit);
   const { user } = useContext(UserContext);
-
+  const [linkedin, setLinkedin] = useState(props.user.linkedin);
+  const [twitter, setTwitter] = useState(props.user.twitter);
   const [resume, setResume] = useState(Resume);
   const [number, setNumber] = useState("");
+  const navigate = useNavigate();
+  const trimSocials = () => {   
+    if (props.user.linkedin?.includes("https://www.linkedin.com/in/")) {
+      const username = props.user.linkedin.slice(28);
+      // console.log("l1",username);
+      setLinkedin(username);
+    }else
+    if (props.user.linkedin?.startsWith("www.linkedin.com/in/")) {
+      const username = props.user.linkedin.slice(20);
+      // console.log("l2",username);
+      setLinkedin(username);
+    }else{
+      setLinkedin(props.user.linkedin)
+    } 
+    if (props.user.twitter?.includes("https://x.com/")) {
+      const username = props.user.twitter.slice(14);
+      // console.log('t1',username);
+      setTwitter(username);
+    }else
+    if (props.user.twitter?.startsWith("x.com/")) {
+      const username = props.user.twitter.slice(6);
+      // console.log('t2',username);
+      setTwitter(username);
+    }else
+    if (props.user.twitter?.startsWith("https://twitter.com/")) {
+      const username = props.user.twitter.slice(19);
+      // console.log('t2',username);
+      setTwitter(username);
+    }else
+    if (props.user.twitter?.startsWith("twitter.com/")) {
+      const username = props.user.twitter.slice(12);
+      // console.log('t2',username);
+      setTwitter(username);
+    }else
+    {
+      setTwitter(props.user.twitter)
+    }
+  };
 
-  // console.log(props.user);
+  useEffect(() => {
+    trimSocials();
+  })
 
   const handleResumeDownload = () => {
     const pdfUrl = resume;
-    const link = document.createElement("a");  
+    const link = document.createElement("a");
     link.href = pdfUrl;
     link.download = `${props.user.name} Resume.pdf`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-};
+  };
 
   const handleNumber = (num) => {
     if (num.length <= 10) {
@@ -106,7 +148,7 @@ const ProfileCard = (props) => {
                 <Typography className="ml-2">{props.user.location}</Typography>
               </div>
             )}
-            <div className="flex flex-row gap-1 items-center mb-1">
+            <div className="flex flex-row gap-1 items-center mb-1 cursor-pointer" onClick={() => window.open(`mailto:${props.user.email}`)}>
               <MdEmail className="text-gray-700" />
               <Typography className="ml-2">{props.user.email}</Typography>
             </div>
@@ -117,15 +159,15 @@ const ProfileCard = (props) => {
               </div>
             )}
             {props.user.linkedin && (
-              <div className="flex flex-row gap-1 items-center mb-1">
+              <div className="flex flex-row gap-1 items-center mb-1 cursor-pointer" onClick={() => window.open(`https://www.linkedin.com/in/${linkedin}`)}>
                 <FaLinkedinIn className="text-gray-700" />
-                <Typography className="ml-2">{props.user.linkedin}</Typography>
+                <Typography className="ml-2">{linkedin}</Typography>
               </div>
             )}
             {props.user.twitter && (
-              <div className="flex flex-row gap-1 items-center mb-1">
+              <div className="flex flex-row gap-1 items-center mb-1 cursor-pointer" onClick={() => window.open(`https://twitter.com/${twitter}`)}>
                 <FaXTwitter className="text-gray-700" />
-                <Typography className="ml-2">{props.user.twitter}</Typography>
+                <Typography className="ml-2">{twitter}</Typography>
               </div>
             )}
           </CardBody>
@@ -133,20 +175,20 @@ const ProfileCard = (props) => {
             ""
           ) : props.user._id === user._id ? (
             <CardBody className="flex flex-col px-4 py-2 border-b-2">
-              <div className="flex flex-row gap-1 items-center mb-1 justify-between">
+              <div className="flex flex-row gap-1 items-center mb-1 justify-between cursor-pointer" onClick={()=> navigate("/user-saves/:id")}>
                 <Typography className="">Saved Jobs</Typography>
                 <Typography className="text-base text-white bg-blue-500 px-2 rounded-full">
                   38
                 </Typography>
               </div>
-              <div className="flex flex-row gap-1 items-center mb-1 justify-between">
+              <div className="flex flex-row gap-1 items-center mb-1 justify-between cursor-pointer" onClick={()=> navigate("/user-saves/:id")}>
                 <Typography className="text-base">Posted Jobs</Typography>
                 <Typography className="text-base text-white bg-blue-500 px-2 rounded-full">
                   08
                 </Typography>
               </div>
               <div
-                className={`flex flex-row gap-1 items-center mb-1 justify-between`}
+                className={`flex flex-row gap-1 items-center mb-1 justify-between cursor-pointer`} onClick={()=> navigate("/user-saves/:id")}
               >
                 <Typography className="text-base">Applied Jobs</Typography>
                 <Typography className="text-base text-white bg-blue-500 px-2 rounded-full">
@@ -166,7 +208,12 @@ const ProfileCard = (props) => {
             {props.route === "single-post" ? (
               ""
             ) : (
-              <Button variant="outlined" size="sm" color="blue" onClick={handleResumeDownload}>
+              <Button
+                variant="outlined"
+                size="sm"
+                color="blue"
+                onClick={handleResumeDownload}
+              >
                 Resume
               </Button>
             )}

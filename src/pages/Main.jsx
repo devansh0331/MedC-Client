@@ -24,6 +24,7 @@ import NavMain from "../components/NavMain";
 import Settings from "./Settings";
 import SingleJob from "./SingleJob";
 import Admin from "./Admin";
+import Saves from "./Saves";
 // import { NavbarWithSearch } from "./Nav";
 
 function Main() {
@@ -216,6 +217,15 @@ function Main() {
           <>
             <NavMain />
             <Admin />
+          </>
+        }
+      />
+      <Route
+        path="/user-saves/:id"
+        element={
+          <>
+            <NavMain />
+            <Saves />
           </>
         }
       />
