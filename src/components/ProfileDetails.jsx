@@ -266,14 +266,16 @@ const ProfileDetails = (props) => {
                     shadow={false}
                     className="pb-2 mb-2 border-b-2 rounded-none"
                   >
-                    <Typography className="text-gray-800 text-md">
-                      Title
-                    </Typography>
-                    <Typography className="text-gray-800 text-base my-2">
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                      Id, error! Rem ullam accusamus voluptatum recusandae
-                      dolores reprehenderit quos facere mollitia.
-                    </Typography>
+                    {ach.achievement && (
+                      <Typography className="text-gray-800 text-md">
+                        {ach.achievement}
+                      </Typography>
+                    )}
+                    {ach.description && (
+                      <Typography className="text-gray-800 text-base my-2">
+                        {ach.description}
+                      </Typography>
+                    )}
                   </Card>
                 ))}
                 <img

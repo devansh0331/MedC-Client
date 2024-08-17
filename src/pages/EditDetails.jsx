@@ -463,13 +463,16 @@ const EditDetails = () => {
                         >
                           <div
                             className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
-                            onClick={handleAchiEdit}
+                            onClick={() => {
+                              setSingleAchievementData(achievement);
+                              handleAchiEdit();
+                            }}
                           >
                             <FaRegEdit />
                           </div>
-                          {achievement.title && (
+                          {achievement.achievement && (
                             <Typography className="text-gray-800 text-md">
-                              {achievement.title}
+                              {achievement.achievement}
                             </Typography>
                           )}
                           {achievement.description && (
@@ -564,24 +567,15 @@ const EditDetails = () => {
       />
 
       {/* EDIT ACHIEVEMENTS */}
-      <Dialog open={openAchiEdit} handler={handleAchiEdit} className="p-4">
-        <div className="flex w-full justify-between items-start">
-          <Typography className="text-2xl font-bold">
-            Edit Achievements
-          </Typography>
-          <IoClose
-            className="cursor-pointer w-6 h-6"
-            onClick={handleAchiEdit}
-          />
-        </div>
-        <div className="mt-2 grid grid-cols-1 gap-4">
-          <Input label="Job Title" size="" />
-          <Textarea label="Description" size="" />
-        </div>
-        <Button size="sm" color="blue" className="mt-4">
-          Save
-        </Button>
-      </Dialog>
+      <EditAchi
+        setOpenAchiEdit={setOpenAchiEdit}
+        openAchiEdit={openAchiEdit}
+        singleAchievementData={singleAchievementData}
+        getUserAchievement={getUserAchievement}
+        setSingleAchievementData={setSingleAchievementData}
+        setToast={setToast}
+        handleAchiEdit={handleAchiEdit}
+      />
       <Toaster position="top-right" />
     </div>
   );
