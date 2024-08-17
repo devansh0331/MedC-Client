@@ -82,6 +82,7 @@ const EditEdu = (props) => {
         if (res.success) {
           props.getUserEducation();
           props.setSingleEducationData({});
+          props.handleEduEdit();
           props.setToast("Education added successfully", true);
         }
       } catch (error) {
@@ -96,11 +97,11 @@ const EditEdu = (props) => {
             credentials: "include",
             headers: {
               "Content-Type": "application/json",
-            }, 
+            },
             body: JSON.stringify({
               organization,
               course,
-              startingMonth,  
+              startingMonth,
               endingMonth,
             }),
           }
@@ -108,6 +109,7 @@ const EditEdu = (props) => {
         const res = await response.json();
         if (res.success) {
           props.getUserEducation();
+          props.handleEduEdit();
           props.setSingleEducationData({});
           props.setToast("Education updated successfully", true);
         }
@@ -183,7 +185,7 @@ const EditEdu = (props) => {
           type="month"
         />
       </div>
-      <Button size="sm" color="blue" className="mt-4">
+      <Button onClick={handleEducation} size="sm" color="blue" className="mt-4">
         Save
       </Button>
     </Dialog>

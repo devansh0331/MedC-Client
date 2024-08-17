@@ -301,10 +301,10 @@ const EditDetails = () => {
                         </Typography>
                       </Card>
                     ))}
-                  <img
-                    src={Experience}
-                    className="w-1/2 mx-auto mt-10 opacity-30"
-                  />
+                    <img
+                      src={Experience}
+                      className="w-1/2 mx-auto mt-10 opacity-30"
+                    />
                   </>
                 ) : (
                   <img
@@ -365,10 +365,10 @@ const EditDetails = () => {
                         </Typography>
                       </Card>
                     ))}
-                  <img
-                    src={Experience}
-                    className="w-1/2 mx-auto mt-10 opacity-30"
-                  />
+                    <img
+                      src={Experience}
+                      className="w-1/2 mx-auto mt-10 opacity-30"
+                    />
                   </>
                 ) : (
                   <img
@@ -422,10 +422,10 @@ const EditDetails = () => {
                         )}
                       </Card>
                     ))}
-                  <img
-                    src={Certificates}
-                    className="w-1/2 mx-auto mt-10 opacity-30"
-                  />
+                    <img
+                      src={Certificates}
+                      className="w-1/2 mx-auto mt-10 opacity-30"
+                    />
                   </>
                 ) : (
                   <img
@@ -476,10 +476,10 @@ const EditDetails = () => {
                           )}
                         </Card>
                       ))}
-                    <img
-                      src={Achievements}
-                      className="w-1/2 mx-auto mt-10 opacity-30"
-                    />
+                      <img
+                        src={Achievements}
+                        className="w-1/2 mx-auto mt-10 opacity-30"
+                      />
                     </>
                   ) : (
                     <img
@@ -546,6 +546,7 @@ const EditDetails = () => {
         getUserEducation={getUserEducation}
         setSingleEducationData={setSingleEducationData}
         setToast={setToast}
+        handleEduEdit={handleEduEdit}
       />
 
       {/* EDIT CERTIFICATES */}
@@ -564,24 +565,24 @@ const EditDetails = () => {
           <Input label="Issuer" size="" />
           <Textarea label="Description" size="" />
           <div className="relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
-          <input
-            id="file-upload-image"
-            className="hidden"
-            type="file"
-            accept=".pdf"
-            onChange={(e) => setFile(e.target.files[0])}
-          />
-          <label htmlFor="file-upload-image">
-            <RiGalleryFill className="w-5 h-5  absolute left-4 top-1/2 -translate-y-1/2" />{" "}
-            <span className="ml-8 absolute top-1/2 -translate-y-1/2">
-              {file ? file.name : "Upload Certificate"}
-            </span>
-          </label>
-          <IoClose
-            className="w-5 h-5 absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
-            onClick={() => setFile(null)}
-          />
-        </div>
+            <input
+              id="file-upload-image"
+              className="hidden"
+              type="file"
+              accept=".pdf"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+            <label htmlFor="file-upload-image">
+              <RiGalleryFill className="w-5 h-5  absolute left-4 top-1/2 -translate-y-1/2" />{" "}
+              <span className="ml-8 absolute top-1/2 -translate-y-1/2">
+                {file ? file.name : "Upload Certificate"}
+              </span>
+            </label>
+            <IoClose
+              className="w-5 h-5 absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+              onClick={() => setFile(null)}
+            />
+          </div>
         </div>
         <Button size="sm" color="blue" className="mt-4">
           Save
