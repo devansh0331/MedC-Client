@@ -1,83 +1,92 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { SERVER_URL } from "../ServerURL";
 import Cookies from "js-cookie";
+import {
+  Button,
+  Dialog,
+  Input,
+  Textarea,
+  Typography,
+} from "@material-tailwind/react";
+import { IoClose } from "react-icons/io5";
+import { RiGalleryFill } from "react-icons/ri";
+import toast, { Toaster } from "react-hot-toast";
 
 const EditCert = (props) => {
-  const [certificate, setCertificate] = useState(
-    props.singleCertificateData && props.singleCertificateData.certificate
-      ? props.singleCertificateData.certificate
-      : ""
-  );
+  const [certificate, setCertificate] = useState("");
 
-  const [issuer, setIssuer] = useState(
-    props.singleCertificateData && props.singleCertificateData.issuer
-      ? props.singleCertificateData.issuer
-      : ""
-  );
+  const [issuer, setIssuer] = useState("");
 
-  const [description, setDescription] = useState(
-    props.singleCertificateData && props.singleCertificateData.description
-      ? props.singleCertificateData.description
-      : ""
-  );
+  const [description, setDescription] = useState("");
+
+  const [file, setFile] = useState(null);
+
+  const [check, setCheck] = useState(false);
 
   const handleCertificate = async () => {
-    console.log(certificate, issuer, description);
-    if (props.singleCertificateData._id == undefined) {
-      try {
-        const response = await fetch(
-          `${SERVER_URL}/auth/update-profile/add/certificate`,
-          {
-            method: "POST",
-            credentials: "include",
+    if (certificate != "" && issuer != "" && description != "") {
+      setCheck(false);
+      if (props.singleCertificateData._id == undefined) {
+        try {
+          const response = await fetch(
+            `${SERVER_URL}/auth/update-profile/add/certificate`,
+            {
+              method: "POST",
+              credentials: "include",
 
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${Cookies.get("token")}`,
-            },
-            body: JSON.stringify({
-              certificate,
-              issuer,
-              description,
-            }),
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${Cookies.get("token")}`,
+              },
+              body: JSON.stringify({
+                certificate,
+                issuer,
+                description,
+              }),
+            }
+          );
+          const res = await response.json();
+          console.log("Edit Cert: ", res);
+          if (res.success) {
+            props.getUserCertificate();
+            props.setSingleCertificateData({});
+            props.handleCertEdit();
+            props.setToast("Certificate added successfully", true);
           }
-        );
-        const res = await response.json();
-        console.log("Edit Cert: ", res);
-        if (res.success) {
-          props.getUserCertificate();
-          props.setToast("Certificate added successfully", true);
+        } catch (error) {
+          props.setToast("Failed to add", false);
         }
-      } catch (error) {
-        props.setToast("Failed to add", false);
+      } else {
+        try {
+          const response = await fetch(
+            `${SERVER_URL}/auth/update-profile/edit/certificate/${props.singleCertificateData._id}`,
+            {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                certificate,
+                issuer,
+                description,
+              }),
+            }
+          );
+          const res = await response.json();
+          if (res.success) {
+            props.getUserCertificate();
+            props.setSingleCertificateData({});
+            props.handleCertEdit();
+            props.setToast("Certificate added successfully", true);
+          }
+        } catch (error) {
+          props.setToast("Failed to update", false);
+        }
       }
     } else {
-      try {
-        const response = await fetch(
-          `${SERVER_URL}/auth/update-profile/edit/certificate/${props.singleCertificateData._id}`,
-          {
-            method: "POST",
-            credentials: "include",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              certificate,
-              issuer,
-              description,
-            }),
-          }
-        );
-        const res = await response.json();
-        if (res.success) {
-          props.getUserCertificate();
-          props.setSingleCertificate({});
-          props.setToast("Certificate updated successfully", true);
-        }
-      } catch (error) {
-        props.setToast("Failed to update", false);
-      }
+      setCheck(true);
     }
   };
   const handleDeleteCertificate = async () => {
@@ -94,8 +103,9 @@ const EditCert = (props) => {
 
         console.log(res.success);
         if (res.success) {
-          console.log(res.success);
           props.getUserCertificate();
+          props.setSingleCertificateData({});
+          props.handleCertEdit();
           props.setToast("Certificate deleted successfully", true);
         }
       } catch (error) {
@@ -106,73 +116,108 @@ const EditCert = (props) => {
     }
   };
 
+  const handleCertEdit = () => {
+    setCertificate("");
+    setIssuer("");
+    setDescription("");
+    props.setOpenCertEdit(!props.openCertEdit);
+  };
+
+  useEffect(() => {
+    setCertificate(
+      props.singleCertificateData && props.singleCertificateData.certificate
+        ? props.singleCertificateData.certificate
+        : ""
+    );
+    setIssuer(
+      props.singleCertificateData && props.singleCertificateData.issuer
+        ? props.singleCertificateData.issuer
+        : ""
+    );
+    setDescription(
+      props.singleCertificateData && props.singleCertificateData.description
+        ? props.singleCertificateData.description
+        : ""
+    );
+  }, [props.singleCertificateData]);
+
   return (
-    <div className="w-screen h-screen z-100 bg-dialogueBg flex">
-      <div className="w-2/5 h-3/5 mx-auto mt-24 bg-white rounded-2xl flex flex-col p-3 justify-evenly">
-        <div className="flex justify-between mx-4 mt-2">
-          <p className="text-lg text-gray-700 font-medium">Edit Certificate</p>
-          <button onClick={() => props.setEditCert(false)}>
-            <MdClose className="w-6 h-6 text-gray-700 font-medium" />
-          </button>
-        </div>
-        <div className="flex flex-col mx-4 my-1">
-          <div className="flex flex-col my-1">
-            <label className="text-gray-700 text-md">Certificate</label>
-            <input
-              value={certificate}
-              onChange={(e) => setCertificate(e.target.value)}
-              className="border-2 border-gray-400 rounded-md px-3 py-1 w-2/3"
-            />
-          </div>
-          <div className="flex flex-col h-1/2 my-1">
-            <label className="text-gray-700 text-md">Issuer</label>
-            <input
-              value={issuer}
-              onChange={(e) => setIssuer(e.target.value)}
-              className="border-2 border-gray-400 rounded-md px-3 py-1 w-full"
-            />
-          </div>
-          <div className="flex flex-col my-1">
-            <label className="text-gray-700 text-md">Description</label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="border-2 border-gray-400 rounded-md px-3 py-1 w-full h-16"
-            />
-          </div>
-        </div>
-        <div className="flex justify-between">
-          <div className="mx-4 mt-2">
-            <button
-              className="text-red-400 border-2 border-red-400 px-3 py-1 rounded-md"
-              onClick={() => {
-                handleDeleteCertificate();
-                props.setEditCert(false);
-              }}
-            >
-              Delete
-            </button>
-          </div>
-          <div className="mx-4 mt-2">
-            <button
-              className="text-primary border-2 border-primary px-3 py-1 rounded-md"
-              onClick={() => props.setEditCert(false)}
-            >
-              Cancel
-            </button>
-            <button
-              onClick={() => {
-                handleCertificate();
-                props.setEditCert(false);
-              }}
-              className="text-white bg-primary px-3 py-1 rounded-md ml-3"
-            >
-              Save
-            </button>
-          </div>
+    <Dialog open={props.openCertEdit} handler={handleCertEdit} className="p-4">
+      <div className="flex w-full justify-between items-start">
+        <Typography className="text-2xl font-bold">
+          Edit Certificates
+        </Typography>
+        <div className="flex">
+          {check && (
+            <Typography className="text-red-500">
+              All fields are mandetory
+            </Typography>
+          )}
+          <IoClose
+            className="cursor-pointer w-6 h-6"
+            onClick={handleCertEdit}
+          />
         </div>
       </div>
-    </div>
+      <div className="mt-2 grid grid-cols-1 gap-4">
+        <Input
+          value={certificate}
+          onChange={(e) => setCertificate(e.target.value)}
+          label="Title"
+          size=""
+        />
+        <Input
+          value={issuer}
+          onChange={(e) => setIssuer(e.target.value)}
+          label="Issuer"
+          size=""
+        />
+        <Textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          label="Description"
+          size=""
+        />
+        <div className="relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
+          <input
+            id="file-upload-image"
+            className="hidden"
+            type="file"
+            accept=".pdf"
+            onChange={(e) => setFile(e.target.files[0])}
+          />
+          <label htmlFor="file-upload-image">
+            <RiGalleryFill className="w-5 h-5  absolute left-4 top-1/2 -translate-y-1/2" />{" "}
+            <span className="ml-8 absolute top-1/2 -translate-y-1/2">
+              {file ? file.name : "Upload Certificate"}
+            </span>
+          </label>
+          <IoClose
+            className="w-5 h-5 absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+            onClick={() => setFile(null)}
+          />
+        </div>
+      </div>
+      <div className="flex justify-start items-center">
+        <Button
+          onClick={handleCertificate}
+          size="sm"
+          color="blue"
+          className="mt-4"
+        >
+          Save
+        </Button>
+        <Button
+          onClick={handleDeleteCertificate}
+          size="sm"
+          variant="outlined"
+          color="red"
+          className="mt-4 ml-4"
+        >
+          Delete
+        </Button>
+      </div>
+    </Dialog>
   );
 };
 
