@@ -301,10 +301,10 @@ const EditDetails = () => {
                         </Typography>
                       </Card>
                     ))}
-                  <img
-                    src={Experience}
-                    className="w-1/2 mx-auto mt-10 opacity-30"
-                  />
+                    <img
+                      src={Experience}
+                      className="w-1/2 mx-auto mt-10 opacity-30"
+                    />
                   </>
                 ) : (
                   <img
@@ -365,10 +365,10 @@ const EditDetails = () => {
                         </Typography>
                       </Card>
                     ))}
-                  <img
-                    src={Experience}
-                    className="w-1/2 mx-auto mt-10 opacity-30"
-                  />
+                    <img
+                      src={Experience}
+                      className="w-1/2 mx-auto mt-10 opacity-30"
+                    />
                   </>
                 ) : (
                   <img
@@ -401,7 +401,10 @@ const EditDetails = () => {
                       >
                         <div
                           className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
-                          onClick={handleCertEdit}
+                          onClick={() => {
+                            setSingleCertificateData(certificate);
+                            handleCertEdit();
+                          }}
                         >
                           <FaRegEdit />
                         </div>
@@ -422,10 +425,10 @@ const EditDetails = () => {
                         )}
                       </Card>
                     ))}
-                  <img
-                    src={Certificates}
-                    className="w-1/2 mx-auto mt-10 opacity-30"
-                  />
+                    <img
+                      src={Certificates}
+                      className="w-1/2 mx-auto mt-10 opacity-30"
+                    />
                   </>
                 ) : (
                   <img
@@ -460,13 +463,16 @@ const EditDetails = () => {
                         >
                           <div
                             className="absolute top-0 right-0 z-10 bg-white cursor-pointer"
-                            onClick={handleAchiEdit}
+                            onClick={() => {
+                              setSingleAchievementData(achievement);
+                              handleAchiEdit();
+                            }}
                           >
                             <FaRegEdit />
                           </div>
-                          {achievement.title && (
+                          {achievement.achievement && (
                             <Typography className="text-gray-800 text-md">
-                              {achievement.title}
+                              {achievement.achievement}
                             </Typography>
                           )}
                           {achievement.description && (
@@ -476,10 +482,10 @@ const EditDetails = () => {
                           )}
                         </Card>
                       ))}
-                    <img
-                      src={Achievements}
-                      className="w-1/2 mx-auto mt-10 opacity-30"
-                    />
+                      <img
+                        src={Achievements}
+                        className="w-1/2 mx-auto mt-10 opacity-30"
+                      />
                     </>
                   ) : (
                     <img
@@ -546,67 +552,30 @@ const EditDetails = () => {
         getUserEducation={getUserEducation}
         setSingleEducationData={setSingleEducationData}
         setToast={setToast}
+        handleEduEdit={handleEduEdit}
       />
 
       {/* EDIT CERTIFICATES */}
-      <Dialog open={openCertEdit} handler={handleCertEdit} className="p-4">
-        <div className="flex w-full justify-between items-start">
-          <Typography className="text-2xl font-bold">
-            Edit Certificates
-          </Typography>
-          <IoClose
-            className="cursor-pointer w-6 h-6"
-            onClick={handleCertEdit}
-          />
-        </div>
-        <div className="mt-2 grid grid-cols-1 gap-4">
-          <Input label="Title" size="" />
-          <Input label="Issuer" size="" />
-          <Textarea label="Description" size="" />
-          <div className="relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
-          <input
-            id="file-upload-image"
-            className="hidden"
-            type="file"
-            accept=".pdf"
-            onChange={(e) => setFile(e.target.files[0])}
-          />
-          <label htmlFor="file-upload-image">
-            <RiGalleryFill className="w-5 h-5  absolute left-4 top-1/2 -translate-y-1/2" />{" "}
-            <span className="ml-8 absolute top-1/2 -translate-y-1/2">
-              {file ? file.name : "Upload Certificate"}
-            </span>
-          </label>
-          <IoClose
-            className="w-5 h-5 absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
-            onClick={() => setFile(null)}
-          />
-        </div>
-        </div>
-        <Button size="sm" color="blue" className="mt-4">
-          Save
-        </Button>
-      </Dialog>
+      <EditCert
+        setOpenCertEdit={setOpenCertEdit}
+        openCertEdit={openCertEdit}
+        singleCertificateData={singleCertificateData}
+        getUserCertificate={getUserCertificate}
+        setSingleCertificateData={setSingleCertificateData}
+        setToast={setToast}
+        handleCertEdit={handleCertEdit}
+      />
 
       {/* EDIT ACHIEVEMENTS */}
-      <Dialog open={openAchiEdit} handler={handleAchiEdit} className="p-4">
-        <div className="flex w-full justify-between items-start">
-          <Typography className="text-2xl font-bold">
-            Edit Achievements
-          </Typography>
-          <IoClose
-            className="cursor-pointer w-6 h-6"
-            onClick={handleAchiEdit}
-          />
-        </div>
-        <div className="mt-2 grid grid-cols-1 gap-4">
-          <Input label="Job Title" size="" />
-          <Textarea label="Description" size="" />
-        </div>
-        <Button size="sm" color="blue" className="mt-4">
-          Save
-        </Button>
-      </Dialog>
+      <EditAchi
+        setOpenAchiEdit={setOpenAchiEdit}
+        openAchiEdit={openAchiEdit}
+        singleAchievementData={singleAchievementData}
+        getUserAchievement={getUserAchievement}
+        setSingleAchievementData={setSingleAchievementData}
+        setToast={setToast}
+        handleAchiEdit={handleAchiEdit}
+      />
       <Toaster position="top-right" />
     </div>
   );

@@ -166,10 +166,10 @@ const ProfileDetails = (props) => {
                     )}
                   </Card>
                 ))}
-              <img
-                src={Experience}
-                className="w-1/2 mx-auto mt-10 opacity-30"
-              />
+                <img
+                  src={Experience}
+                  className="w-1/2 mx-auto mt-10 opacity-30"
+                />
               </>
             ) : (
               <img
@@ -207,7 +207,10 @@ const ProfileDetails = (props) => {
                     )}
                   </Card>
                 ))}
-              <img src={Education} className="w-1/2 mx-auto mt-10 opacity-30" />
+                <img
+                  src={Education}
+                  className="w-1/2 mx-auto mt-10 opacity-30"
+                />
               </>
             ) : (
               <img src={Education} className="w-1/2 mx-auto mt-10 opacity-30" />
@@ -224,23 +227,27 @@ const ProfileDetails = (props) => {
                     shadow={false}
                     className="pb-2 mb-2 border-b-2 rounded-none"
                   >
-                    <Typography className="text-gray-800 text-md">
-                      Title
-                    </Typography>
-                    <Typography className="text-gray-600 text-base">
-                      Organisation
-                    </Typography>
-                    <Typography className="text-gray-800 text-base my-2">
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                      Id, error! Rem ullam accusamus voluptatum recusandae
-                      dolores reprehenderit quos facere mollitia.
-                    </Typography>
+                    {cert.certificate && (
+                      <Typography className="text-gray-800 text-md">
+                        {cert.certificate}
+                      </Typography>
+                    )}
+                    {cert.issuer && (
+                      <Typography className="text-gray-600 text-base">
+                        {cert.issuer}
+                      </Typography>
+                    )}
+                    {cert.description && (
+                      <Typography className="text-gray-800 text-base my-2">
+                        {cert.description}
+                      </Typography>
+                    )}
                   </Card>
                 ))}
-              <img
-                src={Certificates}
-                className="w-1/2 mx-auto mt-10 opacity-30"
-              />
+                <img
+                  src={Certificates}
+                  className="w-1/2 mx-auto mt-10 opacity-30"
+                />
               </>
             ) : (
               <img
@@ -259,20 +266,22 @@ const ProfileDetails = (props) => {
                     shadow={false}
                     className="pb-2 mb-2 border-b-2 rounded-none"
                   >
-                    <Typography className="text-gray-800 text-md">
-                      Title
-                    </Typography>
-                    <Typography className="text-gray-800 text-base my-2">
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                      Id, error! Rem ullam accusamus voluptatum recusandae
-                      dolores reprehenderit quos facere mollitia.
-                    </Typography>
+                    {ach.achievement && (
+                      <Typography className="text-gray-800 text-md">
+                        {ach.achievement}
+                      </Typography>
+                    )}
+                    {ach.description && (
+                      <Typography className="text-gray-800 text-base my-2">
+                        {ach.description}
+                      </Typography>
+                    )}
                   </Card>
                 ))}
-              <img
-                src={Achievements}
-                className="w-1/2 mx-auto mt-10 opacity-30"
-              />
+                <img
+                  src={Achievements}
+                  className="w-1/2 mx-auto mt-10 opacity-30"
+                />
               </>
             ) : (
               <img
