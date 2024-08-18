@@ -121,6 +121,14 @@ const SinglePostCard = (props) => {
     }
   };
 
+  const handleEditPost = () => {
+    
+  };
+
+  const handleDeletePost = () => {
+
+  };
+
   return (
     <Card className="w-full p-4 my-2 mx-auto">
       <CardHeader
@@ -153,7 +161,7 @@ const SinglePostCard = (props) => {
             )}
           </div>
         </div>
-        <div className="ml-auto flex flex-col-reverse md:flex-row items-end md:items-center md:gap-2">
+        <div className="ml-auto flex flex-col-reverse md:flex-row items-end md:items-start md:gap-2">
           <Typography className="text-xs md:text-base">
             {props.postedAt}
           </Typography>
@@ -166,8 +174,8 @@ const SinglePostCard = (props) => {
                   </button>
                 </MenuHandler>
                 <MenuList>
-                  <MenuItem>Edit</MenuItem>
-                  <MenuItem>Delete</MenuItem>
+                  <MenuItem onClick={() => handleEditPost()}>Edit</MenuItem>
+                  <MenuItem onClick={() => handleDeletePost()}>Delete</MenuItem>
                 </MenuList>
               </Menu>
             </Typography>
