@@ -1,8 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useId } from "react";
 import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
+import Cookies from "js-cookie";
 import {
   Card,
   CardHeader,
@@ -17,9 +18,14 @@ import Certificates from "../assets/Certificates.png";
 import Achievements from "../assets/Achievements.png";
 import Posts from "../assets/Posts.png";
 import { FaRegEdit } from "react-icons/fa";
+import { SERVER_URL } from "../ServerURL";
+import SinglePostCard from "./SinglePostCard";
+import ReactTimeAgo from "react-time-ago";
 
 const ProfileDetails = (props) => {
   const [section, setSection] = useState("About");
+  const [posts, setPosts] = useState([]);
+  const {user} = useContext(UserContext); 
   const navigate = useNavigate();
   const {
     getUserExperience,
@@ -32,7 +38,37 @@ const ProfileDetails = (props) => {
     userAchievement,
   } = useContext(UserContext);
 
-  return (
+const userId = props.user._id
+
+const getUserPosts = async () => {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/post/get-user-posts/${userId}`,
+      {
+        method: "GET", 
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      }
+      )
+      const res = await response.json();
+      if (!res.success) {
+        console.log(res.error);
+      } else {
+        setPosts(res.data);
+        // console.log(res.data);
+      }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+useEffect(() => {
+  getUserPosts();
+}, [userId]); 
+
+  return ( 
     <Card className="w-full h-full scrollbar-thin bg-white relative">
       {props.isExisting && (
         <div
@@ -217,7 +253,6 @@ const ProfileDetails = (props) => {
             )}
           </>
         )}
-
         {section === "Certificates" && (
           <>
             {userCertificate.length > 0 ? (
@@ -292,9 +327,34 @@ const ProfileDetails = (props) => {
           </>
         )}
         {section === "Posts" && (
-          <>
-            <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
-          </>
+          <div className="w-2/3 mx-auto">
+              {posts.length > 0 ?
+                (
+                <>
+                  {posts.map((post, key) => (
+                    <SinglePostCard 
+                    post={post}  
+                    profileURL={props.profileURL}
+                    profileId={userId}
+                    userId={user._id}
+                    postId={post._id}
+                    name={props.name}
+                    bio={props.bio}
+                    postedAt={<ReactTimeAgo date={post.updatedAt} locale="en-US" />}
+                    description={post.description}
+                    img={post.fileURL}
+                    getUserPosts={getUserPosts}
+                    key={key} />
+                  ))} 
+                  <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
+                </>
+               ) : (
+                <>
+                  <Typography className="text-gray-800 text-md">Haven't posted anything yet</Typography>
+                  <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
+                </>
+              )}
+          </div>
         )}
       </CardBody>
     </Card>

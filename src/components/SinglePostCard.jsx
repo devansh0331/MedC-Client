@@ -12,6 +12,7 @@ import altprofile from "../assets/altprofile.png";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 import {
   Card,
   CardHeader,
@@ -25,6 +26,11 @@ import {
   MenuList,
   MenuItem,
   Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+  Textarea,
 } from "@material-tailwind/react";
 import { UserContext } from "../UserContext";
 
@@ -41,7 +47,12 @@ const SinglePostCard = (props) => {
   const user = props.userId;
   const [postMenu, setPostMenu] = useState(false);
   const navigate = useNavigate();
-
+  const [editBox, setEditBox] = useState(false);
+  const [editPost, setEditPost] = useState("");
+  const [postdescp, setPostDescp] = useState(props.description);
+  const handleEditBox = () => {
+    setEditBox(!editBox);
+  }
   const menuHandle = () => {
     setMenuopen(!menuopen);
   };
@@ -62,7 +73,7 @@ const SinglePostCard = (props) => {
           console.log(res.error);
         } else {
           setComments(res.data);
-          console.log(res.data);
+          // console.log(res.data);
           setCommentsCount(res.data.length);
         }
       } catch (error) {
@@ -121,12 +132,56 @@ const SinglePostCard = (props) => {
     }
   };
 
-  const handleEditPost = () => {
-    
+  const handleEditPost = async() => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/post/update-post/${postId}`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+          body: JSON.stringify({ description: postdescp }),
+        }
+      )
+      const res = await response.json();
+      if (!res.success) {
+        toast.error("Failed to edit post due to: ", res.error);
+      } else {
+        toast.success("Post edited successfully", true);
+        props.getUserPosts();
+        setEditBox(false);
+      }
+
+    } catch (error) {
+      toast.error("Failed to edit post due to: ", res.error);
+    }
   };
 
-  const handleDeletePost = () => {
-
+  const handleDeletePost = async() => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/post/delete-post/${postId}`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      )
+      const res = await response.json();
+      if (!res.success) {
+        toast.error("Failed to delete post due to: ", res.error);
+      } else {
+        props.getUserPosts();
+        toast.success("Post deleted successfully", true);
+      }
+    } catch (error) {
+      toast.error("Failed to delete post due to: ", res.error);      
+    }
   };
 
   return (
@@ -174,7 +229,7 @@ const SinglePostCard = (props) => {
                   </button>
                 </MenuHandler>
                 <MenuList>
-                  <MenuItem onClick={() => handleEditPost()}>Edit</MenuItem>
+                  <MenuItem onClick={handleEditBox}>Edit</MenuItem>
                   <MenuItem onClick={() => handleDeletePost()}>Delete</MenuItem>
                 </MenuList>
               </Menu>
@@ -192,8 +247,7 @@ const SinglePostCard = (props) => {
           <img
             src={props.img}
             // src="https://res.cloudinary.com/dn7l5h2gk/image/upload/v1717411078/l9tx5dc0bkuqyn1zuw5l.jpg"
-
-            alt="jobBuilding"
+            alt="post"
             className="w-full rounded-md my-2 object-contain mx-auto bg-black"
           />
         )}
@@ -208,7 +262,7 @@ const SinglePostCard = (props) => {
               <AiOutlineLike className="w-5 h-5 text-blue-600" />
             )}
             <Typography className="text-base text-gray-800">
-              {props.likes} Likes
+              {props.likes} {props.likes === 1 ? "Like" : "Likes"}
             </Typography>
           </div>
           <div
@@ -296,6 +350,39 @@ const SinglePostCard = (props) => {
           </div>
         </CardFooter>
       )}
+      <Toaster position="top-right" />
+
+      {/* EDIT POST POPUP */}
+      <Dialog open={editBox} handler={handleEditBox} size="sm">
+        <DialogHeader 
+        className="p-4 m-0">
+          <Typography className="text-xl font-semibold text-gray-900">Edit Post</Typography>
+          </DialogHeader>
+          <DialogBody>
+            <Typography className="text-base font-normal text-gray-700">
+              <Textarea label="Description" value={postdescp} onChange={(e) => setPostDescp(e.target.value)} />
+            </Typography>
+          </DialogBody>
+          <DialogFooter className="">
+            <Button
+              variant="outlined"
+              size="sm"
+              color="blue"
+              onClick={() => handleEditBox()}
+              className="mr-4"
+            >
+              <span>Cancel</span>
+            </Button>
+            <Button
+              variant="gradient"
+              size="sm"
+              color="blue"
+              onClick={() => handleEditPost()}
+            >
+              <span>Save</span>
+            </Button>
+          </DialogFooter>
+      </Dialog>
     </Card>
   );
 };

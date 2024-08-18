@@ -118,7 +118,6 @@ export function UserContextProvider({ children }) {
       console.error("Failed to fetch user education");
     }
   };
-
   const getUser = async () => {
     try {
       const response = await fetch(`${SERVER_URL}/auth/profile`, {
@@ -150,10 +149,9 @@ export function UserContextProvider({ children }) {
       console.error("Failed to fetch user");
     }
   };
-
   const getPosts = async () => {
     try {
-      const response = await fetch(`${SERVER_URL}/post/all-posts`, {
+      const response = await fetch(`${SERVER_URL}/post/get-live-posts`, {
         credentials: "include",
         headers: {
           Authorization: `Bearer ${Cookies.get("token")}`,
@@ -169,7 +167,6 @@ export function UserContextProvider({ children }) {
       toast.error("Failed to fetch posts");
     }
   };
-
   const handleLike = async (postId) => {
     try {
       const res = await fetch(`${SERVER_URL}/post/single-post/like/${postId}`, {
@@ -189,7 +186,6 @@ export function UserContextProvider({ children }) {
       console.error("Failed to like post");
     }
   };
-
   const getAllUsers = async () => {
     try {
       const res = await fetch(`${SERVER_URL}/user/all-user`, {
@@ -209,7 +205,6 @@ export function UserContextProvider({ children }) {
       console.error("Failed to get users");
     }
   };
-
   const checkFriendStatus = async (id) => {
     try {
       console.log(id);
@@ -241,7 +236,6 @@ export function UserContextProvider({ children }) {
       console.error("Failed to check status");
     }
   };
-
   const sendRequest = async (friendId) => {
     try {
       console.log("Friend Id: " + friendId);
@@ -276,11 +270,9 @@ export function UserContextProvider({ children }) {
       console.error("Failed to accept request");
     }
   };
-
   useEffect(() => {
     getUser();
   }, []);
-
   return (
     <UserContext.Provider
       value={{

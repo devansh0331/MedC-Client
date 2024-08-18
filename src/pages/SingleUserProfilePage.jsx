@@ -82,6 +82,9 @@ function SingleUserProfilePage() {
             setToast={setToast}
             getSingleUser={getSingleUser}
             isExisting={isExisting}
+            name={user ? user.name : ""}
+            bio={user ? user.bio : ""}
+            profileURL={user ? user.profileURL : ""}
           />
         </div>
         <Toaster position="top-right" />

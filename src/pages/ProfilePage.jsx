@@ -1,3 +1,5 @@
+// OLD ONE, DO NOT PAY ATTENTION
+
 import React, { useContext, useEffect } from "react";
 import ProfileCard from "../components/ProfileCard";
 import ProfileAbout from "../components/ProfileAbout";
