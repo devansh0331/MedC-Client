@@ -131,7 +131,7 @@ const EditExperience = (props) => {
         <Typography className="text-2xl font-bold">Edit Experience</Typography>
         <IoClose className="cursor-pointer w-6 h-6" onClick={handleExpEdit} />
       </div>
-      <div className="mt-2 grid grid-cols-2 gap-4">
+      <div className="mt-2 flex flex-col sm:grid grid-cols-2 gap-4">
         <div className="col-span-2">
           <Input
             value={post}

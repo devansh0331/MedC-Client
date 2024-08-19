@@ -21,11 +21,16 @@ import { FaRegEdit } from "react-icons/fa";
 import { SERVER_URL } from "../ServerURL";
 import SinglePostCard from "./SinglePostCard";
 import ReactTimeAgo from "react-time-ago";
-
+import { BsInfoCircle } from "react-icons/bs";
+import { BsBriefcaseFill } from "react-icons/bs";
+import { FaGraduationCap } from "react-icons/fa6";
+import { GrCertificate } from "react-icons/gr";
+import { FaAward } from "react-icons/fa6";
+import { RiGalleryFill } from "react-icons/ri";
 const ProfileDetails = (props) => {
   const [section, setSection] = useState("About");
   const [posts, setPosts] = useState([]);
-  const {user} = useContext(UserContext); 
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const {
     getUserExperience,
@@ -38,20 +43,20 @@ const ProfileDetails = (props) => {
     userAchievement,
   } = useContext(UserContext);
 
-const userId = props.user._id
+  const userId = props.user._id;
 
-const getUserPosts = async () => {
-  try {
-    const response = await fetch(
-      `${SERVER_URL}/post/get-user-posts/${userId}`,
-      {
-        method: "GET", 
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-      }
-      )
+  const getUserPosts = async () => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/post/get-user-posts/${userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
       const res = await response.json();
       if (!res.success) {
         console.log(res.error);
@@ -59,16 +64,16 @@ const getUserPosts = async () => {
         setPosts(res.data);
         // console.log(res.data);
       }
-  } catch (error) {
-    console.log(error);
-  }
-}
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-useEffect(() => {
-  getUserPosts();
-}, [userId]); 
+  useEffect(() => {
+    getUserPosts();
+  }, [userId]);
 
-  return ( 
+  return (
     <Card className="w-full h-full scrollbar-thin bg-white relative">
       {props.isExisting && (
         <div
@@ -92,7 +97,10 @@ useEffect(() => {
             }`}
             onClick={() => setSection("About")}
           >
-            <Typography className={`text-md mx-auto py-1 `}>About</Typography>
+            <Typography className={`text-md mx-auto py-1 hidden 2xl:block`}>
+              About
+            </Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden"><BsInfoCircle className="w-5 h-5 my-1" /></Typography>
           </div>
           <div
             className={`w-full text-center rounded-md cursor-pointer ${
@@ -103,9 +111,10 @@ useEffect(() => {
               setSection("Experience");
             }}
           >
-            <Typography className={`text-md mx-auto py-1 `}>
+            <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>
               Experience
             </Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden"><BsBriefcaseFill className="w-5 h-5 my-1" /></Typography>
           </div>
           <div
             className={`w-full text-center rounded-md cursor-pointer ${
@@ -116,9 +125,10 @@ useEffect(() => {
               setSection("Education");
             }}
           >
-            <Typography className={`text-md mx-auto py-1 `}>
+            <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>
               Education
             </Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden"><FaGraduationCap  className="w-5 h-5 my-1" /></Typography>
           </div>
           <div
             className={`w-full text-center rounded-md cursor-pointer ${
@@ -129,9 +139,10 @@ useEffect(() => {
               setSection("Certificates");
             }}
           >
-            <Typography className={`text-md mx-auto py-1 `}>
+            <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>
               Certificates
             </Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden"><GrCertificate className="w-5 h-5 my-1" /></Typography>
           </div>
           <div
             className={`w-full text-center rounded-md cursor-pointer ${
@@ -142,9 +153,10 @@ useEffect(() => {
               setSection("Achievements");
             }}
           >
-            <Typography className={`text-md mx-auto py-1 `}>
+            <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>
               Achievements
             </Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden"><FaAward  className="w-5 h-5 my-1" /></Typography>
           </div>
           <div
             className={`w-full text-center rounded-md cursor-pointer ${
@@ -152,7 +164,8 @@ useEffect(() => {
             }`}
             onClick={() => setSection("Posts")}
           >
-            <Typography className={`text-md mx-auto py-1 `}>Posts</Typography>
+            <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>Posts</Typography>
+          <Typography className="flex h-full justify-center items-center 2xl:hidden"><RiGalleryFill  className="w-5 h-5 my-1" /></Typography>
           </div>
         </div>
       </CardHeader>
@@ -163,10 +176,10 @@ useEffect(() => {
             {props.user.about ? (
               <Typography className="text-gray-800 text-md">
                 {props.user.about}
-                <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
+                <img src={About} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
               </Typography>
             ) : (
-              <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
+              <img src={About} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
             )}
           </>
         )}
@@ -204,13 +217,13 @@ useEffect(() => {
                 ))}
                 <img
                   src={Experience}
-                  className="w-1/2 mx-auto mt-10 opacity-30"
+                  className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                 />
               </>
             ) : (
               <img
                 src={Experience}
-                className="w-1/2 mx-auto mt-10 opacity-30"
+                className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
               />
             )}
           </>
@@ -245,11 +258,11 @@ useEffect(() => {
                 ))}
                 <img
                   src={Education}
-                  className="w-1/2 mx-auto mt-10 opacity-30"
+                  className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                 />
               </>
             ) : (
-              <img src={Education} className="w-1/2 mx-auto mt-10 opacity-30" />
+              <img src={Education} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
             )}
           </>
         )}
@@ -281,13 +294,13 @@ useEffect(() => {
                 ))}
                 <img
                   src={Certificates}
-                  className="w-1/2 mx-auto mt-10 opacity-30"
+                  className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                 />
               </>
             ) : (
               <img
                 src={Certificates}
-                className="w-1/2 mx-auto mt-10 opacity-30"
+                className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
               />
             )}
           </>
@@ -315,45 +328,49 @@ useEffect(() => {
                 ))}
                 <img
                   src={Achievements}
-                  className="w-1/2 mx-auto mt-10 opacity-30"
+                  className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                 />
               </>
             ) : (
               <img
                 src={Achievements}
-                className="w-1/2 mx-auto mt-10 opacity-30"
+                className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
               />
             )}
           </>
         )}
         {section === "Posts" && (
-          <div className="w-2/3 mx-auto">
-              {posts.length > 0 ?
-                (
-                <>
-                  {posts.map((post, key) => (
-                    <SinglePostCard 
-                    post={post}  
+          <div className="md:w-2/3 mx-auto">
+            {posts.length > 0 ? (
+              <>
+                {posts.map((post, key) => (
+                  <SinglePostCard
+                    post={post}
                     profileURL={props.profileURL}
                     profileId={userId}
                     userId={user._id}
                     postId={post._id}
                     name={props.name}
                     bio={props.bio}
-                    postedAt={<ReactTimeAgo date={post.updatedAt} locale="en-US" />}
+                    postedAt={
+                      <ReactTimeAgo date={post.updatedAt} locale="en-US" />
+                    }
                     description={post.description}
                     img={post.fileURL}
                     getUserPosts={getUserPosts}
-                    key={key} />
-                  ))} 
-                  <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
-                </>
-               ) : (
-                <>
-                  <Typography className="text-gray-800 text-md">Haven't posted anything yet</Typography>
-                  <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
-                </>
-              )}
+                    key={key}
+                  />
+                ))}
+                <img src={Posts} className="w-4/5 lg:w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
+              </>
+            ) : (
+              <>
+                <Typography className="text-gray-800 text-md">
+                  Haven't posted anything yet
+                </Typography>
+                <img src={Posts} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
+              </>
+            )}
           </div>
         )}
       </CardBody>

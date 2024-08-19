@@ -17,6 +17,12 @@ import Achievements from "../assets/Achievements.png";
 import Posts from "../assets/Posts.png";
 import { FaRegEdit } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import SinglePostCard from "../components/SinglePostCard";
+import { BsInfoCircle } from "react-icons/bs";
+import { BsBriefcaseFill } from "react-icons/bs";
+import { FaGraduationCap } from "react-icons/fa6";
+import { GrCertificate } from "react-icons/gr";
+import { FaAward } from "react-icons/fa6";
 import { RiGalleryFill } from "react-icons/ri";
 import {
   Card,
@@ -33,7 +39,9 @@ import {
 import SideBar from "../components/SideBar";
 import { SERVER_URL } from "../ServerURL";
 import Cookies from "js-cookie";
+import ReactTimeAgo from "react-time-ago";
 const EditDetails = () => {
+
   const {
     getUserExperience,
     userExperience,
@@ -46,7 +54,6 @@ const EditDetails = () => {
     getUser,
     user,
   } = useContext(UserContext);
-
   const [section, setSection] = useState("About");
   const [openAboutEdit, setOpenAboutEdit] = useState(false);
   const [openExpEdit, setOpenExpEdit] = useState(false);
@@ -58,6 +65,39 @@ const EditDetails = () => {
   const [singleCertificateData, setSingleCertificateData] = useState({});
   const [singleAchievementData, setSingleAchievementData] = useState({});
   const [file, setFile] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const userId = user._id
+
+  // console.log("userId", userId);
+  
+
+const getUserPosts = async () => {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/post/get-user-posts/${userId}`,
+      {
+        method: "GET", 
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      }
+      )
+      const res = await response.json();
+      if (!res.success) {
+        console.log(res.error);
+      } else {
+        setPosts(res.data);
+        // console.log(res.data);
+      }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+useEffect(() => {
+  getUserPosts();
+}, [userId]); 
 
   const handleAboutEdit = () => {
     setOpenAboutEdit(!openAboutEdit);
@@ -139,9 +179,9 @@ const EditDetails = () => {
   };
 
   return (
-    <div className=" flex overflow-hidden bg-background h-screen">
+    <div className="flex overflow-hidden bg-background lg:h-[90vh] lg:pb-0 pb-5">
       <SideBar />
-      <Card className="w-[80%] h-full scrollbar-thin bg-white relative mx-auto mt-5">
+      <Card className="w-[95%] lg:w-[80%] h-full scrollbar-thin bg-white relative mx-auto mt-5">
         <div
           className="absolute top-1 right-4 z-10 bg-white cursor-pointer text-blue-400 underline"
           onClick={() => navigate(-1)}
@@ -150,85 +190,90 @@ const EditDetails = () => {
         </div>
 
         <CardHeader
-          floated={false}
-          shadow={false}
-          color="transparent"
-          className="rounded-none"
-        >
-          <div className="flex w-full justify-between bg-gray-50 p-1 rounded-md mt-4">
-            <div
-              className={`w-full text-center rounded-md cursor-pointer  ${
-                section === "About" ? "bg-blue-400 text-white" : ""
-              }`}
-              onClick={() => setSection("About")}
-            >
-              <Typography className={`text-md mx-auto py-1 `}>About</Typography>
-            </div>
-            <div
-              className={`w-full text-center rounded-md cursor-pointer ${
-                section === "Experience" ? "bg-blue-400 text-white" : ""
-              }`}
-              onClick={() => {
-                getUserExperience();
-                console.log(userExperience);
-                setSection("Experience");
-              }}
-            >
-              <Typography className={`text-md mx-auto py-1 `}>
-                Experience
-              </Typography>
-            </div>
-            <div
-              className={`w-full text-center rounded-md cursor-pointer ${
-                section === "Education" ? "bg-blue-400 text-white" : ""
-              }`}
-              onClick={() => {
-                getUserEducation();
-                console.log(userEducation);
-                setSection("Education");
-              }}
-            >
-              <Typography className={`text-md mx-auto py-1 `}>
-                Education
-              </Typography>
-            </div>
-            <div
-              className={`w-full text-center rounded-md cursor-pointer ${
-                section === "Certificates" ? "bg-blue-400 text-white" : ""
-              }`}
-              onClick={() => {
-                getUserCertificate();
-                console.log(userCertificate);
-                setSection("Certificates");
-              }}
-            >
-              <Typography className={`text-md mx-auto py-1 `}>
-                Certificates
-              </Typography>
-            </div>
-            <div
-              className={`w-full text-center rounded-md cursor-pointer ${
-                section === "Achievements" ? "bg-blue-400 text-white" : ""
-              }`}
-              onClick={() => {
-                getUserAchievement();
-                setSection("Achievements");
-              }}
-            >
-              <Typography className={`text-md mx-auto py-1 `}>
-                Achievements
-              </Typography>
-            </div>
-            <div
-              className={`w-full text-center rounded-md cursor-pointer ${
-                section === "Posts" ? "bg-blue-400 text-white" : ""
-              }`}
-              onClick={() => setSection("Posts")}
-            >
-              <Typography className={`text-md mx-auto py-1 `}>Posts</Typography>
-            </div>
+        floated={false}
+        shadow={false}
+        color="transparent"
+        className="rounded-none"
+      >
+        <div className="flex w-full justify-between bg-gray-50 p-1 rounded-md mt-2">
+          <div
+            className={`w-full text-center rounded-md cursor-pointer  ${
+              section === "About" ? "bg-blue-400 text-white" : ""
+            }`}
+            onClick={() => setSection("About")}
+          >
+            <Typography className={`text-md mx-auto py-1 hidden md:block`}>
+              About
+            </Typography>
+            <Typography className="flex h-full justify-center items-center md:hidden"><BsInfoCircle className="w-5 h-5 my-1" /></Typography>
           </div>
-        </CardHeader>
+          <div
+            className={`w-full text-center rounded-md cursor-pointer ${
+              section === "Experience" ? "bg-blue-400 text-white" : ""
+            }`}
+            onClick={() => {
+              getUserExperience();
+              setSection("Experience");
+            }}
+          >
+            <Typography className={`text-md mx-auto py-1 hidden md:block `}>
+              Experience
+            </Typography>
+            <Typography className="flex h-full justify-center items-center md:hidden"><BsBriefcaseFill className="w-5 h-5 my-1" /></Typography>
+          </div>
+          <div
+            className={`w-full text-center rounded-md cursor-pointer ${
+              section === "Education" ? "bg-blue-400 text-white" : ""
+            }`}
+            onClick={() => {
+              getUserEducation();
+              setSection("Education");
+            }}
+          >
+            <Typography className={`text-md mx-auto py-1 hidden md:block `}>
+              Education
+            </Typography>
+            <Typography className="flex h-full justify-center items-center md:hidden"><FaGraduationCap  className="w-5 h-5 my-1" /></Typography>
+          </div>
+          <div
+            className={`w-full text-center rounded-md cursor-pointer ${
+              section === "Certificates" ? "bg-blue-400 text-white" : ""
+            }`}
+            onClick={() => {
+              getUserCertificate();
+              setSection("Certificates");
+            }}
+          >
+            <Typography className={`text-md mx-auto py-1 hidden md:block `}>
+              Certificates
+            </Typography>
+            <Typography className="flex h-full justify-center items-center md:hidden"><GrCertificate className="w-5 h-5 my-1" /></Typography>
+          </div>
+          <div
+            className={`w-full text-center rounded-md cursor-pointer ${
+              section === "Achievements" ? "bg-blue-400 text-white" : ""
+            }`}
+            onClick={() => {
+              getUserAchievement();
+              setSection("Achievements");
+            }}
+          >
+            <Typography className={`text-md mx-auto py-1 hidden md:block `}>
+              Achievements
+            </Typography>
+            <Typography className="flex h-full justify-center items-center md:hidden"><FaAward  className="w-5 h-5 my-1" /></Typography>
+          </div>
+          <div
+            className={`w-full text-center rounded-md cursor-pointer ${
+              section === "Posts" ? "bg-blue-400 text-white" : ""
+            }`}
+            onClick={() => setSection("Posts")}
+          >
+            <Typography className={`text-md mx-auto py-1 hidden md:block `}>Posts</Typography>
+          <Typography className="flex h-full justify-center items-center md:hidden"><RiGalleryFill  className="w-5 h-5 my-1" /></Typography>
+          </div>
+        </div>
+      </CardHeader>
 
         <CardBody className="w-full max-h-[80vh] overflow-y-scroll scrollbar-thin ">
           {section === "About" && (
@@ -244,10 +289,10 @@ const EditDetails = () => {
                   <Typography className="text-gray-800 text-md">
                     {user.about}
                   </Typography>
-                  <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
+                  <img src={About} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
                 </div>
               ) : (
-                <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
+                <img src={About} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
               )}
             </div>
           )}
@@ -303,13 +348,13 @@ const EditDetails = () => {
                     ))}
                     <img
                       src={Experience}
-                      className="w-1/2 mx-auto mt-10 opacity-30"
+                      className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                     />
                   </>
                 ) : (
                   <img
                     src={Experience}
-                    className="w-1/2 mx-auto mt-10 opacity-30"
+                    className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                   />
                 )}
               </div>
@@ -367,13 +412,13 @@ const EditDetails = () => {
                     ))}
                     <img
                       src={Experience}
-                      className="w-1/2 mx-auto mt-10 opacity-30"
+                      className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                     />
                   </>
                 ) : (
                   <img
                     src={Experience}
-                    className="w-1/2 mx-auto mt-10 opacity-30"
+                    className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                   />
                 )}
               </div>
@@ -427,13 +472,13 @@ const EditDetails = () => {
                     ))}
                     <img
                       src={Certificates}
-                      className="w-1/2 mx-auto mt-10 opacity-30"
+                      className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                     />
                   </>
                 ) : (
                   <img
                     src={Certificates}
-                    className="w-1/2 mx-auto mt-10 opacity-30"
+                    className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                   />
                 )}
               </div>
@@ -484,13 +529,13 @@ const EditDetails = () => {
                       ))}
                       <img
                         src={Achievements}
-                        className="w-1/2 mx-auto mt-10 opacity-30"
+                        className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                       />
                     </>
                   ) : (
                     <img
                       src={Achievements}
-                      className="w-1/2 mx-auto mt-10 opacity-30"
+                      className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                     />
                   )}
                 </div>
@@ -498,10 +543,35 @@ const EditDetails = () => {
             </div>
           )}
           {section === "Posts" && (
-            <>
-              <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
-            </>
-          )}
+          <div className="md:w-2/3 mx-auto">
+              {posts.length > 0 ?
+                (
+                <>
+                  {posts.map((post, key) => (
+                    <SinglePostCard 
+                    post={post}  
+                    profileURL={user.profileURL}
+                    profileId={userId}
+                    userId={user._id}
+                    postId={post._id}
+                    name={user.name}
+                    bio={user.bio}
+                    postedAt={<ReactTimeAgo date={post.updatedAt} locale="en-US" />}
+                    description={post.description}
+                    img={post.fileURL}
+                    getUserPosts={getUserPosts}
+                    key={key} />
+                  ))} 
+                  <img src={Posts} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
+                </>
+               ) : (
+                <>
+                  <Typography className="text-gray-800 text-md">Haven't posted anything yet</Typography>
+                  <img src={Posts} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
+                </>
+              )}
+          </div>
+        )}
         </CardBody>
       </Card>
 
@@ -554,7 +624,6 @@ const EditDetails = () => {
         setToast={setToast}
         handleEduEdit={handleEduEdit}
       />
-
       {/* EDIT CERTIFICATES */}
       <EditCert
         setOpenCertEdit={setOpenCertEdit}
@@ -565,7 +634,6 @@ const EditDetails = () => {
         setToast={setToast}
         handleCertEdit={handleCertEdit}
       />
-
       {/* EDIT ACHIEVEMENTS */}
       <EditAchi
         setOpenAchiEdit={setOpenAchiEdit}

@@ -64,10 +64,11 @@ function SingleUserProfilePage() {
   };
 
   return (
-    <div className="bg-background w-full overflow-x-hidden">
+    <div className="bg-background w-full overflow-x-hidden lg:h-[90vh] lg:overflow-y-hidden pb-5 lg:pb-0 scrollbar-thin">
       <div className="flex">
         <SideBar />
-        <div className="w-[80%] flex mx-auto mt-5 gap-5">
+        <div className="w-[85%] flex flex-col lg:flex-row mx-auto mt-5 gap-5">
+          <div className="w-min mx-auto">
           <ProfileCard
             user={user ? user : {}}
             setToast={setToast}
@@ -77,6 +78,8 @@ function SingleUserProfilePage() {
             sendRequest={sendRequest}
             acceptRequest={acceptRequest}
           />
+          </div>
+          <div className="w-full">
           <ProfileDetails
             user={user ? user : {}}
             setToast={setToast}
@@ -86,6 +89,7 @@ function SingleUserProfilePage() {
             bio={user ? user.bio : ""}
             profileURL={user ? user.profileURL : ""}
           />
+          </div>
         </div>
         <Toaster position="top-right" />
       </div>

@@ -123,10 +123,9 @@ const ProfileCard = (props) => {
               unmount: { scale: 0.9, y: -100 },
             }}
           >
-            <Avatar
+            <img
               src={props.user.profileURL ? props.user.profileURL : altprofile}
-              size="xl"
-              className="mb-3 cursor-pointer w-24 h-24"
+              className="mb-3 cursor-pointer w-24 h-24 aspect-square rounded-full"
               alt="profile"
               onClick={handleOpenProfile}
             />
@@ -271,12 +270,12 @@ const ProfileCard = (props) => {
       <Dialog
         open={openProfile}
         handler={handleOpenProfile}
-        className="flex justify-between p-4 gap-4 items-center border-8 border-blue-400"
+        className="flex flex-col sm:flex-row justify-between p-4 gap-4 items-center border-8 border-blue-400"
         size="md"
       >
         <img
           src={props.user.profileURL ? props.user.profileURL : altprofile}
-          className="w-80 h-80 object-cover "
+          className="sm:w-80 w-full sm:h-80 h-full object-cover "
           alt="profile"
         />
         <div className="w-full flex flex-col justify-center items-center">
