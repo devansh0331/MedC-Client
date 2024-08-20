@@ -25,33 +25,33 @@ import ReactTimeAgo from "react-time-ago";
 const ProfileDetails = (props) => {
   const [section, setSection] = useState("About");
   const [posts, setPosts] = useState([]);
-  const {user} = useContext(UserContext); 
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const {
-    getUserExperience,
-    userExperience,
-    getUserEducation,
-    userEducation,
-    getUserCertificate,
-    userCertificate,
-    getUserAchievement,
-    userAchievement,
+    getSingleUserExperience,
+    singleUserExperience,
+    getSingleUserEducation,
+    singleUserEducation,
+    getSingleUserCertificate,
+    singleUserCertificate,
+    getSingleUserAchievement,
+    singleUserAchievement,
   } = useContext(UserContext);
 
-const userId = props.user._id
+  const userId = props.user._id;
 
-const getUserPosts = async () => {
-  try {
-    const response = await fetch(
-      `${SERVER_URL}/post/get-user-posts/${userId}`,
-      {
-        method: "GET", 
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-      }
-      )
+  const getUserPosts = async () => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/post/get-user-posts/${userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
       const res = await response.json();
       if (!res.success) {
         console.log(res.error);
@@ -59,16 +59,16 @@ const getUserPosts = async () => {
         setPosts(res.data);
         // console.log(res.data);
       }
-  } catch (error) {
-    console.log(error);
-  }
-}
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-useEffect(() => {
-  getUserPosts();
-}, [userId]); 
+  useEffect(() => {
+    getUserPosts();
+  }, [userId]);
 
-  return ( 
+  return (
     <Card className="w-full h-full scrollbar-thin bg-white relative">
       {props.isExisting && (
         <div
@@ -99,7 +99,7 @@ useEffect(() => {
               section === "Experience" ? "bg-blue-400 text-white" : ""
             }`}
             onClick={() => {
-              getUserExperience();
+              getSingleUserExperience(userId);
               setSection("Experience");
             }}
           >
@@ -112,7 +112,7 @@ useEffect(() => {
               section === "Education" ? "bg-blue-400 text-white" : ""
             }`}
             onClick={() => {
-              getUserEducation();
+              getSingleUserEducation(userId);
               setSection("Education");
             }}
           >
@@ -125,7 +125,7 @@ useEffect(() => {
               section === "Certificates" ? "bg-blue-400 text-white" : ""
             }`}
             onClick={() => {
-              getUserCertificate();
+              getSingleUserCertificate(userId);
               setSection("Certificates");
             }}
           >
@@ -138,7 +138,7 @@ useEffect(() => {
               section === "Achievements" ? "bg-blue-400 text-white" : ""
             }`}
             onClick={() => {
-              getUserAchievement();
+              getSingleUserAchievement(userId);
               setSection("Achievements");
             }}
           >
@@ -172,9 +172,9 @@ useEffect(() => {
         )}
         {section === "Experience" && (
           <>
-            {userExperience.length > 0 ? (
+            {singleUserExperience.length > 0 ? (
               <>
-                {userExperience.map((exp, key) => (
+                {singleUserExperience.map((exp, key) => (
                   <Card
                     shadow={false}
                     className="pb-2 mb-2 border-b-2 rounded-none"
@@ -217,9 +217,9 @@ useEffect(() => {
         )}
         {section === "Education" && (
           <>
-            {userEducation.length > 0 ? (
+            {singleUserEducation.length > 0 ? (
               <>
-                {userEducation.map((edu, key) => (
+                {singleUserEducation.map((edu, key) => (
                   <Card
                     shadow={false}
                     className="pb-2 mb-2 border-b-2 rounded-none"
@@ -255,9 +255,9 @@ useEffect(() => {
         )}
         {section === "Certificates" && (
           <>
-            {userCertificate.length > 0 ? (
+            {singleUserCertificate.length > 0 ? (
               <>
-                {userCertificate.map((cert, key) => (
+                {singleUserCertificate.map((cert, key) => (
                   <Card
                     shadow={false}
                     className="pb-2 mb-2 border-b-2 rounded-none"
@@ -294,9 +294,9 @@ useEffect(() => {
         )}
         {section === "Achievements" && (
           <>
-            {userAchievement.length > 0 ? (
+            {singleUserAchievement.length > 0 ? (
               <>
-                {userAchievement.map((ach, key) => (
+                {singleUserAchievement.map((ach, key) => (
                   <Card
                     shadow={false}
                     className="pb-2 mb-2 border-b-2 rounded-none"
@@ -328,32 +328,36 @@ useEffect(() => {
         )}
         {section === "Posts" && (
           <div className="w-2/3 mx-auto">
-              {posts.length > 0 ?
-                (
-                <>
-                  {posts.map((post, key) => (
-                    <SinglePostCard 
-                    post={post}  
+            {posts.length > 0 ? (
+              <>
+                {posts.map((post, key) => (
+                  <SinglePostCard
+                    post={post}
                     profileURL={props.profileURL}
                     profileId={userId}
                     userId={user._id}
                     postId={post._id}
                     name={props.name}
                     bio={props.bio}
-                    postedAt={<ReactTimeAgo date={post.updatedAt} locale="en-US" />}
+                    postedAt={
+                      <ReactTimeAgo date={post.updatedAt} locale="en-US" />
+                    }
                     description={post.description}
                     img={post.fileURL}
                     getUserPosts={getUserPosts}
-                    key={key} />
-                  ))} 
-                  <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
-                </>
-               ) : (
-                <>
-                  <Typography className="text-gray-800 text-md">Haven't posted anything yet</Typography>
-                  <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
-                </>
-              )}
+                    key={key}
+                  />
+                ))}
+                <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
+              </>
+            ) : (
+              <>
+                <Typography className="text-gray-800 text-md">
+                  Haven't posted anything yet
+                </Typography>
+                <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
+              </>
+            )}
           </div>
         )}
       </CardBody>

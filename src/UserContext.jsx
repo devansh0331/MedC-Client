@@ -13,9 +13,13 @@ export function UserContextProvider({ children }) {
   const [user, setUser] = useState({});
   const [allUsers, setAllUsers] = useState([]);
   const [userExperience, setUserExperience] = useState([]);
+  const [singleUserExperience, setSingleUserExperience] = useState([]);
   const [userCertificate, setUserCertificate] = useState([]);
+  const [singleUserCertificate, setSingleUserCertificate] = useState([]);
   const [userAchievement, setUserAchievement] = useState([]);
+  const [singleUserAchievement, setSingleUserAchievement] = useState([]);
   const [userEducation, setUserEducation] = useState([]);
+  const [singleUserEducation, setSingleUserEducation] = useState([]);
   const [posts, setPosts] = useState([]);
   const [userId, setUserId] = useState(null);
   const [friendStatus, setFriendStatus] = useState(0);
@@ -46,6 +50,31 @@ export function UserContextProvider({ children }) {
       console.error("Failed to fetch user experience");
     }
   };
+  const getSingleUserExperience = async (id) => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/user/single-user/experience/${id}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
+
+      const res = await response.json();
+
+      if (!res.success) {
+        console.error(res.error);
+      } else {
+        console.log(res.data);
+        setSingleUserExperience(res.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch user experience");
+    }
+  };
   const getUserCertificate = async () => {
     try {
       const response = await fetch(
@@ -65,6 +94,30 @@ export function UserContextProvider({ children }) {
         console.error(res.error);
       } else {
         setUserCertificate(res.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch user certificate");
+    }
+  };
+  const getSingleUserCertificate = async (id) => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/user/single-user/certificate/${id}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
+
+      const res = await response.json();
+
+      if (!res.success) {
+        console.error(res.error);
+      } else {
+        setSingleUserCertificate(res.data);
       }
     } catch (error) {
       console.error("Failed to fetch user certificate");
@@ -94,6 +147,30 @@ export function UserContextProvider({ children }) {
       console.error("Failed to fetch user achievement");
     }
   };
+  const getSingleUserAchievement = async (id) => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/user/single-user/achievement/${id}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
+
+      const res = await response.json();
+
+      if (!res.success) {
+        console.error(res.error);
+      } else {
+        setSingleUserAchievement(res.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch user achievement");
+    }
+  };
   const getUserEducation = async () => {
     try {
       const response = await fetch(
@@ -113,6 +190,30 @@ export function UserContextProvider({ children }) {
         console.error(res.error);
       } else {
         setUserEducation(res.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch user education");
+    }
+  };
+  const getSingleUserEducation = async (id) => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/user/single-user/education/${id}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
+
+      const res = await response.json();
+
+      if (!res.success) {
+        console.error(res.error);
+      } else {
+        setSingleUserEducation(res.data);
       }
     } catch (error) {
       console.error("Failed to fetch user education");
@@ -299,6 +400,14 @@ export function UserContextProvider({ children }) {
         statusValue,
         sendRequest,
         acceptRequest,
+        getSingleUserAchievement,
+        getSingleUserCertificate,
+        getSingleUserEducation,
+        getSingleUserExperience,
+        singleUserCertificate,
+        singleUserAchievement,
+        singleUserExperience,
+        singleUserEducation,
       }}
     >
       {children}
