@@ -20,6 +20,7 @@ const MinPost = () => {
     getPosts();
   }, []);
 
+  console.log(posts);
   return (
     <Card className="w-full bg-inherit h-2/3 flex-col items-center mx-auto mt-5 shadow-md lg:flex hidden">
       <Card className="w-full flex items-center justify-center bg-white rounded-md">
@@ -37,6 +38,7 @@ const MinPost = () => {
             post.fileURL == "" && (
               <MinPostCard
                 key={key}
+                post={post}
                 name={post.user ? post.user.name : "Unknown User"}
                 profileURL={
                   post.user && post.user.profileURL ? post.user.profileURL : ""

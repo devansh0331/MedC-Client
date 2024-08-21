@@ -17,9 +17,6 @@ function PostCard() {
     // console.log(posts);
   }, []);
 
-  const handleOpen = () => {
-    setOpen(!open);
-  };
 
   return (
     <div className="w-full flex flex-col mx-auto mt-5 bg-inherit ">
@@ -35,11 +32,12 @@ function PostCard() {
           type="text"
           className="w-4/5 border-2 border-gray-500 rounded-md px-2 py-1 md:py-1"
           label="Create Post"
-          onClick={handleOpen}
+          onClick={() => setOpen(!open)}
+          onChange={() => setOpen(!open)}
         />
         <CreatePostPopUp
           open={open}
-          handleOpen={handleOpen}
+          setOpen={setOpen}
           getAllPosts={getPosts}
         />
       </Card>
