@@ -159,17 +159,18 @@ function EditProfileNew({
       open={openEdit}
       handler={handleOpenEdit}
       size="lg"
-      className="p-5 flex flex-row gap-4 w-full"
+      className=""
     >
-      <div className="w-2/5 flex items-center">
-      <Avatar src={uploadedFile ? URL.createObjectURL(uploadedFile) : file } className="aspect-square w-full h-min"/>
-      </div>
-      <div className="w-3/5 flex flex-col">
-      <div className="flex w-full justify-between items-start">
+      <div className="flex px-4 py-2 w-full justify-between items-start">
         <Typography className="text-2xl font-bold">Edit Profile</Typography>
         <IoClose className="cursor-pointer w-6 h-6" onClick={handleOpenEdit} />
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="px-5 pb-5 flex flex-col lg:flex-row gap-4 w-full">
+      <div className="lg:w-2/5 lg:flex items-center hidden">
+      <Avatar src={uploadedFile ? URL.createObjectURL(uploadedFile) : file } className="aspect-square w-1/3 lg:w-full h-min"/>
+      </div>
+      <div className="lg:w-3/5 flex flex-col">
+      <div className="flex flex-col sm:grid grid-cols-2 gap-4">
         <div className="col-span-2 relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
           <input
             id="file-upload-image"
@@ -264,7 +265,7 @@ function EditProfileNew({
             onClick={() => setResume(null)}
           />
         </div>
-        <div>
+        <div className="col-span-2 flex w-full justify-end">
           <Button
             onClick={() => handleSaveProfile()}
             size="sm"
@@ -274,6 +275,7 @@ function EditProfileNew({
             Save
           </Button>
         </div>
+      </div>
       </div>
       </div>
     </Dialog>

@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { IoClose } from "react-icons/io5";
 const EditEdu = (props) => {
-  console.log("Education" + props.singleEducationData.organization);
+  // console.log("Education" + props.singleEducationData.organization);
   const handleEduEdit = () => {
     setOrganization("");
     setCourse("");
@@ -177,7 +177,7 @@ const EditEdu = (props) => {
           <IoClose className="cursor-pointer w-6 h-6" onClick={handleEduEdit} />
         </div>
       </div>
-      <div className="mt-2 grid grid-cols-2 gap-4">
+      <div className="mt-2 flex flex-col sm:grid grid-cols-2 gap-4">
         <div className="col-span-2">
           <Input
             value={organization}

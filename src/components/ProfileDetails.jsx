@@ -21,7 +21,12 @@ import { FaRegEdit } from "react-icons/fa";
 import { SERVER_URL } from "../ServerURL";
 import SinglePostCard from "./SinglePostCard";
 import ReactTimeAgo from "react-time-ago";
-
+import { BsInfoCircle } from "react-icons/bs";
+import { BsBriefcaseFill } from "react-icons/bs";
+import { FaGraduationCap } from "react-icons/fa6";
+import { GrCertificate } from "react-icons/gr";
+import { FaAward } from "react-icons/fa6";
+import { RiGalleryFill } from "react-icons/ri";
 const ProfileDetails = (props) => {
   const [section, setSection] = useState("About");
   const [posts, setPosts] = useState([]);
@@ -92,7 +97,12 @@ const ProfileDetails = (props) => {
             }`}
             onClick={() => setSection("About")}
           >
-            <Typography className={`text-md mx-auto py-1 `}>About</Typography>
+            <Typography className={`text-md mx-auto py-1 hidden 2xl:block`}>
+              About
+            </Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden">
+              <BsInfoCircle className="w-5 h-5 my-1" />
+            </Typography>
           </div>
           <div
             className={`w-full text-center rounded-md cursor-pointer ${
@@ -103,8 +113,11 @@ const ProfileDetails = (props) => {
               setSection("Experience");
             }}
           >
-            <Typography className={`text-md mx-auto py-1 `}>
+            <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>
               Experience
+            </Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden">
+              <BsBriefcaseFill className="w-5 h-5 my-1" />
             </Typography>
           </div>
           <div
@@ -116,8 +129,11 @@ const ProfileDetails = (props) => {
               setSection("Education");
             }}
           >
-            <Typography className={`text-md mx-auto py-1 `}>
+            <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>
               Education
+            </Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden">
+              <FaGraduationCap className="w-5 h-5 my-1" />
             </Typography>
           </div>
           <div
@@ -129,8 +145,11 @@ const ProfileDetails = (props) => {
               setSection("Certificates");
             }}
           >
-            <Typography className={`text-md mx-auto py-1 `}>
+            <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>
               Certificates
+            </Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden">
+              <GrCertificate className="w-5 h-5 my-1" />
             </Typography>
           </div>
           <div
@@ -142,8 +161,11 @@ const ProfileDetails = (props) => {
               setSection("Achievements");
             }}
           >
-            <Typography className={`text-md mx-auto py-1 `}>
+            <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>
               Achievements
+            </Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden">
+              <FaAward className="w-5 h-5 my-1" />
             </Typography>
           </div>
           <div
@@ -152,7 +174,12 @@ const ProfileDetails = (props) => {
             }`}
             onClick={() => setSection("Posts")}
           >
-            <Typography className={`text-md mx-auto py-1 `}>Posts</Typography>
+            <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>
+              Posts
+            </Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden">
+              <RiGalleryFill className="w-5 h-5 my-1" />
+            </Typography>
           </div>
         </div>
       </CardHeader>
@@ -163,10 +190,16 @@ const ProfileDetails = (props) => {
             {props.user.about ? (
               <Typography className="text-gray-800 text-md">
                 {props.user.about}
-                <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
+                <img
+                  src={About}
+                  className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
+                />
               </Typography>
             ) : (
-              <img src={About} className="w-1/2 mx-auto mt-10 opacity-30" />
+              <img
+                src={About}
+                className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
+              />
             )}
           </>
         )}
@@ -204,13 +237,13 @@ const ProfileDetails = (props) => {
                 ))}
                 <img
                   src={Experience}
-                  className="w-1/2 mx-auto mt-10 opacity-30"
+                  className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                 />
               </>
             ) : (
               <img
                 src={Experience}
-                className="w-1/2 mx-auto mt-10 opacity-30"
+                className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
               />
             )}
           </>
@@ -245,11 +278,14 @@ const ProfileDetails = (props) => {
                 ))}
                 <img
                   src={Education}
-                  className="w-1/2 mx-auto mt-10 opacity-30"
+                  className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                 />
               </>
             ) : (
-              <img src={Education} className="w-1/2 mx-auto mt-10 opacity-30" />
+              <img
+                src={Education}
+                className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
+              />
             )}
           </>
         )}
@@ -281,13 +317,13 @@ const ProfileDetails = (props) => {
                 ))}
                 <img
                   src={Certificates}
-                  className="w-1/2 mx-auto mt-10 opacity-30"
+                  className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                 />
               </>
             ) : (
               <img
                 src={Certificates}
-                className="w-1/2 mx-auto mt-10 opacity-30"
+                className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
               />
             )}
           </>
@@ -315,13 +351,13 @@ const ProfileDetails = (props) => {
                 ))}
                 <img
                   src={Achievements}
-                  className="w-1/2 mx-auto mt-10 opacity-30"
+                  className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                 />
               </>
             ) : (
               <img
                 src={Achievements}
-                className="w-1/2 mx-auto mt-10 opacity-30"
+                className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
               />
             )}
           </>

@@ -49,7 +49,7 @@ const ProfilePage = () => {
     <div className="bg-black w-full overflow-x-hidden h-screen">
       <div className="flex">
         <SideBar />
-        <div className="w-[80%] flex mx-auto mt-5 gap-5">
+        <div className="w-[90%] xl:w-[80%] flex mx-auto mt-5 gap-5">
           <ProfileCard />
           <ProfileDetails />
         </div>
