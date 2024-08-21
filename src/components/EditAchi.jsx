@@ -17,16 +17,18 @@ const EditAchi = (props) => {
   const [check, setCheck] = useState(false);
 
   useEffect(() => {
-    setAchievement(
-      props.singleAchievementData && props.singleAchievementData.achievement
-        ? props.singleAchievementData.achievement
-        : ""
-    );
-    setDescription(
-      props.singleAchievementData && props.singleAchievementData.description
-        ? props.singleAchievementData.description
-        : ""
-    );
+    if (props.setSingleAchievementData) {
+      setAchievement(
+        props.singleAchievementData && props.singleAchievementData.achievement
+          ? props.singleAchievementData.achievement
+          : ""
+      );
+      setDescription(
+        props.singleAchievementData && props.singleAchievementData.description
+          ? props.singleAchievementData.description
+          : ""
+      );
+    }
   }, [props.singleAchievementData]);
 
   const handleAchievement = async () => {

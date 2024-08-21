@@ -33,14 +33,14 @@ const ProfileDetails = (props) => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const {
-    getUserExperience,
-    userExperience,
-    getUserEducation,
-    userEducation,
-    getUserCertificate,
-    userCertificate,
-    getUserAchievement,
-    userAchievement,
+    getSingleUserExperience,
+    singleUserExperience,
+    getSingleUserEducation,
+    singleUserEducation,
+    getSingleUserCertificate,
+    singleUserCertificate,
+    getSingleUserAchievement,
+    singleUserAchievement,
   } = useContext(UserContext);
 
   const userId = props.user._id;
@@ -100,63 +100,73 @@ const ProfileDetails = (props) => {
             <Typography className={`text-md mx-auto py-1 hidden 2xl:block`}>
               About
             </Typography>
-            <Typography className="flex h-full justify-center items-center 2xl:hidden"><BsInfoCircle className="w-5 h-5 my-1" /></Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden">
+              <BsInfoCircle className="w-5 h-5 my-1" />
+            </Typography>
           </div>
           <div
             className={`w-full text-center rounded-md cursor-pointer ${
               section === "Experience" ? "bg-blue-400 text-white" : ""
             }`}
             onClick={() => {
-              getUserExperience();
+              getSingleUserExperience(userId);
               setSection("Experience");
             }}
           >
             <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>
               Experience
             </Typography>
-            <Typography className="flex h-full justify-center items-center 2xl:hidden"><BsBriefcaseFill className="w-5 h-5 my-1" /></Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden">
+              <BsBriefcaseFill className="w-5 h-5 my-1" />
+            </Typography>
           </div>
           <div
             className={`w-full text-center rounded-md cursor-pointer ${
               section === "Education" ? "bg-blue-400 text-white" : ""
             }`}
             onClick={() => {
-              getUserEducation();
+              getSingleUserEducation(userId);
               setSection("Education");
             }}
           >
             <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>
               Education
             </Typography>
-            <Typography className="flex h-full justify-center items-center 2xl:hidden"><FaGraduationCap  className="w-5 h-5 my-1" /></Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden">
+              <FaGraduationCap className="w-5 h-5 my-1" />
+            </Typography>
           </div>
           <div
             className={`w-full text-center rounded-md cursor-pointer ${
               section === "Certificates" ? "bg-blue-400 text-white" : ""
             }`}
             onClick={() => {
-              getUserCertificate();
+              getSingleUserCertificate(userId);
               setSection("Certificates");
             }}
           >
             <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>
               Certificates
             </Typography>
-            <Typography className="flex h-full justify-center items-center 2xl:hidden"><GrCertificate className="w-5 h-5 my-1" /></Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden">
+              <GrCertificate className="w-5 h-5 my-1" />
+            </Typography>
           </div>
           <div
             className={`w-full text-center rounded-md cursor-pointer ${
               section === "Achievements" ? "bg-blue-400 text-white" : ""
             }`}
             onClick={() => {
-              getUserAchievement();
+              getSingleUserAchievement(userId);
               setSection("Achievements");
             }}
           >
             <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>
               Achievements
             </Typography>
-            <Typography className="flex h-full justify-center items-center 2xl:hidden"><FaAward  className="w-5 h-5 my-1" /></Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden">
+              <FaAward className="w-5 h-5 my-1" />
+            </Typography>
           </div>
           <div
             className={`w-full text-center rounded-md cursor-pointer ${
@@ -164,8 +174,12 @@ const ProfileDetails = (props) => {
             }`}
             onClick={() => setSection("Posts")}
           >
-            <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>Posts</Typography>
-          <Typography className="flex h-full justify-center items-center 2xl:hidden"><RiGalleryFill  className="w-5 h-5 my-1" /></Typography>
+            <Typography className={`text-md mx-auto py-1 hidden 2xl:block `}>
+              Posts
+            </Typography>
+            <Typography className="flex h-full justify-center items-center 2xl:hidden">
+              <RiGalleryFill className="w-5 h-5 my-1" />
+            </Typography>
           </div>
         </div>
       </CardHeader>
@@ -176,18 +190,24 @@ const ProfileDetails = (props) => {
             {props.user.about ? (
               <Typography className="text-gray-800 text-md">
                 {props.user.about}
-                <img src={About} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
+                <img
+                  src={About}
+                  className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
+                />
               </Typography>
             ) : (
-              <img src={About} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
+              <img
+                src={About}
+                className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
+              />
             )}
           </>
         )}
         {section === "Experience" && (
           <>
-            {userExperience.length > 0 ? (
+            {singleUserExperience.length > 0 ? (
               <>
-                {userExperience.map((exp, key) => (
+                {singleUserExperience.map((exp, key) => (
                   <Card
                     shadow={false}
                     className="pb-2 mb-2 border-b-2 rounded-none"
@@ -230,9 +250,9 @@ const ProfileDetails = (props) => {
         )}
         {section === "Education" && (
           <>
-            {userEducation.length > 0 ? (
+            {singleUserEducation.length > 0 ? (
               <>
-                {userEducation.map((edu, key) => (
+                {singleUserEducation.map((edu, key) => (
                   <Card
                     shadow={false}
                     className="pb-2 mb-2 border-b-2 rounded-none"
@@ -262,15 +282,18 @@ const ProfileDetails = (props) => {
                 />
               </>
             ) : (
-              <img src={Education} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
+              <img
+                src={Education}
+                className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
+              />
             )}
           </>
         )}
         {section === "Certificates" && (
           <>
-            {userCertificate.length > 0 ? (
+            {singleUserCertificate.length > 0 ? (
               <>
-                {userCertificate.map((cert, key) => (
+                {singleUserCertificate.map((cert, key) => (
                   <Card
                     shadow={false}
                     className="pb-2 mb-2 border-b-2 rounded-none"
@@ -307,9 +330,9 @@ const ProfileDetails = (props) => {
         )}
         {section === "Achievements" && (
           <>
-            {userAchievement.length > 0 ? (
+            {singleUserAchievement.length > 0 ? (
               <>
-                {userAchievement.map((ach, key) => (
+                {singleUserAchievement.map((ach, key) => (
                   <Card
                     shadow={false}
                     className="pb-2 mb-2 border-b-2 rounded-none"
@@ -340,7 +363,7 @@ const ProfileDetails = (props) => {
           </>
         )}
         {section === "Posts" && (
-          <div className="md:w-2/3 mx-auto">
+          <div className="w-2/3 mx-auto">
             {posts.length > 0 ? (
               <>
                 {posts.map((post, key) => (
@@ -361,14 +384,14 @@ const ProfileDetails = (props) => {
                     key={key}
                   />
                 ))}
-                <img src={Posts} className="w-4/5 lg:w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
+                <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
               </>
             ) : (
               <>
                 <Typography className="text-gray-800 text-md">
                   Haven't posted anything yet
                 </Typography>
-                <img src={Posts} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
+                <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
               </>
             )}
           </div>
