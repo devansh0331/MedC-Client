@@ -150,6 +150,7 @@ function SinglePeopleCardHorizontal({
             color="blue"
             variant="outlined"
             size="sm"
+            onClick={handleOpen}
             >Cancel</Button>
             <Button
             color="blue"

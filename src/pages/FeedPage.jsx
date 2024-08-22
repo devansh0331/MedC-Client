@@ -52,13 +52,13 @@ function FeedPage() {
         userId={user._id}
       />
       <div className="flex mx-auto gap-4 justify-center">
-        <div className="hidden md:block w-56">
+        <div className="hidden 2xl:block w-56">
           <BlogCard/>
         </div>
-        <div className="w-full md:w-2/6">
+        <div className="w-[95%] sm:w-[90%] md:w-[500px] mx-auto">
           <PostCard />
         </div>
-        <div className="hidden md:block w-96">
+        <div className="hidden lg:block w-[350px]">
           <JobCard />
         </div>
       </div>

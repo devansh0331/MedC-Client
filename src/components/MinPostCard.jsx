@@ -5,6 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { Avatar, Card, Typography } from "@material-tailwind/react";
 const MinPostCard = (props) => {
   const navigate = useNavigate();
+  console.log(props);
+  console.log("isliked");
+  
   return (
     <Card className="w-full bg-white my-2 p-4  rounded-md">
       <div className="flex justify-between  bg-white">

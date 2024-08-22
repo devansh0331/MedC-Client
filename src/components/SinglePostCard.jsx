@@ -12,7 +12,6 @@ import altprofile from "../assets/altprofile.png";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
 import {
   Card,
   CardHeader,
@@ -31,8 +30,17 @@ import {
   DialogBody,
   DialogFooter,
   Textarea,
+  Popover,
+  PopoverHandler,
+  PopoverContent,
 } from "@material-tailwind/react";
 import { UserContext } from "../UserContext";
+import { FaFacebook } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
+import { FaLinkedin } from "react-icons/fa";
+import { FaSquareWhatsapp } from "react-icons/fa6";
+import { FaCopy } from "react-icons/fa6";
+import toast, { Toaster } from "react-hot-toast";
 
 const SinglePostCard = (props) => {
   const [comm, setComm] = useState(false);
@@ -41,8 +49,11 @@ const SinglePostCard = (props) => {
   const [commentsCount, setCommentsCount] = useState(0);
   const [commentbox, setCommentbox] = useState(false);
   const [menuopen, setMenuopen] = useState(false);
-  // const { getPosts, posts, handleLike, user } = useContext(UserContext);
-  // const currUserId =
+  const [shareBox, setShareBox] = useState(false);
+  const [showText, setShowText] = useState(false);
+  const handleShareBox = () => {
+    setShareBox(!shareBox);
+  };
   const postId = props.postId;
   const user = props.userId;
   const [postMenu, setPostMenu] = useState(false);
@@ -52,7 +63,7 @@ const SinglePostCard = (props) => {
   const [postdescp, setPostDescp] = useState(props.description);
   const handleEditBox = () => {
     setEditBox(!editBox);
-  }
+  };
   const menuHandle = () => {
     setMenuopen(!menuopen);
   };
@@ -132,20 +143,17 @@ const SinglePostCard = (props) => {
     }
   };
 
-  const handleEditPost = async() => {
+  const handleEditPost = async () => {
     try {
-      const response = await fetch(
-        `${SERVER_URL}/post/update-post/${postId}`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${Cookies.get("token")}`,
-          },
-          body: JSON.stringify({ description: postdescp }),
-        }
-      )
+      const response = await fetch(`${SERVER_URL}/post/update-post/${postId}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        body: JSON.stringify({ description: postdescp }),
+      });
       const res = await response.json();
       if (!res.success) {
         toast.error("Failed to edit post due to: ", res.error);
@@ -154,24 +162,20 @@ const SinglePostCard = (props) => {
         props.getUserPosts();
         setEditBox(false);
       }
-
     } catch (error) {
       toast.error("Failed to edit post due to: ", res.error);
     }
   };
 
-  const handleDeletePost = async() => {
+  const handleDeletePost = async () => {
     try {
-      const response = await fetch(
-        `${SERVER_URL}/post/delete-post/${postId}`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            Authorization: `Bearer ${Cookies.get("token")}`,
-          },
-        }
-      )
+      const response = await fetch(`${SERVER_URL}/post/delete-post/${postId}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
       const res = await response.json();
       if (!res.success) {
         toast.error("Failed to delete post due to: ", res.error);
@@ -180,7 +184,21 @@ const SinglePostCard = (props) => {
         toast.success("Post deleted successfully", true);
       }
     } catch (error) {
-      toast.error("Failed to delete post due to: ", res.error);      
+      toast.error("Failed to delete post due to: ", res.error);
+    }
+  };
+
+  const postUrl = `${window.location.origin}/post/${props.postId}`;
+  const copyUrl = async () => {
+    try {
+      const postUrl = `${window.location.origin}/post/${props.postId}`;
+      await navigator.clipboard.writeText(postUrl);
+      setShowText(true);
+      setTimeout(() => {
+        setShowText(false);
+      }, 1000);
+    } catch (error) {
+      console.error("Error copying URL:", error);
     }
   };
 
@@ -239,7 +257,10 @@ const SinglePostCard = (props) => {
       </CardHeader>
       <CardBody className="m-0 p-0 z-0">
         {props.description && (
-          <Typography className="py-4 px-2 text-gray-800">
+          <Typography
+            className="py-4 px-2 text-gray-800 cursor-pointer"
+            onClick={() => navigate(`/post/${props.postId}`)}
+          >
             {props.description}
           </Typography>
         )}
@@ -262,7 +283,9 @@ const SinglePostCard = (props) => {
               <AiOutlineLike className="w-5 h-5 text-blue-600" />
             )}
             <Typography className="text-base text-gray-800">
-              {props.likes} {props.likes === 1 ? "Like" : "Likes"}
+              <span className="xs:block hidden">
+                {props.likes} {props.likes === 1 ? "Like" : "Likes"}
+              </span>
             </Typography>
           </div>
           <div
@@ -273,13 +296,19 @@ const SinglePostCard = (props) => {
             }}
           >
             <FaRegCommentAlt className="w-5 h-5 text-blue-600" />
-            <Typography className="text-base text-gray-800">
-              {comments.length > 0 && comments.length} Comments
+            <Typography className="text-base text-gray-800 flex gap-1 items-center">
+              {comments.length > 0 && comments.length}{" "}
+              <span className="xs:block hidden">Comments</span>
             </Typography>
           </div>
-          <div className="flex items-center gap-2 cursor-pointer">
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={handleShareBox}
+          >
             <IoPaperPlaneOutline className="w-5 h-5 text-blue-600" />
-            <Typography className="text-base text-gray-800">Share</Typography>
+            <Typography className="text-base text-gray-800">
+              <span className="xs:block hidden">Share</span>
+            </Typography>
           </div>
         </div>
       </CardBody>
@@ -354,35 +383,94 @@ const SinglePostCard = (props) => {
 
       {/* EDIT POST POPUP */}
       <Dialog open={editBox} handler={handleEditBox} size="sm">
-        <DialogHeader 
-        className="p-4 m-0">
-          <Typography className="text-xl font-semibold text-gray-900">Edit Post</Typography>
-          </DialogHeader>
-          <DialogBody>
-            <Typography className="text-base font-normal text-gray-700">
-              <Textarea label="Description" value={postdescp} onChange={(e) => setPostDescp(e.target.value)} />
-            </Typography>
-          </DialogBody>
-          <DialogFooter className="">
-            <Button
-              variant="outlined"
-              size="sm"
-              color="blue"
-              onClick={() => handleEditBox()}
-              className="mr-4"
-            >
-              <span>Cancel</span>
-            </Button>
-            <Button
-              variant="gradient"
-              size="sm"
-              color="blue"
-              onClick={() => handleEditPost()}
-            >
-              <span>Save</span>
-            </Button>
-          </DialogFooter>
+        <DialogHeader className="p-4 m-0">
+          <Typography className="text-xl font-semibold text-gray-900">
+            Edit Post
+          </Typography>
+        </DialogHeader>
+        <DialogBody>
+          <Typography className="text-base font-normal text-gray-700">
+            <Textarea
+              label="Description"
+              value={postdescp}
+              onChange={(e) => setPostDescp(e.target.value)}
+            />
+          </Typography>
+        </DialogBody>
+        <DialogFooter className="">
+          <Button
+            variant="outlined"
+            size="sm"
+            color="blue"
+            onClick={() => handleEditBox()}
+            className="mr-4"
+          >
+            <span>Cancel</span>
+          </Button>
+          <Button
+            variant="gradient"
+            size="sm"
+            color="blue"
+            onClick={() => handleEditPost()}
+          >
+            <span>Save</span>
+          </Button>
+        </DialogFooter>
       </Dialog>
+
+      {/* Share Post */}
+      <Dialog open={shareBox} handler={handleShareBox} size="xs">
+        <DialogHeader>
+          <Typography className="text-xl font-semibold text-gray-900">
+            Share Post
+          </Typography>
+        </DialogHeader>
+        <DialogBody className="px-6 py-2 flex justify-between w-full">
+          <a
+            href={`https://www.facebook.com/sharer.php?u=${postUrl}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <button className="">
+              <FaFacebook className="w-8 h-8 text-[#316FF6]" />
+            </button>
+          </a>
+          <a
+            href={`https://twitter.com/intent/tweet?url=${postUrl}&text=${props.description}`}
+            target="_blank"
+            rel="noreferrer"
+            className=""
+          >
+            <button className="">
+              <FaSquareXTwitter className="w-8 h-8 text-black" />
+            </button>
+          </a>
+          <a
+            href={`http://www.linkedin.com/shareArticle?mini=true&url=${postUrl}&title=${props.description}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <button className="">
+              <FaLinkedin className="w-8 h-8 text-[#0077B5]" />
+            </button>
+          </a>
+          <a
+            href={`https://wa.me/?text=${postUrl}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <button className="">
+              <FaSquareWhatsapp className="w-8 h-8 text-[#25D366]" />
+            </button>
+          </a>
+          <button className="" onClick={() => copyUrl()}>
+            <FaCopy className="w-8 h-7 text-gray-700" />
+          </button>
+        </DialogBody>
+          <Typography className={`text-base font-normal text-gray-800 text-center pb-2 ${showText ? "opacity-100" : "opacity-0"}`}
+          style={{ transition: "opacity 0.5s ease-in-out" }}>Link Copied</Typography>
+      </Dialog>
+      <Toaster position="top-right" />
     </Card>
   );
 };

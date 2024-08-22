@@ -20,6 +20,9 @@ function CreatePostPopUp(props) {
   const [file, setFile] = useState(null);
   const [userId, setUserID] = useState("");
 
+  const handleOpen = () => {
+    props.setOpen(!props.open);
+  }
   const handleSubmit = async () => {
     const formData = new FormData();
     const data = {
@@ -50,7 +53,7 @@ function CreatePostPopUp(props) {
           setFile(null);
           setTimeout(() => {
             props.getAllPosts();
-            props.handleOpen();
+            handleOpen();
           }, 2000);
         } else {
           console.error("Failed to create post:", result.error);
@@ -82,7 +85,7 @@ function CreatePostPopUp(props) {
           setFile(null);
           setTimeout(() => {
             props.getAllPosts();
-            props.handleOpen();
+            handleOpen();
           }, 2000);
         } else {
           console.error("Failed to create post:", result.error);
@@ -99,7 +102,7 @@ function CreatePostPopUp(props) {
     setAudience(event.target.value);
   };
   return (
-    <Dialog open={props.open} size="lg">
+    <Dialog open={props.open} size="lg" handler={handleOpen}>
       <div className="flex items-center justify-between">
         <DialogHeader className="flex flex-col items-start">
           {" "}
@@ -111,11 +114,11 @@ function CreatePostPopUp(props) {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
-          className="mr-3 h-5 w-5"
+          className="mr-3 h-5 w-5 cursor-pointer"
           onClick={() => {
             setPost("");
             setFile(null);
-            props.handleOpen();
+            handleOpen();
           }}
         >
           <path
@@ -198,9 +201,9 @@ function CreatePostPopUp(props) {
           variant="text"
           color="gray"
           onClick={() => {
+            handleOpen();
             setPost("");
             setFile(null);
-            props.handleOpen();
           }}
         >
           cancel
