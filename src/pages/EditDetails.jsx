@@ -41,7 +41,6 @@ import { SERVER_URL } from "../ServerURL";
 import Cookies from "js-cookie";
 import ReactTimeAgo from "react-time-ago";
 const EditDetails = () => {
-
   const {
     getUserExperience,
     userExperience,
@@ -66,23 +65,22 @@ const EditDetails = () => {
   const [singleAchievementData, setSingleAchievementData] = useState({});
   const [file, setFile] = useState(null);
   const [posts, setPosts] = useState([]);
-  const userId = user._id
+  const userId = user._id;
 
   // console.log("userId", userId);
-  
 
-const getUserPosts = async () => {
-  try {
-    const response = await fetch(
-      `${SERVER_URL}/post/get-user-posts/${userId}`,
-      {
-        method: "GET", 
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-      }
-      )
+  const getUserPosts = async () => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/post/get-user-posts/${userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
       const res = await response.json();
       if (!res.success) {
         console.log(res.error);
@@ -90,14 +88,14 @@ const getUserPosts = async () => {
         setPosts(res.data);
         // console.log(res.data);
       }
-  } catch (error) {
-    console.log(error);
-  }
-}
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-useEffect(() => {
-  getUserPosts();
-}, [userId]); 
+  useEffect(() => {
+    getUserPosts();
+  }, [userId]);
 
   const handleAboutEdit = () => {
     setOpenAboutEdit(!openAboutEdit);
@@ -190,80 +188,90 @@ useEffect(() => {
         </div>
 
         <CardHeader
-        floated={false}
-        shadow={false}
-        color="transparent"
-        className="rounded-none"
-      >
-        <div className="flex w-full justify-between bg-gray-50 p-1 rounded-md mt-2">
-          <div
-            className={`w-full text-center rounded-md cursor-pointer  ${
-              section === "About" ? "bg-blue-400 text-white" : ""
-            }`}
-            onClick={() => setSection("About")}
-          >
-            <Typography className={`text-md mx-auto py-1 hidden md:block`}>
-              About
-            </Typography>
-            <Typography className="flex h-full justify-center items-center md:hidden"><BsInfoCircle className="w-5 h-5 my-1" /></Typography>
-          </div>
-          <div
-            className={`w-full text-center rounded-md cursor-pointer ${
-              section === "Experience" ? "bg-blue-400 text-white" : ""
-            }`}
-            onClick={() => {
-              getUserExperience();
-              setSection("Experience");
-            }}
-          >
-            <Typography className={`text-md mx-auto py-1 hidden md:block `}>
-              Experience
-            </Typography>
-            <Typography className="flex h-full justify-center items-center md:hidden"><BsBriefcaseFill className="w-5 h-5 my-1" /></Typography>
-          </div>
-          <div
-            className={`w-full text-center rounded-md cursor-pointer ${
-              section === "Education" ? "bg-blue-400 text-white" : ""
-            }`}
-            onClick={() => {
-              getUserEducation();
-              setSection("Education");
-            }}
-          >
-            <Typography className={`text-md mx-auto py-1 hidden md:block `}>
-              Education
-            </Typography>
-            <Typography className="flex h-full justify-center items-center md:hidden"><FaGraduationCap  className="w-5 h-5 my-1" /></Typography>
-          </div>
-          <div
-            className={`w-full text-center rounded-md cursor-pointer ${
-              section === "Certificates" ? "bg-blue-400 text-white" : ""
-            }`}
-            onClick={() => {
-              getUserCertificate();
-              setSection("Certificates");
-            }}
-          >
-            <Typography className={`text-md mx-auto py-1 hidden md:block `}>
-              Certificates
-            </Typography>
-            <Typography className="flex h-full justify-center items-center md:hidden"><GrCertificate className="w-5 h-5 my-1" /></Typography>
-          </div>
-          <div
-            className={`w-full text-center rounded-md cursor-pointer ${
-              section === "Achievements" ? "bg-blue-400 text-white" : ""
-            }`}
-            onClick={() => {
-              getUserAchievement();
-              setSection("Achievements");
-            }}
-          >
-            <Typography className={`text-md mx-auto py-1 hidden md:block `}>
-              Achievements
-            </Typography>
-            <Typography className="flex h-full justify-center items-center md:hidden"><FaAward  className="w-5 h-5 my-1" /></Typography>
-          </div>
-          <div
+          floated={false}
+          shadow={false}
+          color="transparent"
+          className="rounded-none"
+        >
+          <div className="flex w-full justify-between bg-gray-50 p-1 rounded-md mt-2">
+            <div
+              className={`w-full text-center rounded-md cursor-pointer  ${
+                section === "About" ? "bg-blue-400 text-white" : ""
+              }`}
+              onClick={() => setSection("About")}
+            >
+              <Typography className={`text-md mx-auto py-1 hidden md:block`}>
+                About
+              </Typography>
+              <Typography className="flex h-full justify-center items-center md:hidden">
+                <BsInfoCircle className="w-5 h-5 my-1" />
+              </Typography>
+            </div>
+            <div
+              className={`w-full text-center rounded-md cursor-pointer ${
+                section === "Experience" ? "bg-blue-400 text-white" : ""
+              }`}
+              onClick={() => {
+                getUserExperience();
+                setSection("Experience");
+              }}
+            >
+              <Typography className={`text-md mx-auto py-1 hidden md:block `}>
+                Experience
+              </Typography>
+              <Typography className="flex h-full justify-center items-center md:hidden">
+                <BsBriefcaseFill className="w-5 h-5 my-1" />
+              </Typography>
+            </div>
+            <div
+              className={`w-full text-center rounded-md cursor-pointer ${
+                section === "Education" ? "bg-blue-400 text-white" : ""
+              }`}
+              onClick={() => {
+                getUserEducation();
+                setSection("Education");
+              }}
+            >
+              <Typography className={`text-md mx-auto py-1 hidden md:block `}>
+                Education
+              </Typography>
+              <Typography className="flex h-full justify-center items-center md:hidden">
+                <FaGraduationCap className="w-5 h-5 my-1" />
+              </Typography>
+            </div>
+            <div
+              className={`w-full text-center rounded-md cursor-pointer ${
+                section === "Certificates" ? "bg-blue-400 text-white" : ""
+              }`}
+              onClick={() => {
+                getUserCertificate();
+                setSection("Certificates");
+              }}
+            >
+              <Typography className={`text-md mx-auto py-1 hidden md:block `}>
+                Certificates
+              </Typography>
+              <Typography className="flex h-full justify-center items-center md:hidden">
+                <GrCertificate className="w-5 h-5 my-1" />
+              </Typography>
+            </div>
+            <div
+              className={`w-full text-center rounded-md cursor-pointer ${
+                section === "Achievements" ? "bg-blue-400 text-white" : ""
+              }`}
+              onClick={() => {
+                getUserAchievement();
+                setSection("Achievements");
+              }}
+            >
+              <Typography className={`text-md mx-auto py-1 hidden md:block `}>
+                Achievements
+              </Typography>
+              <Typography className="flex h-full justify-center items-center md:hidden">
+                <FaAward className="w-5 h-5 my-1" />
+              </Typography>
+            </div>
+            {/* <div
             className={`w-full text-center rounded-md cursor-pointer ${
               section === "Posts" ? "bg-blue-400 text-white" : ""
             }`}
@@ -271,9 +279,9 @@ useEffect(() => {
           >
             <Typography className={`text-md mx-auto py-1 hidden md:block `}>Posts</Typography>
           <Typography className="flex h-full justify-center items-center md:hidden"><RiGalleryFill  className="w-5 h-5 my-1" /></Typography>
+          </div> */}
           </div>
-        </div>
-      </CardHeader>
+        </CardHeader>
 
         <CardBody className="w-full max-h-[80vh] overflow-y-scroll scrollbar-thin ">
           {section === "About" && (
@@ -289,10 +297,16 @@ useEffect(() => {
                   <Typography className="text-gray-800 text-md">
                     {user.about}
                   </Typography>
-                  <img src={About} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
+                  <img
+                    src={About}
+                    className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
+                  />
                 </div>
               ) : (
-                <img src={About} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
+                <img
+                  src={About}
+                  className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
+                />
               )}
             </div>
           )}
@@ -543,35 +557,45 @@ useEffect(() => {
             </div>
           )}
           {section === "Posts" && (
-          <div className="md:w-2/3 mx-auto">
-              {posts.length > 0 ?
-                (
+            <div className="md:w-2/3 mx-auto">
+              {posts.length > 0 ? (
                 <>
                   {posts.map((post, key) => (
-                    <SinglePostCard 
-                    post={post}  
-                    profileURL={user.profileURL}
-                    profileId={userId}
-                    userId={user._id}
-                    postId={post._id}
-                    name={user.name}
-                    bio={user.bio}
-                    postedAt={<ReactTimeAgo date={post.updatedAt} locale="en-US" />}
-                    description={post.description}
-                    img={post.fileURL}
-                    getUserPosts={getUserPosts}
-                    key={key} />
-                  ))} 
-                  <img src={Posts} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
+                    <SinglePostCard
+                      post={post}
+                      profileURL={user.profileURL}
+                      profileId={userId}
+                      userId={user._id}
+                      postId={post._id}
+                      name={user.name}
+                      bio={user.bio}
+                      postedAt={
+                        <ReactTimeAgo date={post.updatedAt} locale="en-US" />
+                      }
+                      description={post.description}
+                      img={post.fileURL}
+                      getUserPosts={getUserPosts}
+                      key={key}
+                    />
+                  ))}
+                  <img
+                    src={Posts}
+                    className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
+                  />
                 </>
-               ) : (
+              ) : (
                 <>
-                  <Typography className="text-gray-800 text-md">Haven't posted anything yet</Typography>
-                  <img src={Posts} className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30" />
+                  <Typography className="text-gray-800 text-md">
+                    Haven't posted anything yet
+                  </Typography>
+                  <img
+                    src={Posts}
+                    className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
+                  />
                 </>
               )}
-          </div>
-        )}
+            </div>
+          )}
         </CardBody>
       </Card>
 
