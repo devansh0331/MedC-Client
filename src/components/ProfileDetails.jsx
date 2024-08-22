@@ -41,6 +41,7 @@ const ProfileDetails = (props) => {
     singleUserCertificate,
     getSingleUserAchievement,
     singleUserAchievement,
+    handleLike,
   } = useContext(UserContext);
 
   const userId = props.user._id;
@@ -368,20 +369,42 @@ const ProfileDetails = (props) => {
               <>
                 {posts.map((post, key) => (
                   <SinglePostCard
-                    post={post}
-                    profileURL={props.profileURL}
-                    profileId={userId}
-                    userId={user._id}
-                    postId={post._id}
-                    name={props.name}
-                    bio={props.bio}
-                    postedAt={
-                      <ReactTimeAgo date={post.updatedAt} locale="en-US" />
-                    }
-                    description={post.description}
-                    img={post.fileURL}
+                    // post={post}
+                    // profileURL={props.profileURL}
+                    // profileId={userId}
+                    // userId={user._id}
+                    // postId={post._id}
+                    // name={props.name}
+                    // bio={props.bio}
+                    // postedAt={
+                    //   <ReactTimeAgo date={post.updatedAt} locale="en-US" />
+                    // }
+                    // description={post.description}
+                    // img={post.fileURL}
                     getUserPosts={getUserPosts}
+                    // key={key}
                     key={key}
+                    img={post.fileURL == "" ? null : post.fileURL}
+                    name={post.user ? post.user.name : "Unknown User"}
+                    bio={post.user && post.user.bio ? post.user.bio : "User"}
+                    profileURL={
+                      post.user && post.user.profileURL
+                        ? post.user.profileURL
+                        : ""
+                    }
+                    profileId={post.user && post.user._id ? post.user._id : ""}
+                    description={post.description}
+                    likes={post.likes ? Object.keys(post.likes).length : "0"}
+                    isLiked={post.likes && user._id && post.likes[user._id]}
+                    postedAt={
+                      <ReactTimeAgo date={post.createdAt} locale="en-US" />
+                    }
+                    handleLike={async () => {
+                      await handleLike(post._id);
+                      getUserPosts();
+                    }}
+                    postId={post._id}
+                    userId={user._id}
                   />
                 ))}
                 <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
