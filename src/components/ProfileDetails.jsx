@@ -59,7 +59,7 @@ const ProfileDetails = (props) => {
       );
       const res = await response.json();
       if (!res.success) {
-        console.log(res.error);
+        console.log(res?.error);
       } else {
         setPosts(res.data);
         // console.log(res.data);
@@ -71,11 +71,14 @@ const ProfileDetails = (props) => {
 
   useEffect(() => {
     getUserPosts();
+
+    console.log(singleUserExperience);
+    
   }, [userId]);
 
   return (
     <Card className="w-full h-full scrollbar-thin bg-white relative">
-      {props.isExisting && (
+      {props?.isExisting && (
         <div
           className="absolute top-2 right-2 z-10 bg-white cursor-pointer"
           onClick={() => navigate("/editdetails")}
@@ -205,10 +208,11 @@ const ProfileDetails = (props) => {
         )}
         {section === "Experience" && (
           <>
-            {singleUserExperience.length > 0 ? (
+            {singleUserExperience.length > 0 ? ( 
               <>
                 {singleUserExperience.map((exp, key) => (
                   <Card
+                    key={key}
                     shadow={false}
                     className="pb-2 mb-2 border-b-2 rounded-none"
                   >
@@ -368,6 +372,7 @@ const ProfileDetails = (props) => {
               <>
                 {posts.map((post, key) => (
                   <SinglePostCard
+                    key={key}
                     post={post}
                     profileURL={props.profileURL}
                     profileId={userId}
@@ -381,7 +386,6 @@ const ProfileDetails = (props) => {
                     description={post.description}
                     img={post.fileURL}
                     getUserPosts={getUserPosts}
-                    key={key}
                   />
                 ))}
                 <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />

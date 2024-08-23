@@ -130,10 +130,11 @@ const ProfileCard = (props) => {
               onClick={handleOpenProfile}
             />
             <div className="flex flex-col items-center">
+              {props.user.name && 
               <Typography className="text-lg font-semibold">
                 {props.user.name}
-              </Typography>
-              <Typography className="text-md">{props.user.bio}</Typography>
+              </Typography>}
+              {props.user.bio && <Typography className="text-md">{props.user.bio}</Typography>}
             </div>
           </CardHeader>
           <CardBody
@@ -149,7 +150,7 @@ const ProfileCard = (props) => {
             )}
             <div className="flex flex-row gap-1 items-center mb-1 cursor-pointer" onClick={() => window.open(`mailto:${props.user.email}`)}>
               <MdEmail className="text-gray-700" />
-              <Typography className="ml-2">{props.user.email}</Typography>
+              {props.user.email &&<Typography className="ml-2">{props.user.email}</Typography>}
             </div>
             {props.user.contact && (
               <div className="flex flex-row gap-1 items-center mb-1 cursor-pointer" onClick={() => window.open(`tel:${props.user.contact}`)}>

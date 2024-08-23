@@ -37,14 +37,14 @@ export function UserContextProvider({ children }) {
           },
         }
       );
-
       const res = await response.json();
-
+      // console.log(res)
       if (!res.success) {
         console.error(res.error);
       } else {
-        console.log(res.data);
-        setUserExperience(res.data);
+        // console.log(res.data);
+        setUserExperience(res.data.sort((a, b) => new Date(a.startingMonth) - new Date(b.startingMonth)));
+        setUserExperience(res.data);        
       }
     } catch (error) {
       console.error("Failed to fetch user experience");
@@ -68,7 +68,7 @@ export function UserContextProvider({ children }) {
       if (!res.success) {
         console.error(res.error);
       } else {
-        console.log(res.data);
+        setSingleUserExperience(res.data.sort((a, b) => new Date(b.startingMonth) - new Date(a.startingMonth)));
         setSingleUserExperience(res.data);
       }
     } catch (error) {
@@ -190,6 +190,7 @@ export function UserContextProvider({ children }) {
         console.error(res.error);
       } else {
         setUserEducation(res.data);
+        setUserEducation(res.data.sort((a, b) => new Date(b.startingMonth) - new Date(a.startingMonth)));
       }
     } catch (error) {
       console.error("Failed to fetch user education");
@@ -214,6 +215,7 @@ export function UserContextProvider({ children }) {
         console.error(res.error);
       } else {
         setSingleUserEducation(res.data);
+        setUserEducation(res.data.sort((a, b) => new Date(b.startingMonth) - new Date(a.startingMonth)));
       }
     } catch (error) {
       console.error("Failed to fetch user education");
@@ -296,7 +298,7 @@ export function UserContextProvider({ children }) {
         },
       });
       const parsedRes = await res.json();
-      console.log(parsedRes);
+      // console.log(parsedRes);
       if (!parsedRes.success) {
         console.error(parsedRes.error);
       } else {
@@ -308,7 +310,7 @@ export function UserContextProvider({ children }) {
   };
   const checkFriendStatus = async (id) => {
     try {
-      console.log(id);
+      // console.log(id);
       const res = await fetch(`${SERVER_URL}/user/check-status/${id}`, {
         method: "GET",
         credentials: "include",
@@ -320,9 +322,9 @@ export function UserContextProvider({ children }) {
       const parsedRes = await res.json();
       if (!parsedRes) console.error(parsedRes.error);
       else {
-        console.log(parsedRes);
+        // console.log(parsedRes);
         setFriendStatus(parsedRes.data);
-        console.log("Friend Statussss: ", friendStatus);
+        // console.log("Friend Statussss: ", friendStatus);
         if (parsedRes.data == 0) {
           setStatusValue("Connect");
         } else if (parsedRes.data == 1) {
@@ -339,7 +341,7 @@ export function UserContextProvider({ children }) {
   };
   const sendRequest = async (friendId) => {
     try {
-      console.log("Friend Id: " + friendId);
+      // console.log("Friend Id: " + friendId);
       const res = await fetch(`${SERVER_URL}/user/send-request/${friendId}`, {
         method: "POST",
         credentials: "include",
@@ -356,7 +358,7 @@ export function UserContextProvider({ children }) {
   };
   const acceptRequest = async (friendId) => {
     try {
-      console.log("Friend Id: " + friendId);
+      // console.log("Friend Id: " + friendId);
       const res = await fetch(`${SERVER_URL}/user/accept-request/${friendId}`, {
         method: "POST",
         credentials: "include",

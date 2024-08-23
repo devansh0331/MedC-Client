@@ -170,7 +170,9 @@ function SideBar() {
                 <Typography className={`font-semibold ${currentPage.includes(`/user/${user._id}`) ? "text-white" : "text-black"}`}>
                   {userInfo.name}
                 </Typography>
+                {user.bio && (
                 <Typography className="text-sm">{user.bio}</Typography>
+                )}
               </div>
             </div>
           </CardHeader>
