@@ -41,6 +41,7 @@ const ProfileDetails = (props) => {
     singleUserCertificate,
     getSingleUserAchievement,
     singleUserAchievement,
+    handleLike,
   } = useContext(UserContext);
 
   const userId = props.user._id;
@@ -372,7 +373,6 @@ const ProfileDetails = (props) => {
               <>
                 {posts.map((post, key) => (
                   <SinglePostCard
-                    key={key}
                     post={post}
                     profileURL={props.profileURL}
                     profileId={userId}
@@ -386,6 +386,7 @@ const ProfileDetails = (props) => {
                     description={post.description}
                     img={post.fileURL}
                     getUserPosts={getUserPosts}
+                    key={key}
                   />
                 ))}
                 <img src={Posts} className="w-1/2 mx-auto mt-10 opacity-30" />
