@@ -25,6 +25,7 @@ import Settings from "./Settings";
 import SingleJob from "./SingleJob";
 import Admin from "./Admin";
 import Saves from "./Saves";
+import Blogs from "./Blogs";
 // import { NavbarWithSearch } from "./Nav";
 
 function Main() {
@@ -226,6 +227,15 @@ function Main() {
           <>
             <NavMain />
             <Saves />
+          </>
+        }
+      />
+      <Route
+        path="/blogs"
+        element={
+          <>
+            <NavMain />
+            <Blogs />
           </>
         }
       />
