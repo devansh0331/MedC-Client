@@ -27,6 +27,7 @@ import Admin from "./Admin";
 import Saves from "./Saves";
 import Blogs from "./Blogs";
 import SingleBlog from "./SingleBlog";
+import CreateBlog from "./CreateBlog";
 // import { NavbarWithSearch } from "./Nav";
 
 function Main() {
@@ -246,6 +247,15 @@ function Main() {
           <>
             <NavMain />
             <SingleBlog />
+          </>
+        }
+      />
+      <Route
+        path="/create-blog"
+        element={
+          <>
+            <NavMain />
+            <CreateBlog />
           </>
         }
       />
