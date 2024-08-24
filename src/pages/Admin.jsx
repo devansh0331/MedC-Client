@@ -1,58 +1,74 @@
 import React, { useState } from "react";
 import SideBar from "../components/SideBar";
-import { Button, Card } from "@material-tailwind/react";
-import PostCardAdmin from "../components/PostCardAdmin";
-import UserCardAdmin from "../components/UserCardAdmin";
+import { Card, List, ListItem, Typography, CardHeader, Avatar, Menu, MenuHandler, CardBody, MenuList, MenuItem } from "@material-tailwind/react";
+import SinglePostCard from "../components/SinglePostCard";
+import altprofile from "../assets/altprofile.png";
+import jobBuilding from "../assets/jobBuilding.png";
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import AdminPostCard from "../components/AdminPostCard";
 
 const Admin = () => {
-  const [active, setActive] = useState("Posts");
+  const [active, setActive] = useState(0);
   return (
-    <div className="w-full h-[90vh] flex bg-background">
+    <div className="w-full h-[90vh] flex flex-row bg-background overflow-y-hidden">
       <SideBar />
-      <div className="flex flex-col w-full">
-        <div className="flex gap-4 h-min mx-4 mt-4 absolute">
-          <Button
-            variant={`${active === "Posts" ? "filled" : "outlined"}`}
-            color="blue"
-            onClick={() => setActive("Posts")}
-          >
-            Posts
-          </Button>
-          <Button
-            variant={`${active === "Users" ? "filled" : "outlined"}`}
-            color="blue"
-            onClick={() => setActive("Users")}
-          >
-            Users
-          </Button>
-        </div>
-        <div className="flex justify-center h-[90vh] w-full">
-          {active === "Posts" && 
-            <Card className="p-0 m-0 w-1/2 bg-inherit pt-3 flex flex-col gap-1 rounded-lg h-full overflow-y-scroll scrollbar-thin"
-            shadow={false}>
-                <PostCardAdmin/>
-                <PostCardAdmin/>
-                <PostCardAdmin/>
-                <PostCardAdmin/>
-                <PostCardAdmin/>
-                <PostCardAdmin/>
-            </Card>
-          }
-        </div>
-        <div className="flex h-[90vh] justify-center w-full ">
-        {active === "Users" && 
-          <Card className="p-0 m-0 bg-inherit pt-3 justify-center grid grid-cols-3 gap-2 h-full overflow-y-scroll scrollbar-thin"
-          shadow={false}>
-                <UserCardAdmin/>
-                <UserCardAdmin/>
-                <UserCardAdmin/>
-                <UserCardAdmin/>
-                <UserCardAdmin/>
-                <UserCardAdmin/>
-                <UserCardAdmin/>
-          </Card>
-          }
-        </div>
+      <div className="mt-5 w-[80%] mx-auto flex flex-row gap-4">
+        <Card className="w-min h-min">
+          <List className="p-2 ">
+            <div
+              onClick={() => setActive(0)}
+              className={`px-3 py-2 rounded-md my-1 cursor-pointer hover:bg-blue-200 ${
+                active === 0
+                  ? "bg-blue-500 text-white"
+                  : "bg-white text-gray-800"
+              }`}
+            >
+              Live Posts
+            </div>
+            <div
+              onClick={() => setActive(1)}
+              className={`px-3 py-2 rounded-md my-1 cursor-pointer hover:bg-blue-200 ${
+                active === 1
+                  ? "bg-blue-500 text-white"
+                  : "bg-white text-gray-800"
+              }`}
+            >
+              Archived Posts
+            </div>
+            <div
+              onClick={() => setActive(2)}
+              className={`px-3 py-2 rounded-md my-1 cursor-pointer hover:bg-blue-200 ${
+                active === 2
+                  ? "bg-blue-500 text-white"
+                  : "bg-white text-gray-800"
+              }`}
+            >
+              Profiles
+            </div>
+            <div
+              onClick={() => setActive(3)}
+              className={`px-3 py-2 rounded-md my-1 cursor-pointer hover:bg-blue-200 ${
+                active === 3
+                  ? "bg-blue-500 text-white"
+                  : "bg-white text-gray-800"
+              }`}
+            >
+              Blogs
+            </div>
+          </List>
+        </Card>
+        <Card className="w-full h-full overflow-y-scroll scrollbar-thin relative">
+          {active === 0 && (
+            <div className="p-4">
+              <Typography className="text-xl text-gray-700 fixed">
+                Live Posts
+              </Typography>
+              <div className="w-1/2 mx-auto mt-8">
+              <AdminPostCard />
+              </div>
+            </div>
+          )}
+        </Card>
       </div>
     </div>
   );

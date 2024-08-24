@@ -52,7 +52,7 @@ function FeedPage() {
         userId={user._id}
       />
       <div className="flex mx-auto gap-4 justify-center">
-        <div className="hidden 2xl:block w-56">
+        <div className="hidden 2xl:block w-56 cursor-pointer mt-5" onClick={() => navigate("/blogs")}>
           <BlogCard/>
         </div>
         <div className="w-[95%] sm:w-[90%] md:w-[500px] mx-auto">

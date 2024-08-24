@@ -4,10 +4,11 @@ import { Card, Typography } from "@material-tailwind/react";
 import BlogBG from "../assets/BlogBG.png";
 import BlogBG2 from "../assets/BlogBG2.png";
 import BlogBG3 from "../assets/BlogBG3.png";
+import { useNavigate } from "react-router-dom";
 
 const Blogs = () => {
   const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
-
+  const navigate = useNavigate();
   const Blogs = [
     { img: BlogBG, color: "rgba(76, 175, 80, 0.8)", text: "black" },
     { img: BlogBG3, color: "rgba(255, 91, 0, 0.9)", text: "white" },
@@ -22,9 +23,10 @@ const Blogs = () => {
         {Blogs.map((blog, index) => (
           <Card
             key={index}
-            className="w-56 h-[500px] flex flex-col justify-start relative mx-auto"
+            className="w-56 h-[500px] flex flex-col justify-start relative mx-auto cursor-pointer"
             onMouseEnter={() => setHoveredCardIndex(index)}
             onMouseLeave={() => setHoveredCardIndex(null)}
+            onClick={() => navigate("/blog/:id")}
           >
             <img
               src={blog.img}

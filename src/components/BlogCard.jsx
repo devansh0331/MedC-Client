@@ -9,7 +9,7 @@ import { IoMdArrowDropleftCircle } from "react-icons/io";
 
 const BlogCard = () => {
   return (
-    <Card className="h-4/5 rounded-lg mt-5">
+    <Card className="h-4/5 rounded-lg">
       <div className="">
         <Typography className="text-xl font-semibold m-2">New Blogs</Typography>
       </div>
