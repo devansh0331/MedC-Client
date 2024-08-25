@@ -24,67 +24,69 @@ import {
   Button,
   Dialog,
   CardFooter,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
 } from "@material-tailwind/react";
 import EditProfileNew from "./EditProfileNew";
 import { UserContext } from "../UserContext";
 import Resume from "../assets/Resume.pdf";
 import { useNavigate } from "react-router-dom";
+import { FaEllipsisVertical } from "react-icons/fa6";
 
 const ProfileCard = (props) => {
   const [check, setCheck] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
   const CityArr = City.getCitiesOfCountry("IN");
   const StateArr = State.getStatesOfCountry("IN");
   const handleOpenProfile = () => setOpenProfile(!openProfile);
   const handleOpenEdit = () => setOpenEdit(!openEdit);
+  const handleOpenMenu = () => setOpenMenu(!openEdit);
   const { user } = useContext(UserContext);
   const [linkedin, setLinkedin] = useState(props.user.linkedin);
   const [twitter, setTwitter] = useState(props.user.twitter);
   const [resume, setResume] = useState(Resume);
   const [number, setNumber] = useState("");
   const navigate = useNavigate();
-  const trimSocials = () => {   
+  const trimSocials = () => {
     if (props.user.linkedin?.includes("https://www.linkedin.com/in/")) {
       const username = props.user.linkedin.slice(28);
       // console.log("l1",username);
       setLinkedin(username);
-    }else
-    if (props.user.linkedin?.startsWith("www.linkedin.com/in/")) {
+    } else if (props.user.linkedin?.startsWith("www.linkedin.com/in/")) {
       const username = props.user.linkedin.slice(20);
       // console.log("l2",username);
       setLinkedin(username);
-    }else{
-      setLinkedin(props.user.linkedin)
-    } 
+    } else {
+      setLinkedin(props.user.linkedin);
+    }
     if (props.user.twitter?.includes("https://x.com/")) {
       const username = props.user.twitter.slice(14);
       // console.log('t1',username);
       setTwitter(username);
-    }else
-    if (props.user.twitter?.startsWith("x.com/")) {
+    } else if (props.user.twitter?.startsWith("x.com/")) {
       const username = props.user.twitter.slice(6);
       // console.log('t2',username);
       setTwitter(username);
-    }else
-    if (props.user.twitter?.startsWith("https://twitter.com/")) {
+    } else if (props.user.twitter?.startsWith("https://twitter.com/")) {
       const username = props.user.twitter.slice(19);
       // console.log('t2',username);
       setTwitter(username);
-    }else
-    if (props.user.twitter?.startsWith("twitter.com/")) {
+    } else if (props.user.twitter?.startsWith("twitter.com/")) {
       const username = props.user.twitter.slice(12);
       // console.log('t2',username);
       setTwitter(username);
-    }else
-    {
-      setTwitter(props.user.twitter)
+    } else {
+      setTwitter(props.user.twitter);
     }
   };
 
   useEffect(() => {
     trimSocials();
-  })
+  });
 
   const handleResumeDownload = () => {
     const pdfUrl = resume;
@@ -101,15 +103,31 @@ const ProfileCard = (props) => {
       setNumber(num);
     }
   };
+
   return (
     <>
       <Card className="min-w-80 bg-white p-4 h-min">
-        {props.isExisting && (
+        {props.isExisting ? (
           <div
             className="flex justify-end pt-2 px-2 -mt-4 -mr-4  cursor-pointer"
             onClick={handleOpenEdit}
           >
             <FaRegEdit />
+          </div>
+        ) : (
+          <div className="flex justify-end pt-2 px-2 -mt-4 -mr-4  cursor-pointer">
+            <Typography className="text-sm md:text-base text-gray-900 md:text-gray-700">
+              <Menu placement="bottom-start">
+                <MenuHandler>
+                  <button>
+                    <FaEllipsisVertical className="cursor-pointer  w-4 h-4 md:w-6 md:h-6" />
+                  </button>
+                </MenuHandler>
+                <MenuList>
+                  <MenuItem>Report</MenuItem>
+                </MenuList>
+              </Menu>
+            </Typography>
           </div>
         )}
         <div className="flex flex-col">
@@ -130,11 +148,14 @@ const ProfileCard = (props) => {
               onClick={handleOpenProfile}
             />
             <div className="flex flex-col items-center">
-              {props.user.name && 
-              <Typography className="text-lg font-semibold">
-                {props.user.name}
-              </Typography>}
-              {props.user.bio && <Typography className="text-md">{props.user.bio}</Typography>}
+              {props.user.name && (
+                <Typography className="text-lg font-semibold">
+                  {props.user.name}
+                </Typography>
+              )}
+              {props.user.bio && (
+                <Typography className="text-md">{props.user.bio}</Typography>
+              )}
             </div>
           </CardHeader>
           <CardBody
@@ -148,24 +169,40 @@ const ProfileCard = (props) => {
                 <Typography className="ml-2">{props.user.location}</Typography>
               </div>
             )}
-            <div className="flex flex-row gap-1 items-center mb-1 cursor-pointer" onClick={() => window.open(`mailto:${props.user.email}`)}>
+            <div
+              className="flex flex-row gap-1 items-center mb-1 cursor-pointer"
+              onClick={() => window.open(`mailto:${props.user.email}`)}
+            >
               <MdEmail className="text-gray-700" />
-              {props.user.email &&<Typography className="ml-2">{props.user.email}</Typography>}
+              {props.user.email && (
+                <Typography className="ml-2">{props.user.email}</Typography>
+              )}
             </div>
             {props.user.contact && (
-              <div className="flex flex-row gap-1 items-center mb-1 cursor-pointer" onClick={() => window.open(`tel:${props.user.contact}`)}>
+              <div
+                className="flex flex-row gap-1 items-center mb-1 cursor-pointer"
+                onClick={() => window.open(`tel:${props.user.contact}`)}
+              >
                 <FaPhoneAlt className="text-gray-700" />
                 <Typography className="ml-2">{props.user.contact}</Typography>
               </div>
             )}
             {props.user.linkedin && (
-              <div className="flex flex-row gap-1 items-center mb-1 cursor-pointer" onClick={() => window.open(`https://www.linkedin.com/in/${linkedin}`)}>
+              <div
+                className="flex flex-row gap-1 items-center mb-1 cursor-pointer"
+                onClick={() =>
+                  window.open(`https://www.linkedin.com/in/${linkedin}`)
+                }
+              >
                 <FaLinkedinIn className="text-gray-700" />
                 <Typography className="ml-2">{linkedin}</Typography>
               </div>
             )}
             {props.user.twitter && (
-              <div className="flex flex-row gap-1 items-center mb-1 cursor-pointer" onClick={() => window.open(`https://twitter.com/${twitter}`)}>
+              <div
+                className="flex flex-row gap-1 items-center mb-1 cursor-pointer"
+                onClick={() => window.open(`https://twitter.com/${twitter}`)}
+              >
                 <FaXTwitter className="text-gray-700" />
                 <Typography className="ml-2">{twitter}</Typography>
               </div>
@@ -175,20 +212,27 @@ const ProfileCard = (props) => {
             ""
           ) : props.user._id === user._id ? (
             <CardBody className="flex flex-col px-4 py-2 border-b-2">
-              <div className="flex flex-row gap-1 items-center mb-1 justify-between cursor-pointer" onClick={()=> navigate("/user-saves/:id")}>
+              <div
+                className="flex flex-row gap-1 items-center mb-1 justify-between cursor-pointer"
+                onClick={() => navigate("/user-saves/:id")}
+              >
                 <Typography className="">Saved Jobs</Typography>
                 <Typography className="text-base text-white bg-blue-500 px-2 rounded-full">
                   38
                 </Typography>
               </div>
-              <div className="flex flex-row gap-1 items-center mb-1 justify-between cursor-pointer" onClick={()=> navigate("/user-saves/:id")}>
+              <div
+                className="flex flex-row gap-1 items-center mb-1 justify-between cursor-pointer"
+                onClick={() => navigate("/user-saves/:id")}
+              >
                 <Typography className="text-base">Posted Jobs</Typography>
                 <Typography className="text-base text-white bg-blue-500 px-2 rounded-full">
                   08
                 </Typography>
               </div>
               <div
-                className={`flex flex-row gap-1 items-center mb-1 justify-between cursor-pointer`} onClick={()=> navigate("/user-saves/:id")}
+                className={`flex flex-row gap-1 items-center mb-1 justify-between cursor-pointer`}
+                onClick={() => navigate("/user-saves/:id")}
               >
                 <Typography className="text-base">Applied Jobs</Typography>
                 <Typography className="text-base text-white bg-blue-500 px-2 rounded-full">

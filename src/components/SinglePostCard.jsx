@@ -4,6 +4,7 @@ import profile from "../assets/profile.png";
 import jobBuilding from "../assets/jobBuilding.png";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { AiFillLike } from "react-icons/ai";
+
 import { FaRegCommentAlt } from "react-icons/fa";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { AiOutlineLike } from "react-icons/ai";
@@ -467,8 +468,14 @@ const SinglePostCard = (props) => {
             <FaCopy className="w-8 h-7 text-gray-700" />
           </button>
         </DialogBody>
-          <Typography className={`text-base font-normal text-gray-800 text-center pb-2 ${showText ? "opacity-100" : "opacity-0"}`}
-          style={{ transition: "opacity 0.5s ease-in-out" }}>Link Copied</Typography>
+        <Typography
+          className={`text-base font-normal text-gray-800 text-center pb-2 ${
+            showText ? "opacity-100" : "opacity-0"
+          }`}
+          style={{ transition: "opacity 0.5s ease-in-out" }}
+        >
+          Link Copied
+        </Typography>
       </Dialog>
       <Toaster position="top-right" />
     </Card>
