@@ -23,28 +23,39 @@ import {
   Avatar,
   Button,
   Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
   CardFooter,
   Menu,
   MenuHandler,
   MenuList,
   MenuItem,
+  Radio,
 } from "@material-tailwind/react";
 import EditProfileNew from "./EditProfileNew";
 import { UserContext } from "../UserContext";
 import Resume from "../assets/Resume.pdf";
 import { useNavigate } from "react-router-dom";
 import { FaEllipsisVertical } from "react-icons/fa6";
+import { SERVER_URL } from "../ServerURL";
+import Cookies from "js-cookie";
 
 const ProfileCard = (props) => {
   const [check, setCheck] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [openReport, setOpenReport] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+
+  const [reportReason, setReportReason] = useState("");
+
   const CityArr = City.getCitiesOfCountry("IN");
   const StateArr = State.getStatesOfCountry("IN");
   const handleOpenProfile = () => setOpenProfile(!openProfile);
   const handleOpenEdit = () => setOpenEdit(!openEdit);
   const handleOpenMenu = () => setOpenMenu(!openEdit);
+  const handleOpenReport = () => setOpenReport(!openReport);
   const { user } = useContext(UserContext);
   const [linkedin, setLinkedin] = useState(props.user.linkedin);
   const [twitter, setTwitter] = useState(props.user.twitter);
@@ -104,6 +115,38 @@ const ProfileCard = (props) => {
     }
   };
 
+  const handleReport = async () => {
+    try {
+      if (reportReason != "") {
+        const res = await fetch(
+          `${SERVER_URL}/report/add-report/${props.user._id}`,
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token")}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ reason: reportReason }),
+          }
+        );
+        const parsedRes = await res.json();
+        if (!parsedRes) props.setToast(parsedRes.error, false);
+        else {
+          if (!parsedRes.success) {
+            props.setToast(parsedRes.error, false);
+            handleOpenReport();
+          } else {
+            props.setToast(parsedRes.message, true);
+            handleOpenReport();
+          }
+        }
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   return (
     <>
       <Card className="min-w-80 bg-white p-4 h-min">
@@ -124,7 +167,7 @@ const ProfileCard = (props) => {
                   </button>
                 </MenuHandler>
                 <MenuList>
-                  <MenuItem>Report</MenuItem>
+                  <MenuItem onClick={() => handleOpenReport()}>Report</MenuItem>
                 </MenuList>
               </Menu>
             </Typography>
@@ -343,6 +386,113 @@ const ProfileCard = (props) => {
           getSingleUser={props ? props.getSingleUser : {}}
         />
       )}
+
+      {/* OPEN REPORT DIALOG */}
+      <Dialog
+        open={openReport}
+        handler={handleOpenReport}
+        animate={{
+          mount: { scale: 1, y: 0 },
+          unmount: { scale: 0.9, y: -100 },
+        }}
+      >
+        <DialogHeader className="font-thin">
+          Report an issue with "{props.user.name}"
+        </DialogHeader>
+        <DialogBody>
+          <div className="grid grid-cols-1 ">
+            <Radio
+              name="description"
+              value="Abbusive"
+              label={
+                <div>
+                  <Typography color="blue-gray" className="font-medium">
+                    Abbusive
+                  </Typography>
+                </div>
+              }
+              onClick={(e) => {
+                console.log(e.target.value);
+                setReportReason(e.target.value);
+              }}
+            />
+
+            <Radio
+              name="description"
+              value="Fake Profile"
+              label={
+                <div>
+                  <Typography color="blue-gray" className="font-medium">
+                    Fake Profile
+                  </Typography>
+                </div>
+              }
+              onClick={(e) => {
+                console.log(e.target.value);
+                setReportReason(e.target.value);
+              }}
+            />
+            <Radio
+              name="description"
+              value="Sexual Content"
+              label={
+                <div>
+                  <Typography color="blue-gray" className="font-medium">
+                    Sexual Content
+                  </Typography>
+                </div>
+              }
+              onClick={(e) => {
+                console.log(e.target.value);
+                setReportReason(e.target.value);
+              }}
+            />
+            <Radio
+              name="description"
+              value="Spamming"
+              label={
+                <div>
+                  <Typography color="blue-gray" className="font-medium">
+                    Spamming
+                  </Typography>
+                </div>
+              }
+              onClick={(e) => {
+                console.log(e.target.value);
+                setReportReason(e.target.value);
+              }}
+            />
+            <Radio
+              name="description"
+              value="User is not authorized"
+              label={
+                <div>
+                  <Typography color="blue-gray" className="font-medium">
+                    User is not authorized
+                  </Typography>
+                </div>
+              }
+              onClick={(e) => {
+                console.log(e.target.value);
+                setReportReason(e.target.value);
+              }}
+            />
+          </div>
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="outlined"
+            color="red"
+            onClick={handleOpenReport}
+            className="mr-1"
+          >
+            <span>Cancel</span>
+          </Button>
+          <Button onClick={() => handleReport()} variant="gradient" color="red">
+            <span>Report</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
     </>
   );
 };
