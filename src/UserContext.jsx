@@ -43,8 +43,12 @@ export function UserContextProvider({ children }) {
         console.error(res.error);
       } else {
         // console.log(res.data);
-        setUserExperience(res.data.sort((a, b) => new Date(a.startingMonth) - new Date(b.startingMonth)));
-        setUserExperience(res.data);        
+        setUserExperience(
+          res.data.sort(
+            (a, b) => new Date(a.startingMonth) - new Date(b.startingMonth)
+          )
+        );
+        setUserExperience(res.data);
       }
     } catch (error) {
       console.error("Failed to fetch user experience");
@@ -68,7 +72,11 @@ export function UserContextProvider({ children }) {
       if (!res.success) {
         console.error(res.error);
       } else {
-        setSingleUserExperience(res.data.sort((a, b) => new Date(b.startingMonth) - new Date(a.startingMonth)));
+        setSingleUserExperience(
+          res.data.sort(
+            (a, b) => new Date(b.startingMonth) - new Date(a.startingMonth)
+          )
+        );
         setSingleUserExperience(res.data);
       }
     } catch (error) {
@@ -190,7 +198,11 @@ export function UserContextProvider({ children }) {
         console.error(res.error);
       } else {
         setUserEducation(res.data);
-        setUserEducation(res.data.sort((a, b) => new Date(b.startingMonth) - new Date(a.startingMonth)));
+        setUserEducation(
+          res.data.sort(
+            (a, b) => new Date(b.startingMonth) - new Date(a.startingMonth)
+          )
+        );
       }
     } catch (error) {
       console.error("Failed to fetch user education");
@@ -215,7 +227,11 @@ export function UserContextProvider({ children }) {
         console.error(res.error);
       } else {
         setSingleUserEducation(res.data);
-        setUserEducation(res.data.sort((a, b) => new Date(b.startingMonth) - new Date(a.startingMonth)));
+        setUserEducation(
+          res.data.sort(
+            (a, b) => new Date(b.startingMonth) - new Date(a.startingMonth)
+          )
+        );
       }
     } catch (error) {
       console.error("Failed to fetch user education");
@@ -373,6 +389,7 @@ export function UserContextProvider({ children }) {
       console.error("Failed to accept request");
     }
   };
+
   useEffect(() => {
     getUser();
   }, []);
