@@ -57,7 +57,7 @@ const AdminPostCard = (props) => {
                 {props.name ? props.name : "Unknown User"}
               </Typography>
               {props.bio && (
-                <Typography className="text-xs md:text-[14px] text-gray-800">
+                <Typography className="text-xs md:text-[14px] text-gray-800 font-serif">
                   {props.bio}
                 </Typography>
               )}
