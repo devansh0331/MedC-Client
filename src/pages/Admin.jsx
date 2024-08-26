@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
 import {
   Card,
@@ -28,6 +28,8 @@ import { toast, Toaster } from "react-hot-toast";
 import { SERVER_URL } from "../ServerURL";
 import Cookies from "js-cookie";
 import { SingleReportBox } from "../components/SingleReportBox";
+import { UserContext } from "../UserContext";
+import ReactTimeAgo from "react-time-ago";
 
 const Admin = (props) => {
   const [active, setActive] = useState(0);
@@ -36,8 +38,10 @@ const Admin = (props) => {
   const [reportProfileName, setReportProfileName] = useState("");
   const [reportProfileId, setReportProfileId] = useState("");
   const navigate = useNavigate();
-
   const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
+
+  const { getPosts, posts, getAllUsers, allUsers } = useContext(UserContext);
+
   const Blogs = [
     { img: BlogBG, color: "rgba(76, 175, 80, 0.8)", text: "black" },
     { img: BlogBG3, color: "rgba(255, 91, 0, 0.9)", text: "white" },
@@ -69,25 +73,10 @@ const Admin = (props) => {
       console.error("Failed to get profiles");
     }
   };
-  const getSingleReportedProfile = async (id) => {
-    try {
-      const res = await fetch(`${SERVER_URL}/report/single-report/${id}`, {
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-      });
-      const parsedRes = await res.json();
-      if (!parsedRes.success) {
-        console.error(parsedRes.error);
-      } else {
-        console.log(parsedRes);
-        setSingleReport(await parsedRes.data);
-      }
-    } catch (error) {
-      console.error("Failed to get profiles");
-    }
-  };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
 
   return (
     <div className="w-full h-[90vh] flex flex-row bg-background overflow-y-hidden">
@@ -116,7 +105,10 @@ const Admin = (props) => {
               Archived Posts
             </div>
             <div
-              onClick={() => setActive(2)}
+              onClick={async () => {
+                await getAllUsers();
+                setActive(2);
+              }}
               className={`px-3 py-2 rounded-md my-1 cursor-pointer hover:bg-blue-50 hover:text-gray-800 ${
                 active === 2
                   ? "bg-blue-500 text-white"
@@ -159,11 +151,32 @@ const Admin = (props) => {
                 </Typography>
               </div>
               <div className="w-full h-[75vh] overflow-y-scroll scrollbar-thin">
-                <div className="w-1/2 mx-auto">
-                  <AdminPostCard />
-                  <AdminPostCard />
-                  <AdminPostCard />
-                  <AdminPostCard />
+                <div className="grid grid-cols-2 w-4/5 gap-5 justify-evenly mx-auto">
+                  {posts.map((post, key) => (
+                    <AdminPostCard
+                      key={key}
+                      img={post.fileURL == "" ? null : post.fileURL}
+                      name={
+                        post.user && post.user.name
+                          ? post.user.name
+                          : "Unknown User"
+                      }
+                      bio={post.user && post.user.bio ? post.user.bio : "User"}
+                      profileURL={
+                        post.user && post.user.profileURL
+                          ? post.user.profileURL
+                          : ""
+                      }
+                      profileId={
+                        post.user && post.user._id ? post.user._id : ""
+                      }
+                      description={post.description}
+                      postedAt={
+                        <ReactTimeAgo date={post.createdAt} locale="en-US" />
+                      }
+                      postId={post._id}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -194,18 +207,17 @@ const Admin = (props) => {
               </div>
               <div className="w-full h-[70vh] overflow-y-scroll scrollbar-thin">
                 <div className=" grid grid-cols-3 w-3/4 mx-auto">
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
+                  {allUsers.length > 0 &&
+                    allUsers.map((user, key) => (
+                      <UserCardAdmin
+                        name={user.name ? user.name : null}
+                        bio={user.bio ? user.bio : null}
+                        profileURL={user.profileURL ? user.profileURL : null}
+                        profileId={user._id ? user._id : null}
+                        location={user.location ? user.location : null}
+                        key={key}
+                      />
+                    ))}
                 </div>
               </div>
             </div>
