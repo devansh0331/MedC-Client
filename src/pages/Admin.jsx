@@ -40,7 +40,7 @@ const Admin = (props) => {
   const navigate = useNavigate();
   const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
 
-  const { getPosts, posts } = useContext(UserContext);
+  const { getPosts, posts, getAllUsers, allUsers } = useContext(UserContext);
 
   const Blogs = [
     { img: BlogBG, color: "rgba(76, 175, 80, 0.8)", text: "black" },
@@ -105,7 +105,10 @@ const Admin = (props) => {
               Archived Posts
             </div>
             <div
-              onClick={() => setActive(2)}
+              onClick={async () => {
+                await getAllUsers();
+                setActive(2);
+              }}
               className={`px-3 py-2 rounded-md my-1 cursor-pointer hover:bg-blue-50 hover:text-gray-800 ${
                 active === 2
                   ? "bg-blue-500 text-white"
@@ -204,18 +207,17 @@ const Admin = (props) => {
               </div>
               <div className="w-full h-[70vh] overflow-y-scroll scrollbar-thin">
                 <div className=" grid grid-cols-3 w-3/4 mx-auto">
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
-                  <UserCardAdmin />
+                  {allUsers.length > 0 &&
+                    allUsers.map((user, key) => (
+                      <UserCardAdmin
+                        name={user.name ? user.name : null}
+                        bio={user.bio ? user.bio : null}
+                        profileURL={user.profileURL ? user.profileURL : null}
+                        profileId={user._id ? user._id : null}
+                        location={user.location ? user.location : null}
+                        key={key}
+                      />
+                    ))}
                 </div>
               </div>
             </div>
