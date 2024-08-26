@@ -163,7 +163,7 @@ const ProfileCard = (props) => {
               <Menu placement="bottom-start">
                 <MenuHandler>
                   <button>
-                    <FaEllipsisVertical className="cursor-pointer  w-4 h-4 md:w-6 md:h-6" />
+                    <FaEllipsisVertical className="cursor-pointer w-4 h-4 md:w-5 md:h-5" />
                   </button>
                 </MenuHandler>
                 <MenuList>
@@ -479,16 +479,17 @@ const ProfileCard = (props) => {
             />
           </div>
         </DialogBody>
-        <DialogFooter>
+        <DialogFooter className="gap-2">
           <Button
             variant="outlined"
             color="red"
             onClick={handleOpenReport}
-            className="mr-1"
+            className=""
+            size="sm"
           >
             <span>Cancel</span>
           </Button>
-          <Button onClick={() => handleReport()} variant="gradient" color="red">
+          <Button onClick={() => handleReport()} variant="gradient" color="red" size="sm">
             <span>Report</span>
           </Button>
         </DialogFooter>
