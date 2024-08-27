@@ -192,7 +192,7 @@ const ProfileCard = (props) => {
             />
             <div className="flex flex-col items-center">
               {props.user.name && (
-                <Typography className="text-lg font-semibold">
+                <Typography className="text-lg font-semibold cursor-pointer" onClick={()=> navigate(`/user/${props.profileURL}`)}>
                   {props.user.name}
                 </Typography>
               )}

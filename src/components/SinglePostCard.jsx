@@ -42,6 +42,7 @@ import { FaLinkedin } from "react-icons/fa";
 import { FaSquareWhatsapp } from "react-icons/fa6";
 import { FaCopy } from "react-icons/fa6";
 import toast, { Toaster } from "react-hot-toast";
+import ReactTimeAgo from "react-time-ago";
 
 const SinglePostCard = (props) => {
   const [comm, setComm] = useState(false);
@@ -203,43 +204,46 @@ const SinglePostCard = (props) => {
     }
   };
 
+  const post = props.post;  
+  const noOfLikes = post?.likes ? Object.keys(post?.likes).length : 0;
+
   return (
     <Card className="w-full p-4 my-2 mx-auto">
       <CardHeader
         floated={false}
-        shadow={false}
+        shadow={false} 
         color="transparent"
         className="m-0 p-0 flex items-center justify-between"
       >
         <div className="flex items-center">
           <div className="">
             <Avatar
-              src={props.profileURL ? props.profileURL : altprofile}
+              src={`${post?.user?.profileURL ? post?.user?.profileURL : altprofile}`}
               alt="profile"
               size="lg"
               className="cursor-pointer"
-              onClick={() => navigate(`/user/${props.profileId}`)}
+              onClick={() => navigate(`/user/${post?.user?._id}`)}
             />
           </div>
           <div
             className="ml-4 cursor-pointer"
-            onClick={() => navigate(`/user/${props.profileId}`)}
+            onClick={() => navigate(`/user/${post?.user?._id}`)}
           >
             <Typography className="text-sm md:text-base font-bold text-gray-900">
-              {props.name}
+              {post?.user?.name}
             </Typography>
-            {props.bio && (
-              <Typography className="text-xs md:text-[14px]  font-bold font-serif text-gray-700">
-                {props.bio}
+            {post?.user?.bio && (
+              <Typography className="text-xs md:text-[14px] text-gray-700">
+                {post?.user?.bio}
               </Typography>
             )}
           </div>
         </div>
         <div className="ml-auto flex flex-col-reverse md:flex-row items-end md:items-start md:gap-2">
           <Typography className="text-xs md:text-base">
-            {props.postedAt}
+           {post?.createdAt &&  <ReactTimeAgo date={new Date(post?.createdAt)} locale="en-US"/>}
           </Typography>
-          {user === props.profileId && (
+          {user === post?.user?._id && (
             <Typography className="text-sm md:text-base text-gray-900 md:text-gray-700">
               <Menu placement="bottom-start">
                 <MenuHandler>
@@ -257,18 +261,17 @@ const SinglePostCard = (props) => {
         </div>
       </CardHeader>
       <CardBody className="m-0 p-0 z-0">
-        {props.description && (
+        {post?.description && (
           <Typography
             className="py-4 px-2 text-gray-800 cursor-pointer"
             onClick={() => navigate(`/post/${props.postId}`)}
           >
-            {props.description}
+            {post?.description}
           </Typography>
         )}
-        {props.img && (
+        {post?.fileURL && (
           <img
-            src={props.img}
-            // src="https://res.cloudinary.com/dn7l5h2gk/image/upload/v1717411078/l9tx5dc0bkuqyn1zuw5l.jpg"
+            src={post?.fileURL}
             alt="post"
             className="w-full rounded-md my-2 object-contain mx-auto bg-black"
           />
@@ -285,7 +288,7 @@ const SinglePostCard = (props) => {
             )}
             <Typography className="text-base text-gray-800">
               <span className="xs:block hidden">
-                {props.likes} {props.likes === 1 ? "Like" : "Likes"}
+                {noOfLikes} {noOfLikes === 1 ? "Like" : "Likes"}
               </span>
             </Typography>
           </div>
@@ -380,8 +383,7 @@ const SinglePostCard = (props) => {
           </div>
         </CardFooter>
       )}
-      <Toaster position="top-right" />
-
+     
       {/* EDIT POST POPUP */}
       <Dialog open={editBox} handler={handleEditBox} size="sm">
         <DialogHeader className="p-4 m-0">

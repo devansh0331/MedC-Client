@@ -82,7 +82,6 @@ const SinglePost = () => {
         console.log(res?.error);
       } else {
         setUserPost(res.data);
-        console.log(res.data);
       }
     } catch (error) {
       console.log(error);
@@ -99,31 +98,17 @@ const SinglePost = () => {
         route="single-post" 
         user={postUser}
         profileURL={
-          // post.user && post.user.profileURL ? post.user.profileURL : ""
           postUser._id
         }
         />
         </div>
         <div className="lg:w-3/5 2xl:w-2/5 mt-3">  
         <SinglePostCard
-          img={post.fileURL == "" ? null : post.fileURL}
-          name={post.user ? post.user.name : "Unknown User"}
-          profileURL={
-            post.user && post.user.profileURL ? post.user.profileURL : ""
-          }
-          description={post.description}
-          likes={post.likes ? Object.keys(post.likes).length : "0"}
+          post={post}
           isLiked={post.likes && post.likes[currentUserId]}
-          postedAt={
-            post &&
-            post.createdAt && (
-              <ReactTimeAgo date={post.createdAt} locale="en-US" />
-            )
-          }
           handleLike={() => handleLike(post._id)}
           postId={postId.id}
           userId={currentUserId}
-          // profileId={post.user._id ? post.user._id : null}
           className="shadow-md"
         />
         </div>
@@ -132,41 +117,6 @@ const SinglePost = () => {
           posts={userPost}
           userName={postUser.name}
          />
-      <div className="flex h-full gap-6 justify-center mx-auto">
-        <div className="w-80 mt-5">
-          <ProfileCard
-            route="single-post"
-            user={postUser}
-            profileURL={
-              // post.user && post.user.profileURL ? post.user.profileURL : ""
-              postUser._id
-            }
-          />
-        </div>
-        <div className="w-2/5 mt-3 scrollbar-invisible overflow-y-scroll">
-          <SinglePostCard
-            img={post.fileURL == "" ? null : post.fileURL}
-            name={post.user ? post.user.name : "Unknown User"}
-            profileURL={
-              post.user && post.user.profileURL ? post.user.profileURL : ""
-            }
-            description={post.description}
-            likes={post.likes ? Object.keys(post.likes).length : "0"}
-            isLiked={post.likes && post.likes[currentUserId]}
-            postedAt={
-              post &&
-              post.createdAt && (
-                <ReactTimeAgo date={post.createdAt} locale="en-US" />
-              )
-            }
-            handleLike={() => handleLike(post._id)}
-            postId={postId.id}
-            userId={currentUserId}
-            className="shadow-md"
-          />
-        </div>
-        <div className="w-96">
-          <MorefromThem />
         </div>
       </div>
     </div>

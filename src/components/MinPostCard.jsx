@@ -14,22 +14,22 @@ const MinPostCard = (props) => {
       <div className="flex justify-between  bg-white">
         {/* NAME AND DETAILS */}
         <div className="flex items-center gap-4">
-          <Link to={`/user/${post.user._id}`}>
+          <Link to={`/user/${post?.user._id}`}>
             <Avatar
-              src={post.user.profileURL != "" ? post.user.profileURL : altprofile}
+              src={`${post?.user.profileURL ? post?.user.profileURL : altprofile}`}
               alt="profile"
               size="sm"
             />
           </Link>
           <div className="flex flex-col">
-            <Link to={`/user/${post.user.profileId}`}>
-              <Typography className="text-[17px] text-gray-900">{post.user.name}</Typography>
+            <Link to={`/user/${post?.user._id}`}>
+              <Typography className="text-[17px] text-gray-900">{post?.user.name}</Typography>
             </Link>
           </div>
         </div>
         <div className="flex items-center text-blue-500">
           <button>
-            {post.likes && user._id && post.likes[user._id] ? (
+            {post?.likes && user._id && post?.likes[user._id] ? (
               <AiFillLike className="w-6 h-6 cursor-pointer" onClick={() => handleLike(post._id)} />
             ) : (
               <AiOutlineLike className="w-6 h-6 cursor-pointer" onClick={() => handleLike(post._id)} />

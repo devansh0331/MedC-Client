@@ -20,7 +20,6 @@ const MinPost = () => {
     getPosts();
   }, []);
 
-  console.log(posts);
   return (
     <Card className="w-full bg-inherit h-2/3 flex-col items-center mx-auto mt-5 shadow-md lg:flex hidden">
       <Card className="w-full flex items-center justify-center bg-white rounded-md">
@@ -33,24 +32,15 @@ const MinPost = () => {
       </Card>
 
       <div className="overflow-y-scroll scrollbar-thin w-full h-full flex flex-col items-center">
-        {posts.map(
-          (post, key) =>
-            post.fileURL == "" && (
-              <MinPostCard
-                key={key}
-                post={post}
-                name={post.user ? post.user.name : "Unknown User"}
-                profileURL={
-                  post.user && post.user.profileURL ? post.user.profileURL : ""
-                }
-                profileId={post.user && post.user._id ? post.user._id : ""}
-                description={post.description}
-                isLiked={post.likes && user._id && post.likes[user._id]}
-                handleLike={() => handleLike(post._id)}
-                postId={post._id}
-              />
-            )
-        )}
+        {posts.map((post, key) => (
+          <MinPostCard
+            post={post}
+            key={key}
+            handleLike={handleLike}
+            userId={userId}
+            user={user}
+          />
+        ))}
       </div>
     </Card>
   );
