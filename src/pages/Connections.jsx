@@ -27,6 +27,8 @@ import Cookies from "js-cookie";
 const Connections = () => {
   const [activeTab, setActiveTab] = useState("Pending");
   const [pendingCount, setPendingCount] = useState(0);
+  const [connectionsCount, setConnectionsCount] = useState(0);
+  const [sentCount, setSentCount] = useState(0);
   const {
     getAllUsers,
     allUsers,
@@ -55,9 +57,8 @@ const Connections = () => {
         console.log(message);
       } else {
         setData(data.data);
-        setPendingCount(data.data.length);
-        console.log(data);
       }
+      setPendingCount(data.data ? data.data.length : 0);
     } catch (error) {
       toast.error("Error: " + error.message);
     }
@@ -79,6 +80,7 @@ const Connections = () => {
         console.log(message);
       } else {
         setData(data.data);
+        setSentCount(data.data.length);
         console.log(data);
       }
     } catch (error) {
@@ -102,6 +104,7 @@ const Connections = () => {
         console.log(message);
       } else {
         setData(data.data);
+        setConnectionsCount(data.data.length);
         console.log(data);
       }
     } catch (error) {
@@ -117,6 +120,8 @@ const Connections = () => {
 
   useEffect(() => {
     getPendingRequests();
+    getSentRequests();
+    getConnections();
     getAllUsers();
   }, []);
   console.log("All Users: ", allUsers);
@@ -159,7 +164,7 @@ const Connections = () => {
                 <FaUserFriends />
               </ListItemPrefix>
               <Typography className="mr-2">Connections</Typography>
-              <ListItemSuffix>100</ListItemSuffix>
+              <ListItemSuffix>{connectionsCount}</ListItemSuffix>
             </ListItem>
             <ListItem
               selected={activeTab === "Sent"}
@@ -172,7 +177,7 @@ const Connections = () => {
                 <MdPresentToAll />
               </ListItemPrefix>
               <Typography className="mr-2">Sent requests</Typography>
-              <ListItemSuffix>100</ListItemSuffix>
+              <ListItemSuffix>{sentCount}</ListItemSuffix>
             </ListItem>
           </List>
         </Card>
