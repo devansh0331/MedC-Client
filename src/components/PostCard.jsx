@@ -50,6 +50,7 @@ function PostCard() {
           posts.map((post, key) => (
             <SinglePostCard
               key={key}
+              post={post}
               img={post.fileURL == "" ? null : post.fileURL}
               name={post.user ? post.user.name : "Unknown User"}
               bio={post.user && post.user.bio ? post.user.bio : "User"}

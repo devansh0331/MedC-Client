@@ -183,12 +183,37 @@ const SinglePostCard = (props) => {
         toast.error("Failed to delete post due to: ", res.error);
       } else {
         props.getUserPosts();
+        props.getAllPosts();
         toast.success("Post deleted successfully", true);
       }
     } catch (error) {
       toast.error("Failed to delete post due to: ", res.error);
     }
   };
+
+  const handleArchivePost = async () => {
+    console.log("handleArchivePost")
+    try {
+      const response = await fetch(`${SERVER_URL}/post/archive-post-by-user/${postId}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        }
+      });
+  
+      const res = await response.json();
+      if (!res.success) {
+        toast.error("Failed to archive post due to: ", res.error);
+      } else {
+        toast.success("Post archived successfully", true);
+        props.getUserPosts();
+        props.getAllPosts();
+      }
+    } catch (error) {
+      toast.error("Failed to archive post due to: ", res.error);
+    }
+  }
 
   const postUrl = `${window.location.origin}/post/${props.postId}`;
   const copyUrl = async () => {
@@ -205,6 +230,8 @@ const SinglePostCard = (props) => {
   };
 
   const post = props.post;  
+  console.log(post);
+  
   const noOfLikes = post?.likes ? Object.keys(post?.likes).length : 0;
 
   return (
@@ -253,6 +280,7 @@ const SinglePostCard = (props) => {
                 </MenuHandler>
                 <MenuList>
                   <MenuItem onClick={handleEditBox}>Edit</MenuItem>
+                  <MenuItem onClick={() => handleArchivePost()}>Archive</MenuItem>
                   <MenuItem onClick={() => handleDeletePost()}>Delete</MenuItem>
                 </MenuList>
               </Menu>
