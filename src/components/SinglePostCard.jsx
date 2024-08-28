@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import profile from "../assets/profile.png";
 import jobBuilding from "../assets/jobBuilding.png";
@@ -53,6 +53,8 @@ const SinglePostCard = (props) => {
   const [menuopen, setMenuopen] = useState(false);
   const [shareBox, setShareBox] = useState(false);
   const [showText, setShowText] = useState(false);
+  const {handleLike} = useContext(UserContext);
+  const post = props.post; 
   const handleShareBox = () => {
     setShareBox(!shareBox);
   };
@@ -62,7 +64,19 @@ const SinglePostCard = (props) => {
   const navigate = useNavigate();
   const [editBox, setEditBox] = useState(false);
   const [editPost, setEditPost] = useState("");
-  const [postdescp, setPostDescp] = useState(props.description);
+  const [postdescp, setPostDescp] = useState(post.description);
+  const [deletePost, setDeletePost] = useState(false);
+  const [archivePost, setArchivePost] = useState(false);
+  const isLiked = post?.likes && user && post?.likes[user]
+
+  const handleDeletePostBox = () => {
+    setDeletePost(!deletePost);
+  };
+
+  const   handleArchivePostBox = () => {
+    setArchivePost(!archivePost);
+  };
+
   const handleEditBox = () => {
     setEditBox(!editBox);
   };
@@ -161,7 +175,7 @@ const SinglePostCard = (props) => {
         toast.error("Failed to edit post due to: ", res.error);
       } else {
         toast.success("Post edited successfully", true);
-        props.getUserPosts();
+        props.parentFunction();
         setEditBox(false);
       }
     } catch (error) {
@@ -182,9 +196,9 @@ const SinglePostCard = (props) => {
       if (!res.success) {
         toast.error("Failed to delete post due to: ", res.error);
       } else {
-        props.getUserPosts();
-        props.getAllPosts();
+        props.parentFunction();
         toast.success("Post deleted successfully", true);
+        setDeletePost(false);
       }
     } catch (error) {
       toast.error("Failed to delete post due to: ", res.error);
@@ -192,7 +206,6 @@ const SinglePostCard = (props) => {
   };
 
   const handleArchivePost = async () => {
-    console.log("handleArchivePost")
     try {
       const response = await fetch(`${SERVER_URL}/post/archive-post-by-user/${postId}`, {
         method: "POST",
@@ -203,15 +216,40 @@ const SinglePostCard = (props) => {
       });
   
       const res = await response.json();
+      console.log(res);
+      
       if (!res.success) {
         toast.error("Failed to archive post due to: ", res.error);
+        console.log(res);
       } else {
         toast.success("Post archived successfully", true);
-        props.getUserPosts();
-        props.getAllPosts();
+        setArchivePost(false);
+        props.parentFunction();
       }
     } catch (error) {
-      toast.error("Failed to archive post due to: ", res.error);
+      console.log(error);
+    }
+  }
+
+  const handleRestorePost = async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/post/restore-post-by-user/${postId}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        }
+      })
+
+      const res = await response.json();
+      if (!res.success) {
+        toast.error("Failed to restore post due to: ", res.error);
+      } else {
+        toast.success("Post restored successfully", true);
+        props.parentFunction();
+      }
+    } catch (error) {
+       toast.error("Failed to restore post due to: ", res.error);
     }
   }
 
@@ -228,10 +266,7 @@ const SinglePostCard = (props) => {
       console.error("Error copying URL:", error);
     }
   };
-
-  const post = props.post;  
-  console.log(post);
-  
+ 
   const noOfLikes = post?.likes ? Object.keys(post?.likes).length : 0;
 
   return (
@@ -280,8 +315,12 @@ const SinglePostCard = (props) => {
                 </MenuHandler>
                 <MenuList>
                   <MenuItem onClick={handleEditBox}>Edit</MenuItem>
-                  <MenuItem onClick={() => handleArchivePost()}>Archive</MenuItem>
-                  <MenuItem onClick={() => handleDeletePost()}>Delete</MenuItem>
+                  {post?.userArchived ?  
+                  <MenuItem onClick={() => handleRestorePost()}>Restore</MenuItem>
+                  :
+                  <MenuItem onClick={handleArchivePostBox}>Archive</MenuItem>
+                  }
+                  <MenuItem onClick={handleDeletePostBox}>Delete</MenuItem>
                 </MenuList>
               </Menu>
             </Typography>
@@ -301,15 +340,15 @@ const SinglePostCard = (props) => {
           <img
             src={post?.fileURL}
             alt="post"
-            className="w-full rounded-md my-2 object-contain mx-auto bg-black"
+            className="w-full rounded-md my-2 object-contain mx-auto"
           />
         )}
         <div className="flex items-center px-6 py-4 gap-6 justify-between">
           <div
             className="flex items-center gap-2 cursor-pointer"
-            onClick={() => props.handleLike()}
+            onClick={() => {handleLike(postId); props.parentFunction()}}
           >
-            {props.isLiked ? (
+            {isLiked ? (
               <AiFillLike className="w-5 h-5 text-blue-600" />
             ) : (
               <AiOutlineLike className="w-5 h-5 text-blue-600" />
@@ -413,7 +452,7 @@ const SinglePostCard = (props) => {
       )}
      
       {/* EDIT POST POPUP */}
-      <Dialog open={editBox} handler={handleEditBox} size="sm">
+      <Dialog open={editBox} handler={handleEditBox} size="sm" className="z-40">
         <DialogHeader className="p-4 m-0">
           <Typography className="text-xl font-semibold text-gray-900">
             Edit Post
@@ -449,7 +488,47 @@ const SinglePostCard = (props) => {
         </DialogFooter>
       </Dialog>
 
-      {/* Share Post */}
+      {/* DELETE CONFIRMATION POPUP */}
+      <Dialog size="xs" open={deletePost} handler={handleDeletePostBox} className="">
+        <DialogBody className="flex flex-col">
+          <Typography className="text-gray-800 text-lg mb-8">Are you sure you want to delete this post?</Typography>
+          <div className="flex justify-between">
+            <Button
+            color="blue"
+            variant="outlined"
+            size="sm"
+            onClick={handleDeletePostBox}
+            >Cancel</Button>
+            <Button
+            color="blue"
+            size="sm"
+             onClick={() => handleDeletePost()}
+            >Delete</Button>
+          </div>
+        </DialogBody>
+      </Dialog>
+
+      {/* ARCHIVE CONFIRMATION POPUP */}
+      <Dialog size="xs" open={archivePost} handler={handleArchivePostBox} className="">
+        <DialogBody className="flex flex-col">
+          <Typography className="text-gray-800 text-lg mb-8">Are you sure you want to archive this post?</Typography>
+          <div className="flex justify-between">
+            <Button
+            color="blue"
+            variant="outlined"
+            size="sm"
+            onClick={handleArchivePostBox}
+            >Cancel</Button>
+            <Button
+            color="blue"
+            size="sm"
+             onClick={() => handleArchivePost()}
+            >Archive</Button>
+          </div>
+        </DialogBody>
+      </Dialog>
+
+      {/* SHARE POST POPUP */}
       <Dialog open={shareBox} handler={handleShareBox} size="xs">
         <DialogHeader>
           <Typography className="text-xl font-semibold text-gray-900">
@@ -507,7 +586,7 @@ const SinglePostCard = (props) => {
           Link Copied
         </Typography>
       </Dialog>
-      <Toaster position="top-right" />
+      <Toaster position="top-right" className="z-50" />
     </Card>
   );
 };

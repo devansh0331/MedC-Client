@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 const SingleJobCard = (props) => {
   const navigate = useNavigate();
   const job = props.job;
-  console.log(job);
   return (
     <Card className="w-full bg-white my-2 p-4 cursor-pointer" onClick={() => navigate("/job/:id")}>
       <div className="w-full flex items-center justify-between ">

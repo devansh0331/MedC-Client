@@ -51,20 +51,9 @@ function PostCard() {
             <SinglePostCard
               key={key}
               post={post}
-              img={post.fileURL == "" ? null : post.fileURL}
-              name={post.user ? post.user.name : "Unknown User"}
-              bio={post.user && post.user.bio ? post.user.bio : "User"}
-              profileURL={
-                post.user && post.user.profileURL ? post.user.profileURL : ""
-              }
-              profileId={post.user && post.user._id ? post.user._id : ""}
-              description={post.description}
-              likes={post.likes ? Object.keys(post.likes).length : "0"}
-              isLiked={post.likes && user._id && post.likes[user._id]}
-              postedAt={<ReactTimeAgo date={post.createdAt} locale="en-US" />}
-              handleLike={() => handleLike(post._id)}
               postId={post._id}
               userId={user._id}
+              parentFunction={getPosts}
             />
           ))
         )}

@@ -13,7 +13,7 @@ const SingleBlogCard = (props) => {
             className="w-56 h-[500px] object-fill rounded-lg"
           />
         </div>
-        <div className="w-4/5 p-4">
+        <div className="w-4/5 p-4 pl-6">
           <Typography className="text-[42px] font-semibold text-gray-900">
             Lorem ipsum dolor sit amet.
           </Typography>

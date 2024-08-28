@@ -16,8 +16,10 @@ import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
+  const navigate = useNavigate();
   return (
     <div className="w-full h-[90vh] flex bg-background">
       <SideBar />
@@ -41,9 +43,13 @@ const Settings = () => {
                   <Typography className="text-md">Jobs Applied</Typography>
                   <Typography className="text-md">400</Typography>
                 </div>
-                <div className="flex justify-between text-gray-800 py-2">
+                <div className="flex justify-between text-gray-800 py-2 border-b-2">
                   <Typography className="text-md">Jobs Posted</Typography>
                   <Typography className="text-md">400</Typography>
+                </div>
+                <div className="flex justify-between text-gray-800 py-2 cursor-pointer" onClick={() => navigate("/archivedPosts")}>
+                  <Typography className="text-md">Archived Posts</Typography>
+                  <Typography className="text-md"></Typography>
                 </div>
               </div>
               <div className="flex flex-col mt-10">

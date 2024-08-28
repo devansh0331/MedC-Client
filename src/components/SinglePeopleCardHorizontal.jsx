@@ -142,6 +142,7 @@ function SinglePeopleCardHorizontal({
           <span className="hidden xl:block">View Profile</span>
         </Button>
       </CardBody>
+      
       <Dialog size="xs" open={open} handler={handleOpen} className="">
         <DialogBody className="flex flex-col">
           <Typography className="text-gray-800 text-lg mb-8">Are you sure you want to remove connection?</Typography>

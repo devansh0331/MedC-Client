@@ -44,7 +44,7 @@ const ProfileDetails = (props) => {
     handleLike,
   } = useContext(UserContext);
 
-  const userId = props.user._id;
+  const userId = props?.user?._id;
 
   const getUserPosts = async () => {
     try {
@@ -72,9 +72,7 @@ const ProfileDetails = (props) => {
 
   useEffect(() => {
     getUserPosts();
-
-    console.log(singleUserExperience);
-    
+    // console.log(singleUserExperience);
   }, [userId]);
 
   return (
@@ -259,6 +257,7 @@ const ProfileDetails = (props) => {
               <>
                 {singleUserEducation.map((edu, key) => (
                   <Card
+                    key={key}
                     shadow={false}
                     className="pb-2 mb-2 border-b-2 rounded-none"
                   >
@@ -368,24 +367,15 @@ const ProfileDetails = (props) => {
           </>
         )}
         {section === "Posts" && (
-          <div className="w-2/3 mx-auto">
+          <div className="xl:w-2/3 mx-auto">
             {posts.length > 0 ? (
               <>
                 {posts.map((post, key) => (
                   <SinglePostCard
                     post={post}
-                    profileURL={props.profileURL}
-                    profileId={userId}
                     userId={user._id}
                     postId={post._id}
-                    name={props.name}
-                    bio={props.bio}
-                    postedAt={
-                      <ReactTimeAgo date={post.updatedAt} locale="en-US" />
-                    }
-                    description={post.description}
-                    img={post.fileURL}
-                    getUserPosts={getUserPosts}
+                    parentFunction={getUserPosts}
                     key={key}
                   />
                 ))}

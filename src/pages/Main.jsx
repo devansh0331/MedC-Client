@@ -28,6 +28,7 @@ import Saves from "./Saves";
 import Blogs from "./Blogs";
 import SingleBlog from "./SingleBlog";
 import CreateBlog from "./CreateBlog";
+import ArchivedPosts from "./ArchivedPosts";
 // import { NavbarWithSearch } from "./Nav";
 
 function Main() {
@@ -256,6 +257,15 @@ function Main() {
           <>
             <NavMain />
             <CreateBlog />
+          </>
+        }
+      />
+      <Route
+        path="/archivedPosts"
+        element={
+          <>
+            <NavMain />
+            <ArchivedPosts />
           </>
         }
       />
