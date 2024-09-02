@@ -3,7 +3,7 @@
     { "src": "/", "dest": "/" },
     { "src": "/feed", "dest": "/" },
     { "src": "/user", "dest": "/" },
-    { "src": "/post/:id", "dest": "/" },
+    { "src": "/post/(.*)", "dest": "/" },
     { "src": "/detail/(.*)", "dest": "/" },
     { "src": "/cart", "dest": "/" }
   ]
