@@ -5,6 +5,7 @@
     { "src": "/user", "dest": "/" },
     { "src": "/post/(.*)", "dest": "/" },
     { "src": "/detail/(.*)", "dest": "/" },
+    { "src": "/editdetails", "dest": "/" },
     { "src": "/cart", "dest": "/" }
   ]
 }
