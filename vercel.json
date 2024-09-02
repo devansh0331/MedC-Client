@@ -2,7 +2,7 @@
   "routes": [
     { "src": "/", "dest": "/" },
     { "src": "/feed", "dest": "/" },
-    { "src": "/user/:id", "dest": "/" },
+    { "src": "/user", "dest": "/" },
     { "src": "/post/:id", "dest": "/" },
     { "src": "/detail/(.*)", "dest": "/" },
     { "src": "/cart", "dest": "/" }
