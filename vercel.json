@@ -2,10 +2,27 @@
   "routes": [
     { "src": "/", "dest": "/" },
     { "src": "/feed", "dest": "/" },
-    { "src": "/user", "dest": "/" },
+    { "src": "/user/(.*)", "dest": "/" },
     { "src": "/post/(.*)", "dest": "/" },
     { "src": "/detail/(.*)", "dest": "/" },
     { "src": "/editdetails", "dest": "/" },
-    { "src": "/cart", "dest": "/" }
+    { "src": "/admin", "dest": "/" },
+    { "src": "/hire", "dest": "/" },
+    { "src": "/connections", "dest": "/" },
+    { "src": "/jobs", "dest": "/" },
+    { "src": "/job/(.*)", "dest": "/" },
+    { "src": "/user-saves/(.*)", "dest": "/" },
+    { "src": "/postjob", "dest": "/" },
+    { "src": "/settings", "dest": "/" },
+    { "src": "/signup", "dest": "/" },
+    { "src": "/signin", "dest": "/" },
+    { "src": "/reset-password", "dest": "/" },
+    { "src": "/blogs", "dest": "/" },
+    { "src": "/create-blog", "dest": "/" },
+    { "src": "/blog/(.*)", "dest": "/" },
+    { "src": "/privacypolicy", "dest": "/" },
+    { "src": "/faq", "dest": "/" },
+    { "src": "/about", "dest": "/" },
+    { "src": "/archivedPosts", "dest": "/" }
   ]
 }
