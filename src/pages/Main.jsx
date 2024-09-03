@@ -8,7 +8,6 @@ import NewPassword from "./NewPassword";
 import SignUpPage from "./SignUpPage";
 import FeedPage from "./FeedPage";
 import "../index.css";
-import ProfilePage from "./ProfilePage";
 import PostJobPage from "./PostJobPage";
 import AboutPage from "./AboutPage";
 import Faq from "./Faq";
@@ -104,15 +103,6 @@ function Main() {
           <>
             <NavMain route="signup" />
             <Jobs />
-          </>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <>
-            <NavMain route="profile" />
-            <ProfilePage />
           </>
         }
       />

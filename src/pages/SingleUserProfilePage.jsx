@@ -11,6 +11,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { SERVER_URL } from "../ServerURL";
 import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
+import ProfileCardSkeleton from "../components/ProfileCardSkeleton";
 
 function SingleUserProfilePage() {
   const [close, setClose] = useState(false);
@@ -25,6 +26,7 @@ function SingleUserProfilePage() {
   } = useContext(UserContext);
   const [isExisting, setIsExisting] = useState(false);
   const [user, setUser] = useState();
+  const [userLoading, setUserLoading] = useState(true);
 
   const userId = useParams();
   // console.log(userId.id);
@@ -47,6 +49,7 @@ function SingleUserProfilePage() {
         setUser(data.user);
         setIsExisting(data.isExisting);
         await checkFriendStatus(data.user._id);
+        setUserLoading(false);
       }
     } catch (error) {
       console.error(error.message);
@@ -69,26 +72,30 @@ function SingleUserProfilePage() {
         <SideBar />
         <div className="w-[85%] flex flex-col lg:flex-row mx-auto mt-5 gap-5">
           <div className="w-min mx-auto">
-          <ProfileCard
-            user={user ? user : {}}
-            setToast={setToast}
-            getSingleUser={getSingleUser}
-            isExisting={isExisting}
-            statusValue={statusValue}
-            sendRequest={sendRequest}
-            acceptRequest={acceptRequest}
-          />
+            {userLoading ? (
+              <ProfileCardSkeleton />
+            ) : (
+              <ProfileCard
+              user={user ? user : {}}
+              setToast={setToast}
+              getSingleUser={getSingleUser}
+              isExisting={isExisting}
+              statusValue={statusValue}
+              sendRequest={sendRequest}
+              acceptRequest={acceptRequest}
+              />
+            )}
           </div>
           <div className="w-full">
-          <ProfileDetails
-            user={user ? user : {}}
-            setToast={setToast}
-            getSingleUser={getSingleUser}
-            isExisting={isExisting}
-            name={user ? user.name : ""}
-            bio={user ? user.bio : ""}
-            profileURL={user ? user.profileURL : ""}
-          />
+            <ProfileDetails
+              user={user ? user : {}}
+              setToast={setToast}
+              getSingleUser={getSingleUser}
+              isExisting={isExisting}
+              name={user ? user.name : ""}
+              bio={user ? user.bio : ""}
+              profileURL={user ? user.profileURL : ""}
+            />
           </div>
         </div>
         <Toaster position="top-right" />

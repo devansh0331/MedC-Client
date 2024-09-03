@@ -40,7 +40,7 @@ const MinPostCard = (props) => {
       {/* POST */}
       <div className="flex flex-col w-full mt-2">
         <Typography className="min-w-full text-gray-800">
-          {post.description}
+          {post?.description.substring(0, 80)}...
           <br />
           <button
             className="text-blue-500"

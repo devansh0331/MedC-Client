@@ -367,12 +367,16 @@ const ProfileCard = (props) => {
           alt="profile"
         />
         <div className="w-full flex flex-col justify-center items-center">
-          <Typography className="text-3xl font-bold">
-            {props.user.name}
+        {props?.user?.name &&
+        <Typography className="text-3xl font-bold">
+            {props?.user?.name}
           </Typography>
+        }
+        {props?.user?.bio &&
           <Typography className="text-2xl text-left">
-            {props.user.bio}
+            {props?.user?.bio}
           </Typography>
+          }
         </div>
       </Dialog>
 

@@ -9,6 +9,7 @@ import SideBar from "../components/SideBar";
 import Cookies from "js-cookie";
 import ProfileCard from "../components/ProfileCard";
 import MorefromThem from "../components/MorefromThem";
+import SinglePostSkeleton from "../components/SinglePostSkeleton";
 
 const SinglePost = () => {
   const [post, setPost] = useState({});
@@ -17,6 +18,7 @@ const SinglePost = () => {
   const [currentUserId, setCurrentuserId] = useState(null);
   const { getPosts, userId, posts, getUser, user } = useContext(UserContext);
   const [userPost, setUserPost] = useState([]);
+  const [postLoading, setPostLoading] = useState(true);
 
   useEffect(() => {
     getSinglePost();
@@ -38,6 +40,7 @@ const SinglePost = () => {
     if (!res.success) {
       console.log(res.error);
     } else {
+      setPostLoading(false);
       setPost(res.data);
       setCurrentuserId(user._id);
       setPostUser(res.data.user);
@@ -103,14 +106,18 @@ const SinglePost = () => {
         />
         </div>
         <div className="lg:w-3/5 2xl:w-2/5 mt-3">  
+        {postLoading ? (
+          <SinglePostSkeleton />
+        ) : (
         <SinglePostCard
           post={post}
           isLiked={post.likes && post.likes[currentUserId]}
           handleLike={() => handleLike(post._id)}
           postId={postId.id}
           userId={currentUserId}
-          className="shadow-md"
         />
+        )
+        }
         </div>
         <div className="w-96 2xl:block hidden">
          <MorefromThem

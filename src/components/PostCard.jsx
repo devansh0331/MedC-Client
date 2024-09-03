@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { UserContext } from "../UserContext";
 import { Link } from "react-router-dom";
 import { Avatar, Card, Input } from "@material-tailwind/react";
+import SinglePostSkeleton from "./SinglePostSkeleton";
 
 function PostCard() {
   const [open, setOpen] = useState(false);
@@ -47,15 +48,19 @@ function PostCard() {
             <p className="font-bold text-lg">No Posts Available!</p>
           </div>
         ) : (
-          posts.map((post, key) => (
-            <SinglePostCard
+          <>
+          { 
+            posts.map((post, key) => (
+              <SinglePostCard
               key={key}
               post={post}
               postId={post._id}
               userId={user._id}
               parentFunction={getPosts}
-            />
-          ))
+              />
+            ))
+          }
+          </>
         )}
         <Toaster className="z-30 mt-20" position="top-right" />
       </div>
