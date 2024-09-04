@@ -45,7 +45,8 @@ function PostCard() {
       <div className="flex flex-col w-full h-[75vh] overflow-y-scroll scrollbar-thin">
         {posts.length === 0 ? (
           <div className="w-full h-full flex items-center justify-center">
-            <p className="font-bold text-lg">No Posts Available!</p>
+            {/* <p className="font-bold text-lg">No Posts Available!</p> */}
+            <SinglePostSkeleton />
           </div>
         ) : (
           <>

@@ -32,6 +32,12 @@ const ProfileDetails = (props) => {
   const [posts, setPosts] = useState([]);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  const [aboutLoading, setAboutLoading] = useState(false);
+  const [experienceLoading, setExperienceLoading] = useState(false);
+  const [educationLoading, setEducationLoading] = useState(false);
+  const [certificateLoading, setCertificateLoading] = useState(false);
+  const [achievementLoading, setAchievementLoading] = useState(false);
+  
   const {
     getSingleUserExperience,
     singleUserExperience,

@@ -5,7 +5,7 @@ import { FaRegCommentAlt } from "react-icons/fa";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 const SinglePostSkeleton = () => {
   return (
-    <Card className="max-w-full animate-pulse p-4">
+    <Card className="w-full animate-pulse p-4">
       <div className="w-full flex h-auto items-center justify-between">
         <div className="flex items-center">
           <div className="w-14 h-14 bg-gray-300 rounded-full"></div>

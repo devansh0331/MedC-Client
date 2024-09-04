@@ -73,7 +73,7 @@ const SinglePostCard = (props) => {
   const [postReadMore, setPostReadMore] = useState(
     post?.description?.length > 100
   );
-  const isLiked = post?.likes && user && post?.likes[user];
+  const [isLiked, setIsLiked] = useState(post?.likes && user && post?.likes[user]);
   const [postLoading, setPostLoading] = useState(true);
   const [imagePreview, setImagePreview] = useState(false);
 
@@ -404,13 +404,14 @@ const SinglePostCard = (props) => {
                 }}
               >
                 {isLiked ? (
-                  <AiFillLike className="w-5 h-5 text-blue-600" />
+                  <AiFillLike className="w-5 h-5 text-blue-600 active:animate-like" onClick={() => setIsLiked(false)} />
                 ) : (
-                  <AiOutlineLike className="w-5 h-5 text-blue-600" />
+                  <AiOutlineLike className="w-5 h-5 text-blue-600 active:animate-like" onClick={() => setIsLiked(true)} />
                 )}
-                <Typography className="text-base text-gray-800">
+                <Typography className="text-base text-gray-800 flex gap-1">
+                  <span>{noOfLikes}</span>
                   <span className="xs:block hidden">
-                    {noOfLikes} {noOfLikes === 1 ? "Like" : "Likes"}
+                    {noOfLikes === 1 ? "Like" : "Likes"}
                   </span>
                 </Typography>
               </div>
@@ -424,7 +425,9 @@ const SinglePostCard = (props) => {
                 <FaRegCommentAlt className="w-5 h-5 text-blue-600" />
                 <Typography className="text-base text-gray-800 flex gap-1 items-center">
                   {comments.length > 0 && comments.length}{" "}
-                  <span className="xs:block hidden">{comments.length === 1 ? "Comment" : "Comments"}</span>
+                  <span className="xs:block hidden">
+                    {comments.length === 1 ? "Comment" : "Comments"}
+                  </span>
                 </Typography>
               </div>
               <div
@@ -671,13 +674,13 @@ const SinglePostCard = (props) => {
 
           {/* IMAGE PREVIEW */}
           <Dialog open={imagePreview} handler={handleImagePreview}>
-          {post?.fileURL && (
+            {post?.fileURL && (
               <img
                 src={post?.fileURL}
                 alt="post"
                 className="rounded-md my-auto object-contain mx-auto"
               />
-            )} 
+            )}
           </Dialog>
           <Toaster position="top-right" className="z-50" />
         </Card>

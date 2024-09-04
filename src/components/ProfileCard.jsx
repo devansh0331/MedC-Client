@@ -149,7 +149,7 @@ const ProfileCard = (props) => {
 
   return (
     <>
-      <Card className="min-w-80 bg-white p-4 h-min">
+      <Card className="w-full lg:min-w-80 bg-white p-4 h-min mx-auto">
         {props.isExisting ? (
           <div
             className="flex justify-end pt-2 px-2 -mt-4 -mr-4  cursor-pointer"
@@ -286,7 +286,6 @@ const ProfileCard = (props) => {
           ) : (
             ""
           )}
-
           <CardFooter
             className={`flex px-4 py-2 mt-2  ${
               props.user._id === user._id ? "justify-center" : "justify-between"
