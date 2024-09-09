@@ -101,7 +101,6 @@ const SinglePostCard = (props) => {
     setMenuopen(!menuopen);
   };
 
-  // useEffect(() => {});
   const getComments = async (comm) => {
     if (comm == true) {
       try {
@@ -397,16 +396,16 @@ const SinglePostCard = (props) => {
             )}
             <div className="flex items-center px-6 py-4 gap-6 justify-between">
               <div
-                className="flex items-center gap-2 cursor-pointer"
+                className="flex items-center gap-1"
                 onClick={() => {
                   handleLike(postId);
                   props.parentFunction();
                 }}
               >
                 {isLiked ? (
-                  <AiFillLike className="w-5 h-5 text-blue-600 active:animate-like" onClick={() => setIsLiked(false)} />
+                  <AiFillLike className="w-5 h-5 text-blue-600 active:animate-like cursor-pointer" onClick={() => setIsLiked(false)} />
                 ) : (
-                  <AiOutlineLike className="w-5 h-5 text-blue-600 active:animate-like" onClick={() => setIsLiked(true)} />
+                  <AiOutlineLike className="w-5 h-5 text-blue-600 active:animate-like cursor-pointer" onClick={() => setIsLiked(true)} />
                 )}
                 <Typography className="text-base text-gray-800 flex gap-1">
                   <span>{noOfLikes}</span>
