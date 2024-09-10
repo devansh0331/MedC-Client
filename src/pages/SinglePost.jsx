@@ -87,7 +87,6 @@ const SinglePost = () => {
       } else {
         let data = res.data.filter((item, key) => item._id != postId.id);
         setUserPost(data);
-        console.log(userPost);
       }
     } catch (error) {
       console.log(error);
