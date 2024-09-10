@@ -44,7 +44,8 @@ const SinglePost = () => {
       setPost(res.data);
       setCurrentuserId(user._id);
       setPostUser(res.data.user);
-      getUserPosts(res.data.user._id);
+      getUserPosts(res.data.user._id, postId);
+      console.log(res.data);
     }
   };
 
@@ -68,7 +69,7 @@ const SinglePost = () => {
     }
   };
 
-  const getUserPosts = async (postUserId) => {
+  const getUserPosts = async (postUserId, postId) => {
     try {
       const response = await fetch(
         `${SERVER_URL}/post/get-user-posts/${postUserId}`,
@@ -84,7 +85,9 @@ const SinglePost = () => {
       if (!res.success) {
         console.log(res?.error);
       } else {
-        setUserPost(res.data);
+        let data = res.data.filter((item, key) => item._id != postId.id);
+        setUserPost(data);
+        console.log(userPost);
       }
     } catch (error) {
       console.log(error);
@@ -97,33 +100,27 @@ const SinglePost = () => {
 
       <div className="flex h-full gap-6 justify-center mx-auto w-[95%] sm:w-[80%] md:w-[60%] lg:w-[75%] 2xl:w-[85%]">
         <div className="w-80 mt-5 lg:block hidden">
-        <ProfileCard 
-        route="single-post" 
-        user={postUser}
-        profileURL={
-          postUser._id
-        }
-        />
+          <ProfileCard
+            route="single-post"
+            user={postUser}
+            profileURL={postUser._id}
+          />
         </div>
-        <div className="lg:w-3/5 2xl:w-2/5 mt-3">  
-        {postLoading ? (
-          <SinglePostSkeleton />
-        ) : (
-        <SinglePostCard
-          post={post}
-          isLiked={post.likes && post.likes[currentUserId]}
-          handleLike={() => handleLike(post._id)}
-          postId={postId.id}
-          userId={currentUserId}
-        />
-        )
-        }
+        <div className="lg:w-3/5 2xl:w-2/5 mt-3">
+          {postLoading ? (
+            <SinglePostSkeleton />
+          ) : (
+            <SinglePostCard
+              post={post}
+              isLiked={post.likes && post.likes[currentUserId]}
+              handleLike={() => handleLike(post._id)}
+              postId={postId.id}
+              userId={currentUserId}
+            />
+          )}
         </div>
         <div className="w-96 2xl:block hidden">
-         <MorefromThem
-          posts={userPost}
-          userName={postUser.name}
-         />
+          <MorefromThem posts={userPost} userName={postUser.name} />
         </div>
       </div>
     </div>
