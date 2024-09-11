@@ -73,7 +73,9 @@ const SinglePostCard = (props) => {
   const [postReadMore, setPostReadMore] = useState(
     post?.description?.length > 100
   );
-  const [isLiked, setIsLiked] = useState(post?.likes && user && post?.likes[user]);
+  const [isLiked, setIsLiked] = useState(
+    post?.likes && user && post?.likes[user]
+  );
   const [postLoading, setPostLoading] = useState(true);
   const [imagePreview, setImagePreview] = useState(false);
 
@@ -397,15 +399,29 @@ const SinglePostCard = (props) => {
             <div className="flex items-center px-6 py-4 gap-6 justify-between">
               <div
                 className="flex items-center gap-1"
-                onClick={() => {
-                  handleLike(postId);
-                  props.parentFunction();
-                }}
+                // onClick={() => {
+                //   handleLike(postId);
+                //   props.parentFunction();
+                // }}
               >
                 {isLiked ? (
-                  <AiFillLike className="w-5 h-5 text-blue-600 active:animate-like cursor-pointer" onClick={() => setIsLiked(false)} />
+                  <AiFillLike
+                    className="w-5 h-5 text-blue-600 active:animate-like cursor-pointer"
+                    onClick={() => {
+                      handleLike(postId);
+                      props.parentFunction();
+                      setIsLiked(false);
+                    }}
+                  />
                 ) : (
-                  <AiOutlineLike className="w-5 h-5 text-blue-600 active:animate-like cursor-pointer" onClick={() => setIsLiked(true)} />
+                  <AiOutlineLike
+                    className="w-5 h-5 text-blue-600 active:animate-like cursor-pointer"
+                    onClick={() => {
+                      handleLike(postId);
+                      props.parentFunction();
+                      setIsLiked(true);
+                    }}
+                  />
                 )}
                 <Typography className="text-base text-gray-800 flex gap-1">
                   <span>{noOfLikes}</span>
