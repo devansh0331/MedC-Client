@@ -94,3 +94,10 @@
 .text-shadowmd{
   text-shadow: 1px 1px 2px #aaaaaa;
 }
+
+.about-main{
+  background-image: url("./assets/maindoodle.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+}
