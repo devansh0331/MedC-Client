@@ -1,8 +1,10 @@
 import React from "react";
 import logofoot from "../assets/logofoot.png";
 import profile3 from "../assets/profile3.png";
+import { useNavigate } from "react-router-dom";
 
 const AboutPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="">
       <div className="flex justify-center py-10 px-10 about-main">
@@ -82,6 +84,45 @@ const AboutPage = () => {
             <p>Mr. Devansh</p>
           </div>
         </div>
+      </div>
+
+      <div className="px-10 my-10 2xl:w-[85%] mx-auto">
+        <h3 className="text-3xl lg:text-4xl font-bold text-blue-400 text-center">
+          What We Offer
+        </h3>
+        <p className="text-gray-800">
+          <ul className="list-disc">
+            <li>
+              <b> Job Board: </b> Our extensive job board features opportunities
+              across all healthcare disciplines. From clinical roles to
+              administrative positions, we have listings that cover the entire
+              spectrum of the medical sector.
+            </li>
+            <li>
+              <b> Networking Opportunities:</b> Engage with a community of
+              like-minded professionals. Join groups, participate in
+              discussions, and attend virtual events to expand your network and
+              share your expertise.
+            </li>
+            <li>
+              <b> Professional Profiles: </b> Create a detailed professional
+              profile to showcase your skills, experience, and accomplishments.
+              Let potential employers and colleagues get to know you and your
+              career journey.
+            </li>
+            <li>
+              <b> Resources and Insights: </b> Stay informed of the latest
+              industry trends, news, and best practices. Our resource center
+              offers articles, webinars, and tutorials to support your ongoing
+              education and professional development.
+            </li>
+            <li>
+              <b>Career Tools: </b>Utilize our suite of career tools, including
+              resume builders, interview tips, and job application trackers to
+              streamline your job search process.
+            </li>
+          </ul>
+        </p>
       </div>
 
       <div className="px-10 my-10 2xl:w-[85%] mx-auto">
@@ -203,7 +244,11 @@ const AboutPage = () => {
       <div className="w-full flex flex-col bg-background pt-8 px-5">
         <div className="w-full flex md:flex-row flex-col justify-center items-center md:items-start md:justify-start">
           <div className="md:w-2/5 flex justify-center items-center md:items-start md:justify-start  my-3">
-            <img src={logofoot} alt="logofoot" className="w-2/3 sm:w-1/3 mx-auto"></img>
+            <img
+              src={logofoot}
+              alt="logofoot"
+              className="w-2/3 sm:w-1/3 mx-auto"
+            ></img>
           </div>
           <div className="w-3/5 flex md:flex-row flex-col justify-center items-center md:items-start md:justify-start">
             <div className="sm:w-1/3 flex flex-col items-center md:items-start">

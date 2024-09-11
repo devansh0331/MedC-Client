@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SideBar from "../components/SideBar";
 import { FaRegEdit } from "react-icons/fa";
 import altprofile from "../assets/altprofile.png";
@@ -17,8 +17,12 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import SignUpDialog from "../components/SignUpDialog";
+
 
 const Settings = () => {
+  const [openSignUp, setOpenSignUp] = useState(false);
+  const handleOpenSignUp = () => setOpenSignUp(!openSignUp);
   const navigate = useNavigate();
   return (
     <div className="w-full h-[90vh] flex bg-background">
@@ -76,8 +80,10 @@ const Settings = () => {
             <Typography className="text-md text-gray-800 my-1 underline cursor-pointer">Contact Us</Typography>
             </div> 
             </div>
+      <Button onClick={handleOpenSignUp}>open</Button>
         </Card>
       </div>
+      <SignUpDialog open={openSignUp} handler={handleOpenSignUp}/>
     </div>
   );
 };

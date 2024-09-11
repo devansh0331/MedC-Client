@@ -163,15 +163,6 @@ function EditProfileNew({
     }
   };
 
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    if (!selectedFile || selectedFile.type !== "application/pdf") {
-      setResume(null);
-      alert("Please select a PDF file!");
-      return;
-    }
-    setResume(selectedFile);
-  };
 
   //   const onButtonClick = () => {
   //     const pdfUrl = URL.createObjectURL(resume);
@@ -351,25 +342,6 @@ function EditProfileNew({
               onChange={(e) => setTwitter(e.target.value)}
               className="col-span-1"
             />
-            <div className="col-span-2 relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
-              <input
-                id="file-upload"
-                className="hidden"
-                type="file"
-                accept=".pdf"
-                onChange={handleFileChange}
-              />
-              <label htmlFor="file-upload" className="">
-                <IoDocumentTextSharp className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2" />{" "}
-                <span className="ml-8 absolute top-1/2 -translate-y-1/2">
-                  {resume ? resume.name : "Upload Resume"}
-                </span>
-              </label>
-              <IoClose
-                className="w-5 h-5 absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
-                onClick={() => setResume(null)}
-              />
-            </div>
             <div className="col-span-2 flex w-full justify-end">
               <Button
                 onClick={() => handleSaveProfile()}
