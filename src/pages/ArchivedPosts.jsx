@@ -43,6 +43,7 @@ const ArchivedPosts = () => {
     <div className="w-full h-[90vh] flex flex-col bg-background overflow-y-scroll scrollbar-thin">
       <SideBar />
       <div className="flex w-[40%] mx-auto flex-col h-full gap-6 justify-start mt-5 items-start">
+        {posts.length === 0 && <h1 className="text-3xl font-semibold text-gray-900 text-center mt-10">You don't have any archived posts</h1>}
         {posts.map((post) => (
           <SinglePostCard 
           post={post} 

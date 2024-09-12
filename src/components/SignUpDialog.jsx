@@ -96,7 +96,7 @@ function SignUpDialog(props) {
     }
   };
   return (
-    <Dialog open={props.open} handler={props.handler}>
+    <Dialog open={props.open} handler={props.handler} size="sm">
           <DialogHeader className="">
             Sign Up to MedC
           </DialogHeader>
