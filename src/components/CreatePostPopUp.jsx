@@ -104,12 +104,11 @@ function CreatePostPopUp(props) {
   return (
     <Dialog open={props.open} size="lg" handler={handleOpen}>
       <div className="flex items-center justify-between">
-        <DialogHeader className="flex flex-col items-start">
+        <DialogHeader className="flex items-center justify-between w-full px-6">
           {" "}
           <Typography className="mb-1 text-xl font-bold">
             Create a post{" "}
           </Typography>
-        </DialogHeader>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -127,53 +126,16 @@ function CreatePostPopUp(props) {
             clipRule="evenodd"
           />
         </svg>
+        </DialogHeader>
       </div>
-      <hr />
-      <br />
-      <DialogBody>
-        <Typography className="mb-2 -mt-7 text-lg">Select audience</Typography>
-        <div className="grid mb-5">
-          <div className="flex items-center mb-1">
-            <input
-              id="default-radio-1"
-              type="radio"
-              value="Friends Only"
-              name="default-radio"
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              checked={audience === "Friends Only"}
-              onChange={handleAudienceChange}
-            />
-            <label
-              htmlFor="default-radio-1"
-              className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              Friends Only
-            </label>
-          </div>
-          <div className="flex items-center">
-            <input
-              id="default-radio-2"
-              type="radio"
-              value="Everyone"
-              name="default-radio"
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              checked={audience === "Everyone"}
-              onChange={handleAudienceChange}
-            />
-            <label
-              for="default-radio-2"
-              className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              Everyone
-            </label>
-          </div>
-        </div>
-        <div className="grid gap-6">
+      <DialogBody className="m-0 b p-0 px-6">
+        <div className="grid">
           <Textarea
             label="Share Your experience"
             value={post}
             onChange={(e) => setPost(e.target.value)}
             required
+            className="h-48 overflow-y-scroll scrollbar-thin"
           />
         </div>
 

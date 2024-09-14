@@ -29,6 +29,7 @@ import { handleOpen } from "../Slices/feedSlice";
 import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
 import { UserContext } from "../UserContext";
+import { MdAdminPanelSettings } from "react-icons/md";
 
 function SideBar() {
   const dispatch = useDispatch();
@@ -39,9 +40,11 @@ function SideBar() {
   const closeDrawer = () => dispatch(handleOpen(false));
   const selected = "bg-blue-500 text-white";
   const navigate = useNavigate();
-  const { setUserInfo, userInfo, user } = useContext(UserContext);
+  const { setUserInfo, userInfo, user, adminStatus } = useContext(UserContext);
   const active = "bg-blue-500 text-white";
   const currentPage = useLocation().pathname;
+  console.log(adminStatus);
+  
   // console.log(currentPage);
 
   const handleLogout = (e) => {
@@ -136,6 +139,17 @@ function SideBar() {
                   <FaGear className="w-6 h-6" />
                 </ListItemPrefix>
               </div>
+              {adminStatus && (
+              <div
+                className={`hidden lg:flex items-center justify-center px-4 py-3 rounded-md my-1 cursor-pointer ${currentPage.includes("/admin") ? active : ""}`}
+                onClick={() => navigate("/admin")}
+              >
+                <ListItemPrefix className="mx-auto">
+                  <MdAdminPanelSettings className="w-6 h-6" />
+                </ListItemPrefix>
+              </div>
+              )}
+
               <div
                 className={`hidden lg:flex items-center justify-center px-4 py-3 rounded-md my-1 cursor-pointer text-red-800`}
                 onClick={(e) => handleLogout(e)}
@@ -239,6 +253,7 @@ function SideBar() {
                 <Typography className="ml-2">Post a Job</Typography>
               </div>
             </div>
+            
             <div className="mt-2 p-2">
               <div
                 className={`flex items-center px-4 py-3 rounded-md my-1 hover:bg-opacity-90 cursor-pointer ${currentPage.includes("/settings") ? active : ""}`}
@@ -252,7 +267,21 @@ function SideBar() {
                 </ListItemPrefix>
                 <Typography className="ml-2">Settings</Typography>
               </div>
+              {adminStatus && (
               <div
+                className={`flex items-center px-4 py-3 rounded-md my-1 hover:bg-opacity-90 cursor-pointer ${currentPage.includes("/admin") ? active : ""}`}
+                onClick={() => {
+                  navigate("/admin");
+                  closeDrawer();
+                }}
+              >
+                <ListItemPrefix>
+                <MdAdminPanelSettings className="w-6 h-6" />
+                </ListItemPrefix>
+                <Typography className="ml-2">Admin</Typography>
+              </div>
+               )}
+             <div
                 className={`flex items-center px-4 py-3 rounded-md my-1 hover:bg-opacity-90 cursor-pointer text-red-800`}
                 onClick={(e) => handleLogout(e)}
               >
@@ -262,6 +291,7 @@ function SideBar() {
                 <Typography className="ml-2">Log Out</Typography>
               </div>
             </div>
+          
           </CardBody>
           <CardFooter className="mt-auto w-full mx-0 py-0 px-2">
             <div className="flex px-2 py-3 border-t-2">
