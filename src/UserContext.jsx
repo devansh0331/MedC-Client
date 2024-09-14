@@ -11,6 +11,7 @@ export function UserContextProvider({ children }) {
     email: "",
   });
   const [user, setUser] = useState({});
+  const [adminStatus, setAdminStatus] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
   const [userExperience, setUserExperience] = useState([]);
   const [singleUserExperience, setSingleUserExperience] = useState([]);
@@ -263,6 +264,7 @@ export function UserContextProvider({ children }) {
           setUserInfo({ state, name, email });
         }
         setUser(res.data);
+        await isAdmin();
       }
     } catch (error) {
       console.error("Failed to fetch user");
@@ -390,6 +392,28 @@ export function UserContextProvider({ children }) {
     }
   };
 
+  const isAdmin = async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/admin/is-admin`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
+
+      const res = await response.json();
+
+      if (!res.success) {
+        console.error(res.error);
+      } else {
+        setAdminStatus(true)
+      }
+    } catch (error) {
+      console.error("Failed to fetch admin status");
+    }
+  }
+
   useEffect(() => {
     getUser();
   }, []);
@@ -427,6 +451,7 @@ export function UserContextProvider({ children }) {
         singleUserAchievement,
         singleUserExperience,
         singleUserEducation,
+        adminStatus,
       }}
     >
       {children}

@@ -75,6 +75,21 @@ module.exports = withMT({
         'sm': '576px',
         'xs': '480px',
         'nos': '200px',
+      },
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        },
+        like: {
+          '0%': { transform: 'scale(1) ' },
+          '50%': { transform: 'scale(0.3)' },
+          '100%': { transform: 'scale(1)' },
+        },
+      },
+      animation: {
+        wiggle: 'wiggle 1s ease-in-out infinite',
+        like: 'like 1s cubic-bezier(0.4, 0, 0.6, 1) 1',
       }
     },
   },

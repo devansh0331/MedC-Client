@@ -1,4 +1,4 @@
-import { Button, Input } from "@material-tailwind/react";
+import { Button, Dialog, DialogBody, DialogHeader, Input } from "@material-tailwind/react";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import emaillogo from "../assets/emaillogo.png";
@@ -11,7 +11,7 @@ import { GoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
 import Cookies from "js-cookie";
 import { UserContext } from "../UserContext";
 
-function SignUpPage() {
+function SignUpDialog(props) {
   // useNavigate Initialization
   const navigate = useNavigate();
 
@@ -96,13 +96,12 @@ function SignUpPage() {
     }
   };
   return (
-    <div className="w-screen h-[90vh] flex overflow-hidden">
-      <div className="w-full md:w-3/5 lg:w-1/2 h-full flex flex-col items-center justify-center mt-4">
-        <div className="w-3/5 lg:w-1/2">
-          <p className="w-full text-4xl tracking-wide text-center font-black mb-6 mt-4 font-open leading-custom">
-            Start Hiring <br /> With MEDC
-          </p>
-          <div className="w-full flex justify-center my-3">
+    <Dialog open={props.open} handler={props.handler} size="sm">
+          <DialogHeader className="">
+            Sign Up to MedC
+          </DialogHeader>
+        <DialogBody>
+          <div className="w-full flex justify-center">
             <GoogleLogin
               onSuccess={(res) => {
                 signInWithGoogle(res.credential);
@@ -114,8 +113,8 @@ function SignUpPage() {
             <span className="text-word">or</span>
             <span className="line"></span>
           </div>
-              <div className="flex my-0">
-                <div className="flex flex-col my-2 mr-2">
+              <div className="flex my-0 w-full gap-2">
+                <div className="flex flex-col my-2 w-full">
                   <label
                     htmlFor="fname"
                     className="text-sm font-medium tracking-wider text-gray-700"
@@ -130,7 +129,7 @@ function SignUpPage() {
                     placeholder="First Name"
                   />
                 </div>
-                <div className="flex flex-col my-2">
+                <div className="flex flex-col my-2 w-full">
                   <label
                     htmlFor="lname"
                     className="text-sm font-medium tracking-wider text-gray-700"
@@ -192,30 +191,9 @@ function SignUpPage() {
               >
                 Create Account
               </Button>
-          <p className="text-center mt-2 text-gray-600 text-sm">
-            Already have an account?{" "}
-            <button
-              className="text-primary"
-              onClick={() => navigate("/signin")}
-            >
-              Login
-            </button>
-          </p>
-        </div>
-      </div>
-      <div className="md:block hidden  w-2/5 lg:w-1/2">
-        <div className="bg-offWhite h-full flex flex-col items-center justify-center">
-          <div className="md:h-full md:w-4/5 md:flex md:flex-col md:items-center md:justify-center">
-            <img src={professional} alt="" className="rounded-lg mb-2" />
-            <p className="font-extrabold text-xl text-center">
-            Login to world of career possibilities
-            </p>
-          </div>
-        </div>
-      </div>
-      <Toaster position="top-right" />
-    </div>
+        </DialogBody>
+    </Dialog>
   );
 }
 
-export default SignUpPage;
+export default SignUpDialog;

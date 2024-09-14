@@ -38,6 +38,9 @@ const Connections = () => {
   } = useContext(UserContext);
 
   const [data, setData] = useState([]);
+  const [connectionsData, setConnectionsData] = useState([]);
+  const [pendingRequestsData, setPendingRequestsData] = useState([]);
+  const [sentRequestsData, setSentRequestsData] = useState([]);
   const [message, setMessage] = useState("");
 
   const getPendingRequests = async () => {
@@ -56,7 +59,7 @@ const Connections = () => {
         setMessage(data.error);
         console.log(message);
       } else {
-        setData(data.data);
+        setPendingRequestsData(data.data);
       }
       setPendingCount(data.data ? data.data.length : 0);
     } catch (error) {
@@ -79,7 +82,7 @@ const Connections = () => {
         setMessage(data.error);
         console.log(message);
       } else {
-        setData(data.data);
+        setSentRequestsData(data.data);
         setSentCount(data.data.length);
         console.log(data);
       }
@@ -103,7 +106,7 @@ const Connections = () => {
         setMessage(data.error);
         console.log(message);
       } else {
-        setData(data.data);
+        setConnectionsData(data.data);
         setConnectionsCount(data.data.length);
         console.log(data);
       }
@@ -251,25 +254,77 @@ const Connections = () => {
             </div>
           </div>
           <div className="flex flex-col max-h-[80vh] overflow-y-scroll scrollbar-thin w-full mt-1">
-            {data.length == 0 ? (
-              <Card className="Connections my-2 flex flex-row p-4">
-                {message}
-              </Card>
-            ) : (
-              data.map((user) => (
-                <>
-                  <SinglePeopleCardHorizontal
-                    activeTab={activeTab}
-                    user={user}
-                    sendRequest={sendRequest}
-                    acceptRequest={acceptRequest}
-                    setToast={setToast}
-                    getConnections={getConnections}
-                    getPendingRequests={getPendingRequests}
-                    getSentRequests={getSentRequests}
-                  />
-                </>
-              ))
+            {activeTab == "Pending" && (
+              <>
+                {pendingRequestsData.length == 0 ? (
+                  <Card className="Connections my-2 flex flex-row p-4">
+                    {message}
+                  </Card>
+                ) : (
+                  pendingRequestsData.map((user) => (
+                    <>
+                      <SinglePeopleCardHorizontal
+                        activeTab={activeTab}
+                        user={user}
+                        sendRequest={sendRequest}
+                        acceptRequest={acceptRequest}
+                        setToast={setToast}
+                        getConnections={getConnections}
+                        getPendingRequests={getPendingRequests}
+                        getSentRequests={getSentRequests}
+                      />
+                    </>
+                  ))
+                )}
+              </>
+            )}
+            {activeTab == "Connections" && (
+              <>
+                {connectionsData.length == 0 ? (
+                  <Card className="Connections my-2 flex flex-row p-4">
+                    {message}
+                  </Card>
+                ) : (
+                  connectionsData.map((user) => (
+                    <>
+                      <SinglePeopleCardHorizontal
+                        activeTab={activeTab}
+                        user={user}
+                        sendRequest={sendRequest}
+                        acceptRequest={acceptRequest}
+                        setToast={setToast}
+                        getConnections={getConnections}
+                        getPendingRequests={getPendingRequests}
+                        getSentRequests={getSentRequests}
+                      />
+                    </>
+                  ))
+                )}
+              </>
+            )}
+            {activeTab == "Sent" && (
+              <>
+                {sentRequestsData.length == 0 ? (
+                  <Card className="Connections my-2 flex flex-row p-4">
+                    {message}
+                  </Card>
+                ) : (
+                  sentRequestsData.map((user) => (
+                    <>
+                      <SinglePeopleCardHorizontal
+                        activeTab={activeTab}
+                        user={user}
+                        sendRequest={sendRequest}
+                        acceptRequest={acceptRequest}
+                        setToast={setToast}
+                        getConnections={getConnections}
+                        getPendingRequests={getPendingRequests}
+                        getSentRequests={getSentRequests}
+                      />
+                    </>
+                  ))
+                )}
+              </>
             )}
           </div>
         </div>

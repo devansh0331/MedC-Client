@@ -32,6 +32,7 @@ const ProfileDetails = (props) => {
   const [posts, setPosts] = useState([]);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+
   const {
     getSingleUserExperience,
     singleUserExperience,
@@ -189,7 +190,7 @@ const ProfileDetails = (props) => {
       <CardBody className="w-full max-h-[70vh] overflow-y-scroll scrollbar-thin pt-4">
         {section === "About" && (
           <>
-            {props.user.about ? (
+            {props.user.about && (
               <Typography className="text-gray-800 text-md">
                 {props.user.about}
                 <img
@@ -197,17 +198,12 @@ const ProfileDetails = (props) => {
                   className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
                 />
               </Typography>
-            ) : (
-              <img
-                src={About}
-                className="w-4/5 md:w-1/2 mx-auto mt-10 opacity-30"
-              />
             )}
           </>
         )}
         {section === "Experience" && (
           <>
-            {singleUserExperience.length > 0 ? ( 
+            {singleUserExperience.length > 0 ? (
               <>
                 {singleUserExperience.map((exp, key) => (
                   <Card

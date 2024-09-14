@@ -71,7 +71,7 @@ function SingleUserProfilePage() {
       <div className="flex">
         <SideBar />
         <div className="w-[85%] flex flex-col lg:flex-row mx-auto mt-5 gap-5">
-          <div className="w-min mx-auto">
+          <div className="w-full lg:w-min mx-auto">
             {userLoading ? (
               <ProfileCardSkeleton />
             ) : (

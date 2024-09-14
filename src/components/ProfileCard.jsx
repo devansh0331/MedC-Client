@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import profile2 from "../assets/profile2.png";
+import { FaFileDownload } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -62,6 +63,11 @@ const ProfileCard = (props) => {
   const [resume, setResume] = useState(Resume);
   const [number, setNumber] = useState("");
   const navigate = useNavigate();
+  const [openResumeDialog, setOpenResumeDialog] = useState(false);
+
+  const handleResumeDialog = () => {
+    setOpenResumeDialog(!openResumeDialog);
+  }
   const trimSocials = () => {
     if (props.user.linkedin?.includes("https://www.linkedin.com/in/")) {
       const username = props.user.linkedin.slice(28);
@@ -93,6 +99,16 @@ const ProfileCard = (props) => {
     } else {
       setTwitter(props.user.twitter);
     }
+  };
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (!selectedFile || selectedFile.type !== "application/pdf") {
+      setResume(null);
+      alert("Please select a PDF file!");
+      return;
+    }
+    setResume(selectedFile);
   };
 
   useEffect(() => {
@@ -149,7 +165,7 @@ const ProfileCard = (props) => {
 
   return (
     <>
-      <Card className="min-w-80 bg-white p-4 h-min">
+      <Card className="w-full lg:min-w-80 bg-white p-4 h-min mx-auto">
         {props.isExisting ? (
           <div
             className="flex justify-end pt-2 px-2 -mt-4 -mr-4  cursor-pointer"
@@ -286,7 +302,6 @@ const ProfileCard = (props) => {
           ) : (
             ""
           )}
-
           <CardFooter
             className={`flex px-4 py-2 mt-2  ${
               props.user._id === user._id ? "justify-center" : "justify-between"
@@ -299,9 +314,9 @@ const ProfileCard = (props) => {
                 variant="outlined"
                 size="sm"
                 color="blue"
-                onClick={handleResumeDownload}
+                onClick={handleResumeDialog}
               >
-                Resume
+                My Resume
               </Button>
             )}
             {props.user._id === user._id ? (
@@ -496,6 +511,49 @@ const ProfileCard = (props) => {
           <Button onClick={() => handleReport()} variant="gradient" color="red" size="sm">
             <span>Report</span>
           </Button>
+        </DialogFooter>
+      </Dialog>
+
+      {/* OPEN RESUME DIALOG */}
+      <Dialog open={openResumeDialog} handler={handleResumeDialog} size="sm">
+        <DialogHeader>My Resume</DialogHeader>
+        <DialogBody className="flex flex-col">
+          <div className="my-1 border-[1px] border-gray-400 w-full sm:w-2/3 p-2 rounded-md flex items-center justify-between"> 
+          {Resume.length > 20 ? Resume.slice(0, 20) + "..." : Resume}
+          <FaFileDownload className="w-5 h-5 cursor-pointer" onClick={() => handleResumeDownload()} />
+          </div>
+          <div className="my-1 border-[1px] border-gray-400 w-full sm:w-2/3 p-2 rounded-md flex items-center justify-between"> 
+          {Resume.length > 20 ? Resume.slice(0, 20) + "..." : Resume}
+          <FaFileDownload className="w-5 h-5 cursor-pointer" onClick={() => handleResumeDownload()} />
+          </div>
+          <div className="my-1 border-[1px] border-gray-400 w-full sm:w-2/3 p-2 rounded-md flex items-center justify-between"> 
+          {Resume.length > 20 ? Resume.slice(0, 20) + "..." : Resume}
+          <FaFileDownload className="w-5 h-5 cursor-pointer" onClick={() => handleResumeDownload()} />
+          </div>
+          <p className="mt-5">Upload New Resume</p>
+          <div className="mt-1 relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
+              <input
+                id="file-upload"
+                className="hidden"
+                type="file"
+                accept=".pdf"
+                onChange={handleFileChange}
+              />
+              <label htmlFor="file-upload" className="">
+                <IoDocumentTextSharp className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2" />{" "}
+                <span className="ml-8 absolute top-1/2 -translate-y-1/2">
+                  {resume ? resume.name : "Upload Resume"}
+                </span>
+              </label>
+              <IoClose
+                className="w-5 h-5 absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+                onClick={() => setResume(null)}
+              />
+            </div>
+        </DialogBody>
+        <DialogFooter className="flex gap-2">
+          <Button size="sm" variant="outlined" color="blue" onClick={handleResumeDialog}>Cancel</Button>
+          <Button size="sm" color="blue">Upload</Button>
         </DialogFooter>
       </Dialog>
     </>
