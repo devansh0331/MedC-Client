@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logofoot from "../assets/logofoot.png";
 import profile3 from "../assets/profile3.png";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
+import SideBar from "../components/SideBar";
 
 const Faq = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const topElement = document.getElementById("faq");
+    if (topElement) {
+      topElement.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
   return (
-    <div>
+    <div  id="faq" className="h-[90vh] overflow-y-scroll scrollbar-thin">
+      <div className="block lg:hidden">
+      <SideBar />
+      </div>
       <div className="flex justify-center py-10 px-10 about-main">
         <h2 className="text-[80px] lg:text-[120px] 2xl:text-[160px] font-bold text-light-blue-400 text-center drop-shadow-lg">
           General FAQs
@@ -126,7 +138,7 @@ const Faq = () => {
         </ol>
       </div>
 
-      <div className="w-full flex flex-col bg-background pt-8 px-5">
+      {/* <div className="w-full flex flex-col bg-background pt-8 px-5">
         <div className="w-full flex md:flex-row flex-col justify-center items-center md:items-start md:justify-start">
           <div className="md:w-2/5 flex justify-center items-center md:items-start md:justify-start  my-3">
             <img
@@ -204,7 +216,8 @@ const Faq = () => {
         <div className="w-11/12 text-center mt-8 text-sm text-gray-700 border-t-2 border-gray-300  mx-auto p-1">
           Copyright &#169; MedC 2024. All Rights Reserved
         </div>
-      </div>
+      </div> */}
+      <Footer />
     </div>
   );
 };

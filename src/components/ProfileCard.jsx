@@ -303,13 +303,14 @@ const ProfileCard = (props) => {
             ""
           )}
           <CardFooter
-            className={`flex px-4 py-2 mt-2  ${
-              props.user._id === user._id ? "justify-center" : "justify-between"
-            }`}
+            className={`flex px-4 py-2 mt-2 justify-center`}
           >
             {props.route === "single-post" ? (
               ""
             ) : (
+              <></>
+            )}
+            {props.user._id === user._id ? (
               <Button
                 variant="outlined"
                 size="sm"
@@ -318,9 +319,6 @@ const ProfileCard = (props) => {
               >
                 My Resume
               </Button>
-            )}
-            {props.user._id === user._id ? (
-              ""
             ) : (
               <>
                 {props.statusValue == "Connect" && (

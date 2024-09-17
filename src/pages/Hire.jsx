@@ -31,7 +31,7 @@ const Hire = () => {
               fullWidth
               shadow
             >
-              <div className="relative flex w-full md:w-3/5 mr-2">
+              <div className="relative flex w-full md:w-3/5 mr-2  my-1 md:my-0">
                 <Input
                   type="search"
                   placeholder=""
@@ -40,7 +40,7 @@ const Hire = () => {
                   icon={<IoMdSearch/>}
                 />
               </div>
-              <div className="relative flex w-full md:w-3/5 mr-2">
+              <div className="relative flex w-full md:w-3/5 mr-2  my-1 md:my-0">
                 <Input
                   type="search"
                   placeholder="Search Location"
@@ -49,7 +49,7 @@ const Hire = () => {
                   icon={<IoLocationSharp />}
                 />
               </div>
-              <button type="button" className="select-none rounded-lg bg-blue-500 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+              <button type="button" className="select-none rounded-lg bg-blue-500 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none  my-1 md:my-0">
                 Search
               </button>
             </Navbar>

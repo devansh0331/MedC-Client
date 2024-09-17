@@ -43,7 +43,7 @@ function SideBar() {
   const { setUserInfo, userInfo, user, adminStatus } = useContext(UserContext);
   const active = "bg-blue-500 text-white";
   const currentPage = useLocation().pathname;
-  console.log(adminStatus);
+  // console.log(adminStatus);
   
   // console.log(currentPage);
 

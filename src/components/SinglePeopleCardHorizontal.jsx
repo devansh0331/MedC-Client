@@ -13,7 +13,7 @@ import { BsBuildingsFill } from "react-icons/bs";
 import { ImProfile } from "react-icons/im";
 import { IoLocationSharp, IoPersonAddOutline } from "react-icons/io5";
 import altprofile from "../assets/altprofile.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SinglePeopleCardHorizontal({
   user,
@@ -28,6 +28,7 @@ function SinglePeopleCardHorizontal({
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(!open);
+  const navigate = useNavigate();
 
   return (
     <Card className="Connections my-2 flex flex-row p-4">
@@ -135,6 +136,7 @@ function SinglePeopleCardHorizontal({
           color="light-blue"
           variant="outlined"
           className="xl:px-4 p-2 xl:rounded-lg rounded-full"
+          onClick={()=> navigate(`/user/${user._id}`)}
         >
           <span className="xl:hidden">
             <ImProfile className="w-4 h-4" />

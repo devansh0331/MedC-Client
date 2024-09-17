@@ -96,7 +96,7 @@
 }
 
 .about-main{
-  background-image: url("./assets/maindoodle.png");
+  background-image: url("./assets/aboutbg.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-blend-mode: overlay;
