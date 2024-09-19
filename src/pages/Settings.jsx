@@ -103,7 +103,7 @@ const Settings = () => {
             <Typography className="text-md text-gray-600 my-1 underline cursor-pointer" onClick={() => navigate(`/about`)}>About Us</Typography>
             <Typography className="text-md text-gray-600 my-1 underline cursor-pointer" onClick={() => navigate(`/faq`)}>FAQ</Typography>
             <Typography className="text-md text-gray-600 my-1 underline cursor-pointer">Privacy Policy</Typography>
-            <Typography className="text-md text-gray-600 my-1 underline cursor-pointer">Contact Us</Typography>
+            <Typography className="text-md text-gray-600 my-1 underline cursor-pointer" onClick={() => navigate(`/contactus`)}>Contact Us</Typography>
             </div> 
             </div>
       {/* <Button onClick={handleOpenSignUp}>open</Button> */}

@@ -67,6 +67,12 @@ const Footer = () => {
               <button className="text-lg font-medium  my-3">Contact Us</button>
               <button
                 className="text-gray-600"
+                onClick={() => navigate("/contactus")}
+              >
+                Contact Us
+              </button>
+              <button
+                className="text-gray-600"
                 onClick={() => navigate("/contact")}
               >
                 contact@medc.in
