@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import {
   List,
   ListItem,
@@ -11,8 +11,15 @@ import {
 import altprofile from "../assets/altprofile.png";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { UserContext } from "../UserContext";
 
-const YouMayKnow = (props) => {
+const YouMayKnow = () => {
+
+  const {getAllUsers, allUsers} = useContext(UserContext)
+
+  useEffect(() => {
+    getAllUsers()
+  }, [])
   return (
     <Card className="">
       <Typography className="border-b-2 py-3 px-4 text-lg">
@@ -20,10 +27,10 @@ const YouMayKnow = (props) => {
       </Typography>
       <Card className="overflow-y-scroll scrollbar-thin h-96">
         <List>
-          {props.data.length == 0 ? (
+          {allUsers.length == 0 ? (
             <ListItem></ListItem>
           ) : (
-            props.data.map((user) => (
+            allUsers.map((user) => (
               <Link to={`/user/${user._id}`}>
                 <ListItem>
                   <ListItemPrefix>

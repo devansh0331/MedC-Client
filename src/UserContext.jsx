@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 import { createContext, useEffect, useState } from "react";
 import { SERVER_URL } from "./ServerURL";
+import toast from "react-hot-toast";
 
 export const UserContext = createContext({});
 
@@ -273,13 +274,15 @@ export function UserContextProvider({ children }) {
   const getPosts = async () => {
     try {
       const response = await fetch(`${SERVER_URL}/post/get-live-posts`, {
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
+        method: "GET",
+        // credentials: "include",
+        // headers: {
+        //   Authorization: `Bearer ${Cookies.get("token")}`,
+        // },
       });
       const res = await response.json();
       if (!res.success) {
+        console.error(res);
         toast.error(res.error);
       } else {
         setPosts(res.data);
@@ -310,17 +313,22 @@ export function UserContextProvider({ children }) {
   const getAllUsers = async () => {
     try {
       const res = await fetch(`${SERVER_URL}/user/all-user`, {
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
+        method: "GET",
+        // credentials: "include",
+        // headers: {
+        //   Authorization: `Bearer ${Cookies.get("token")}`,
+        // },
       });
       const parsedRes = await res.json();
-      // console.log(parsedRes);
+      console.log(parsedRes);
       if (!parsedRes.success) {
         console.error(parsedRes.error);
       } else {
-        setAllUsers(parsedRes.data);
+        if(userInfo.status){
+          setAllUsers(parsedRes.data.filter((user) => user.email !== userInfo.email));
+        }else{
+          setAllUsers(parsedRes.data);
+        }
       }
     } catch (error) {
       console.error("Failed to get users");

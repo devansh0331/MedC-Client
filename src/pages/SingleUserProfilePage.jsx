@@ -34,13 +34,12 @@ function SingleUserProfilePage() {
   const getSingleUser = async () => {
     try {
       const _id = userId.id;
-
       const response = await fetch(`${SERVER_URL}/user/single-user/${_id}`, {
         method: "GET",
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
+        // credentials: "include",
+        // headers: {
+        //   Authorization: `Bearer ${Cookies.get("token")}`,
+        // },
       });
       const data = await response.json();
 

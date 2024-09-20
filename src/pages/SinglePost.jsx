@@ -23,15 +23,16 @@ const SinglePost = () => {
 
   const {
     getAllUsers,
-    allUsers,
     sendRequest,
     checkFriendStatus,
     acceptRequest,
+    userInfo
   } = useContext(UserContext);
 
   useEffect(() => {
     getSinglePost();
   }, [postId]);
+ 
 
   const getSinglePost = async () => {
     const response = await fetch(
@@ -54,7 +55,7 @@ const SinglePost = () => {
       setCurrentuserId(user._id);
       setPostUser(res.data.user);
       getUserPosts(res.data.user._id, postId);
-      console.log(res.data);
+      // console.log(res.data);
     }
   };
 
@@ -79,6 +80,7 @@ const SinglePost = () => {
   };
 
   const getUserPosts = async (postUserId, postId) => {
+    if(!userInfo.status) return;
     try {
       const response = await fetch(
         `${SERVER_URL}/post/get-user-posts/${postUserId}`,
@@ -117,7 +119,7 @@ const SinglePost = () => {
             profileURL={postUser._id}
           />
         </div>
-        <div className="lg:w-3/5 2xl:w-2/5 mt-3">
+        <div className="lg:w-3/5 2xl:w-2/5 mt-5">
           {postLoading ? (
             <SinglePostSkeleton />
           ) : (
@@ -130,9 +132,9 @@ const SinglePost = () => {
             />
           )}
         </div>
-        <div className="w-96 2xl:block hidden">
+        <div className="w-96 2xl:block hidden mt-5">
           {userPost.length < 4 ? (
-            <YouMayKnow data={allUsers} />
+            <YouMayKnow />
           ) : (
             <MorefromThem posts={userPost} userName={postUser.name} />
           )}

@@ -55,6 +55,7 @@ function SignUpDialog(props) {
         setTimeout(() => {
           navigate("/feed");
           // location.reload();
+          props.handler();
         }, 2000);
       } else {
         toast.error("Server Error: " + parsedResponse.error);
@@ -88,6 +89,7 @@ function SignUpDialog(props) {
           toast.success("Account Created Successfully...");
           setTimeout(() => {
             navigate("/signin");
+            props.handler();
           }, 2000);
         }
       } catch (error) {

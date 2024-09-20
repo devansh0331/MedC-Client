@@ -50,7 +50,7 @@ const ProfileCard = (props) => {
   const [openMenu, setOpenMenu] = useState(false);
 
   const [reportReason, setReportReason] = useState("");
-
+ 
   const CityArr = City.getCitiesOfCountry("IN");
   const StateArr = State.getStatesOfCountry("IN");
   const handleOpenProfile = () => setOpenProfile(!openProfile);
@@ -64,7 +64,8 @@ const ProfileCard = (props) => {
   const [number, setNumber] = useState("");
   const navigate = useNavigate();
   const [openResumeDialog, setOpenResumeDialog] = useState(false);
-
+  console.log("user", user);
+  
   const handleResumeDialog = () => {
     setOpenResumeDialog(!openResumeDialog);
   }
@@ -113,7 +114,7 @@ const ProfileCard = (props) => {
 
   useEffect(() => {
     trimSocials();
-  });
+  }, []);
 
   const handleResumeDownload = () => {
     const pdfUrl = resume;

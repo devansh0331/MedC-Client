@@ -62,6 +62,7 @@ function FeedPage() {
           <JobCard />
         </div>
       </div>
+      <Toaster position="top-right"/>
     </div>
   );
 }
