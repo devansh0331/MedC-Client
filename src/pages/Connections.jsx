@@ -23,6 +23,7 @@ import SinglePeopleCardHorizontal from "../components/SinglePeopleCardHorizontal
 import { Toaster, toast } from "react-hot-toast";
 import { SERVER_URL } from "../ServerURL";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Connections = () => {
   const [activeTab, setActiveTab] = useState("Pending");
@@ -35,6 +36,7 @@ const Connections = () => {
     sendRequest,
     checkFriendStatus,
     acceptRequest,
+    userInfo,
   } = useContext(UserContext);
 
   const [data, setData] = useState([]);
@@ -42,6 +44,7 @@ const Connections = () => {
   const [pendingRequestsData, setPendingRequestsData] = useState([]);
   const [sentRequestsData, setSentRequestsData] = useState([]);
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const getPendingRequests = async () => {
     try {
@@ -134,6 +137,7 @@ const Connections = () => {
       <div className="z-40">
         <SideBar className="" />
       </div>
+      {userInfo.state ? (  
       <div className="flex w-full gap-6 justify-center">
         <Card
           shadow={false}
@@ -333,6 +337,14 @@ const Connections = () => {
         </div>
         <Toaster position="top-right" />
       </div>
+      ): (
+        <div className="flex flex-col justify-center items-center w-full h-[80vh]">
+            <Typography className="my-4 text-3xl font-semibold">
+            Please Sign In to see this page
+            </Typography>
+            <Button onClick={() => navigate('/signin')} color="blue" >Sign In</Button>
+          </div>
+      )}
     </div>
   );
 };

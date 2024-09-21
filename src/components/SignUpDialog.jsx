@@ -54,7 +54,7 @@ function SignUpDialog(props) {
         getUser();
         setTimeout(() => {
           navigate("/feed");
-          // location.reload();
+          location.reload();
           props.handler();
         }, 2000);
       } else {

@@ -149,7 +149,7 @@ function SideBar() {
                 </ListItemPrefix>
               </div>
               )}
-
+              {userInfo.state && (   
               <div
                 className={`hidden lg:flex items-center justify-center px-4 py-3 rounded-md my-1 cursor-pointer text-red-800`}
                 onClick={(e) => handleLogout(e)}
@@ -158,6 +158,7 @@ function SideBar() {
                   <IoPowerSharp className="w-6 h-6" />
                 </ListItemPrefix>
               </div>
+              )}
             </div>
           </CardBody>
         </Card>
@@ -167,6 +168,7 @@ function SideBar() {
           className="flex flex-col justify-between items-start h-full w-full"
           shadow={false}
         >
+          {userInfo.state && (
           <CardHeader
             shadow={false}
             floated={false}
@@ -190,6 +192,7 @@ function SideBar() {
               </div>
             </div>
           </CardHeader>
+          )}
           <CardBody className="p-0 w-full">
             <div className="mt-2 p-2  border-b-2 mx-2">
               <div
@@ -281,7 +284,8 @@ function SideBar() {
                 <Typography className="ml-2">Admin</Typography>
               </div>
                )}
-             <div
+               {userInfo.state && (     
+               <div
                 className={`flex items-center px-4 py-3 rounded-md my-1 hover:bg-opacity-90 cursor-pointer text-red-800`}
                 onClick={(e) => handleLogout(e)}
               >
@@ -290,6 +294,7 @@ function SideBar() {
                 </ListItemPrefix>
                 <Typography className="ml-2">Log Out</Typography>
               </div>
+               )}
             </div>
           
           </CardBody>

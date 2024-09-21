@@ -14,7 +14,7 @@ const MinPost = () => {
     dispatch(feedClick(!minJobs));
   };
 
-  const { getPosts, userId, user, posts, handleLike } = useContext(UserContext);
+  const { getPosts, userId, user, posts, handleLike, userInfo } = useContext(UserContext);
 
   useEffect(() => {
     getPosts();

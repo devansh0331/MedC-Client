@@ -9,9 +9,10 @@ import SideBar from "../components/SideBar";
 import EditDetails from "../components/EditExperience";
 import toast, { Toaster } from "react-hot-toast";
 import { SERVER_URL } from "../ServerURL";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import ProfileCardSkeleton from "../components/ProfileCardSkeleton";
+import { Button, Typography } from "@material-tailwind/react";
 
 function SingleUserProfilePage() {
   const [close, setClose] = useState(false);
@@ -27,23 +28,23 @@ function SingleUserProfilePage() {
   const [isExisting, setIsExisting] = useState(false);
   const [user, setUser] = useState();
   const [userLoading, setUserLoading] = useState(true);
-
+  const navigate = useNavigate();
   const userId = useParams();
   // console.log(userId.id);
-
+ 
   const getSingleUser = async () => {
     try {
       const _id = userId.id;
       const response = await fetch(`${SERVER_URL}/user/single-user/${_id}`, {
         method: "GET",
-        // credentials: "include",
-        // headers: {
-        //   Authorization: `Bearer ${Cookies.get("token")}`,
-        // },
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
       });
       const data = await response.json();
 
-      if (!data.success) toast.error(data.error);
+      if (!data.success) toast.error("data.error");
       else {
         setUser(data.user);
         setIsExisting(data.isExisting);
@@ -56,7 +57,7 @@ function SingleUserProfilePage() {
   };
 
   useEffect(() => {
-    getSingleUser();
+    if(userInfo.state) getSingleUser();
     // console.log(user);
   }, [userId]);
   const setToast = (msg, success) => {
@@ -69,6 +70,7 @@ function SingleUserProfilePage() {
     <div className="bg-background w-full overflow-x-hidden lg:h-[90vh] lg:overflow-y-hidden pb-5 lg:pb-0 scrollbar-thin">
       <div className="flex">
         <SideBar />
+        {userInfo.state ? (
         <div className="w-[85%] flex flex-col lg:flex-row mx-auto mt-5 gap-5">
           <div className="w-full lg:w-min mx-auto">
             {userLoading ? (
@@ -97,6 +99,14 @@ function SingleUserProfilePage() {
             />
           </div>
         </div>
+        ) : (
+          <div className="flex flex-col justify-center items-center w-full h-[80vh]">
+            <Typography className="my-4 text-3xl font-semibold">
+            Please Sign In to see this page
+            </Typography>
+            <Button onClick={() => navigate('/signin')} color="blue" >Sign In</Button>
+          </div>
+        )}
         <Toaster position="top-right" />
       </div>
     </div>

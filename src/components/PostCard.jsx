@@ -27,7 +27,7 @@ function PostCard() {
     >
       {userInfo.state && (  
       <div>
-        <Card className="flex flex-row gap-4 w-full bg-white py-2 items-center rounded-md shadow-md px-4">
+        <Card className="flex flex-row gap-4 w-full bg-white py-2 items-center rounded-md shadow-md px-4  mb-2">
           <Link to={`/user/${user._id}`}>
             <Avatar
               src={user.profileURL ? user.profileURL : altprofile}

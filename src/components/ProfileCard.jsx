@@ -114,7 +114,7 @@ const ProfileCard = (props) => {
 
   useEffect(() => {
     trimSocials();
-  }, []);
+  }, [props.user]);   
 
   const handleResumeDownload = () => {
     const pdfUrl = resume;
