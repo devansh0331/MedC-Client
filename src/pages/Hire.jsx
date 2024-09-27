@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -18,8 +18,22 @@ import { IoMdSearch } from "react-icons/io";
 import YouMayKnow from "../components/YouMayKnow";
 import ProfileExpand from "../components/ProfileExpand";
 import SideBar from "../components/SideBar";
+import { UserContext } from "../UserContext";
 
 const Hire = () => {
+
+  const {allUsers, getAllUsers, userInfo} = useContext(UserContext);
+  const [userExpand, setUserExpand] = useState({});
+
+  
+  useEffect(() => {
+    getAllUsers(); 
+  }, [userInfo]);
+  
+  useEffect(() => {
+    setUserExpand(allUsers[0]);
+  }, [allUsers]);
+
   return (
     <div className="flex overflow-y-hidden z-0 bg-background">
       <SideBar route="feed" />
@@ -55,210 +69,61 @@ const Hire = () => {
             </Navbar>
           </div>
           <div className="grid md:grid-cols-3 overflow-y-scroll max-h-[75vh] scrollbar-thin w-full mt-1">
-            <Card className="p-3 m-3">
+            {allUsers.map((user, index) => ( 
+             <>
+             {user.name != "" ? (    
+            <Card className="p-3 m-3 flex flex-col gap-3 justify-between" key={index}>
               <CardHeader
                 floated={false}
                 shadow={false}
                 color="transparent"
-                className="p-0 m-0  flex flex-col items-center justify-center w-full border-b-2 rounded-none pb-2"
+                className="p-0 m-0  flex flex-col items-center justify-center w-full border-b-2 rounded-none pb-2 "
               >
-                <Badge color="green" overlap="circular">
+                <Badge color="green" overlap="circular" invisible>
                   <Avatar
-                    src={altprofile}
+                    src={user.profileURL ? user.profileURL : altprofile}
                     alt="altprofile"
                     size="xl"
                     className="w-24 h-24 mx-auto"
                   />
                 </Badge>
-                <Typography className="text-lg mt-2">John Doe</Typography>
-                <Typography className="text-sm">
-                  Lorem ipsum dolor sit amet.
-                </Typography>
+                <Typography className="text-lg mt-2">{user.name}</Typography>
               </CardHeader>
-              <CardBody className="m-0 p-0 mt-3 border-b-2 rounded-none pb-2">
-                <Typography className="flex items-center">
-                  <IoLocationSharp />
-                  <span className="ml-1">Jaipur</span>
-                </Typography>
-                <Typography className="flex items-center">
+              {user.location || user.bio ? (  
+              <CardBody className="m-0 p-0 border-b-2 rounded-none pb-2">
+                {user.bio && (
+
+                  <Typography className="flex items-center">
                   <BsBuildingsFill />
-                  <span className="ml-1">ABC Hospital</span>
+                  <span className="ml-1">{user.bio}</span>
                 </Typography>
+                )}
+                {user.location && (
+                  <Typography className="flex items-center">
+                  <IoLocationSharp />
+                  <span className="ml-1">{user.location}</span>
+                </Typography>
+                )}          
               </CardBody>
-              <CardFooter className="m-0 p-0 mt-3 mx-auto">
+              ): null}
+              <CardFooter className="m-0 p-0 mx-auto">
                 <Button
                   size="sm"
                   className="px-2 py-1 font-light rounded-md"
                   color="light-blue"
+                  onClick={() => setUserExpand(user)}
                 >
                   Show Details
                 </Button>
               </CardFooter>
             </Card>
-            <Card className="p-3 m-3">
-              <CardHeader
-                floated={false}
-                shadow={false}
-                color="transparent"
-                className="p-0 m-0  flex flex-col items-center justify-center w-full border-b-2 rounded-none pb-2"
-              >
-                <Badge color="red" overlap="circular">
-                  <Avatar
-                    src={altprofile}
-                    alt="altprofile"
-                    size="xl"
-                    className="w-24 h-24 mx-auto"
-                  />
-                </Badge>
-                <Typography className="text-lg mt-2">John Doe</Typography>
-                <Typography className="text-sm">
-                  Lorem ipsum dolor sit amet.
-                </Typography>
-              </CardHeader>
-              <CardBody className="m-0 p-0 mt-3 border-b-2 rounded-none pb-2">
-                <Typography className="flex items-center">
-                  <IoLocationSharp />
-                  <span className="ml-1">Jaipur</span>
-                </Typography>
-                <Typography className="flex items-center">
-                  <BsBuildingsFill />
-                  <span className="ml-1">ABC Hospital</span>
-                </Typography>
-              </CardBody>
-              <CardFooter className="m-0 p-0 mt-3 mx-auto">
-                <Button
-                  size="sm"
-                  className="px-2 py-1 font-light rounded-md"
-                  color="light-blue"
-                >
-                  Show Details
-                </Button>
-              </CardFooter>
-            </Card>
-            <Card className=" p-3 m-3">
-              <CardHeader
-                floated={false}
-                shadow={false}
-                color="transparent"
-                className="p-0 m-0  flex flex-col items-center justify-center w-full border-b-2 rounded-none pb-2"
-              >
-                <Badge color="green" overlap="circular">
-                  <Avatar
-                    src={altprofile}
-                    alt="altprofile"
-                    size="xl"
-                    className="w-24 h-24 mx-auto"
-                  />
-                </Badge>
-                <Typography className="text-lg mt-2">John Doe</Typography>
-                <Typography className="text-sm">
-                  Lorem ipsum dolor sit amet.
-                </Typography>
-              </CardHeader>
-              <CardBody className="m-0 p-0 mt-3 border-b-2 rounded-none pb-2">
-                <Typography className="flex items-center">
-                  <IoLocationSharp />
-                  <span className="ml-1">Jaipur</span>
-                </Typography>
-                <Typography className="flex items-center">
-                  <BsBuildingsFill />
-                  <span className="ml-1">ABC Hospital</span>
-                </Typography>
-              </CardBody>
-              <CardFooter className="m-0 p-0 mt-3 mx-auto">
-                <Button
-                  size="sm"
-                  className="px-2 py-1 font-light rounded-md"
-                  color="light-blue"
-                >
-                  Show Details
-                </Button>
-              </CardFooter>
-            </Card>
-            <Card className="p-3 m-3">
-              <CardHeader
-                floated={false}
-                shadow={false}
-                color="transparent"
-                className="p-0 m-0  flex flex-col items-center justify-center w-full border-b-2 rounded-none pb-2"
-              >
-                <Badge color="red" overlap="circular">
-                  <Avatar
-                    src={altprofile}
-                    alt="altprofile"
-                    size="xl"
-                    className="w-24 h-24 mx-auto"
-                  />
-                </Badge>
-                <Typography className="text-lg mt-2">John Doe</Typography>
-                <Typography className="text-sm">
-                  Lorem ipsum dolor sit amet.
-                </Typography>
-              </CardHeader>
-              <CardBody className="m-0 p-0 mt-3 border-b-2 rounded-none pb-2">
-                <Typography className="flex items-center">
-                  <IoLocationSharp />
-                  <span className="ml-1">Jaipur</span>
-                </Typography>
-                <Typography className="flex items-center">
-                  <BsBuildingsFill />
-                  <span className="ml-1">ABC Hospital</span>
-                </Typography>
-              </CardBody>
-              <CardFooter className="m-0 p-0 mt-3 mx-auto">
-                <Button
-                  size="sm"
-                  className="px-2 py-1 font-light rounded-md"
-                  color="light-blue"
-                >
-                  Show Details
-                </Button>
-              </CardFooter>
-            </Card>
-            <Card className="p-3 m-3">
-              <CardHeader
-                floated={false}
-                shadow={false}
-                color="transparent"
-                className="p-0 m-0  flex flex-col items-center justify-center w-full border-b-2 rounded-none pb-2"
-              >
-                <Badge color="green" overlap="circular">
-                  <Avatar
-                    src={altprofile}
-                    alt="altprofile"
-                    size="xl"
-                    className="w-24 h-24 mx-auto"
-                  />
-                </Badge>
-                <Typography className="text-lg mt-2">John Doe</Typography>
-                <Typography className="text-sm">
-                  Lorem ipsum dolor sit amet.
-                </Typography>
-              </CardHeader>
-              <CardBody className="m-0 p-0 mt-3 border-b-2 rounded-none pb-2">
-                <Typography className="flex items-center">
-                  <IoLocationSharp />
-                  <span className="ml-1">Jaipur</span>
-                </Typography>
-                <Typography className="flex items-center">
-                  <BsBuildingsFill />
-                  <span className="ml-1">ABC Hospital</span>
-                </Typography>
-              </CardBody>
-              <CardFooter className="m-0 p-0 mt-3 mx-auto">
-                <Button
-                  size="sm"
-                  className="px-2 py-1 font-light rounded-md"
-                  color="light-blue"
-                >
-                  Show Details
-                </Button>
-              </CardFooter>
-            </Card>
+              ) : null}
+             </>
+            ))}
           </div>
         </div>
         <div className="hidden md:block w-2/6 mt-4 mx-2">
-          <ProfileExpand />
+          <ProfileExpand user={userExpand} />
         </div>
       </div>
     </div>

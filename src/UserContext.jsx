@@ -320,13 +320,15 @@ export function UserContextProvider({ children }) {
         // },
       });
       const parsedRes = await res.json();
-      console.log(parsedRes);
+      // console.log(parsedRes);
       if (!parsedRes.success) {
         console.error(parsedRes.error);
       } else {
-        if(userInfo.status){
+        if(userInfo.state){
+          // console.log(userInfo, "true")
           setAllUsers(parsedRes.data.filter((user) => user.email !== userInfo.email));
         }else{
+          // console.log(userInfo, "false")
           setAllUsers(parsedRes.data);
         }
       }

@@ -29,6 +29,7 @@ import SingleBlog from "./SingleBlog";
 import CreateBlog from "./CreateBlog";
 import ArchivedPosts from "./ArchivedPosts";
 import Contactus from "./Contactus";
+import ViewApplications from "./ViewApplications";
 // import { NavbarWithSearch } from "./Nav";
 
 function Main() {
@@ -266,6 +267,15 @@ function Main() {
           <>
             <NavMain />
             <Contactus />
+          </>
+        }
+      />
+      <Route
+        path="/job/:id/applications"
+        element={
+          <>
+            <NavMain />
+            <ViewApplications />
           </>
         }
       />

@@ -57,6 +57,22 @@ const MaxJobCard = (props) => {
 
       {/* APPLY */}
       <div className="w-full flex flex-col md:flex-row md:justify-between mt-2 md:mt-0 md:my-2">
+        {props.parent === 'Posted' &&
+        <>
+        <div className="flex flex-col">
+          <Typography className="text-gray-700">250 Applicants</Typography>
+          <Typography className="text-gray-700">
+           Posted 2 Days Ago
+          </Typography>
+        </div>
+        <div className="flex md:justify-end items-end gap-4 mt-2 md:mt-0">
+          <Button size="sm" variant="outlined" color="blue">Edit</Button>
+          <Button size="sm" color="blue" onClick={() => navigate(`/job/:id/applications`)}>View</Button>
+        </div>
+        </>
+      }
+      {props.parent !== 'Posted' &&
+      <>
         <div className="flex flex-col">
           <Typography className="text-gray-700">250 Applicants</Typography>
           <Typography className="text-gray-700">
@@ -69,22 +85,11 @@ const MaxJobCard = (props) => {
           <Button size="sm" variant="outlined" color="blue">Save</Button>
           <Button size="sm" color="blue">Apply</Button>
         </div>
+      </>
+      }
       </div>
     </Card>
   );
 };
 
 export default MaxJobCard;
-
-
-// jobTitle: String,
-// organziationName: String,
-// location: String,
-// salaryRange: String,
-// requiredQualification: String,
-// benefits: String,
-// skills: String,
-// experience: String,
-// workTiming: String,
-// jobType: String,
-// jobDescription: String,

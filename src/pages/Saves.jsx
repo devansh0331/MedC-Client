@@ -9,12 +9,14 @@ import React, { useState } from "react";
 import MaxJobCard from "../components/MaxJobCard";
 import SideBar from "../components/SideBar";
 import MoreLikeThis from "../components/MoreLikeThis";
+import { useNavigate } from "react-router-dom";
 
 const Saves = () => {
   const [activeItem, setActiveItem] = useState(0);
   const [savedJobs, setSavedJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [postedJobs, setPostedJobs] = useState([]);
+  const navigate = useNavigate();
 
   return (
     <div className="flex overflow-y-hidden bg-background h-[90vh]">
@@ -74,8 +76,8 @@ const Saves = () => {
             {activeItem == 1 && <MaxJobCard />}
             {activeItem == 2 && (
               <>
-                <MaxJobCard />
-                <MaxJobCard />
+                <MaxJobCard parent="Posted" />
+                <MaxJobCard parent="Posted" />
               </>
             )}
           </div>
