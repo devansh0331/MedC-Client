@@ -24,7 +24,7 @@ const ProfileExpand = (props) => {
   const navigate = useNavigate();
   return (
     <div>
-      <Card className="p-4">
+      <Card className="p-4 min-w-72">
         <CardHeader
           className="m-0 p-1 flex flex-col justify-center items-center border-b-2 rounded-none"
           shadow={false}

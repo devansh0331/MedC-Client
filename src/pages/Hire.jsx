@@ -10,6 +10,7 @@ import {
   Input,
   CardFooter,
   Badge,
+  Dialog,
 } from "@material-tailwind/react";
 import altprofile from "../assets/altprofile.png";
 import { IoLocationSharp } from "react-icons/io5";
@@ -24,7 +25,11 @@ const Hire = () => {
 
   const {allUsers, getAllUsers, userInfo} = useContext(UserContext);
   const [userExpand, setUserExpand] = useState({});
+  const [profileExpand, setProfileExpand] = useState(false);
 
+  const handleProfileExpand = () => {
+    setProfileExpand(!profileExpand);
+  };
   
   useEffect(() => {
     getAllUsers(); 
@@ -35,10 +40,10 @@ const Hire = () => {
   }, [allUsers]);
 
   return (
-    <div className="flex overflow-y-hidden z-0 bg-background">
+    <div className="flex overflow-y-hidden z-0 bg-background overflow-x-hidden h-[90vh]">
       <SideBar route="feed" />
-      <div className="flex xl:w-[75%] w-[90%] mx-auto">
-        <div className="w-full md:w-4/6 m-auto mt-4 mx-2">
+      <div className="flex 2xl:w-[75%] xl:w-[85%] w-[90%] mx-auto">
+        <div className="w-full lg:w-4/6 m-auto mt-4 mx-2 overflow-y-scroll max-h-[85vh] scrollbar-thin">
           <div className="search">
             <Navbar
               className="flex flex-col md:flex-row rounded-md items-center"
@@ -68,7 +73,7 @@ const Hire = () => {
               </button>
             </Navbar>
           </div>
-          <div className="grid md:grid-cols-3 overflow-y-scroll max-h-[75vh] scrollbar-thin w-full mt-1">
+          <div className="grid grid-cols-2 md:grid-cols-3 w-full mt-1">
             {allUsers.map((user, index) => ( 
              <>
              {user.name != "" ? (    
@@ -109,9 +114,17 @@ const Hire = () => {
               <CardFooter className="m-0 p-0 mx-auto">
                 <Button
                   size="sm"
-                  className="px-2 py-1 font-light rounded-md"
+                  className="px-2 py-1 font-light rounded-md hidden lg:block"
                   color="light-blue"
                   onClick={() => setUserExpand(user)}
+                >
+                  Show Details 
+                </Button>
+                <Button
+                  size="sm"
+                  className="px-2 py-1 font-light rounded-md lg:hidden block"
+                  color="light-blue"
+                  onClick={() => {setUserExpand(user); handleProfileExpand();}}
                 >
                   Show Details
                 </Button>
@@ -122,10 +135,13 @@ const Hire = () => {
             ))}
           </div>
         </div>
-        <div className="hidden md:block w-2/6 mt-4 mx-2">
+        <div className="hidden lg:block w-2/6 mt-4 mx-2">
           <ProfileExpand user={userExpand} />
         </div>
       </div>
+      <Dialog open={profileExpand} handler={handleProfileExpand} className="bg-transparent shadow-none" size="xs">
+        <ProfileExpand user={userExpand} />
+      </Dialog>
     </div>
   );
 };
