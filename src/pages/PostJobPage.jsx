@@ -9,11 +9,11 @@ const PostJobPage = () => {
   const { userInfo } = useContext(UserContext);
   const navigate = useNavigate();
   return (
-    <div className="w-full flex bg-background h-[89vh]">
+    <div className="w-full flex bg-background md:h-[90vh]">
       <SideBar />
       {userInfo.state ? (
         <div className="flex w-full gap-4 justify-center mt-5">
-          <div className="w-4/5">
+          <div className="w-[98%] lg:w-[85%]">
             <PostJobCard />
           </div>
         </div>

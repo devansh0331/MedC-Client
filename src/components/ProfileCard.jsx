@@ -64,7 +64,7 @@ const ProfileCard = (props) => {
   const [number, setNumber] = useState("");
   const navigate = useNavigate();
   const [openResumeDialog, setOpenResumeDialog] = useState(false);
-  console.log("user", user);
+  // console.log("user", user);
   
   const handleResumeDialog = () => {
     setOpenResumeDialog(!openResumeDialog);

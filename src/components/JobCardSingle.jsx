@@ -3,6 +3,9 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Dialog,
+  DialogBody,
+  DialogHeader,
   Typography,
 } from "@material-tailwind/react";
 import { IoPaperPlaneOutline } from "react-icons/io5";
@@ -14,14 +17,21 @@ import { TbPigMoney } from "react-icons/tb";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { FaUserGraduate } from "react-icons/fa6";
 import { HiHomeModern } from "react-icons/hi2";
-import React from "react";
+import React, { useState } from "react";
 
 const JobCardSingle = (props) => {
   const job = props.job;
   // console.log(job);
 
+
   return (
-    <div className={`bg-white w-full p-4 max-h-[80vh] flex flex-col justify-start mb-4 rounded-xl ${props.route === "ViewApplications" ? "md:overflow-y-scroll scrollbar-invisible overflow-visible" : "overflow-y-scroll scrollbar-invisible"}`}>
+    <div
+      className={`bg-white w-full p-4 max-h-[80vh] flex flex-col justify-start mb-4 rounded-xl ${
+        props.route === "ViewApplications"
+          ? "md:overflow-y-scroll scrollbar-invisible overflow-visible"
+          : "overflow-y-scroll scrollbar-invisible"
+      }`}
+    >
       <div
         className={`p-2 m-0 flex justify-between gap-2 ${
           props.route === "ViewApplications"
@@ -98,7 +108,11 @@ const JobCardSingle = (props) => {
           <></>
         ) : (
           <div className="flex text-gray-700 w-full px-3 mt-6 gap-5 items-end">
-            <Button className="" size="sm" color="blue">
+            <Button
+              className=""
+              size="sm"
+              color="blue"
+            >
               Apply
             </Button>
             <Button className="" size="sm" color="blue" variant="outlined">
@@ -128,7 +142,11 @@ const JobCardSingle = (props) => {
           <></>
         ) : (
           <div className="flex text-gray-700 w-full px-3 mt-6 gap-5 items-end">
-            <Button className="" size="sm" color="blue">
+            <Button
+              className=""
+              size="sm"
+              color="blue"
+            >
               Apply
             </Button>
             <Button className="" size="sm" color="blue" variant="outlined">
