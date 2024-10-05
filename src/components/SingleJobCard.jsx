@@ -5,7 +5,7 @@ import alt from "../assets/altprofile.png";
 import { Avatar, Card, Typography } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 const SingleJobCard = (props) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const job = props.job;
   return (
     <Card className="w-full bg-white my-2 p-4 cursor-pointer" onClick={() => navigate(`/job/${job._id}`)}>
@@ -15,7 +15,7 @@ const SingleJobCard = (props) => {
         </div>
         {/* SAVE JOB */}
         <div className="flex items-center justify-center">
-          <CiStar className="w-6 h-6  " />
+          <CiStar className="w-6 h-6" />
         </div>
       </div>
 
