@@ -5,18 +5,52 @@ import {
   ListItem,
   Typography,
 } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MaxJobCard from "../components/MaxJobCard";
 import SideBar from "../components/SideBar";
 import MoreLikeThis from "../components/MoreLikeThis";
 import { useNavigate } from "react-router-dom";
+import { SERVER_URL } from "../ServerURL";
+import { UserContext } from "../UserContext";
+import Cookies from "js-cookie";
 
 const Saves = () => {
   const [activeItem, setActiveItem] = useState(0);
   const [savedJobs, setSavedJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [postedJobs, setPostedJobs] = useState([]);
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
+
+  const getSavedJobs = async () => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/userjob/get-saved-jobs/${user._id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
+
+      const res = await response.json();
+      if (res.success) {
+        setSavedJobs(res.savedJobs);
+        console.log(res.savedJobs);
+      }
+      if (!res.success) {
+        console.log(res.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getSavedJobs();
+  }, [user._id]);
 
   return (
     <div className="flex overflow-y-hidden bg-background h-[90vh]">
@@ -67,10 +101,9 @@ const Saves = () => {
           <div className=" overflow-y-scroll scrollbar-thin">
             {activeItem == 0 && (
               <>
-                <MaxJobCard />
-                <MaxJobCard />
-                <MaxJobCard />
-                <MaxJobCard />
+                {savedJobs?.map((job) => (
+                  <MaxJobCard parent="Saved" job={job.jobId} />
+                ))}
               </>
             )}
             {activeItem == 1 && <MaxJobCard />}
