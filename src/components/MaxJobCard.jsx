@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaRegBookmark } from "react-icons/fa";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { TiDocumentText } from "react-icons/ti";
@@ -34,12 +34,13 @@ import Cookies from "js-cookie";
 
 const MaxJobCard = (props) => {
   const [resume, setResume] = useState(Resume);
-  const navigate = useNavigate();
   const [openResumeDialog, setOpenResumeDialog] = useState(false);
   const [shareBox, setShareBox] = useState(false);
   const [showText, setShowText] = useState(false);
   const [signUpBox, setSignUpBox] = useState(false);
-  const {user, userInfo} = useContext(UserContext);
+  const [isSaved, setIsSaved] = useState(false);
+  const { user, userInfo } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleShareBox = () => {
     setShareBox(!shareBox);
@@ -74,9 +75,9 @@ const MaxJobCard = (props) => {
   };
 
   const handleSaveJob = async () => {
-    if(!userInfo.state){
+    if (!userInfo.state) {
       setSignUpBox(true);
-    }else{
+    } else {
       try {
         const response = await fetch(`${SERVER_URL}/userjob/save-job`, {
           method: "POST",
@@ -88,29 +89,81 @@ const MaxJobCard = (props) => {
           body: JSON.stringify({
             userId: user._id,
             jobId: props.job._id,
-          })
+          }),
         });
-        
-          const res = await response.json();
-          if (res.success) {
-            console.log(res);
-            toast.success(res.message);
-          }else{
-            console.log(res);
-            toast.error(res.error);
-          }
-        
+
+        const res = await response.json();
+        if (res.success) {
+          console.log(res);
+          toast.success(res.message);
+        } else {
+          console.log(res);
+          toast.error(res.error);
+        }
       } catch (error) {
-        console.error("Error saving job:", error); 
+        console.error("Error saving job:", error);
       }
+    }
+  };
+
+  const handleUnsaveJob = async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/userjob/unsave-job`,{
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        body: JSON.stringify({
+          userId: user._id,
+          jobId: props.job._id,
+        }),
+      })
+
+      const res = await response.json();
+      if (res.success) {
+        console.log(res);
+        toast.success(res.message);
+      } else {
+        console.log(res);
+        toast.error(res.error);
+      }
+
+    } catch (error) {
+      toast.error(error);
     }
   }
 
-  const jobUrl = `${window.location.origin}/job/${props.job._id}`;
+  const checkIfSaved = async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/userjob/check-saved-job`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        body: JSON.stringify({
+          userId: user._id,
+          jobId: props.job._id,
+        }),
+      });
+      const res = await response.json();
+      
+      if (res.success) {
+        setIsSaved(res.isSaved);
+      } else {
+        console.log(res.error);
+      }
+    } catch (error) {
+      console.error("Error checking if job is saved:", error);
+    }
+  };
 
   const copyUrl = async () => {
     try {
-      const jobUrl = `${window.location.origin}/job/${props.job._id}`;
+      const jobUrl = `${window.location.origin}/job/${props?.job?._id}`;
       await navigator.clipboard.writeText(jobUrl);
       setShowText(true);
       setTimeout(() => {
@@ -120,6 +173,12 @@ const MaxJobCard = (props) => {
       console.error("Error copying URL:", error);
     }
   };
+
+  const jobUrl = `${window.location.origin}/job/${props?.job?._id}`;
+
+  useEffect(() => {
+    checkIfSaved();
+  }, [props.job._id, user._id]);
 
   return (
     <Card className="w-full flex flex-col bg-white p-4 my-2">
@@ -220,10 +279,30 @@ const MaxJobCard = (props) => {
               </Typography>
             </div>
             <div className="flex md:justify-end items-end gap-4 mt-2 md:mt-0">
-              <Button size="sm" variant="outlined" color="blue"
-              onClick={handleSaveJob}>
-                Save
-              </Button>
+              {isSaved ? (
+                <>
+                  <Button
+                    size="sm"
+                    variant="outlined"
+                    color="black"
+                    onClick={handleUnsaveJob}
+                  >
+                    Unsave
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    size="sm"
+                    variant="outlined"
+                    color="blue"
+                    onClick={handleSaveJob}
+                  >
+                    Save
+                  </Button>
+                </>
+              )}
+
               <Button size="sm" color="blue" onClick={handleResumeDialog}>
                 Apply
               </Button>

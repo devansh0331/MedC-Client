@@ -61,7 +61,7 @@ const ProfileDetails = (props) => {
       );
       const res = await response.json();
       if (!res.success) {
-        console.log(res?.error);
+        console.log(res.error);
       } else {
         setPosts(res.data);
         // console.log(res.data);

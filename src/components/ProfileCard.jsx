@@ -41,6 +41,7 @@ import { useNavigate } from "react-router-dom";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { SERVER_URL } from "../ServerURL";
 import Cookies from "js-cookie";
+import ResumeDialog from "./ResumeDialog";
 
 const ProfileCard = (props) => {
   const [check, setCheck] = useState(false);
@@ -48,9 +49,7 @@ const ProfileCard = (props) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openReport, setOpenReport] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
-
   const [reportReason, setReportReason] = useState("");
- 
   const CityArr = City.getCitiesOfCountry("IN");
   const StateArr = State.getStatesOfCountry("IN");
   const handleOpenProfile = () => setOpenProfile(!openProfile);
@@ -514,47 +513,7 @@ const ProfileCard = (props) => {
       </Dialog>
 
       {/* OPEN RESUME DIALOG */}
-      <Dialog open={openResumeDialog} handler={handleResumeDialog} size="sm">
-        <DialogHeader>My Resume</DialogHeader>
-        <DialogBody className="flex flex-col">
-          <div className="my-1 border-[1px] border-gray-400 w-full sm:w-2/3 p-2 rounded-md flex items-center justify-between"> 
-          {Resume.length > 20 ? Resume.slice(0, 20) + "..." : Resume}
-          <FaFileDownload className="w-5 h-5 cursor-pointer" onClick={() => handleResumeDownload()} />
-          </div>
-          <div className="my-1 border-[1px] border-gray-400 w-full sm:w-2/3 p-2 rounded-md flex items-center justify-between"> 
-          {Resume.length > 20 ? Resume.slice(0, 20) + "..." : Resume}
-          <FaFileDownload className="w-5 h-5 cursor-pointer" onClick={() => handleResumeDownload()} />
-          </div>
-          <div className="my-1 border-[1px] border-gray-400 w-full sm:w-2/3 p-2 rounded-md flex items-center justify-between"> 
-          {Resume.length > 20 ? Resume.slice(0, 20) + "..." : Resume}
-          <FaFileDownload className="w-5 h-5 cursor-pointer" onClick={() => handleResumeDownload()} />
-          </div>
-          <p className="mt-5">Upload New Resume</p>
-          <div className="mt-1 relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
-              <input
-                id="file-upload"
-                className="hidden"
-                type="file"
-                accept=".pdf"
-                onChange={handleFileChange}
-              />
-              <label htmlFor="file-upload" className="">
-                <IoDocumentTextSharp className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2" />{" "}
-                <span className="ml-8 absolute top-1/2 -translate-y-1/2">
-                  {resume ? resume.name : "Upload Resume"}
-                </span>
-              </label>
-              <IoClose
-                className="w-5 h-5 absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
-                onClick={() => setResume(null)}
-              />
-            </div>
-        </DialogBody>
-        <DialogFooter className="flex gap-2">
-          <Button size="sm" variant="outlined" color="blue" onClick={handleResumeDialog}>Cancel</Button>
-          <Button size="sm" color="blue">Upload</Button>
-        </DialogFooter>
-      </Dialog>
+      {/* <ResumeDialog open={openResumeDialog} handler={handleResumeDialog} user={user} /> */}
     </>
   );
 };

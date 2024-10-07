@@ -35,7 +35,7 @@ function CreatePostPopUp(props) {
     if (file) {
       formData.append("filepath", file);
       try {
-        console.log("Form Data: ", formData.getAll);
+        // console.log("Form Data: ", formData.getAll);
         const response = await fetch(`${SERVER_URL}/post/create-post`, {
           method: "POST",
           credentials: "include",
