@@ -94,8 +94,10 @@ const MaxJobCard = (props) => {
 
         const res = await response.json();
         if (res.success) {
-          console.log(res);
+          // console.log(res);
           toast.success(res.message);
+          props.parentFunction();
+          checkIfSaved();
         } else {
           console.log(res);
           toast.error(res.error);
@@ -123,8 +125,10 @@ const MaxJobCard = (props) => {
 
       const res = await response.json();
       if (res.success) {
-        console.log(res);
+        // console.log(res);
         toast.success(res.message);
+        props.parentFunction();
+        checkIfSaved();
       } else {
         console.log(res);
         toast.error(res.error);
@@ -178,7 +182,7 @@ const MaxJobCard = (props) => {
 
   useEffect(() => {
     checkIfSaved();
-  }, [props.job._id, user._id]);
+  }, [props?.job?._id, user?._id]);
 
   return (
     <Card className="w-full flex flex-col bg-white p-4 my-2">

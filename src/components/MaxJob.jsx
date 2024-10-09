@@ -47,7 +47,7 @@ const MaxJob = () => {
       </Card>
       <div className="w-full h-[75vh] overflow-y-scroll scrollbar-thin bg-background">
         {jobs.map((job) => (
-          <MaxJobCard key={job._id} job={job} />
+          <MaxJobCard key={job._id} job={job} parentFunction={getAllJobs} />
         ))}
       </div>
     </Card>

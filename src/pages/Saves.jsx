@@ -102,7 +102,7 @@ const Saves = () => {
             {activeItem == 0 && (
               <>
                 {savedJobs?.map((job) => (
-                  <MaxJobCard parent="Saved" job={job.jobId} />
+                  <MaxJobCard parent="Saved" job={job.jobId} parentFunction={getSavedJobs} />
                 ))}
               </>
             )}

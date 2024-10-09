@@ -14,6 +14,7 @@ import { IoClose } from "react-icons/io5";
 import { UserContext } from "../UserContext";
 import { SERVER_URL } from "../ServerURL";
 import Cookies from "js-cookie";
+import { MdDelete } from "react-icons/md";
 import toast, { Toaster } from "react-hot-toast";
 
 const ResumeDialog = (props) => {
@@ -21,11 +22,12 @@ const ResumeDialog = (props) => {
   const [file, setFile] = useState(null);
   const [allfiles, setAllFiles] = useState([]);
 
-  const handlefileDownload = () => {
-    const pdfUrl = file;
+  const handlefileDownload = (resumeFile, resumeName) => {
+    const pdfUrl = resumeFile;
     const link = document.createElement("a");
+    link.target = "_blank";
     link.href = pdfUrl;
-    link.download = `${props.user.name} file.pdf`;
+    link.download = `${props.user.name} resume.pdf`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -40,18 +42,18 @@ const ResumeDialog = (props) => {
     }
     setFile(selectedFile);
   };
-
+ 
   const getAllFiles = async () => {
     try {
-      const response = await fetch(`${SERVER_URL}/userfile/get-file`, {
-        method: "POST",
+      const response = await fetch(`${SERVER_URL}/userResume/get-resume`, {
+        method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
           Authorization: `Bearer ${Cookies.get("token")}`,
         },
       });
       const res = await response.json();
-      console.log(res);
+      // console.log("res", res);
       if (res.success) {
         setAllFiles(res.data);
       } else {
@@ -61,6 +63,27 @@ const ResumeDialog = (props) => {
       console.log(error);
     }
   };
+
+// const getAllResume = async () => {
+//     try {
+//       const response = await fetch(`${SERVER_URL}/userResume/get-all-resume`, {
+//         method: "GET",
+//         headers: {
+//           // "Content-Type": "application/json",
+//           Authorization: `Bearer ${Cookies.get("token")}`,
+//         },
+//       });
+//       const res = await response.json();
+//       console.log("res", res);
+//       if (res.success) {
+//         setAllFiles(res.data);
+//       } else {
+//         console.log(res.error);
+//       }
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
 
   const handleUploadfile = async () => {
     if (!file) {
@@ -73,10 +96,9 @@ const ResumeDialog = (props) => {
       // console.log(formData);
 
       try {
-        const response = await fetch(`${SERVER_URL}/userfile/add-file`, {
+        const response = await fetch(`${SERVER_URL}/userResume/add-resume`, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${Cookies.get("token")}`,
           },
           body: formData,
@@ -91,26 +113,58 @@ const ResumeDialog = (props) => {
           toast.error(res.error);
         }
       } catch (error) {
-        toast.error(error);
+        console.error(error); // Log the actual error for debugging
+        toast.error(error.message || "Error uploading resume"); // Use error message if available, otherwise a fallback message
       }
+    }
+  };
+
+  const handlefileDelete = async (id) => {
+    try {
+      const response = await fetch(`${SERVER_URL}/userResume/remove-resume/${id}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
+      const res = await response.json();
+      console.log("res", res);    
+      if (res.success) {
+        toast.success(res.message);
+        getAllFiles();
+      } else {
+        toast.error(res.error);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   useEffect(() => {
     getAllFiles();
+    // getAllResume();
   }, [user]);
 
   return (
     <Dialog open={props.open} handler={props.handler} size="sm">
-      <DialogHeader>My file</DialogHeader>
-      <DialogBody className="flex flex-col">
-        {/* {allfiles?.length > 0 && (      
-                <div className="my-1 border-[1px] border-gray-400 w-full sm:w-2/3 p-2 rounded-md flex items-center justify-between"> 
-             
-                <FaFileDownload className="w-5 h-5 cursor-pointer" onClick={() => handlefileDownload()} />
-                </div>
-            )} */}
-        <p className="mt-5">Upload New file</p>
+      <DialogHeader className="p-0 px-4 py-1">My Resume</DialogHeader>
+      <DialogBody className="flex flex-col p-0 px-4 m-0">
+        <div className="mb-4">
+        {allfiles?.length > 0 && (
+          
+            allfiles.map((file, index) => (
+              <div key={index} className="my-1 border-[1px] border-gray-400 w-full sm:w-2/3 p-2 rounded-md flex items-center justify-between"> 
+              <p>{file.resumeName}</p>
+              <div className="flex gap-1">
+              <FaFileDownload className="w-5 h-5 cursor-pointer" onClick={() => handlefileDownload(file.resumeURL, file.resumeName)} />
+              <MdDelete className="w-5 h-5 cursor-pointer" onClick={() => handlefileDelete(file._id)} />
+              </div>
+              </div>
+            ))
+          
+            )}
+        </div>
+        <p className="">Upload New Resume</p>
         <div className="mt-1 relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
           <input
             id="file-upload"
