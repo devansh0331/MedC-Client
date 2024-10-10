@@ -48,8 +48,33 @@ const Saves = () => {
     }
   };
 
+  const getAppliedJobs = async () => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/userjob/get-applied-jobs/${user._id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
+
+      const res = await response.json();
+      if (res.success) {
+        setAppliedJobs(res.appliedJobs);
+      }else{
+        console.log(res.error);
+      }
+    } catch (error) {
+      console.log(error);  
+    }
+  }
+
   useEffect(() => {
     getSavedJobs();
+    getAppliedJobs();
   }, [user._id]);
 
   return (
@@ -70,16 +95,6 @@ const Saves = () => {
             </ListItem>
             <ListItem
               className={`${
-                activeItem === 2
-                  ? "font-semibold bg-gray-100"
-                  : "font-normal text-gray-600"
-              }`}
-              onClick={() => setActiveItem(2)}
-            >
-              Posted Jobs
-            </ListItem>
-            <ListItem
-              className={`${
                 activeItem === 1
                   ? "font-semibold bg-gray-100"
                   : "font-normal text-gray-600"
@@ -87,6 +102,16 @@ const Saves = () => {
               onClick={() => setActiveItem(1)}
             >
               Applied Jobs
+            </ListItem>
+            <ListItem
+              className={`${
+                activeItem === 2
+                  ? "font-semibold bg-gray-100"
+                  : "font-normal text-gray-600"
+              }`}
+              onClick={() => setActiveItem(2)}
+            >
+              Posted Jobs
             </ListItem>
           </List>
         </Card>
@@ -106,7 +131,13 @@ const Saves = () => {
                 ))}
               </>
             )}
-            {activeItem == 1 && <MaxJobCard />}
+            {activeItem == 1 && (
+              <>
+                {appliedJobs?.map((job, index) => (
+                  <MaxJobCard parent="Applied" job={job.jobId} key={index} parentFunction={getAppliedJobs} />
+                ))}
+              </>
+            )}
             {activeItem == 2 && (
               <>
                 <MaxJobCard parent="Posted" />

@@ -173,6 +173,7 @@ const ResumeDialog = (props) => {
         const res = await response.json();
         if(res.success){
           props.handler();
+          props.checkIfApplied();
           toast.success(res.message);
         }else{
           setError(res.error);
