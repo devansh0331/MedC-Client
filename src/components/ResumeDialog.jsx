@@ -21,13 +21,15 @@ const ResumeDialog = (props) => {
   const { user } = useContext(UserContext);
   const [file, setFile] = useState(null);
   const [allfiles, setAllFiles] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [error, setError] = useState("");
 
   const handlefileDownload = (resumeFile, resumeName) => {
     const pdfUrl = resumeFile;
     const link = document.createElement("a");
     link.target = "_blank";
     link.href = pdfUrl;
-    link.download = `${props.user.name} resume.pdf`;
+    link.download = `${resumeName}`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -42,7 +44,7 @@ const ResumeDialog = (props) => {
     }
     setFile(selectedFile);
   };
- 
+
   const getAllFiles = async () => {
     try {
       const response = await fetch(`${SERVER_URL}/userResume/get-resume`, {
@@ -64,26 +66,26 @@ const ResumeDialog = (props) => {
     }
   };
 
-// const getAllResume = async () => {
-//     try {
-//       const response = await fetch(`${SERVER_URL}/userResume/get-all-resume`, {
-//         method: "GET",
-//         headers: {
-//           // "Content-Type": "application/json",
-//           Authorization: `Bearer ${Cookies.get("token")}`,
-//         },
-//       });
-//       const res = await response.json();
-//       console.log("res", res);
-//       if (res.success) {
-//         setAllFiles(res.data);
-//       } else {
-//         console.log(res.error);
-//       }
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
+  // const getAllResume = async () => {
+  //     try {
+  //       const response = await fetch(`${SERVER_URL}/userResume/get-all-resume`, {
+  //         method: "GET",
+  //         headers: {
+  //           // "Content-Type": "application/json",
+  //           Authorization: `Bearer ${Cookies.get("token")}`,
+  //         },
+  //       });
+  //       const res = await response.json();
+  //       console.log("res", res);
+  //       if (res.success) {
+  //         setAllFiles(res.data);
+  //       } else {
+  //         console.log(res.error);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
   const handleUploadfile = async () => {
     if (!file) {
@@ -109,6 +111,7 @@ const ResumeDialog = (props) => {
         if (res.success) {
           toast.success(res.message);
           getAllFiles();
+          setFile(null);
         } else {
           toast.error(res.error);
         }
@@ -121,14 +124,17 @@ const ResumeDialog = (props) => {
 
   const handlefileDelete = async (id) => {
     try {
-      const response = await fetch(`${SERVER_URL}/userResume/remove-resume/${id}`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-      });
+      const response = await fetch(
+        `${SERVER_URL}/userResume/remove-resume/${id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
       const res = await response.json();
-      console.log("res", res);    
+      console.log("res", res);
       if (res.success) {
         toast.success(res.message);
         getAllFiles();
@@ -139,6 +145,43 @@ const ResumeDialog = (props) => {
       console.log(error);
     }
   };
+// console.log(props?.jobId)
+// console.log("resume",selectedFile);
+
+  const handleJobApplication = async () => {
+    if(!selectedFile){
+      setError("Please select a file");
+      setTimeout(() => {
+        setError("");
+      },2000)
+    }else{
+      // userId, jobId, userResumeId
+      try {
+        const response = await fetch(`${SERVER_URL}/userJob/apply-job`,{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+          body: JSON.stringify({
+            userId: user._id,
+            userResumeId: selectedFile,
+            jobId: props?.jobId
+          }),
+        })
+
+        const res = await response.json();
+        if(res.success){
+          props.handler();
+          toast.success(res.message);
+        }else{
+          setError(res.error);
+        }
+      } catch (error) {
+        setError(error.message);
+      }
+    }
+  }
 
   useEffect(() => {
     getAllFiles();
@@ -147,22 +190,35 @@ const ResumeDialog = (props) => {
 
   return (
     <Dialog open={props.open} handler={props.handler} size="sm">
-      <DialogHeader className="p-0 px-4 py-1">My Resume</DialogHeader>
-      <DialogBody className="flex flex-col p-0 px-4 m-0">
+      <DialogHeader className="py-2 px-4 pt-2">{props.title}</DialogHeader>
+      <DialogBody className="flex flex-col py-0 px-4 m-0">
         <div className="mb-4">
-        {allfiles?.length > 0 && (
-          
+          {allfiles?.length > 0 &&
             allfiles.map((file, index) => (
-              <div key={index} className="my-1 border-[1px] border-gray-400 w-full sm:w-2/3 p-2 rounded-md flex items-center justify-between"> 
-              <p>{file.resumeName}</p>
-              <div className="flex gap-1">
-              <FaFileDownload className="w-5 h-5 cursor-pointer" onClick={() => handlefileDownload(file.resumeURL, file.resumeName)} />
-              <MdDelete className="w-5 h-5 cursor-pointer" onClick={() => handlefileDelete(file._id)} />
+              <div
+                key={index}
+                className={`my-1 w-full sm:w-2/3 p-2 rounded-md flex items-center justify-between cursor-pointer ${
+                  selectedFile === file._id 
+                    ? `${props.route === "Apply" ? "border-2 border-blue-400 text-blue-400" : "border-[1px] border-gray-400" }` 
+                    : "border-[1px] border-gray-400"
+                }`}
+                onClick={() => setSelectedFile(file._id)}
+              >
+                <p>{file.resumeName}</p>
+                <div className="flex gap-1">
+                  <FaFileDownload
+                    className="w-5 h-5 cursor-pointer"
+                    onClick={() =>
+                      handlefileDownload(file.resumeURL, file.resumeName)
+                    }
+                  />
+                  <MdDelete
+                    className="w-5 h-5 cursor-pointer"
+                    onClick={() => handlefileDelete(file._id)}
+                  />
+                </div>
               </div>
-              </div>
-            ))
-          
-            )}
+            ))}
         </div>
         <p className="">Upload New Resume</p>
         <div className="mt-1 relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
@@ -191,13 +247,28 @@ const ResumeDialog = (props) => {
           variant="outlined"
           color="blue"
           onClick={props.handler}
+          className={`${props.route === "Apply" ? "hidden" : "block"}`}
         >
           Cancel
         </Button>
-        <Button size="sm" color="blue" onClick={handleUploadfile}>
+        <Button
+          size="sm"
+          color="blue"
+          onClick={handleUploadfile}
+          variant={`${props.route === "Apply" ? "outlined" : "contained"}`}
+        >
           Upload
         </Button>
+        <Button
+          size="sm"
+          color="blue"
+          onClick={handleJobApplication}
+          className={`${props.route === "Apply" ? "block" : "hidden"}`}
+        >
+          Apply
+        </Button>
       </DialogFooter>
+      <div className={`text-red-500 w-full text-center mb-2 ${error === "" ? "hidden" : "block"}`}>{error}</div>
     </Dialog>
   );
 };

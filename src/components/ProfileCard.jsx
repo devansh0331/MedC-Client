@@ -513,7 +513,7 @@ const ProfileCard = (props) => {
       </Dialog>
 
       {/* OPEN RESUME DIALOG */}
-      <ResumeDialog open={openResumeDialog} handler={handleResumeDialog} user={user} />
+      <ResumeDialog open={openResumeDialog} handler={handleResumeDialog} user={user} route="profile" title="My Resume" />
     </>
   );
 };

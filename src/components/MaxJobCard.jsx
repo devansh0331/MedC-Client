@@ -31,6 +31,8 @@ import SignUpDialog from "./SignUpDialog";
 import { SERVER_URL } from "../ServerURL";
 import toast, { Toaster } from "react-hot-toast";
 import Cookies from "js-cookie";
+import ResumeApplyDialog from "./ResumeApplyDialog";
+import ResumeDialog from "./ResumeDialog";
 
 const MaxJobCard = (props) => {
   const [resume, setResume] = useState(Resume);
@@ -39,8 +41,13 @@ const MaxJobCard = (props) => {
   const [showText, setShowText] = useState(false);
   const [signUpBox, setSignUpBox] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [openApplyDialog, setOpenApplyDialog] = useState(false);
   const { user, userInfo } = useContext(UserContext);
   const navigate = useNavigate();
+
+  const handleOpenApplyDialog = () => {
+    setOpenApplyDialog(!openApplyDialog);
+  };
 
   const handleShareBox = () => {
     setShareBox(!shareBox);
@@ -185,6 +192,7 @@ const MaxJobCard = (props) => {
   }, [props?.job?._id, user?._id]);
 
   return (
+    <>
     <Card className="w-full flex flex-col bg-white p-4 my-2">
       {/* POST AND ORGANIZATION */}
       <div className="flex w-full justify-between px-0">
@@ -307,54 +315,13 @@ const MaxJobCard = (props) => {
                 </>
               )}
 
-              <Button size="sm" color="blue" onClick={handleResumeDialog}>
+              <Button size="sm" color="blue" onClick={handleOpenApplyDialog}>
                 Apply
               </Button>
             </div>
           </>
         )}
       </div>
-
-      {/* RESUME SELECTOR */}
-      <Dialog open={openResumeDialog} handler={handleResumeDialog} size="sm">
-        <DialogHeader>Select Resume</DialogHeader>
-        <DialogBody className="flex flex-col">
-          <div className="my-1 border-[1px] border-gray-400 w-full sm:w-2/3 p-2 rounded-md flex items-center justify-between">
-            {Resume.length > 20 ? Resume.slice(0, 20) + "..." : Resume}
-            <FaFileDownload
-              className="w-5 h-5 cursor-pointer"
-              onClick={() => handleResumeDownload()}
-            />
-          </div>
-          <div className="my-1 border-[1px] border-gray-400 w-full sm:w-2/3 p-2 rounded-md flex items-center justify-between">
-            {Resume.length > 20 ? Resume.slice(0, 20) + "..." : Resume}
-            <FaFileDownload
-              className="w-5 h-5 cursor-pointer"
-              onClick={() => handleResumeDownload()}
-            />
-          </div>
-          <div className="my-1 border-[1px] border-gray-400 w-full sm:w-2/3 p-2 rounded-md flex items-center justify-between">
-            {Resume.length > 20 ? Resume.slice(0, 20) + "..." : Resume}
-            <FaFileDownload
-              className="w-5 h-5 cursor-pointer"
-              onClick={() => handleResumeDownload()}
-            />
-          </div>
-        </DialogBody>
-        <DialogFooter className="flex gap-2">
-          <Button
-            size="sm"
-            variant="outlined"
-            color="blue"
-            onClick={handleResumeDialog}
-          >
-            Cancel
-          </Button>
-          <Button size="sm" color="blue">
-            Apply
-          </Button>
-        </DialogFooter>
-      </Dialog>
 
       {/* SHARE ON SOCIALS */}
       <Dialog open={shareBox} handler={handleShareBox} size="xs">
@@ -420,6 +387,10 @@ const MaxJobCard = (props) => {
 
       <Toaster position="top-right" reverseOrder={false} />
     </Card>
+
+    {/* APPLICATION DIALOG */}
+    <ResumeDialog open={openApplyDialog} handler={handleOpenApplyDialog} jobId={props.job?._id} title="Select a Resume" route="Apply" />
+    </>
   );
 };
 
