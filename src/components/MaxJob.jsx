@@ -31,6 +31,7 @@ const MaxJob = () => {
 
   useEffect(() => {
     getAllJobs();
+    // console.log(jobs);
   }, [])
   return (
     <Card className="w-full flex flex-col mx-auto mt-5 py-1 bg-white rounded-md shadow-md">

@@ -21,8 +21,6 @@ import React, { useState } from "react";
 
 const JobCardSingle = (props) => {
   const job = props.job;
-  // console.log(job);
-
 
   return (
     <div
@@ -51,11 +49,11 @@ const JobCardSingle = (props) => {
           </Typography>
         </div>
         <div className="flex flex-col">
-          <Typography className="text-sm">250 Applicants</Typography>
+          <Typography className="text-sm">{job?.noOfApplications} Applicants</Typography>
           <Typography className="text-sm">
             Posted by,{" "}
             <span className="text-blue-500 cursor-pointer">
-              {job?.user ? job.user : "N/A"}
+              {job?.user?.name ? job.user?.name : "N/A"}
             </span>
           </Typography>
         </div>
@@ -77,29 +75,25 @@ const JobCardSingle = (props) => {
             </span>
           </Typography>
           <Typography className="flex items-center gap-1">
-            <TiDocumentText className="w-5 h-5 text-black" />
-            <span className="">{job?.experience ? job.experience : "N/A"}</span>
+            <FaUserGraduate className="w-5 h-5 text-black" />
+            <span className="">{job?.requiredQualification ? job.requiredQualification : "N/A"}</span>
           </Typography>
           <Typography className="flex items-center gap-1">
             <IoMdTimer className="w-5 h-5 text-black" />
-            <span className="">{job?.workTiming ? job.workTiming : "N/A"}</span>
+            <span className="">{job?.employementType ? job.employementType : "N/A"}</span>
           </Typography>
           <Typography className="flex items-center gap-1">
-            <FaUserGraduate className="w-5 h-5 text-black" />
+            <TiDocumentText className="w-5 h-5 text-black" />
             <span className="">
-              {job?.requiredQualification ? job.requiredQualification : "N/A"}
+              {job?.minExperience ? job.minExperience : "N/A"}
             </span>
-          </Typography>
-          <Typography className="flex items-center gap-1">
-            <HiHomeModern className="w-5 h-5 text-black" />
-            <span className="">{job?.jobType ? job.jobType : "N/A"}</span>
           </Typography>
         </div>
 
         {/* DETAILS 2 */}
         <Typography className="flex items-center px-5 pt-3 2xl:pt-1 ">
           <span className="text-sm text-gray-700">
-            Last Date to apply: 30 May
+            Last Date to apply: {job?.lastDateToApply ?  props.job.lastDateToApply.split("T")[0] : "N/A"}
           </span>
         </Typography>
 
@@ -122,19 +116,9 @@ const JobCardSingle = (props) => {
         )}
       </CardBody>
 
-      <CardBody className="m-0 p-0 mt-3">
+      <div className="m-0 p-0 mt-3">
         <div className="w-full py-2 px-3">
-          <Typography className="text-lg text-gray-700 font-semibold">
-            Job Description
-          </Typography>
-          <p className="flex flex-col text-sm list-disc mx-5 mt-1">
-            {job?.jobDescription ? job.jobDescription : "N/A"}
-          </p>
-          <Typography className="text-lg text-gray-700 font-semibold mt-2">
-            Benefits
-          </Typography>
-          <p className="flex flex-col text-sm list-disc mx-5 mt-1">
-            {job?.benefits ? job.benefits : "N/A"}
+          <p className="flex flex-col text-sm list-disc mx-5 mt-1" dangerouslySetInnerHTML={{ __html: job?.description ? job.description : "N/A" }}>
           </p>
         </div>
 
@@ -154,7 +138,7 @@ const JobCardSingle = (props) => {
             </Button>
           </div>
         )}
-      </CardBody>
+      </div>
     </div>
   );
 };

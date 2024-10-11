@@ -26,6 +26,8 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { FaSquareWhatsapp } from "react-icons/fa6";
 import { FaCopy } from "react-icons/fa6";
+import { TbPigMoney } from "react-icons/tb";
+import { FaUserGraduate } from "react-icons/fa6";
 import { UserContext } from "../UserContext";
 import SignUpDialog from "./SignUpDialog";
 import { SERVER_URL } from "../ServerURL";
@@ -72,15 +74,15 @@ const MaxJobCard = (props) => {
     setResume(selectedFile);
   };
 
-  const handleResumeDownload = () => {
-    const pdfUrl = resume;
-    const link = document.createElement("a");
-    link.href = pdfUrl;
-    link.download = `${props.user.name} Resume.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // const handleResumeDownload = () => {
+  //   const pdfUrl = resume;
+  //   const link = document.createElement("a");
+  //   link.href = pdfUrl;
+  //   link.download = `${props.user.name} Resume.pdf`;
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   const handleSaveJob = async () => {
     if (!userInfo.state) {
@@ -240,33 +242,15 @@ const MaxJobCard = (props) => {
 
         {/* SALARY AND OTHER DETAILS */}
         <div className="flex flex-col text-gray-800 w-full px-2 my-1">
-          <Typography className="flex items-center">
-            <TiDocumentText className="w-5 h-5" />
-            <span className="ml-3">
-              {props.job?.experience ? props.job.experience : "N/A"} Experience
-            </span>
-          </Typography>
-          <Typography className="flex items-center">
-            <MdOutlineLocationCity className="w-5 h-5" />
-            <span className="ml-3">
-              {props.job?.location ? props.job.location : "N/A"}
-            </span>
-          </Typography>
-          <Typography className="flex items-center">
-            <FaMoneyBill className="w-5 h-5" />
+        <Typography className="flex items-center">
+            <TbPigMoney className="w-5 h-5" />
             <span className="ml-3">
               {props.job?.salaryRange ? props.job.salaryRange : "N/A"}
             </span>
           </Typography>
-          <Typography className="flex items-center">
-            <IoMdTimer className="w-5 h-5" />
-            <span className="ml-3">
-              {props.job?.workTiming ? props.job.workTiming : "N/A"}
-            </span>
-          </Typography>
           {props.job?.requiredQualification && (
             <Typography className="flex items-center">
-              <FaGraduationCap className="w-5 h-5" />
+              <FaUserGraduate className="w-5 h-5" />
               <span className="ml-3">
                 {props.job?.requiredQualification
                   ? props.job.requiredQualification
@@ -275,8 +259,29 @@ const MaxJobCard = (props) => {
             </Typography>
           )}
           <Typography className="flex items-center">
+            <IoMdTimer className="w-5 h-5" />
+            <span className="ml-3">
+              {props.job?.employementType ? props.job.employementType : "N/A"}
+            </span>
+          </Typography>
+          <Typography className="flex items-center">
+            <TiDocumentText className="w-5 h-5" />
+            <span className="ml-3">
+              {props.job?.minExperience ? props.job.minExperience : "N/A"} 
+            </span>
+          </Typography>
+          <Typography className="flex items-center">
+            <MdOutlineLocationCity className="w-5 h-5" />
+            <span className="ml-3">
+              {props.job?.location ? props.job.location : "N/A"}
+            </span>
+          </Typography>
+
+          
+          
+          <Typography className="flex items-center">
             <FaRegCalendarAlt className="w-5 h-5" />
-            <span className="ml-3">31 August 2024</span>
+            <span className="ml-3">{props.job?.lastDateToApply ? props.job.lastDateToApply.split("T")[0] : "N/A"}</span>
           </Typography>
         </div>
 
@@ -286,10 +291,7 @@ const MaxJobCard = (props) => {
             <>
               <div className="flex flex-col">
                 <Typography className="text-gray-700">
-                  250 Applicants
-                </Typography>
-                <Typography className="text-gray-700">
-                  Posted 2 Days Ago
+                  {props.job?.noOfApplications ? props.job.noOfApplications : 0} Applicants
                 </Typography>
               </div>
               <div className="flex md:justify-end items-end gap-4 mt-2 md:mt-0">
@@ -310,14 +312,13 @@ const MaxJobCard = (props) => {
             <>
               <div className="flex flex-col">
                 <Typography className="text-gray-700">
-                  250 Applicants
+                  {props.job?.noOfApplications ? props.job.noOfApplications : 0} Applicants
                 </Typography>
                 <Typography className="text-gray-700">
                   Posted By:{" "}
                   <span className="text-blue-500 cursor-pointer">
-                    Aman Mishra
+                    {props.job?.user?.name ? props.job.user.name : "Unknown"}
                   </span>{" "}
-                  | 2 Days Ago
                 </Typography>
               </div>
 

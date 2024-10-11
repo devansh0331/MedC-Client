@@ -25,7 +25,7 @@ const SingleJob = (props) => {
       const res = await response.json();
       if (res.success) {
         setJob(res.job);
-        console.log(res.job);
+        // console.log(res.job);
         
       }
     } catch (error) {
