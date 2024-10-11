@@ -72,9 +72,36 @@ const Saves = () => {
     }
   }
 
+  const getPostedJobs = async () => {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/userjob/get-posted-job/${user._id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
+
+      const res = await response.json();
+      if (res.success) {
+        setPostedJobs(res.postedJobs);
+      }else{
+        console.log(res.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getSavedJobs();
     getAppliedJobs();
+    getPostedJobs();
+    console.log(postedJobs);
+    
   }, [user._id]);
 
   return (
@@ -140,8 +167,9 @@ const Saves = () => {
             )}
             {activeItem == 2 && (
               <>
-                <MaxJobCard parent="Posted" />
-                <MaxJobCard parent="Posted" />
+                {postedJobs?.map((job, index) => (
+                  <MaxJobCard parent="Posted" job={job.jobId} key={index} parentFunction={getPostedJobs} />
+                ))}
               </>
             )}
           </div>

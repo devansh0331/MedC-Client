@@ -74,16 +74,6 @@ const MaxJobCard = (props) => {
     setResume(selectedFile);
   };
 
-  // const handleResumeDownload = () => {
-  //   const pdfUrl = resume;
-  //   const link = document.createElement("a");
-  //   link.href = pdfUrl;
-  //   link.download = `${props.user.name} Resume.pdf`;
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   document.body.removeChild(link);
-  // };
-
   const handleSaveJob = async () => {
     if (!userInfo.state) {
       setSignUpBox(true);
@@ -217,6 +207,7 @@ const MaxJobCard = (props) => {
   useEffect(() => {
     checkIfSaved();
     checkIfApplied();
+    console.log(props.job);
   }, [props?.job?._id, user?._id]);
 
   return (
@@ -301,7 +292,7 @@ const MaxJobCard = (props) => {
                 <Button
                   size="sm"
                   color="blue"
-                  onClick={() => navigate(`/job/:id/applications`)}
+                  onClick={() => navigate(`/job/${props?.job._id}/applications`)}
                 >
                   View
                 </Button>
