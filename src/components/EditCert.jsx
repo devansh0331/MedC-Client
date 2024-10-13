@@ -12,6 +12,7 @@ import {
 import { IoClose } from "react-icons/io5";
 import { RiGalleryFill } from "react-icons/ri";
 import toast, { Toaster } from "react-hot-toast";
+// import { set } from "mongoose";
 
 const EditCert = (props) => {
   const [certificate, setCertificate] = useState("");
@@ -25,68 +26,161 @@ const EditCert = (props) => {
   const [check, setCheck] = useState(false);
 
   const handleCertificate = async () => {
-    if (certificate != "" && issuer != "" && description != "") {
-      setCheck(false);
-      if (props.singleCertificateData._id == undefined) {
-        try {
-          const response = await fetch(
-            `${SERVER_URL}/auth/update-profile/add/certificate`,
-            {
-              method: "POST",
-              credentials: "include",
-
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${Cookies.get("token")}`,
-              },
-              body: JSON.stringify({
-                certificate,
-                issuer,
-                description,
-              }),
+    // console.log( file.length);
+    if (certificate.length <= 0 || issuer.length <= 0 || description.length <= 0) {
+      setCheck(true);
+      setTimeout(() => {
+        setCheck(false);
+      }, 2000);
+      console.log("First Check")
+      return;
+    }else{
+      const formData = new FormData();
+      if (
+        certificate != "" &&
+        issuer != "" &&
+        description != ""
+      ) {
+        setCheck(false);
+        if (props.singleCertificateData._id == undefined) {
+          if (file && certificate != "" && issuer != "" && description != "") {
+            const data = {
+              certificate,
+              issuer,
+              description,
+            };
+            formData.append("data", JSON.stringify(data));
+            formData.append("filepath", file);
+            try {
+              const response = await fetch(
+                `${SERVER_URL}/auth/update-profile/add/certificate-with-file`,
+                {
+                  method: "POST",
+                  credentials: "include",
+                  headers: {
+                    Authorization: `Bearer ${Cookies.get("token")}`,
+                  },
+                  body: formData,
+                }
+              );
+              const res = await response.json();
+              // console.log(res);
+              if (res.success) {
+                props.getUserCertificate();
+                props.setSingleCertificateData({});
+                props.handleCertEdit();
+                props.setToast("Certificate added successfully", true);
+              } else {
+                props.setToast("Failed to add", false);
+              }
+            } catch (error) {
+              props.setToast("Failed to add", false);
             }
-          );
-          const res = await response.json();
-          console.log("Edit Cert: ", res);
-          if (res.success) {
-            props.getUserCertificate();
-            props.setSingleCertificateData({});
-            props.handleCertEdit();
-            props.setToast("Certificate added successfully", true);
+          } else {
+            const data = {
+              certificate,
+              issuer,
+              description,
+            };
+            formData.append("data", JSON.stringify(data));
+            try {
+              const response = await fetch(
+                `${SERVER_URL}/auth/update-profile/add/certificate`,
+                {
+                  method: "POST",
+                  credentials: "include",
+                  headers: {
+                    Authorization: `Bearer ${Cookies.get("token")}`,
+                  },
+                  body: formData
+                }
+              );
+              const res = await response.json();
+              // console.log("Edit Cert: ", res);
+              if (res.success) {
+                props.getUserCertificate();
+                props.setSingleCertificateData({});
+                props.handleCertEdit();
+                props.setToast("Certificate added successfully", true);
+              }
+            } catch (error) {
+              props.setToast("Failed to add", false);
+            }
           }
-        } catch (error) {
-          props.setToast("Failed to add", false);
+        } else {
+          if (file) {
+            console.log("File: ", file);
+            const data = {
+              certificate,
+              issuer,
+              description,
+              file
+            };
+            formData.append("data", JSON.stringify(data));
+            // formData.append("filepath", file);
+            try {
+              const response = await fetch(
+                `${SERVER_URL}/auth/update-profile/edit/certificate-with-file/${props.singleCertificateData._id}`,
+                {
+                  method: "POST",
+                  credentials: "include",
+                  headers: {
+                    Authorization: `Bearer ${Cookies.get("token")}`,
+                  },
+                  body: formData,
+                }
+              );
+              const res = await response.json();
+              // console.log(res);
+              if (res.success) {
+                props.getUserCertificate();
+                props.setSingleCertificateData({});
+                props.handleCertEdit();
+                props.setToast("Certificate edited successfully", true);
+              } else {
+                props.setToast("Failed to add", false);
+              }
+            } catch (error) {
+              props.setToast("Failed to add", false);
+            }
+          } else {
+            const data = {
+              certificate,
+              issuer,
+              description,
+            }
+            formData.append("data", JSON.stringify(data));
+            try {
+              const response = await fetch(
+                `${SERVER_URL}/auth/update-profile/edit/certificate-without-file/${props.singleCertificateData._id}`,
+                {
+                  method: "POST",
+                  credentials: "include",
+                  headers: {
+                    Authorization: `Bearer ${Cookies.get("token")}`,
+                  },
+                  body: formData
+                }
+              );
+              const res = await response.json();
+              if (res.success) {
+                props.getUserCertificate();
+                props.setSingleCertificateData({});
+                props.handleCertEdit();
+                props.setToast("Certificate added successfully", true);
+              }
+            } catch (error) {
+              props.setToast("Failed to update", false);
+            }
+          }
         }
       } else {
-        try {
-          const response = await fetch(
-            `${SERVER_URL}/auth/update-profile/edit/certificate/${props.singleCertificateData._id}`,
-            {
-              method: "POST",
-              credentials: "include",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                certificate,
-                issuer,
-                description,
-              }),
-            }
-          );
-          const res = await response.json();
-          if (res.success) {
-            props.getUserCertificate();
-            props.setSingleCertificateData({});
-            props.handleCertEdit();
-            props.setToast("Certificate added successfully", true);
-          }
-        } catch (error) {
-          props.setToast("Failed to update", false);
-        }
+        console.log("Second Check")
+        setCheck(true);
+        setTimeout(() => {
+          setCheck(false);
+        }, 2000);
       }
-    } else {
-      setCheck(true);
     }
   };
   const handleDeleteCertificate = async () => {
@@ -101,7 +195,7 @@ const EditCert = (props) => {
         );
         const res = await response.json();
 
-        console.log(res.success);
+        // console.log(res.success);
         if (res.success) {
           props.getUserCertificate();
           props.setSingleCertificateData({});
@@ -139,6 +233,11 @@ const EditCert = (props) => {
         ? props.singleCertificateData.description
         : ""
     );
+    setFile(
+      props.singleCertificateData && props.singleCertificateData.certificateURL
+        ? props.singleCertificateData.certificateURL
+        : null
+    );
   }, [props.singleCertificateData]);
 
   return (
@@ -148,11 +247,6 @@ const EditCert = (props) => {
           Edit Certificates
         </Typography>
         <div className="flex">
-          {check && (
-            <Typography className="text-red-500">
-              All fields are mandetory
-            </Typography>
-          )}
           <IoClose
             className="cursor-pointer w-6 h-6"
             onClick={handleCertEdit}
@@ -183,7 +277,7 @@ const EditCert = (props) => {
             id="file-upload-image"
             className="hidden"
             type="file"
-            accept=".pdf"
+            accept="image/*"
             onChange={(e) => setFile(e.target.files[0])}
           />
           <label htmlFor="file-upload-image">
@@ -217,6 +311,11 @@ const EditCert = (props) => {
           Delete
         </Button>
       </div>
+      {check && (
+        <Typography className="text-red-500 text-center w-full">
+          All fields are mandatory
+        </Typography>
+      )}
     </Dialog>
   );
 };

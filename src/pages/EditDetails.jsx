@@ -53,6 +53,8 @@ const EditDetails = () => {
     getUser,
     user,
   } = useContext(UserContext);
+ 
+
   const [section, setSection] = useState("About");
   const [openAboutEdit, setOpenAboutEdit] = useState(false);
   const [openExpEdit, setOpenExpEdit] = useState(false);
@@ -456,6 +458,7 @@ const EditDetails = () => {
                     {userCertificate.map((certificate, key) => (
                       <Card
                         shadow={false}
+                        key={key}
                         className="pb-2 mb-2 border-b-2 rounded-none"
                       >
                         <div
@@ -467,21 +470,26 @@ const EditDetails = () => {
                         >
                           <FaRegEdit />
                         </div>
-                        {certificate.certificate && (
+                        {certificate?.certificate && (
                           <Typography className="text-gray-800 text-md">
-                            {certificate.certificate}
+                            {certificate?.certificate}
                           </Typography>
                         )}
-                        {certificate.issuer && (
+                        {certificate?.issuer && (
                           <Typography className="text-gray-600 text-base">
-                            {certificate.issuer}
+                            {certificate?.issuer}
                           </Typography>
                         )}
-                        {certificate.description && (
+                        {certificate?.certificateURL && (
+                          <>
+                          <object data={`${certificate?.certificateURL}`} className="h-28 w-40 object-contain" />
+                          </>
+                        )}
+                        {certificate?.description && (
                           <Typography className="text-gray-800 text-base my-2">
-                            {certificate.description}
+                            {certificate?.description}
                           </Typography>
-                        )}
+                        )} 
                       </Card>
                     ))}
                     <img

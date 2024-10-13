@@ -99,7 +99,7 @@ const MaxJobCard = (props) => {
           props.parentFunction();
           checkIfSaved();
         } else {
-          console.log(res);
+          // console.log(res);
           toast.error(res.error);
         }
       } catch (error) {
@@ -130,7 +130,7 @@ const MaxJobCard = (props) => {
         props.parentFunction();
         checkIfSaved();
       } else {
-        console.log(res);
+        // console.log(res);
         toast.error(res.error);
       }
     } catch (error) {
@@ -202,13 +202,39 @@ const MaxJobCard = (props) => {
     }
   };
 
-  const jobUrl = `${window.location.origin}/job/${props?.job?._id}`;
+  const deleteApplication = async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/userjob/delete-application`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        body: JSON.stringify({
+          userId: user._id,
+          jobId: props.job._id,
+        }),
+      });
+      const res = await response.json();
+      if (res.success) {
+        checkIfApplied();
+        toast.success(res.message);
+      } else {
+        toast.error(res.error);
+      }
+    } catch (error) {
+      console.error("Error deleting application:", error);
+    }
+  };
+  
+    useEffect(() => {
+      checkIfSaved();
+      checkIfApplied();
+      // console.log(props.job);
+    }, [props?.job?._id, user?._id]);
 
-  useEffect(() => {
-    checkIfSaved();
-    checkIfApplied();
-    console.log(props.job);
-  }, [props?.job?._id, user?._id]);
+  const jobUrl = `${window.location.origin}/job/${props?.job?._id}`;
 
   return (
     <>
@@ -266,10 +292,7 @@ const MaxJobCard = (props) => {
             <span className="ml-3">
               {props.job?.location ? props.job.location : "N/A"}
             </span>
-          </Typography>
-
-          
-          
+          </Typography> 
           <Typography className="flex items-center">
             <FaRegCalendarAlt className="w-5 h-5" />
             <span className="ml-3">{props.job?.lastDateToApply ? props.job.lastDateToApply.split("T")[0] : "N/A"}</span>
@@ -339,7 +362,7 @@ const MaxJobCard = (props) => {
                 )}
                 {isApplied ? (
                   <div className="flex md:justify-end items-end gap-4 mt-2 md:mt-0">
-                    <Button size="sm" variant="" color="red">
+                    <Button size="sm" variant="" color="red" onClick={() => deleteApplication()}>
                       Withdraw
                     </Button>
                   </div>
