@@ -81,8 +81,17 @@ const ViewApplications = () => {
     }
   };
 
+  const downloadResume = (file) => {
+    const link = document.createElement("a");
+    link.href = file;
+    link.target = "_blank";
+    link.download = "resume.pdf";
+    link.click();
+    link.remove();
+  }
+
   useEffect(() => {
-    getSingleJob();   
+    getSingleJob();
   }, []);
 
   useEffect(() => {
@@ -91,111 +100,137 @@ const ViewApplications = () => {
 
   useEffect(() => {
     getAllApplications();
+    console.log(applications);
   }, [jobId]);
-
+ 
   return (
     <div className="flex md:overflow-y-hidden z-0 bg-background h-[90vh] w-full overflow-y-scroll scrollbar-thin">
       <SideBar />
-      {userInfo.state ? (   
-      <>
-      {user?._id == job?.user?._id ? (
-        <div className="flex w-[92%] lg:w-[90%] 2xl:w-[80%] mx-auto h-full gap-6 justify-center mt-5">
-          <div className="lg:w-1/3 w-2/5 hidden md:block">
-            <JobCardSingle job={job} route={"ViewApplications"} />
-          </div>
-          <div className="flex flex-col w-full lg:w-1/2 md:w-3/5">
-            <Accordion
-              onClick={() => setJobOpen(!jobOpen)}
-              open={jobOpen}
-              className="bg-white mb-2 rounded-lg px-4  md:hidden"
-              icon={<FaChevronDown />}
-            >
-              <AccordionHeader className="border-none">
-                {jobs[0]?.jobTitle}, {jobs[0]?.organziationName}
-              </AccordionHeader>
-              <AccordionBody>
-                <JobCardSingle job={jobs[0]} route={"ViewApplications"} />
-              </AccordionBody>
-            </Accordion>
-            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 overflow-visible md:overflow-y-scroll max-h-[80vh] scrollbar-thin gap-3">
-              {applications.map((user, index) => (
-                <>
-                  {user.userId.name != "" ? (
-                    <Card
-                      className="p-3 flex flex-col gap-3 justify-between"
-                      key={index}
-                    >
-                      <CardHeader
-                        floated={false}
-                        shadow={false}
-                        color="transparent"
-                        className="p-0 m-0  flex flex-col items-center justify-center w-full border-b-2 rounded-none pb-2 "
-                      >
-                        <Badge color="green" overlap="circular" invisible>
-                          <Avatar
-                            src={
-                              user.userId.profileURL
-                                ? user.userId.profileURL
-                                : altprofile
+      {userInfo.state ? (
+        <>
+          {user?._id == job?.user?._id ? (
+            <div className="flex w-[92%] lg:w-[90%] 2xl:w-[80%] mx-auto h-full gap-6 justify-center mt-5">
+              <div className="lg:w-1/3 w-2/5 hidden md:block">
+                <JobCardSingle job={job} route={"ViewApplications"} />
+              </div>
+              <div className="flex flex-col w-full lg:w-1/2 md:w-3/5">
+                <Accordion
+                  onClick={() => setJobOpen(!jobOpen)}
+                  open={jobOpen}
+                  className="bg-white mb-2 rounded-lg px-4  md:hidden"
+                  icon={<FaChevronDown />}
+                >
+                  <AccordionHeader className="border-none">
+                    {jobs[0]?.jobTitle}, {jobs[0]?.organziationName}
+                  </AccordionHeader>
+                  <AccordionBody>
+                    <JobCardSingle job={jobs[0]} route={"ViewApplications"} />
+                  </AccordionBody>
+                </Accordion>
+                <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 overflow-visible md:overflow-y-scroll max-h-[80vh] scrollbar-thin gap-3">
+                  {applications.map((user, index) => (
+                    <>
+                      {user.userId.name != "" ? (
+                        <Card
+                          className="p-3 flex flex-col gap-3 justify-between"
+                          key={index}
+                        >
+                          <CardHeader
+                            floated={false}
+                            shadow={false}
+                            color="transparent"
+                            className="p-0 m-0  flex flex-col items-center justify-center w-full border-b-2 rounded-none pb-2 "
+                          >
+                            <Badge color="green" overlap="circular" invisible>
+                              <Avatar
+                                src={
+                                  user.userId.profileURL
+                                    ? user.userId.profileURL
+                                    : altprofile
+                                }
+                                alt="altprofile"
+                                size="xl"
+                                className="w-24 h-24 mx-auto"
+                              />
+                            </Badge>
+                            <Typography className="text-lg mt-2">
+                              {user.name}
+                            </Typography>
+                          </CardHeader>
+                          {user.userId.location || user.userId.bio ? (
+                            <CardBody className="m-0 p-0 border-b-2 rounded-none pb-2">
+                              {user.userId.bio && (
+                                <Typography className="flex items-center">
+                                  <BsBuildingsFill />
+                                  <span className="ml-1">
+                                    {user.userId.bio}
+                                  </span>
+                                </Typography>
+                              )}
+                              {user.userId.location && (
+                                <Typography className="flex items-center">
+                                  <IoLocationSharp />
+                                  <span className="ml-1">
+                                    {user.userId.location}
+                                  </span>
+                                </Typography>
+                              )}
+                            </CardBody>
+                          ) : null}
+                          <CardFooter className="m-0 p-0 mx-auto flex justify-around w-full">
+                            <Button
+                              size="sm"
+                              className="px-2 py-1 font-light rounded-md hidden xl:block"
+                              color="light-blue"
+                              onClick={() => setUserExpand(user.userId)}
+                            >
+                              Show Details
+                            </Button>
+                            <Button
+                              size="sm"
+                              className="px-2 py-1 font-light rounded-md xl:hidden block"
+                              color="light-blue"
+                              onClick={() => {
+                                setUserExpand(user.userId);
+                                handleProfileExpand();
+                              }}
+                            >
+                              Show Details
+                            </Button>
+                            {user.resume && (
+                              <Button
+                              size="sm"
+                              className="px-2 py-1 rounded-md"
+                              color="black"
+                              variant="outlined"
+                              onClick={() => downloadResume(user.resume.resumeURL)}
+                              >
+                              Resume
+                            </Button>
+                            )
                             }
-                            alt="altprofile"
-                            size="xl"
-                            className="w-24 h-24 mx-auto"
-                          />
-                        </Badge>
-                        <Typography className="text-lg mt-2">
-                          {user.name}
-                        </Typography>
-                      </CardHeader>
-                      {user.userId.location || user.userId.bio ? (
-                        <CardBody className="m-0 p-0 border-b-2 rounded-none pb-2">
-                          {user.userId.bio && (
-                            <Typography className="flex items-center">
-                              <BsBuildingsFill />
-                              <span className="ml-1">{user.userId.bio}</span>
-                            </Typography>
-                          )}
-                          {user.userId.location && (
-                            <Typography className="flex items-center">
-                              <IoLocationSharp />
-                              <span className="ml-1">
-                                {user.userId.location}
-                              </span>
-                            </Typography>
-                          )}
-                        </CardBody>
+                          </CardFooter>
+                        </Card>
                       ) : null}
-                      <CardFooter className="m-0 p-0 mx-auto">
-                        <Button
-                          size="sm"
-                          className="px-2 py-1 font-light rounded-md hidden xl:block"
-                          color="light-blue"
-                          onClick={() => setUserExpand(user.userId)}
-                        >
-                          Show Details
-                        </Button>
-                        <Button
-                          size="sm"
-                          className="px-2 py-1 font-light rounded-md xl:hidden block"
-                          color="light-blue"
-                          onClick={() => {
-                            setUserExpand(user.userId);
-                            handleProfileExpand();
-                          }}
-                        >
-                          Show Details
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  ) : null}
-                </>
-              ))}
+                    </>
+                  ))}
+                </div>
+              </div>
+              <div className="w-1/4 hidden xl:block">
+                <ProfileExpand user={userExpand} />
+              </div>
             </div>
-          </div>
-          <div className="w-1/4 hidden xl:block">
-            <ProfileExpand user={userExpand} />
-          </div>
-        </div>
+          ) : (
+            <div className="flex flex-col justify-center items-center w-full h-[80vh]">
+              <Typography className="my-4 text-3xl font-semibold">
+                Please Sign In to see this page
+              </Typography>
+              <Button onClick={() => navigate("/signin")} color="blue">
+                Sign In
+              </Button>
+            </div>
+          )}
+        </>
       ) : (
         <div className="flex flex-col justify-center items-center w-full h-[80vh]">
           <Typography className="my-4 text-3xl font-semibold">
@@ -206,18 +241,6 @@ const ViewApplications = () => {
           </Button>
         </div>
       )}
-      </>
-      ) :(
-        <div className="flex flex-col justify-center items-center w-full h-[80vh]">
-          <Typography className="my-4 text-3xl font-semibold">
-            Please Sign In to see this page
-          </Typography>
-          <Button onClick={() => navigate("/signin")} color="blue">
-            Sign In
-          </Button>
-        </div>
-      )
-      }
       <Dialog
         open={profileExpand}
         handler={handleProfileExpand}

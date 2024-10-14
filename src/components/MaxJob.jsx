@@ -109,27 +109,31 @@ const MaxJob = () => {
   const handleFilterJobs = () => {
     const selectedKeyword = keyword.split('|').map(word => word.trim()).filter(item => item !== "");
     const selectedLocation = location.split('|').map(word => word.trim()).filter(item => item !== "");
-    
+    let arr = []
     if(selectedKeyword.length === 0 && selectedLocation.length === 0) {
       setFilteredJobs(jobs);
     }
     else if(selectedKeyword.length !== 0 && selectedLocation.length === 0) {
       selectedKeyword.map((keyword) => {
-        setFilteredJobs(jobs.filter(job => job.jobTitle.toLowerCase().includes(keyword.toLowerCase())));
+        arr.push(jobs.filter(job => job.jobTitle.toLowerCase().includes(keyword.toLowerCase())));
+        // setFilteredJobs(jobs.filter(job => job.jobTitle.toLowerCase().includes(keyword.toLowerCase())));
       })
     }
     else if(selectedKeyword.length === 0 && selectedLocation.length !== 0) {
       selectedLocation.map((location) => {
-        setFilteredJobs(jobs.filter(job => job.location.toLowerCase().includes(location.toLowerCase())));
+        arr.push(jobs.filter(job => job.location.toLowerCase().includes(location.toLowerCase())))
+        // setFilteredJobs(jobs.filter(job => job.location.toLowerCase().includes(location.toLowerCase())));
       })
     }
     else if(selectedKeyword.length !== 0 && selectedLocation.length !== 0) {
       selectedKeyword.map((keyword) => {
         selectedLocation.map((location) => {
-          setFilteredJobs(jobs.filter(job => job.jobTitle.toLowerCase().includes(keyword.toLowerCase()) && job.location.toLowerCase().includes(location.toLowerCase())));
+          arr.push(jobs.filter(job => job.jobTitle.toLowerCase().includes(keyword.toLowerCase()) && job.location.toLowerCase().includes(location.toLowerCase())))
+          // setFilteredJobs(jobs.filter(job => job.jobTitle.toLowerCase().includes(keyword.toLowerCase()) && job.location.toLowerCase().includes(location.toLowerCase())));
         })
       })  
     }
+    setFilteredJobs(arr.flat());
   }
 
   // USE EFFECTS

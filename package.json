@@ -51,6 +51,7 @@
     "html-loader": "^5.1.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
+    "tailwindcss-scoped-preflight": "^3.4.5",
     "vite": "^5.2.0"
   }
 }

@@ -1,5 +1,7 @@
 const { List, ListItem } = require("@material-tailwind/react");
 const withMT = require("@material-tailwind/react/utils/withMT");
+const { scopedPreflightStyles, isolateOutsideOfContainer  } = require('tailwindcss-scoped-preflight');
+
 
 module.exports = withMT({
   content: [
@@ -122,6 +124,11 @@ module.exports = withMT({
       }
 
       addUtilities(newUtilities, ['responsive'])
-    }
+    },
+    scopedPreflightStyles({
+      isolationStrategy: isolateOutsideOfContainer('.no-twp', {
+        plus: '.twp', // optional, if you have your Tailwind components under .no-twp, you need them to be preflighted
+      }),
+    }),
   ],
 });

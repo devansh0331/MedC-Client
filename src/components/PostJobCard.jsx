@@ -218,7 +218,7 @@ const PostJobCard = () => {
             {/* Educational requirement */}
             <Input
               label="Educational requirement"
-              className="w-full"
+              className=""
               onChange={(e) => setRequiredQualification(e.target.value)}
               value={requiredQualification}
             />

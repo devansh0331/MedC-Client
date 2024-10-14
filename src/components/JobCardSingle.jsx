@@ -118,8 +118,8 @@ const JobCardSingle = (props) => {
 
       <div className="m-0 p-0 mt-3">
         <div className="w-full py-2 px-3">
-          <p className="flex flex-col text-sm list-disc mx-5 mt-1" dangerouslySetInnerHTML={{ __html: job?.description ? job.description : "N/A" }}>
-          </p>
+          <div className="no-twp" dangerouslySetInnerHTML={{__html: job?.description ? job.description : "N/A"}}>
+          </div>
         </div>
 
         {props.route === "ViewApplications" ? (

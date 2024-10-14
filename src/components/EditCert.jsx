@@ -108,70 +108,32 @@ const EditCert = (props) => {
             }
           }
         } else {
-          if (file) {
-            console.log("File: ", file);
-            const data = {
-              certificate,
-              issuer,
-              description,
-              file
-            };
-            formData.append("data", JSON.stringify(data));
-            // formData.append("filepath", file);
-            try {
-              const response = await fetch(
-                `${SERVER_URL}/auth/update-profile/edit/certificate-with-file/${props.singleCertificateData._id}`,
-                {
-                  method: "POST",
-                  credentials: "include",
-                  headers: {
-                    Authorization: `Bearer ${Cookies.get("token")}`,
-                  },
-                  body: formData,
-                }
-              );
-              const res = await response.json();
-              // console.log(res);
-              if (res.success) {
-                props.getUserCertificate();
-                props.setSingleCertificateData({});
-                props.handleCertEdit();
-                props.setToast("Certificate edited successfully", true);
-              } else {
-                props.setToast("Failed to add", false);
-              }
-            } catch (error) {
-              props.setToast("Failed to add", false);
+          console.log(certificate, issuer, description);
+          
+          const response = await fetch(
+            `${SERVER_URL}/auth/update-profile/edit/certificate/${props.singleCertificateData._id}`,
+            {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${Cookies.get("token")}`,
+              },
+              body: JSON.stringify({
+                certificate,
+                issuer,
+                description,
+              }),
             }
-          } else {
-            const data = {
-              certificate,
-              issuer,
-              description,
-            }
-            formData.append("data", JSON.stringify(data));
-            try {
-              const response = await fetch(
-                `${SERVER_URL}/auth/update-profile/edit/certificate-without-file/${props.singleCertificateData._id}`,
-                {
-                  method: "POST",
-                  credentials: "include",
-                  headers: {
-                    Authorization: `Bearer ${Cookies.get("token")}`,
-                  },
-                  body: formData
-                }
-              );
-              const res = await response.json();
-              if (res.success) {
-                props.getUserCertificate();
-                props.setSingleCertificateData({});
-                props.handleCertEdit();
-                props.setToast("Certificate added successfully", true);
-              }
-            } catch (error) {
-              props.setToast("Failed to update", false);
-            }
+          )
+          const res = await response.json();
+          if (res.success) {
+            props.getUserCertificate();
+            props.setSingleCertificateData({});
+            props.handleCertEdit();
+            props.setToast("Certificate updated successfully", true);
+          }else{
+            props.setToast("Failed to update", false);
           }
         }
       } else {
@@ -244,7 +206,7 @@ const EditCert = (props) => {
     <Dialog open={props.openCertEdit} handler={handleCertEdit} className="p-4">
       <div className="flex w-full justify-between items-start">
         <Typography className="text-2xl font-bold">
-          Edit Certificates
+          Edit Certificate
         </Typography>
         <div className="flex">
           <IoClose
