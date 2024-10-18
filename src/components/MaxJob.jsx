@@ -26,7 +26,6 @@ const MaxJob = () => {
   const [keywordBox, setKeywordBox] = useState(false);
   const keywordRef = useRef(null);
 
-
   // LOCATION FUNCTIONS
   const handleClickOutsideLocation = (event) => {
     if (locationRef.current && !locationRef.current.contains(event.target))
@@ -49,12 +48,21 @@ const MaxJob = () => {
 
   const handleFilterLocation = (word) => {
     const value = word.toLowerCase();
-    setLocationArray(value === "" ? fixedLocationArray : fixedLocationArray.filter((item) => item.toLowerCase().startsWith(value)));
-  }
+    setLocationArray(
+      value === ""
+        ? fixedLocationArray
+        : fixedLocationArray.filter((item) =>
+            item.toLowerCase().startsWith(value)
+          )
+    );
+  };
 
   const setLocationFunc = (item) => {
-    const words = location.split('|').map(word => word.trim());
-    const newLocation = words.slice(0, words.length - 1).concat(item.trim()).join(' | ');
+    const words = location.split("|").map((word) => word.trim());
+    const newLocation = words
+      .slice(0, words.length - 1)
+      .concat(item.trim())
+      .join(" | ");
     setLocation(`${newLocation} |`);
   };
 
@@ -66,20 +74,29 @@ const MaxJob = () => {
 
   const buildKeywordArray = () => {
     let arr = [];
-    for(let i = 0; i < jobs.length; i++) {
+    for (let i = 0; i < jobs.length; i++) {
       arr.push(jobs[i].jobTitle);
     }
     setFixedKeywordArray(arr);
-  }; 
+  };
 
   const handleFilterKeyword = (word) => {
     const value = word.toLowerCase();
-    setKeywordArray(value === "" ? fixedKeywordArray : fixedKeywordArray.filter((item) => item.toLowerCase().startsWith(value)));
-  }
+    setKeywordArray(
+      value === ""
+        ? fixedKeywordArray
+        : fixedKeywordArray.filter((item) =>
+            item.toLowerCase().startsWith(value)
+          )
+    );
+  };
 
   const setKeywordFunc = (item) => {
-    const words = keyword.split('|').map(word => word.trim());
-    const newKeyword = words.slice(0, words.length - 1).concat(item.trim()).join(' | ');
+    const words = keyword.split("|").map((word) => word.trim());
+    const newKeyword = words
+      .slice(0, words.length - 1)
+      .concat(item.trim())
+      .join(" | ");
     setKeyword(`${newKeyword} |`);
   };
 
@@ -107,34 +124,51 @@ const MaxJob = () => {
 
   // FILTER JOBS
   const handleFilterJobs = () => {
-    const selectedKeyword = keyword.split('|').map(word => word.trim()).filter(item => item !== "");
-    const selectedLocation = location.split('|').map(word => word.trim()).filter(item => item !== "");
-    let arr = []
-    if(selectedKeyword.length === 0 && selectedLocation.length === 0) {
+    const selectedKeyword = keyword
+      .split("|")
+      .map((word) => word.trim())
+      .filter((item) => item !== "");
+    const selectedLocation = location
+      .split("|")
+      .map((word) => word.trim())
+      .filter((item) => item !== "");
+    let arr = [];
+    if (selectedKeyword.length === 0 && selectedLocation.length === 0) {
       setFilteredJobs(jobs);
-    }
-    else if(selectedKeyword.length !== 0 && selectedLocation.length === 0) {
+    } else if (selectedKeyword.length !== 0 && selectedLocation.length === 0) {
       selectedKeyword.map((keyword) => {
-        arr.push(jobs.filter(job => job.jobTitle.toLowerCase().includes(keyword.toLowerCase())));
+        arr.push(
+          jobs.filter((job) =>
+            job.jobTitle.toLowerCase().includes(keyword.toLowerCase())
+          )
+        );
         // setFilteredJobs(jobs.filter(job => job.jobTitle.toLowerCase().includes(keyword.toLowerCase())));
-      })
-    }
-    else if(selectedKeyword.length === 0 && selectedLocation.length !== 0) {
+      });
+    } else if (selectedKeyword.length === 0 && selectedLocation.length !== 0) {
       selectedLocation.map((location) => {
-        arr.push(jobs.filter(job => job.location.toLowerCase().includes(location.toLowerCase())))
+        arr.push(
+          jobs.filter((job) =>
+            job.location.toLowerCase().includes(location.toLowerCase())
+          )
+        );
         // setFilteredJobs(jobs.filter(job => job.location.toLowerCase().includes(location.toLowerCase())));
-      })
-    }
-    else if(selectedKeyword.length !== 0 && selectedLocation.length !== 0) {
+      });
+    } else if (selectedKeyword.length !== 0 && selectedLocation.length !== 0) {
       selectedKeyword.map((keyword) => {
         selectedLocation.map((location) => {
-          arr.push(jobs.filter(job => job.jobTitle.toLowerCase().includes(keyword.toLowerCase()) && job.location.toLowerCase().includes(location.toLowerCase())))
+          arr.push(
+            jobs.filter(
+              (job) =>
+                job.jobTitle.toLowerCase().includes(keyword.toLowerCase()) &&
+                job.location.toLowerCase().includes(location.toLowerCase())
+            )
+          );
           // setFilteredJobs(jobs.filter(job => job.jobTitle.toLowerCase().includes(keyword.toLowerCase()) && job.location.toLowerCase().includes(location.toLowerCase())));
-        })
-      })  
+        });
+      });
     }
     setFilteredJobs(arr.flat());
-  }
+  };
 
   // USE EFFECTS
   useEffect(() => {
@@ -167,16 +201,17 @@ const MaxJob = () => {
                 setKeywordBox(true);
               }
               setKeyword(e.target.value);
-              handleFilterKeyword(e.target.value.split('|').pop().trim());
+              handleFilterKeyword(e.target.value.split("|").pop().trim());
             }}
             value={keyword}
             className="relative"
           />
-           {keywordBox && (
+          {keywordBox && (
             <div className="absolute bg-white z-10 rounded-lg  max-h-96 overflow-y-scroll scrollbar-thin w-full">
               {keywordArray.map((keyword, key) => (
                 <div
-f                  key={key}
+                  f
+                  key={key}
                   className="px-2 py-1 border-b-[1px] border-gray-300 cursor-pointer"
                   onClick={() => {
                     setKeywordFunc(keyword);
@@ -199,16 +234,18 @@ f                  key={key}
                 setLocationBox(true);
               }
               setLocation(e.target.value);
-              handleFilterLocation(e.target.value.split('|').pop().trim());
+              handleFilterLocation(e.target.value.split("|").pop().trim());
             }}
             value={location}
             className="relative"
+            variant="outlined"
           />
           {locationBox && (
             <div className="absolute bg-white z-10 rounded-lg  max-h-96 overflow-y-scroll scrollbar-thin w-full">
               {locationArray.map((location) => (
                 <div
-f                  key={location}
+                  f
+                  key={location}
                   className="px-2 py-1 border-b-[1px] border-gray-300 cursor-pointer"
                   onClick={() => {
                     setLocationFunc(location);
@@ -222,8 +259,10 @@ f                  key={location}
           )}
         </div>
         {/* SEARCH BUTTON */}
-        <button className="select-none rounded-lg bg-blue-500 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-        onClick={() => handleFilterJobs()}>
+        <button
+          className="select-none rounded-lg bg-blue-500 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          onClick={() => handleFilterJobs()}
+        >
           Search
         </button>
       </Card>

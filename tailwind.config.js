@@ -1,6 +1,5 @@
 const { List, ListItem } = require("@material-tailwind/react");
 const withMT = require("@material-tailwind/react/utils/withMT");
-const { scopedPreflightStyles, isolateOutsideOfContainer  } = require('tailwindcss-scoped-preflight');
 
 
 module.exports = withMT({
@@ -95,40 +94,4 @@ module.exports = withMT({
       }
     },
   },
-  plugins: [
-    function({ addUtilities }) {
-      const newUtilities = {
-        '.scrollbar-thin': {
-          '&::-webkit-scrollbar': {
-            width: '6px',
-            height: '6px',
-          },
-          '&::-webkit-scrollbar-track': {
-            background: '#f1f1f1',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            background: '#cdcdcd',
-            borderRadius: '6px',
-          },
-          '&::-webkit-scrollbar-thumb:hover': {
-            background: '#A8A8A8',
-            cursor: 'pointer',
-          },
-        },
-        ".scrollbar-invisible":{
-            "&::-webkit-scrollbar": {
-              width: '0px',
-            height: '0px',
-            },
-          }
-      }
-
-      addUtilities(newUtilities, ['responsive'])
-    },
-    scopedPreflightStyles({
-      isolationStrategy: isolateOutsideOfContainer('.no-twp', {
-        plus: '.twp', // optional, if you have your Tailwind components under .no-twp, you need them to be preflighted
-      }),
-    }),
-  ],
 });
