@@ -149,16 +149,16 @@ const PostJobCard = () => {
               Enter Job Details
             </Typography>
             {/* Job Title */}
-            <Input
-              label="Job Title"
-              className="w-full"
+            <input
+              placeholder="Job Title"
+              className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
               onChange={(e) => setJobTitle(e.target.value)}
               value={jobTitle}
             />
             {/* Company Name */}
-            <Input
-              label="Company Name"
-              className="w-full"
+            <input
+              placeholder="Company Name"
+              className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
               onChange={(e) => setOrganziationName(e.target.value)}
               value={organziationName}
             />
@@ -216,9 +216,9 @@ const PostJobCard = () => {
               </select>
             </div>
             {/* Educational requirement */}
-            <Input
-              label="Educational requirement"
-              className=""
+            <input
+              placeholder="Educational requirement"
+              className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
               onChange={(e) => setRequiredQualification(e.target.value)}
               value={requiredQualification}
             />
@@ -247,8 +247,9 @@ const PostJobCard = () => {
               <p>Years</p>
             </div>
             {/* Last Date to apply */}
-            <Input
-              label="Last Date to Apply"
+            <input
+              placeholder="Last Date to Apply"
+              className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
               type="date"
               onChange={(e) => setLastDateToApply(e.target.value)}
               value={lastDateToApply}

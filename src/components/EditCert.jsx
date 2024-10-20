@@ -216,23 +216,26 @@ const EditCert = (props) => {
         </div>
       </div>
       <div className="mt-2 grid grid-cols-1 gap-4">
-        <Input
+        <input
           value={certificate}
           onChange={(e) => setCertificate(e.target.value)}
-          label="Title"
+          placeholder="Title"
           size=""
+          className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
         />
-        <Input
+        <input
           value={issuer}
           onChange={(e) => setIssuer(e.target.value)}
-          label="Issuer"
+          placeholder="Issuer"
           size=""
+          className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
         />
-        <Textarea
+        <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          label="Description"
+          placeholder="Description"
           size=""
+          className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
         />
         <div className="relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
           <input

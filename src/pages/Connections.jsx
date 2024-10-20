@@ -196,21 +196,19 @@ const Connections = () => {
               shadow
             >
               <div className="relative flex md:w-3/5 w-full mr-0 md:mr-2 ">
-                <Input
+                <input
                   type="search"
-                  placeholder=""
-                  className=""
-                  label="Search"
+                  className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
+                  placeholder="Search"
                   size="sm"
                   icon={<IoMdSearch />}
                 />
               </div>
               <div className="relative flex md:w-2/5 w-full mr-0 md:mr-2 mt-2 md:mt-0 ">
-                <Input
+                <input
                   type="search"
                   placeholder="Search Location"
-                  className=""
-                  label="Search Location"
+                  className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
                   size="sm"
                   icon={<IoLocationSharp />}
                 />

@@ -133,42 +133,47 @@ const EditExperience = (props) => {
       </div>
       <div className="mt-2 flex flex-col sm:grid grid-cols-2 gap-4">
         <div className="col-span-2">
-          <Input
+          <input
             value={post}
             onChange={(e) => setPost(e.target.value)}
-            label="Job Title"
+            placeholder="Job Title"
             size=""
+            className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
           />
         </div>
         <div className="col-span-2">
-          <Input
+          <input
             value={organization}
             onChange={(e) => setOrganization(e.target.value)}
-            label="Company Name"
+            placeholder="Company Name"
             size=""
+            className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
           />
         </div>
         <div className="col-span-2">
-          <Textarea
+          <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            label="Description"
+            placeholder="Description"
             size=""
+            className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
           />
         </div>
-        <Input
+        <input
           value={startingMonth}
           onChange={(e) => setStartingMonth(e.target.value)}
-          label="Start Date"
+          placeholder="Start Date"
           size=""
           type="month"
+          className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
         />
-        <Input
+        <input
           value={endingMonth}
           onChange={(e) => setEndingMonth(e.target.value)}
-          label="End Date"
+          placeholder="End Date"
           size=""
           type="month"
+          className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
         />
       </div>
       <div className="flex justify-start items-center">

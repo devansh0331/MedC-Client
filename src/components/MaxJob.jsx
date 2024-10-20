@@ -193,8 +193,8 @@ const MaxJob = () => {
       <Card className="w-full min-w-96 flex flex-col md:flex-row items-center justify-center gap-3 px-3 py-2 rounded-md">
         {/* KEYWORD FILTER */}
         <div className="w-1/2 relative" ref={keywordRef}>
-          <Input
-            label="Search Jobs"
+          <input
+            placeholder="Search Jobs"
             icon={<IoMdSearch />}
             onChange={(e) => {
               if (e.target.value.length > 2) {
@@ -204,7 +204,7 @@ const MaxJob = () => {
               handleFilterKeyword(e.target.value.split("|").pop().trim());
             }}
             value={keyword}
-            className="relative"
+            className="relative w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
           />
           {keywordBox && (
             <div className="absolute bg-white z-10 rounded-lg  max-h-96 overflow-y-scroll scrollbar-thin w-full">
@@ -226,8 +226,8 @@ const MaxJob = () => {
         </div>
         {/* LOCATION FILTER */}
         <div ref={locationRef} className="w-1/2 relative">
-          <Input
-            label="Location"
+          <input
+            placeholder="Location"
             icon={<GrLocation />}
             onChange={(e) => {
               if (e.target.value.length > 2) {
@@ -237,8 +237,7 @@ const MaxJob = () => {
               handleFilterLocation(e.target.value.split("|").pop().trim());
             }}
             value={location}
-            className="relative"
-            variant="outlined"
+            className="relative w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
           />
           {locationBox && (
             <div className="absolute bg-white z-10 rounded-lg  max-h-96 overflow-y-scroll scrollbar-thin w-full">

@@ -4,7 +4,7 @@ import JobCard from '../components/JobCard'
 import MoreLikeThis from '../components/MoreLikeThis'
 import SingleJobCard from '../components/SingleJobCard'
 import JobCardSingle from '../components/JobCardSingle'
-import JobNav from '../components/JobNav'
+// import JobNav from '../components/JobNav'
 import { useParams } from 'react-router-dom'
 import { SERVER_URL } from '../ServerURL'
 

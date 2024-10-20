@@ -186,8 +186,8 @@ const Hire = () => {
                 ref={keywordRef}
                 className="relative w-full md:w-3/5 mr-2 my-1 md:my-0 "
               >
-                <Input
-                  label="Search"
+                <input
+                  placeholder="Search"
                   icon={<IoMdSearch />}
                   onChange={(e) => {
                     if (e.target.value.length > 2) {
@@ -197,7 +197,7 @@ const Hire = () => {
                     handleFilterKeyword(e.target.value.split("|").pop().trim());
                   }}
                   value={keyword}
-                  className="relative "
+                  className="relative w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
                 />
                 {keywordBox && (
                   <div className="absolute bg-white  rounded-lg  max-h-96 overflow-y-scroll scrollbar-thin w-full">
@@ -221,8 +221,8 @@ const Hire = () => {
                 ref={locationRef}
                 className="relative w-full md:w-3/5 mr-2 my-1 md:my-0 "
               >
-                <Input
-                  label="Location"
+                <input
+                  placeholder="Location"
                   icon={<GrLocation />}
                   onChange={(e) => {
                     if (e.target.value.length > 2) {
@@ -234,7 +234,7 @@ const Hire = () => {
                     );
                   }}
                   value={location}
-                  className="relative "
+                  className="relative w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
                 />
                 {locationBox && (
                   <div className="absolute bg-white  rounded-lg  max-h-96 overflow-y-scroll scrollbar-thin w-full z-10">

@@ -35,10 +35,10 @@ function PostCard() {
               alt="profile"
             />
           </Link>
-          <Input
+          <input
+            placeholder="Create Post"
+            className="w-4/5 border-gray-500 rounded-md px-2 py-1 md:py-1 flex gap-2 justify-between border-[1px] h-10 p-2 items-center text-blue-gray-500 text-sm"
             type="text"
-            className="w-4/5 border-2 border-gray-500 rounded-md px-2 py-1 md:py-1"
-            label="Create Post"
             onClick={() => setOpen(!open)}
             onChange={() => setOpen(!open)}
           />
