@@ -11,7 +11,7 @@ import {
   Switch,
   Typography,
 } from "@material-tailwind/react";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -28,7 +28,7 @@ const PostJobCard = () => {
   const modules = {
     toolbar: [
       // [{ header: "1" }, { header: "2" }],
-      [{ size: [] }],
+      // [{ size: [] }],
       ["bold", "italic", "underline"],
       [
         // { list: "ordered" },
@@ -65,7 +65,9 @@ const PostJobCard = () => {
     jobTitle: jobTitle,
     organziationName: organziationName,
     location: location,
-    salaryRange: `Rs. ${minSalary} - ${maxSalary} ${salaryType}`,
+    salaryRange: `Rs. ${minSalary} ${
+      maxSalary == 0 ? "" : `- ${maxSalary}`
+    } ${salaryType}`,
     requiredQualification: requiredQualification,
     employementType: employementType,
     minExperience: `${minExperience} Years`,
@@ -74,9 +76,26 @@ const PostJobCard = () => {
     noOfApplications: 0,
   };
 
+  const handleMinExp = (val) => {
+    setMinExp(`${val} Years`);
+  };
+
+  const handleSalaryRange = (min, max, salary) => {
+    if (min > max && max != 0) {
+      toast.error("Minimum salary cannot be greater than maximum salary");
+      return;
+    } else if (maxSalary == 0) {
+      setSalaryRange(`Rs. ${min} ${salary}`);
+    } else if (max > min) {
+      setSalaryRange(`Rs. ${min} - ${max} ${salary}`);
+    }
+  };
+
   const handlePostJob = async () => {
-    setSalaryRange(`Rs. ${minSalary} - ${maxSalary} ${salaryType}`);
-    setMinExp(`${minExperience} Years`);
+    if (minSalary > maxSalary && maxSalary != 0) {
+      toast.error("Minimum salary cannot be greater than maximum salary");
+      return;
+    }
     if (
       jobTitle == "" ||
       organziationName == "" ||
@@ -88,11 +107,9 @@ const PostJobCard = () => {
       lastDateToApply == "" ||
       description == ""
     ) {
-      toast.error("All fields are mandatory");
+      toast.error("Please fill all the fields");
       return;
-    } 
-
-    console.log(jobTitle, organziationName, location, salaryRange, requiredQualification, employementType, minExp, lastDateToApply, description);
+    }
     try {
       const response = await fetch(`${SERVER_URL}/job/create-job`, {
         method: "POST",
@@ -194,7 +211,10 @@ const PostJobCard = () => {
                 type="number"
                 placeholder="Minimum"
                 className="no-spinner w-[30%] active:border-none"
-                onChange={(e) => setMinSalary(e.target.value)}
+                onChange={(e) => {
+                  setMinSalary(e.target.value);
+                  handleSalaryRange(e.target.value, maxSalary, salaryType);
+                }}
                 value={minSalary}
               />
               <span className="flex items-center">-</span>
@@ -202,12 +222,18 @@ const PostJobCard = () => {
                 type="number"
                 placeholder="Maximum (0 for fixed salary)"
                 className="no-spinner w-[40%] active:border-none"
-                onChange={(e) => setMaxSalary(e.target.value)}
+                onChange={(e) => {
+                  setMaxSalary(e.target.value);
+                  handleSalaryRange(minSalary, e.target.value, salaryType);
+                }}
                 value={maxSalary}
               />
               <select
                 className=""
-                onChange={(e) => setSalaryType(e.target.value)}
+                onChange={(e) => {
+                  setSalaryType(e.target.value);
+                  handleSalaryRange(minSalary, maxSalary, e.target.value);
+                }}
                 value={salaryType}
               >
                 <option>Yearly</option>
@@ -241,7 +267,10 @@ const PostJobCard = () => {
                 type="number"
                 placeholder="Minimum Experience"
                 className="no-spinner h-full w-full"
-                onChange={(e) => setMinExperience(e.target.value)}
+                onChange={(e) => {
+                  setMinExperience(e.target.value);
+                  handleMinExp(e.target.value);
+                }}
                 value={minExperience}
               />
               <p>Years</p>
