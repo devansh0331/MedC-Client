@@ -119,6 +119,10 @@ const Hire = () => {
 
   // FILTER PROFILES
   const handleFilterProfiles = () => {
+    if(keyword.length == 0 && location.length == 0){
+      setFilteredUsers(allUsers);
+      return;
+    }
     const selectedKeyword = keyword.split('|').map(word => word.trim()).filter(item => item !== "");
     const selectedLocation = location.split('|').map(word => word.trim()).filter(item => item !== "");
     let arr = []
@@ -237,7 +241,7 @@ const Hire = () => {
                   className="relative w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
                 />
                 {locationBox && (
-                  <div className="absolute bg-white  rounded-lg  max-h-96 overflow-y-scroll scrollbar-thin w-full z-10">
+                  <div className="absolute bg-white  rounded-lg  max-h-96 overflow-y-scroll scrollbar-thin w-full">
                     {locationArray.map((location) => (
                       <div
                         key={location}

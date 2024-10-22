@@ -101,3 +101,22 @@
   background-repeat: no-repeat;
   background-blend-mode: overlay;
 }
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #b4babdaf;
+  border-radius: 20px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.scrollbar-invisible::-webkit-scrollbar {
+  display: none;
+}

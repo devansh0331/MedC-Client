@@ -124,6 +124,10 @@ const MaxJob = () => {
 
   // FILTER JOBS
   const handleFilterJobs = () => {
+    if(keyword.length == 0 && location.length == 0){
+      setFilteredJobs(jobs);
+      return;
+    }
     const selectedKeyword = keyword
       .split("|")
       .map((word) => word.trim())
