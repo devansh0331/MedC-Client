@@ -130,13 +130,13 @@ function CreatePostPopUp(props) {
       </div>
       <DialogBody className="m-0 b p-0 px-6">
         <div className="grid">
-          <Textarea
-            label="Share Your experience"
+          <textarea
+            placeholder="Share Your experience"
             value={post}
             onChange={(e) => setPost(e.target.value)}
             required
-            className="h-48 overflow-y-scroll scrollbar-thin"
-          />
+            className="h-48 overflow-y-scroll w-full flex gap-2 justify-between border-[1px] border-gray-400 p-2 rounded-md items-center text-blue-gray-500 text-sm"
+          ></textarea>
         </div>
 
         <div className="flex flex-col my-1">

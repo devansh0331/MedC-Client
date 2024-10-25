@@ -32,22 +32,19 @@ const Contactus = () => {
             <p className="text-xl lg:text-2xl font-bold text-blue-500">
               Get In Touch
             </p>
-            <Input
-              label="Name"
-              type="text"
+            <input
               placeholder="Name"
-              className="bg-white"
+              type="text"
+              className="bg-white w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
             />
-            <Input
-              label="Email"
-              type="email"
+            <input
               placeholder="Email"
-              className="bg-white"
+              type="email"
+              className="bg-white w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
             />
-            <Textarea
-              label="Write your message here"
-              placeholder=""
-              className="bg-white h-40"
+            <textarea
+              placeholder="Write your message here"
+              className="bg-white h-40 w-full flex gap-2 justify-between border-[1px] border-gray-400 p-2 rounded-md items-center text-blue-gray-500 text-sm"
             />
             <Button
               size="sm"

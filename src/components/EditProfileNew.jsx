@@ -214,24 +214,24 @@ function EditProfileNew({
                 }}
               />
             </div>
-            <Input
-              label="First Name"
+            <input
+              placeholder="First Name"
               value={fName}
               onChange={(e) => setFName(e.target.value)}
-              className="col-span-1"
+              className="col-span-1 w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
             />
-            <Input
-              label="Last Name"
+            <input
+              placeholder="Last Name"
               value={lName}
               onChange={(e) => setLName(e.target.value)}
-              className="col-span-1"
+              className="col-span-1 w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
             />
             <div className="col-span-2 relative">
-              <Input
-                label="Tagline"
+              <input
+                placeholder="Tagline"
                 value={bio || ""}
                 type="text"
-                className="col-span-2"
+                className="col-span-2 w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
                 onChange={(e) => {
                   setBio(e.target.value);
                   bioSuggestions(e.target.value);
@@ -316,31 +316,31 @@ function EditProfileNew({
                 </option>
               ))}
             </select>
-            <Input
-              label="Email"
+            <input
+              placeholder="Email"
               value={email}
               type="email"
-              className="col-span-1"
+              className="col-span-1 w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
               onChange={(e) => setEmail(e.target.value)}
             />
-            <Input
-              label="Phone No"
-              className="numberInput col-span-1"
+            <input
+              placeholder="Phone No"
+              className="numberInput col-span-1 w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
               type="number"
               value={contact}
               onChange={(e) => setContact(e.target.value)}
             />
-            <Input
-              label="LinkedIn"
+            <input
+              placeholder="LinkedIn"
               value={linkedin}
               onChange={(e) => setLinkedin(e.target.value)}
-              className="col-span-1"
+              className="col-span-1 w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
             />
-            <Input
-              label="Twitter"
+            <input
+              placeholder="Twitter"
               value={twitter}
               onChange={(e) => setTwitter(e.target.value)}
-              className="col-span-1"
+              className="col-span-1 w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
             />
             <div className="col-span-2 flex w-full justify-end">
               <Button

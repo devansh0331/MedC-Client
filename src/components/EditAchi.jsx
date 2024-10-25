@@ -148,17 +148,19 @@ const EditAchi = (props) => {
         </div>
       </div>
       <div className="mt-2 grid grid-cols-1 gap-4">
-        <Input
+        <input
           value={achievement}
           onChange={(e) => setAchievement(e.target.value)}
-          label="Achievement"
+          placeholder="Achievement"
           size=""
+          className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
         />
-        <Textarea
+        <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          label="Description"
+          placeholder="Description"
           size=""
+          className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
         />
       </div>
       <div className="flex justify-start items-center">

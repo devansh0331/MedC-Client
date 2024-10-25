@@ -32,7 +32,6 @@ const ProfileDetails = (props) => {
   const [posts, setPosts] = useState([]);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-
   const {
     getSingleUserExperience,
     singleUserExperience,
@@ -44,9 +43,9 @@ const ProfileDetails = (props) => {
     singleUserAchievement,
     handleLike,
   } = useContext(UserContext);
-
+  
   const userId = props?.user?._id;
-
+  
   const getUserPosts = async () => {
     try {
       const response = await fetch(
@@ -307,6 +306,9 @@ const ProfileDetails = (props) => {
                       <Typography className="text-gray-600 text-base">
                         {cert.issuer}
                       </Typography>
+                    )}
+                    {cert.certificateURL && (
+                      <object data={cert.certificateURL} className="w-40 h-28 object-contain" />
                     )}
                     {cert.description && (
                       <Typography className="text-gray-800 text-base my-2">

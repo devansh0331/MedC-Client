@@ -479,10 +479,11 @@ const SinglePostCard = (props) => {
                 }}
                 className="flex justify-between items-center relative"
               >
-                <Input
+                <input
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
-                  label="Add Comment"
+                  placeholder="Add Comment"
+                  className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
                 />
                 <Typography
                   onClick={() => addComment()}
