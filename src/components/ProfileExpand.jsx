@@ -75,14 +75,31 @@ const ProfileExpand = (props) => {
           >
             Visit Profile
           </Button>
-          <Button
-            size="sm"
-            className="px-2 py-1 font-light rounded-md mx-1"
-            color="light-blue"
-            variant="outlined"
-          >
-            Hire Candidate
-          </Button>
+          {props.isShortListing ? (
+            <Button
+              size="sm"
+              className="px-2 py-1 font-light rounded-md mx-1"
+              color="light-blue"
+              variant="outlined"
+              onClick={async () => {
+                console.log(props.user.email);
+                await props.setCandidateId(props.user?._id);
+                await props.setCandidateEmail(props.user?.email);
+                await props.shortListCandidate();
+              }}
+            >
+              ShortList Candidate
+            </Button>
+          ) : (
+            <Button
+              size="sm"
+              className="px-2 py-1 font-light rounded-md mx-1"
+              color="light-blue"
+              variant="outlined"
+            >
+              Hire Candidate
+            </Button>
+          )}
         </CardFooter>
       </Card>
     </div>
