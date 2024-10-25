@@ -26,6 +26,7 @@ import { SERVER_URL } from "../ServerURL";
 import { FaChevronDown } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
+import toast, { Toaster } from "react-hot-toast";
 
 const ViewApplications = () => {
   const jobId = useParams().id;
@@ -36,6 +37,9 @@ const ViewApplications = () => {
   const { user, allUsers, getAllUsers, userInfo } = useContext(UserContext);
   const [jobOpen, setJobOpen] = useState(false);
   const [profileExpand, setProfileExpand] = useState(false);
+  const [candidateEmail, setCandidateEmail] = useState("");
+  const [candidateId, setCandidateId] = useState("");
+  const [isShortListing, setIsShortListing] = useState(true);
 
   const handleProfileExpand = () => {
     setProfileExpand(!profileExpand);
@@ -81,14 +85,34 @@ const ViewApplications = () => {
     }
   };
 
-  const downloadResume = (file) => {
-    const link = document.createElement("a");
-    link.href = file;
-    link.target = "_blank";
-    link.download = "resume.pdf";
-    link.click();
-    link.remove();
-  }
+  const shortListCandidate = async () => {
+    try {
+      console.log("ShortList Candidate: " + candidateId + " " + candidateEmail);
+      if (candidateId != "" && candidateEmail != "") {
+        const response = await fetch(
+          `${SERVER_URL}/userjob/shortlist-candidate/${jobId}`,
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${Cookies.get("token")}`,
+            },
+            body: JSON.stringify({ candidateId, candidateEmail }),
+          }
+        );
+        console.log("After fetch");
+        const res = await response.json();
+        console.log(res);
+        if (res.success) {
+          toast.success(res.message);
+          console.log(res.message);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getSingleJob();
@@ -100,9 +124,8 @@ const ViewApplications = () => {
 
   useEffect(() => {
     getAllApplications();
-    console.log(applications);
   }, [jobId]);
- 
+
   return (
     <div className="flex md:overflow-y-hidden z-0 bg-background h-[90vh] w-full overflow-y-scroll scrollbar-thin">
       <SideBar />
@@ -177,7 +200,7 @@ const ViewApplications = () => {
                               )}
                             </CardBody>
                           ) : null}
-                          <CardFooter className="m-0 p-0 mx-auto flex justify-around w-full">
+                          <CardFooter className="m-0 p-0 mx-auto">
                             <Button
                               size="sm"
                               className="px-2 py-1 font-light rounded-md hidden xl:block"
@@ -197,18 +220,6 @@ const ViewApplications = () => {
                             >
                               Show Details
                             </Button>
-                            {user.resume && (
-                              <Button
-                              size="sm"
-                              className="px-2 py-1 rounded-md"
-                              color="black"
-                              variant="outlined"
-                              onClick={() => downloadResume(user.resume.resumeURL)}
-                              >
-                              Resume
-                            </Button>
-                            )
-                            }
                           </CardFooter>
                         </Card>
                       ) : null}
@@ -217,7 +228,13 @@ const ViewApplications = () => {
                 </div>
               </div>
               <div className="w-1/4 hidden xl:block">
-                <ProfileExpand user={userExpand} />
+                <ProfileExpand
+                  user={userExpand}
+                  isShortListing={isShortListing}
+                  setCandidateEmail={setCandidateEmail}
+                  setCandidateId={setCandidateId}
+                  shortListCandidate={shortListCandidate}
+                />
               </div>
             </div>
           ) : (
@@ -249,6 +266,7 @@ const ViewApplications = () => {
       >
         <ProfileExpand user={userExpand} />
       </Dialog>
+      <Toaster position="top-right" />
     </div>
   );
 };
