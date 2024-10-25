@@ -75,8 +75,9 @@ const MaxJob = () => {
   const buildKeywordArray = () => {
     let arr = [];
     for (let i = 0; i < jobs.length; i++) {
-      arr.push(jobs[i].jobTitle);
+      arr.push(jobs[i].jobTitle.trim());
     }
+    arr.sort();  
     setFixedKeywordArray(arr);
   };
 
@@ -112,9 +113,8 @@ const MaxJob = () => {
       const res = await response.json();
       // console.log(res)
       if (res.success) {
-        // console.log(res.jobs);
-        setJobs(res.jobs);
-        setFilteredJobs(res.jobs);
+        setJobs(res.jobs.reverse());
+        setFilteredJobs(res.jobs);       
         buildKeywordArray();
       }
     } catch (error) {

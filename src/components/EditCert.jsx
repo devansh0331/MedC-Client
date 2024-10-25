@@ -206,7 +206,7 @@ const EditCert = (props) => {
     <Dialog open={props.openCertEdit} handler={handleCertEdit} className="p-4">
       <div className="flex w-full justify-between items-start">
         <Typography className="text-2xl font-bold">
-          Edit Certificate
+          {certificate === "" ? "Add" : "Edit"} Certificate
         </Typography>
         <div className="flex">
           <IoClose
@@ -235,8 +235,9 @@ const EditCert = (props) => {
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Description"
           size=""
-          className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
+          className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-30 p-2 rounded-md items-center text-blue-gray-500 text-sm"
         />
+        {certificate === "" && (
         <div className="relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
           <input
             id="file-upload-image"
@@ -256,6 +257,7 @@ const EditCert = (props) => {
             onClick={() => setFile(null)}
           />
         </div>
+        )}
       </div>
       <div className="flex justify-start items-center">
         <Button

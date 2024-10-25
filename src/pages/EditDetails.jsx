@@ -35,6 +35,7 @@ import {
   Dialog,
   Input,
   Textarea,
+  DialogBody,
 } from "@material-tailwind/react";
 import SideBar from "../components/SideBar";
 import { SERVER_URL } from "../ServerURL";
@@ -53,7 +54,6 @@ const EditDetails = () => {
     getUser,
     user,
   } = useContext(UserContext);
- 
 
   const [section, setSection] = useState("About");
   const [openAboutEdit, setOpenAboutEdit] = useState(false);
@@ -68,8 +68,12 @@ const EditDetails = () => {
   const [file, setFile] = useState(null);
   const [posts, setPosts] = useState([]);
   const userId = user._id;
+  const [certExpand, setCertExpand] = useState(false);
+  const [certURL, setCertURL] = useState("");
 
-  // console.log("userId", userId);
+  const handleCertExpand = () => {
+    setCertExpand(!certExpand);
+  };
 
   const getUserPosts = async () => {
     try {
@@ -126,28 +130,6 @@ const EditDetails = () => {
   useEffect(() => {
     getUserExperience();
   }, []);
-
-  // const setToast = (msg, success) => {
-  //   if (success) {
-  //     toast.success(msg);
-  //   } else toast.error(msg);
-  // };
-
-  // const handleAdd = () => {
-  //   if (section === "Experience") {
-  //     setSingleExperienceData({});
-  //     setEditexp(true);
-  //   } else if (section === "Education") {
-  //     setSingleEducationData({});
-  //     setEditEdu(true);
-  //   } else if (section === "Certificates") {
-  //     setSingleCertificateData({});
-  //     setEditCert(true);
-  //   } else if (section === "Achivements") {
-  //     setSingleAchievementData({});
-  //     setEditAchi(true);
-  //   }
-  // };
 
   const setToast = (msg, success) => {
     if (success) {
@@ -273,15 +255,6 @@ const EditDetails = () => {
                 <FaAward className="w-5 h-5 my-1" />
               </Typography>
             </div>
-            {/* <div
-            className={`w-full text-center rounded-md cursor-pointer ${
-              section === "Posts" ? "bg-blue-400 text-white" : ""
-            }`}
-            onClick={() => setSection("Posts")}
-          >
-            <Typography className={`text-md mx-auto py-1 hidden md:block `}>Posts</Typography>
-          <Typography className="flex h-full justify-center items-center md:hidden"><RiGalleryFill  className="w-5 h-5 my-1" /></Typography>
-          </div> */}
           </div>
         </CardHeader>
 
@@ -482,14 +455,21 @@ const EditDetails = () => {
                         )}
                         {certificate?.certificateURL && (
                           <>
-                          <object data={`${certificate?.certificateURL}`} className="h-28 w-40 object-contain" />
+                            <object
+                              data={`${certificate?.certificateURL}`}
+                              className="h-28 w-40 object-contain cursor-pointer"
+                              onClick={() => {
+                                setCertURL(`${certificate?.certificateURL}`);  
+                                handleCertExpand();
+                              }}
+                            />
                           </>
                         )}
                         {certificate?.description && (
                           <Typography className="text-gray-800 text-base my-2">
                             {certificate?.description}
                           </Typography>
-                        )} 
+                        )}
                       </Card>
                     ))}
                     <img
@@ -676,6 +656,12 @@ const EditDetails = () => {
         setToast={setToast}
         handleAchiEdit={handleAchiEdit}
       />
+
+      <Dialog open={certExpand} handler={handleCertExpand} className="bg-transparent shadow-none" shadow={false} >
+        <DialogBody className="bg-transparent">
+          <object data={certURL} className="w-full h-full object-cover" />
+        </DialogBody>
+      </Dialog>
       <Toaster position="top-right" />
     </div>
   );

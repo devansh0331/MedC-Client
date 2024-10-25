@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -19,9 +19,18 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaLink } from "react-icons/fa";
 import altprofile from "../assets/altprofile.png";
 import { useNavigate } from "react-router-dom";
+import HireDialog from "./HireDialog";
+import { UserContext } from "../UserContext";
 
 const ProfileExpand = (props) => {
   const navigate = useNavigate();
+  const [hireBox, setHireBox] = useState(false);
+  const {user} = useContext(UserContext);
+
+  const handleHireBox = () => {
+    setHireBox(!hireBox);
+  };
+
   return (
     <div>
       <Card className="p-4 min-w-72">
@@ -80,11 +89,22 @@ const ProfileExpand = (props) => {
             className="px-2 py-1 font-light rounded-md mx-1"
             color="light-blue"
             variant="outlined"
+            onClick={handleHireBox}
           >
             Hire Candidate
           </Button>
         </CardFooter>
       </Card>
+      <HireDialog
+        open={hireBox}
+        handler={handleHireBox}
+        name={props.user?.name}
+        email={props.user?.email}
+        senderEmail={user.email}
+        jobTitle={props?.jobTitle}
+        organizationName={props.organizationName}
+        senderName={user.name}
+      />
     </div>
   );
 };

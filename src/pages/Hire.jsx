@@ -98,6 +98,7 @@ const Hire = () => {
         arr.push(allUsers[i].name)
       }
     }
+    arr.sort();
     setFixedKeywordArray(arr);
   }; 
 
