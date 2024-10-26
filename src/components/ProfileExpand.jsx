@@ -89,6 +89,7 @@ const ProfileExpand = (props) => {
             className="px-2 py-1 font-light rounded-md mx-1"
             color="light-blue"
             variant="outlined"
+            onClick={handleHireBox}
           >
             Hire Candidate
           </Button>
@@ -98,11 +99,11 @@ const ProfileExpand = (props) => {
         open={hireBox}
         handler={handleHireBox}
         name={props.user?.name}
-        email={props.user?.email}
         senderEmail={user.email}
-        jobTitle={props?.jobTitle}
-        organizationName={props.organizationName}
         senderName={user.name}
+        jobId={props?.jobId}
+        candidateEmail={props.user?.email}
+        candidateId={props.user?._id}
       />
     </div>
   );
