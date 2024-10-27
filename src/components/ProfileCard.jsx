@@ -272,32 +272,23 @@ const ProfileCard = (props) => {
           ) : props.user._id === user._id ? (
             <CardBody className="flex flex-col px-4 py-2 border-b-2">
               <div
-                className="flex flex-row gap-1 items-center mb-1 justify-between cursor-pointer"
-                onClick={() => navigate("/user-saves/:id")}
+                className="flex flex-row gap-1 items-center mb-1 text-blue-800 justify-between cursor-pointer underline decoration-1 underline-offset-2"
+                onClick={() => navigate("/user-saves")}
               >
-                <Typography className="">Saved Jobs</Typography>
-                <Typography className="text-base text-white bg-blue-500 px-2 rounded-full">
-                  38
-                </Typography>
+                <Typography className="">Job Actions</Typography>
               </div>
-              <div
+              {/* <div
                 className="flex flex-row gap-1 items-center mb-1 justify-between cursor-pointer"
-                onClick={() => navigate("/user-saves/:id")}
+                onClick={() => navigate("/user-saves")}
               >
                 <Typography className="text-base">Posted Jobs</Typography>
-                <Typography className="text-base text-white bg-blue-500 px-2 rounded-full">
-                  08
-                </Typography>
               </div>
               <div
                 className={`flex flex-row gap-1 items-center mb-1 justify-between cursor-pointer`}
-                onClick={() => navigate("/user-saves/:id")}
+                onClick={() => navigate("/user-saves")}
               >
                 <Typography className="text-base">Applied Jobs</Typography>
-                <Typography className="text-base text-white bg-blue-500 px-2 rounded-full">
-                  30
-                </Typography>
-              </div>
+              </div> */}
             </CardBody>
           ) : (
             ""

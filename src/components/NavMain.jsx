@@ -57,7 +57,7 @@ const NavMain = () => {
           )}
           {userInfo.state && 
           <>
-          <div 
+          {/* <div 
           ref={notificationRef} 
           className="flex items-center relative">
           <Badge
@@ -87,7 +87,7 @@ const NavMain = () => {
             </List>
           </Card>
           }
-          </div>
+          </div> */}
           </>
           }
           {userInfo.state && (

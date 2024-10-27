@@ -218,7 +218,7 @@ function Main() {
         }
       />
       <Route
-        path="/user-saves/:id"
+        path="/user-saves"
         element={
           <>
             <NavMain />

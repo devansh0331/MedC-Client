@@ -1,14 +1,18 @@
-    import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import SingleBlogCard from "../components/SingleBlogCard";
 import { Button, Card, Input, Typography } from "@material-tailwind/react";
 import { RiGalleryFill } from "react-icons/ri";
 import { IoMdCloseCircle } from "react-icons/io";
 import ReactQuill from "react-quill";
 import SideBar from "../components/SideBar";
+import toast, { Toaster } from "react-hot-toast";
+import { SERVER_URL } from "../ServerURL";
+import Cookies from "js-cookie";
 
 const CreateBlog = () => {
   const [active, setActive] = useState(0);
   const [file, setFile] = useState(null);
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const modules = {
     toolbar: [
@@ -29,10 +33,52 @@ const CreateBlog = () => {
     //   matchVisual: false,
     // },
   };
+  const fileUploadRef = useRef(null);
+
+  const handleFileUpload = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const postBlog = async () => {
+    if (!file || !title || !description) {
+      console.log(file, title, description);
+      
+      toast.error("Please fill all the fields");
+      return;
+    }
+    try {
+      const formData = new FormData();
+      const data = { title: title, content: description };
+      formData.append("data", JSON.stringify(data));
+      if (file) {
+        formData.append("filepath", file);
+      }
+      const response = await fetch(`${SERVER_URL}/blog/single-blog/add`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        body: formData,
+      });
+      const res = await response.json();
+
+      if (res.success) {
+        toast.success(res.message);
+        setFile(null);
+        setTitle("");
+        setDescription("");
+      } else {
+        toast.error(res.error);
+      }
+    } catch (error) {
+      toast.error(error);
+    }
+  };
 
   return (
     <div className="w-full h-[90vh] overflow-y-scroll scrollbar-thin flex bg-background pb-5">
-        <SideBar/>
+      <SideBar />
       <div className="w-3/5 my-5 mx-auto">
         {active === 0 && (
           <Card className="flex flex-row">
@@ -40,7 +86,7 @@ const CreateBlog = () => {
               {file ? (
                 <>
                   <img
-                    src={URL.createObjectURL(file)}
+                    src={URL.createObjectURL(file)} 
                     alt="profile"
                     className="w-full h-full object-cover rounded-lg"
                   />
@@ -72,6 +118,8 @@ const CreateBlog = () => {
               <input
                 placeholder="Blog Title"
                 className="text-[40px] h-[50px] w-full"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
               />
               <div>
                 <ReactQuill
@@ -93,6 +141,12 @@ const CreateBlog = () => {
             </div>
           </Card>
         )}
+        <Button
+          className="bg-primary text-white px-3 py-2 mt-3 rounded-lg w-full"
+          onClick={() => postBlog()}
+        >
+          Post
+        </Button>
         {active === 1 && (
           <Card className="pb-4">
             <SingleBlogCard />
@@ -107,6 +161,7 @@ const CreateBlog = () => {
           </Card>
         )}
       </div>
+      <Toaster position="top-right" />
     </div>
   );
 };

@@ -30,6 +30,7 @@ import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
 import { UserContext } from "../UserContext";
 import { MdAdminPanelSettings } from "react-icons/md";
+import { MdOutlineArticle } from "react-icons/md";
 
 function SideBar() {
   const dispatch = useDispatch();
@@ -131,6 +132,15 @@ function SideBar() {
                   <FaSquarePlus className="w-6 h-6" />
                 </ListItemPrefix>
               </div>
+              <div
+                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer ${currentPage.includes("/blogs") ? active : ""}`}
+                onClick={() => navigate("/blogs")}
+              >
+                <ListItemPrefix className="mx-auto">
+                  <MdOutlineArticle className="w-6 h-6" />
+                </ListItemPrefix>
+              </div>
+
               <div
                 className={`hidden lg:flex items-center justify-center px-4 py-3 rounded-md my-1 cursor-pointer ${currentPage.includes("/settings") ? active : ""}`}
                 onClick={() => navigate("/settings")}
@@ -254,6 +264,18 @@ function SideBar() {
                   <FaSquarePlus className="w-6 h-6" />
                 </ListItemPrefix>
                 <Typography className="ml-2">Post a Job</Typography>
+              </div>
+              <div
+                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-opacity-90 cursor-pointer ${currentPage.includes("/blogs") ? active : ""}`}
+                onClick={() => {
+                  navigate("/blogs");
+                  closeDrawer();
+                }}
+              >
+                <ListItemPrefix>
+                  <MdOutlineArticle className="w-6 h-6" />
+                </ListItemPrefix>
+                <Typography className="ml-2">Blogs</Typography>
               </div>
             </div>
             

@@ -256,7 +256,7 @@ const ResumeDialog = (props) => {
           size="sm"
           color="blue"
           onClick={handleUploadfile}
-          variant={`${props.route === "Apply" ? "outlined" : "contained"}`}
+          variant={`${props.route === "Apply" ? "outlined" : "filled"}`}
         >
           Upload
         </Button>

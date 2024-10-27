@@ -70,7 +70,7 @@ const ProfileCardSkeleton = () => {
         >
           &nbsp;
         </Typography>
-        <Typography
+        {/* <Typography
           as="div"
           variant="paragraph"
           className="mb-2 h-2 w-full rounded-full bg-gray-300"
@@ -83,7 +83,7 @@ const ProfileCardSkeleton = () => {
           className="mb-2 h-2 w-full rounded-full bg-gray-300"
         >
           &nbsp;
-        </Typography>
+        </Typography> */}
       </CardBody>
       <CardFooter className="flex px-4 py-2 mt-1 justify-center ">
         <Button      
