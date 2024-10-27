@@ -144,10 +144,10 @@ const ViewApplications = () => {
                   icon={<FaChevronDown />}
                 >
                   <AccordionHeader className="border-none">
-                    {jobs[0]?.jobTitle}, {jobs[0]?.organziationName}
+                    {job.jobTitle}, {job.organziationName}
                   </AccordionHeader>
                   <AccordionBody>
-                    <JobCardSingle job={jobs[0]} route={"ViewApplications"} />
+                    <JobCardSingle job={job} route={"ViewApplications"} />
                   </AccordionBody>
                 </Accordion>
                 <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 overflow-visible md:overflow-y-scroll max-h-[80vh] scrollbar-thin gap-3">
@@ -234,6 +234,9 @@ const ViewApplications = () => {
                   setCandidateEmail={setCandidateEmail}
                   setCandidateId={setCandidateId}
                   shortListCandidate={shortListCandidate}
+                  jobTitle={job.jobTitle}
+                  organizationName={job.organizationName}
+                  jobId={job._id}
                 />
               </div>
             </div>
