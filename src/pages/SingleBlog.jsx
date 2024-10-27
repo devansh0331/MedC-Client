@@ -8,12 +8,12 @@ import { SERVER_URL } from "../ServerURL";
 import Cookies from "js-cookie";
 
 const SingleBlog = () => {
-  const blogId = useParams().id;
+  const blogId = useParams();
   const [blog, setBlog] = useState({});
 
   const getSingleBlog = async () => {
     try {
-      const response = await fetch(`${SERVER_URL}/blog/single-blog/get/${blogId}`, {
+      const response = await fetch(`${SERVER_URL}/blog/single-blog/get/${blogId.id}`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -21,11 +21,9 @@ const SingleBlog = () => {
         },
       });
       const res = await response.json();
-
+     
       if (res.success) {
-        setBlog(res.data);
-        console.log(res.data);
-        
+        setBlog(res.data);       
       } else {
         toast.error(res.error);
       }
@@ -43,7 +41,7 @@ const SingleBlog = () => {
       <SideBar />
       <div className="flex w-[80%] mx-auto gap-4 mt-5 justify-center mb-5">
         <div className="w-4/5">
-          <SingleBlogCard />
+          <SingleBlogCard blog={blog} />
         </div>
         <div className="w-56">{/* <BlogCard/> */}</div>
       </div>

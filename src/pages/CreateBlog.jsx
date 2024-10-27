@@ -17,7 +17,7 @@ const CreateBlog = () => {
   const modules = {
     toolbar: [
       // [{ header: "1" }, { header: "2" }],
-      [{ size: [] }],
+      // [{ size: [] }],
       ["bold", "italic", "underline"],
       [
         // { list: "ordered" },

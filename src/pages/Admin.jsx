@@ -39,20 +39,61 @@ const Admin = (props) => {
   const [reportProfileId, setReportProfileId] = useState("");
   const navigate = useNavigate();
   const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
+  const [blogs, setBlogs] = useState([]);
 
   const { getPosts, posts, getAllUsers, allUsers, adminStatus } = useContext(UserContext);
-
-  const Blogs = [
-    { img: BlogBG, color: "rgba(76, 175, 80, 0.8)", text: "black" },
-    { img: BlogBG3, color: "rgba(255, 91, 0, 0.9)", text: "white" },
-    { img: BlogBG2, color: "rgba(53, 74, 33, 0.8)", text: "white" },
-    { img: BlogBG3, color: "rgba(255, 91, 0, 0.9)", text: "white" },
-  ];
   const [reportBoxOpen, setReportBoxOpen] = useState(false);
 
   const handleReportBoxOpen = () => {
     setReportBoxOpen(!reportBoxOpen);
   };
+
+
+  const getAllBlogs = async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/blog/all-blogs`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
+      const res = await response.json();
+      if (res.success) {
+        setBlogs(res.data);
+      } else {
+        toast.error(res.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteBlog = async (blogId) => {
+    try {
+      const response = await fetch(`${SERVER_URL}/blog/single-blog/delete/${blogId}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
+      const res = await response.json();
+      if (res.success) {
+        toast.success("Blog deleted successfully");
+        getAllBlogs();
+      } else {
+        toast.error(res.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllBlogs();
+  }, []);
+
 
   const getReportedProfiles = async () => {
     try {
@@ -243,48 +284,51 @@ console.log(adminStatus);
                     CREATE BLOG
                   </button>
                 </div>
-                <div className="w-full h-[70vh] overflow-y-scroll scrollbar-thin">
+                <div className="w-full h-[80vh] overflow-y-scroll scrollbar-thin">
                   <div className=" grid grid-cols-3 gap-4 mx-auto mt-2">
-                    {Blogs.map((blog, index) => (
+                    {blogs.map((blog, index) => (
+                      <>
+                      {blog.coverImage && (
                       <Card
                         key={index}
                         className="w-56 h-[500px] flex flex-col justify-start relative mx-auto cursor-pointer"
                         onMouseEnter={() => setHoveredCardIndex(index)}
                         onMouseLeave={() => setHoveredCardIndex(null)}
-                        onClick={() => navigate("/blog/:id")}
                       >
+                        <div className="flex items-center gap-2 mx-auto w-full justify-center mt-2 z-20 cursor-text absolute">
+                          <Button size="sm" color="blue">Edit</Button>
+                          <Button size="sm" color="red" onClick={() => deleteBlog(blog._id)}>Delete</Button>
+                          </div>
                         <img
-                          src={blog.img}
+                          src={blog.coverImage}
                           className="rounded-lg h-full w-full object-cover"
+                          onClick={() => navigate(`/blog/${blog._id}`)}
                         />
                         <div
-                          className={`p-2  bg-opacity-85 absolute rounded-lg bottom-0`}
+                          className={`p-2 bg-opacity-85 absolute rounded-lg bottom-0 bg-white w-full`}
                           style={{
                             transition: "all 0.5s ease-in-out",
-                            backgroundColor: `${blog.color}`,
                           }}
                         >
                           <Typography
-                            className={`text-xl font-semibold text-${blog.text}`}
+                            className={`text-xl font-semibold`}
                           >
-                            Lorem ipsum dolor sit amet.{" "}
+                            {blog.title}
                           </Typography>
                           <Typography
-                            className={`text-sm text-${blog.text}`}
+                            className={`text-sm`}
                             style={{
                               transition: "height 0.5s ease-in-out",
                               height: hoveredCardIndex === index ? "120px" : "0",
                               overflow: "hidden",
                             }}
+                            dangerouslySetInnerHTML={{ __html: blog.content }}
                           >
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Deserunt distinctio dolor iusto? Laborum tempora
-                            quo consequatur fugit doloribus eius reiciendis iusto
-                            ipsam illum ipsum officiis, temporibus iure nobis
-                            recusandae natus?
                           </Typography>
                         </div>
                       </Card>
+                      )}
+                      </>
                     ))}
                   </div>
                 </div>
