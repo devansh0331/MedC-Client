@@ -16,7 +16,7 @@ import altprofile from "../assets/altprofile.png";
 import { IoLocationSharp } from "react-icons/io5";
 import { BsBuildingsFill } from "react-icons/bs";
 import { IoMdSearch } from "react-icons/io";
-import YouMayKnow from "../components/YouMayKnow";
+// import YouMayKnow from "../components/YouMayKnow";
 import ProfileExpand from "../components/ProfileExpand";
 import SideBar from "../components/SideBar";
 import { UserContext } from "../UserContext";
@@ -35,7 +35,7 @@ const Hire = () => {
   const StateArr = State.getStatesOfCountry("IN");
   const [fixedLocationArray, setFixedLocationArray] = useState([]);
   const [locationArray, setLocationArray] = useState([]);
-  const [locationBox, setLocationBox] = useState(false);  
+  const [locationBox, setLocationBox] = useState(false);
   const locationRef = useRef(null);
 
   // KEYWORD VARIABLES
@@ -92,24 +92,33 @@ const Hire = () => {
 
   const buildKeywordArray = () => {
     let arr = [];
-    for(let i = 0; i < allUsers.length; i++) {
-      if(allUsers[i].name === undefined) continue;
-      if(!arr.includes(allUsers[i].name)){
-        arr.push(allUsers[i].name)
+    for (let i = 0; i < allUsers.length; i++) {
+      if (allUsers[i].name === undefined) continue;
+      if (!arr.includes(allUsers[i].name)) {
+        arr.push(allUsers[i].name);
       }
     }
     arr.sort();
     setFixedKeywordArray(arr);
-  }; 
+  };
 
   const handleFilterKeyword = (word) => {
     const value = word.toLowerCase();
-    setKeywordArray(value === "" ? fixedKeywordArray : fixedKeywordArray.filter((item) => item.toLowerCase().startsWith(value)));
-  }
+    setKeywordArray(
+      value === ""
+        ? fixedKeywordArray
+        : fixedKeywordArray.filter((item) =>
+            item.toLowerCase().startsWith(value)
+          )
+    );
+  };
 
   const setKeywordFunc = (item) => {
-    const words = keyword.split('|').map(word => word.trim());
-    const newKeyword = words.slice(0, words.length - 1).concat(item.trim()).join(' | ');
+    const words = keyword.split("|").map((word) => word.trim());
+    const newKeyword = words
+      .slice(0, words.length - 1)
+      .concat(item.trim())
+      .join(" | ");
     setKeyword(`${newKeyword} |`);
   };
 
@@ -117,41 +126,57 @@ const Hire = () => {
     setProfileExpand(!profileExpand);
   };
 
-
   // FILTER PROFILES
   const handleFilterProfiles = () => {
-    if(keyword.length == 0 && location.length == 0){
+    if (keyword.length == 0 && location.length == 0) {
       setFilteredUsers(allUsers);
       return;
     }
-    const selectedKeyword = keyword.split('|').map(word => word.trim()).filter(item => item !== "");
-    const selectedLocation = location.split('|').map(word => word.trim()).filter(item => item !== "");
-    let arr = []
-    if(selectedKeyword.length === 0 && selectedLocation.length === 0) {
+    const selectedKeyword = keyword
+      .split("|")
+      .map((word) => word.trim())
+      .filter((item) => item !== "");
+    const selectedLocation = location
+      .split("|")
+      .map((word) => word.trim())
+      .filter((item) => item !== "");
+    let arr = [];
+    if (selectedKeyword.length === 0 && selectedLocation.length === 0) {
       setFilteredUsers(allUsers);
-    }
-    else if(selectedKeyword.length !== 0 && selectedLocation.length === 0) {
+    } else if (selectedKeyword.length !== 0 && selectedLocation.length === 0) {
       selectedKeyword.map((keyword) => {
-       arr.push(allUsers.filter(user => user.name?.toLowerCase().includes(keyword?.toLowerCase())));
-        // setFilteredUsers(allUsers.filter(user => user.name?.toLowerCase().includes(keyword?.toLowerCase()))); 
-        })
-    }
-    else if(selectedKeyword.length === 0 && selectedLocation.length !== 0) {
+        arr.push(
+          allUsers.filter((user) =>
+            user.name?.toLowerCase().includes(keyword?.toLowerCase())
+          )
+        );
+        // setFilteredUsers(allUsers.filter(user => user.name?.toLowerCase().includes(keyword?.toLowerCase())));
+      });
+    } else if (selectedKeyword.length === 0 && selectedLocation.length !== 0) {
       selectedLocation.map((location) => {
-        arr.push(allUsers.filter(user => user.location?.toLowerCase().includes(location?.toLowerCase())));
+        arr.push(
+          allUsers.filter((user) =>
+            user.location?.toLowerCase().includes(location?.toLowerCase())
+          )
+        );
         // setFilteredUsers(allUsers.filter(user => user.location?.toLowerCase().includes(location?.toLowerCase())));
-      })
-    }
-    else if(selectedKeyword.length !== 0 && selectedLocation.length !== 0) {
+      });
+    } else if (selectedKeyword.length !== 0 && selectedLocation.length !== 0) {
       selectedKeyword.map((keyword) => {
         selectedLocation.map((location) => {
-          arr.push(allUsers.filter(user => user.name?.toLowerCase().includes(keyword?.toLowerCase()) && user.location?.toLowerCase().includes(location?.toLowerCase())));
+          arr.push(
+            allUsers.filter(
+              (user) =>
+                user.name?.toLowerCase().includes(keyword?.toLowerCase()) &&
+                user.location?.toLowerCase().includes(location?.toLowerCase())
+            )
+          );
           // setFilteredUsers(allUsers.filter(user => user.name?.toLowerCase().includes(keyword?.toLowerCase()) && user.location?.toLowerCase().includes(location?.toLowerCase())));
-        })
-      })  
+        });
+      });
     }
     setFilteredUsers(arr.flat());
-  }
+  };
 
   // USE EFFECTS
 
@@ -175,16 +200,36 @@ const Hire = () => {
     document.addEventListener("click", handleClickOutsideKeyword);
   }, []);
 
+  // SCROLL NAVBAR FUNCTION
+  useEffect(() => {
+    const mainContainer = document.getElementById("posts");
+    let prevScrollPos = document.getElementById("posts").scrollTop;
+
+    mainContainer.onscroll = () => {
+      let currentScrollPos = document.getElementById("posts").scrollTop;
+      if (prevScrollPos > currentScrollPos) {
+        document.getElementById("navbar").classList.remove("hidden");
+        document.getElementById("sub-nav").classList.remove("-top-30");
+        document.getElementById("sub-nav").classList.add("top-0");
+      } else {
+        document.getElementById("navbar").classList.add("hidden");
+        document.getElementById("sub-nav").classList.add("-top-30");
+        document.getElementById("sub-nav").classList.remove("top-0");
+      }
+      prevScrollPos = currentScrollPos;
+    };
+  },[]);
+
   return (
     <div className="flex overflow-y-hidden  bg-background overflow-x-hidden h-[90vh]">
       <SideBar route="feed" />
       <div className="flex 2xl:w-[75%] xl:w-[85%] w-[90%] mx-auto ">
         <div className="w-full lg:w-4/6 m-auto mt-4 mx-2 ">
-          <div className="search ">
-            <Navbar
-              className="flex flex-col md:flex-row rounded-md items-center z-10"
-              fullWidth
-              shadow
+          <div className="" id="navbar" style={{transition: "all 0.5s ease"}}>
+            <Card
+              className="flex flex-col md:flex-row rounded-md items-center z-10 px-3 py-2"
+              id="sub-nav"
+              style={{transition: "all 0.5s ease"}}
             >
               {/* SEARCH NAME */}
               <div
@@ -262,13 +307,16 @@ const Hire = () => {
               <button
                 type="button"
                 className="select-none rounded-lg bg-blue-500 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none  my-1 md:my-0"
-                onClick={()=>handleFilterProfiles()}
+                onClick={() => handleFilterProfiles()}
               >
                 Search
               </button>
-            </Navbar>
+            </Card>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 w-full mt-1 overflow-y-scroll max-h-[75vh] scrollbar-thin  z-0">
+          <div
+            className="grid grid-cols-2 md:grid-cols-3 w-full mt-1 overflow-y-scroll max-h-[75vh] scrollbar-thin  z-0"
+            id="posts"
+          >
             {filteredUsers.map((user, index) => (
               <>
                 {user?.name != "" ? (
@@ -276,14 +324,12 @@ const Hire = () => {
                     className="p-3 m-3 flex flex-col gap-3 justify-between bg-white rounded-lg"
                     key={index}
                   >
-                    <div
-                      className="p-0 m-0  flex flex-col items-center justify-center w-full border-b-2 rounded-none pb-2 "
-                    >
-                        <img
-                          src={user?.profileURL ? user?.profileURL : altprofile}
-                          alt="altprofile"
-                          className="w-24 h-24 mx-auto rounded-full"
-                        />
+                    <div className="p-0 m-0  flex flex-col items-center justify-center w-full border-b-2 rounded-none pb-2 ">
+                      <img
+                        src={user?.profileURL ? user?.profileURL : altprofile}
+                        alt="altprofile"
+                        className="w-24 h-24 mx-auto rounded-full"
+                      />
                       <Typography className="text-lg mt-2">
                         {user?.name}
                       </Typography>
@@ -329,7 +375,7 @@ const Hire = () => {
                 ) : null}
               </>
             ))}
-          </div> 
+          </div>
         </div>
         <div className="hidden lg:block w-2/6 mt-4 mx-2">
           <ProfileExpand user={userExpand} />

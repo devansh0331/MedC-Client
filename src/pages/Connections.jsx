@@ -302,6 +302,30 @@ const Connections = () => {
     getConnections();
   }, []);
 
+
+  // SCROLL NAVBAR FUNCTION
+  useEffect(() => {
+    const mainContainer = document.getElementById("posts");
+    if(mainContainer){
+      let prevScrollPos = mainContainer.scrollTop;
+      mainContainer.onscroll = () => {
+        let currentScrollPos = document.getElementById("posts").scrollTop;
+        if (prevScrollPos > currentScrollPos) {
+          document.getElementById("navbar").classList.remove("hidden");
+          document.getElementById("sub-nav").classList.remove("-top-30");
+          document.getElementById("sub-nav").classList.add("top-0");
+        } else {
+          document.getElementById("navbar").classList.add("hidden");
+          document.getElementById("sub-nav").classList.add("-top-30");
+          document.getElementById("sub-nav").classList.remove("top-0");
+        }
+        prevScrollPos = currentScrollPos;
+      };
+    }
+
+  },[]);
+
+
   return (
     <div className="flex overflow-hidden bg-background h-[90vh]">
       <div className="">
@@ -371,10 +395,11 @@ const Connections = () => {
             </List>
           </Card>
           <div className="xl:w-3/6 lg:w-4/6 w-5/6 mt-4">
-              <Navbar
-                className="flex flex-col md:flex-row rounded-md items-center z-10"
-                fullWidth
-                shadow
+
+          <div className="" id="navbar">
+              <Card
+                className="flex flex-col md:flex-row rounded-md items-center z-10 px-3 py-2"
+                id="sub-nav"
               >
                 {/* SEARCH NAME */}
                 <div
@@ -458,7 +483,9 @@ const Connections = () => {
                 >
                   Search
                 </button>
-              </Navbar>
+              </Card>
+          </div>
+
               <div
                 className="p-2 bg-gray-100 justify-between block lg:hidden"
                 style={{ transition: "all 0.5s ease" }}
@@ -507,7 +534,7 @@ const Connections = () => {
                 </div>
               </div>
 
-            <div className="flex flex-col max-h-[80vh] overflow-y-scroll scrollbar-thin w-full mt-1 z-0">
+            <div className="flex flex-col max-h-[80vh] overflow-y-scroll scrollbar-thin w-full mt-1 z-0" id="posts">
               {activeTab == "Pending" && (
                 <>
                   {pendingRequestsData.length == 0 ? (

@@ -15,8 +15,6 @@ const HireDialog = (props) => {
   const mailContent =
     document.getElementsByClassName("dialogBody")[0]?.innerHTML;
   const [senderEmail, setSenderEmail] = useState(props.senderEmail);
-    console.log(props.jobId);
-    console.log(props.candidateEmail);
     
 
   const sendEmail = async () => {

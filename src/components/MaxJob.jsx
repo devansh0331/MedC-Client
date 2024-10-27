@@ -192,9 +192,31 @@ const MaxJob = () => {
     document.addEventListener("click", handleClickOutsideKeyword);
   }, []);
 
+  // SCROLL NAVBAR FUNCTION
+  useEffect(() => {
+    const mainContainer = document.getElementById("posts");
+    let prevScrollPos = document.getElementById("posts").scrollTop;
+    
+    mainContainer.onscroll = () => {
+      let currentScrollPos = document.getElementById("posts").scrollTop;
+      if (prevScrollPos > currentScrollPos) {
+        document.getElementById("navbar").classList.remove("h-0");
+        document.getElementById("sub-nav").classList.remove("-top-30");
+        document.getElementById("sub-nav").classList.add("top-0");
+      } else {
+        document.getElementById("navbar").classList.add("h-0");
+        document.getElementById("sub-nav").classList.add("-top-30");
+        document.getElementById("sub-nav").classList.remove("top-0");
+      }
+      prevScrollPos = currentScrollPos;
+    }
+  })
+
   return (
     <Card className="w-full flex flex-col mx-auto mt-5 py-1 bg-white rounded-md shadow-md">
-      <Card className="w-full min-w-96 flex flex-col md:flex-row items-center justify-center gap-3 px-3 py-2 rounded-md">
+      <div className="" id="navbar" style={{transition: "all 0.5s ease"}}>
+      <Card className="w-full min-w-96 flex flex-col md:flex-row items-center justify-center gap-3 px-3 py-2 rounded-md" id="sub-nav"
+      style={{transition: "all 0.5s ease"}}>
         {/* KEYWORD FILTER */}
         <div className="w-1/2 relative" ref={keywordRef}>
           <input
@@ -269,7 +291,8 @@ const MaxJob = () => {
           Search
         </button>
       </Card>
-      <div className="w-full h-[75vh] overflow-y-scroll scrollbar-thin bg-background">
+      </div>
+      <div className="w-full h-[75vh] overflow-y-scroll scrollbar-thin bg-background" id="posts">
         {filteredJobs.map((job) => (
           <MaxJobCard key={job._id} job={job} parentFunction={getAllJobs} />
         ))}
