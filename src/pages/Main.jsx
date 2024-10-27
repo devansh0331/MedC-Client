@@ -30,6 +30,7 @@ import CreateBlog from "./CreateBlog";
 import ArchivedPosts from "./ArchivedPosts";
 import Contactus from "./Contactus";
 import ViewApplications from "./ViewApplications";
+import PostCardNew from "../components/PostCardNew";
 // import { NavbarWithSearch } from "./Nav";
 
 function Main() {
@@ -276,6 +277,15 @@ function Main() {
           <>
             <NavMain />
             <ViewApplications />
+          </>
+        }
+      />
+      <Route
+        path="/new-posts/posts"
+        element={
+          <>
+            <NavMain />
+            <PostCardNew />
           </>
         }
       />
