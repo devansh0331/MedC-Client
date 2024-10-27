@@ -314,9 +314,11 @@ const SinglePostCard = (props) => {
             <div className="flex items-center">
               <div className="">
                 <Avatar
-                  src={`${
-                    post?.user?.profileURL ? post?.user?.profileURL : altprofile
-                  }`}
+                  src={
+                    post?.user?.profileURL
+                      ? `${post?.user?.profileURL}`
+                      : altprofile
+                  }
                   alt="profile"
                   size="lg"
                   className="cursor-pointer"
@@ -403,30 +405,29 @@ const SinglePostCard = (props) => {
               />
             )}
             <div className="flex items-center px-6 py-4 gap-6 justify-between">
-              <div
-                className="flex items-center gap-1">
+              <div className="flex items-center gap-1">
                 {isLiked ? (
                   <AiFillLike
                     className="w-5 h-5 text-blue-600 active:animate-like cursor-pointer"
                     onClick={() => {
-                      if(userInfo.state){
+                      if (userInfo.state) {
                         handleLike(postId);
                         props.parentFunction();
                         setIsLiked(false);
-                      }else{
+                      } else {
                         setSignUpDialog(true);
                       }
                     }}
-                  /> 
+                  />
                 ) : (
                   <AiOutlineLike
                     className="w-5 h-5 text-blue-600 active:animate-like cursor-pointer"
                     onClick={() => {
-                      if(userInfo.state){
+                      if (userInfo.state) {
                         handleLike(postId);
                         props.parentFunction();
                         setIsLiked(true);
-                      }else{
+                      } else {
                         setSignUpDialog(true);
                       }
                     }}
@@ -442,13 +443,12 @@ const SinglePostCard = (props) => {
               <div
                 className="flex items-center gap-2 cursor-pointer"
                 onClick={() => {
-                  if(userInfo.state){
+                  if (userInfo.state) {
                     getComments(true);
                     setCommentbox(!commentbox);
-                  }else{
+                  } else {
                     setSignUpDialog(true);
                   }
-                 
                 }}
               >
                 <FaRegCommentAlt className="w-5 h-5 text-blue-600" />
@@ -703,7 +703,11 @@ const SinglePostCard = (props) => {
           </Dialog>
 
           {/* IMAGE PREVIEW */}
-          <Dialog open={imagePreview} handler={handleImagePreview} className="bg-transparent border-none shadow-none" >
+          <Dialog
+            open={imagePreview}
+            handler={handleImagePreview}
+            className="bg-transparent border-none shadow-none"
+          >
             {post?.fileURL && (
               <img
                 src={post?.fileURL}
@@ -715,10 +719,7 @@ const SinglePostCard = (props) => {
           <Toaster position="top-right" className="z-50" />
 
           {/* SIGN UP POP UP */}
-          <SignupDialog
-            open={signUpDialog} 
-            handler={handleSignUpDialog}
-            />
+          <SignupDialog open={signUpDialog} handler={handleSignUpDialog} />
         </Card>
       )}
     </>

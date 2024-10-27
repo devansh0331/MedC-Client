@@ -26,13 +26,12 @@ const SinglePost = () => {
     sendRequest,
     checkFriendStatus,
     acceptRequest,
-    userInfo
+    userInfo,
   } = useContext(UserContext);
 
   useEffect(() => {
     getSinglePost();
   }, [postId]);
- 
 
   const getSinglePost = async () => {
     const response = await fetch(
@@ -80,7 +79,7 @@ const SinglePost = () => {
   };
 
   const getUserPosts = async (postUserId, postId) => {
-    if(!userInfo.status) return;
+    if (!userInfo.status) return;
     try {
       const response = await fetch(
         `${SERVER_URL}/post/get-user-posts/${postUserId}`,
@@ -125,10 +124,9 @@ const SinglePost = () => {
           ) : (
             <SinglePostCard
               post={post}
-              isLiked={post.likes && post.likes[currentUserId]}
-              handleLike={() => handleLike(post._id)}
-              postId={postId.id}
               userId={currentUserId}
+              postId={post._id}
+              parentFunction={getPosts}
             />
           )}
         </div>

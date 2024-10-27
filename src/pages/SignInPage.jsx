@@ -58,10 +58,10 @@ function SignInPage() {
           // location.reload();
         }, 2000);
       } else {
-        toast.error("Server Error: " + parsedResponse);
+        toast.error(parsedResponse);
       }
     } catch (error) {
-      toast.error("Client Error: " + error);
+      toast.error(error);
     }
   };
   const handleSubmit = async () => {
@@ -85,7 +85,7 @@ function SignInPage() {
         console.log(parsedResponse);
         if (parsedResponse.success == false) {
           console.log(parsedResponse.message);
-          toast.error("Server Message: " + parsedResponse.message);
+          toast.error(parsedResponse.message);
         } else {
           const parsedName = await parsedResponse.user.name;
           const parsedEmail = await parsedResponse.user.email;
@@ -103,7 +103,7 @@ function SignInPage() {
           }, 1000);
         }
       } catch (error) {
-        toast.error("Client Error: " + error);
+        toast.error(error);
       }
     }
   };

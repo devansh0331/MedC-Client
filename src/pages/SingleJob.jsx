@@ -47,6 +47,7 @@ useEffect(() => {
         {/* <JobNav/> */}
         <JobCardSingle
         job={job}
+        parentFunction={getSingleJob}
         />
         </div>
         </div>

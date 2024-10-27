@@ -60,20 +60,6 @@ const MaxJobCard = (props) => {
     setSignUpBox(!signUpBox);
   };
 
-  const handleResumeDialog = () => {
-    setOpenResumeDialog(!openResumeDialog);
-  };
-
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    if (!selectedFile || selectedFile.type !== "application/pdf") {
-      setResume(null);
-      alert("Please select a PDF file!");
-      return;
-    }
-    setResume(selectedFile);
-  };
-
   const handleSaveJob = async () => {
     if (!userInfo.state) {
       setSignUpBox(true);

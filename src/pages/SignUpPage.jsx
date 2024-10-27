@@ -30,7 +30,7 @@ function SignUpPage() {
   };
 
   const signInWithGoogle = async (token) => {
-    console.log(token);
+    // console.log(token);
     try {
       const response = await fetch(`${SERVER_URL}/auth/signin-with-google`, {
         method: "POST",
@@ -40,27 +40,26 @@ function SignUpPage() {
         body: JSON.stringify({ token }),
       });
       const parsedResponse = await response.json();
-      console.log(parsedResponse);
+      // console.log(parsedResponse);
       if (parsedResponse.success == true) {
         const parsedName = await parsedResponse.user.name;
         const parsedEmail = await parsedResponse.user.email;
 
-        console.log("Token: " + parsedResponse.token);
-        console.log("User: " + parsedEmail + " " + parsedName);
+        // console.log("Token: " + parsedResponse.token);
+        // console.log("User: " + parsedEmail + " " + parsedName);
         Cookies.set("name", parsedName, { expires: 365 });
         Cookies.set("email", parsedEmail, { expires: 365 });
         Cookies.set("token", parsedResponse.token, { expires: 365 });
-        toast.success(parsedResponse.message);
+        // toast.success(parsedResponse.message);
         getUser();
         setTimeout(() => {
           navigate("/feed");
-          // location.reload();
         }, 2000);
       } else {
-        toast.error("Server Error: " + parsedResponse.error);
+        toast.error(parsedResponse.error);
       }
     } catch (error) {
-      toast.error("Client Error: " + error);
+      toast.error(error);
     }
   };
 
@@ -81,7 +80,7 @@ function SignUpPage() {
         });
 
         const parsedResponse = await response.json();
-        console.log(parsedResponse);
+        // console.log(parsedResponse);
         if (parsedResponse.success == false) {
           toast.error(parsedResponse.error);
         } else {
