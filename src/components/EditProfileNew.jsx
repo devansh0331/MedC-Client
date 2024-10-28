@@ -8,7 +8,6 @@ import { FaLinkedinIn } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaLink } from "react-icons/fa";
 import { useState } from "react";
-import EditProfile from "./EditProfile";
 import altprofile from "../assets/altprofile.png";
 import { FaRegEdit } from "react-icons/fa";
 import { RiGalleryFill } from "react-icons/ri";
@@ -42,7 +41,6 @@ function EditProfileNew({
   const handleOpenEdit = () => setOpenEdit();
   const CityArr = City.getCitiesOfCountry("IN");
   const StateArr = State.getStatesOfCountry("IN");
-  console.log(user);
   const [resume, setResume] = useState(Resume);
   const [number, setNumber] = useState("");
   const [fName, setFName] = useState(user.name ? user.name.split(" ")[0] : "");
@@ -64,6 +62,7 @@ function EditProfileNew({
   const [bioRolesArray, setBioRolesArray] = useState([]);
   const [bioSuggestionbox, setBioSuggestionbox] = useState(false);
   const bioDropDown = useRef(null);
+  const [error, setError] = useState("");
 
   const handleClickEvent = (event) => {
     if (bioDropDown.current && !bioDropDown.current.contains(event.target)) {
@@ -120,10 +119,16 @@ function EditProfileNew({
 
         const res = await response.json();
         console.log(res);
+        
         if (res.success) {
           getSingleUser();
           setOpenEdit();
           setToast("Profile updated successfully", true);
+        }else{
+          setError(res.error);
+          setTimeout(() => {
+            setError("");
+          }, 2000);
         }
       } catch (error) {
         setOpenEdit();
@@ -162,17 +167,6 @@ function EditProfileNew({
       }
     }
   };
-
-
-  //   const onButtonClick = () => {
-  //     const pdfUrl = URL.createObjectURL(resume);
-  //     const link = document.createElement("a");
-  //     link.href = pdfUrl;
-  //     link.download = "document.pdf"; // specify the filename
-  //     document.body.appendChild(link);
-  //     link.click();
-  //     document.body.removeChild(link);
-  // };
 
   return (
     <Dialog open={openEdit} handler={handleOpenEdit} size="lg" className="">
@@ -355,6 +349,9 @@ function EditProfileNew({
           </div>
         </div>
       </div>
+      {error.length > 0 && (
+        <p className="w-full text-center mb-3 text-red-600">{error}</p>
+      )}
     </Dialog>
   );
 }

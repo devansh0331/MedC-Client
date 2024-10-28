@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import ProfileCard from "../components/ProfileCard";
 import ProfileAbout from "../components/ProfileAbout";
 import ProfileDetails from "../components/ProfileDetails";
-import EditProfile from "../components/EditProfile";
 import EditAbout from "../components/EditAbout";
 import { UserContext } from "../UserContext";
 import SideBar from "../components/SideBar";
