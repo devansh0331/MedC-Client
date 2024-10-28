@@ -5,15 +5,15 @@ import BlogBg from "../assets/BlogBG.png";
 const SingleBlogCard = (props) => {
   return (
     <>
-      <Card className="flex flex-row" shadow={false}>
+      <Card className="flex flex-col mx-auto" shadow={false}>
         <div className="">
           <img
             src={`${props?.blog?.coverImage}`}
             alt=""
-            className="w-56 h-[500px] object-cover rounded-lg"
+            className="w-full h-64 object-cover rounded-lg"
           />
         </div>
-        <div className="w-4/5 p-4 pl-6">
+        <div className="w-[95%] lg:w-4/5 p-4 pl-6">
           <Typography className="text-[42px] font-semibold text-gray-900">
             {props?.blog?.title}
           </Typography>

@@ -33,11 +33,13 @@ const CreateBlog = () => {
     //   matchVisual: false,
     // },
   };
-  const fileUploadRef = useRef(null);
-
-  const handleFileUpload = (e) => {
-    setFile(e.target.files[0]);
+  
+  let blog = {
+    title: title,
+    content: description,
+    coverImage: file ? URL.createObjectURL(file) : "",
   };
+
 
   const postBlog = async () => {
     if (!file || !title || !description) {
@@ -79,7 +81,8 @@ const CreateBlog = () => {
   return (
     <div className="w-full h-[90vh] overflow-y-scroll scrollbar-thin flex bg-background pb-5">
       <SideBar />
-      <div className="w-3/5 my-5 mx-auto">
+      <div className="flex flex-col w-3/5 my-5 mx-auto pb-5">
+      <div className="">
         {active === 0 && (
           <Card className="flex flex-row">
             <div className="w-56 h-[500px] rounded-lg relative bg-gray-300">
@@ -141,15 +144,9 @@ const CreateBlog = () => {
             </div>
           </Card>
         )}
-        <Button
-          className="bg-primary text-white px-3 py-2 mt-3 rounded-lg w-full"
-          onClick={() => postBlog()}
-        >
-          Post
-        </Button>
         {active === 1 && (
           <Card className="pb-4">
-            <SingleBlogCard />
+            <SingleBlogCard blog={blog} />
             <div className="w-full flex justify-end">
               <Button
                 className="bg-primary text-white px-3 py-2 mt-3 rounded-lg mr-4"
@@ -159,6 +156,15 @@ const CreateBlog = () => {
               </Button>
             </div>
           </Card>
+        )}
+      </div>
+      {active === 0 && (
+        <Button
+        className="bg-primary text-white px-3 py-2 mt-3 rounded-lg w-full"
+        onClick={() => postBlog()}
+        >
+          Post
+        </Button>
         )}
       </div>
       <Toaster position="top-right" />

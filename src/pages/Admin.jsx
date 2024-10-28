@@ -296,7 +296,7 @@ console.log(adminStatus);
                         onMouseLeave={() => setHoveredCardIndex(null)}
                       >
                         <div className="flex items-center gap-2 mx-auto w-full justify-center mt-2 z-20 cursor-text absolute">
-                          <Button size="sm" color="blue">Edit</Button>
+                          <Button size="sm" color="blue" onClick={()=> navigate(`/blog/edit/${blog._id}`)}>Edit</Button>
                           <Button size="sm" color="red" onClick={() => deleteBlog(blog._id)}>Delete</Button>
                           </div>
                         <img

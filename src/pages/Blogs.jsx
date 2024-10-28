@@ -44,7 +44,7 @@ const Blogs = () => {
             {blog.coverImage && (
               <Card
                 key={index}
-                className="w-56 h-[500px] flex flex-col justify-start relative mx-auto cursor-pointer"
+                className="h-64 flex flex-col justify-start relative mx-auto cursor-pointer"
                 onMouseEnter={() => setHoveredCardIndex(index)}
                 onMouseLeave={() => setHoveredCardIndex(null)}
                 onClick={() => navigate(`/blog/${blog._id}`)}

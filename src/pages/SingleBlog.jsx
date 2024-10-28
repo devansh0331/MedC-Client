@@ -39,11 +39,10 @@ const SingleBlog = () => {
   return (
     <div className="w-full h-[90vh] overflow-y-scroll scrollbar-thin flex bg-background">
       <SideBar />
-      <div className="flex w-[80%] mx-auto gap-4 mt-5 justify-center mb-5">
-        <div className="w-4/5">
+      <div className="flex w-full md:w-[95%] xl:w-[80%] mx-auto mt-5 justify-center gap-10 mb-5">
+        <div className="w-[95%] lg:w-4/5 mx-auto">
           <SingleBlogCard blog={blog} />
         </div>
-        <div className="w-56">{/* <BlogCard/> */}</div>
       </div>
     </div>
   );

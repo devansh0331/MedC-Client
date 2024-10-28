@@ -31,6 +31,7 @@ import ArchivedPosts from "./ArchivedPosts";
 import Contactus from "./Contactus";
 import ViewApplications from "./ViewApplications";
 import PostCardNew from "../components/PostCardNew";
+import EditBlog from "./EditBlog";
 // import { NavbarWithSearch } from "./Nav";
 
 function Main() {
@@ -286,6 +287,15 @@ function Main() {
           <>
             <NavMain />
             <PostCardNew />
+          </>
+        }
+      />
+      <Route
+        path="/blog/edit/:id"
+        element= {
+          <>
+          <NavMain/>
+          <EditBlog/>
           </>
         }
       />
