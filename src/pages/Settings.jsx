@@ -63,17 +63,9 @@ const Settings = () => {
                 <div className="flex justify-between text-gray-800 py-2 border-b-2 cursor-pointer md:hidden" onClick={() => navigate(`/user/${user._id}`)}>
                   <Typography className="text-md">Privacy Policy</Typography>
                 </div>
-                <div className="flex justify-between text-gray-800 py-2 border-b-2 cursor-pointer md:hidden" onClick={() => navigate(`/user/${user._id}`)}>
+                <div className="flex justify-between text-gray-800 py-2 border-b-2 cursor-pointer md:hidden" onClick={() => navigate(`/contact`)}>
                   <Typography className="text-md">Contact Us</Typography>
                 </div>
-                {/* <div className="flex justify-between text-gray-800 py-2 border-b-2">
-                  <Typography className="text-md">Jobs Applied</Typography>
-                  <Typography className="text-md">400</Typography>
-                </div>
-                <div className="flex justify-between text-gray-800 py-2 border-b-2">
-                  <Typography className="text-md">Jobs Posted</Typography>
-                  <Typography className="text-md">400</Typography>
-                </div> */}
                 <div className="flex justify-between text-gray-800 py-2 cursor-pointer" onClick={() => navigate("/archivedPosts")}>
                   <Typography className="text-md">Archived Posts</Typography>
                   <Typography className="text-md"></Typography>
@@ -103,7 +95,7 @@ const Settings = () => {
             <Typography className="text-md text-gray-600 my-1 underline cursor-pointer" onClick={() => navigate(`/about`)}>About Us</Typography>
             <Typography className="text-md text-gray-600 my-1 underline cursor-pointer" onClick={() => navigate(`/faq`)}>FAQ</Typography>
             <Typography className="text-md text-gray-600 my-1 underline cursor-pointer">Privacy Policy</Typography>
-            <Typography className="text-md text-gray-600 my-1 underline cursor-pointer" onClick={() => navigate(`/contactus`)}>Contact Us</Typography>
+            <Typography className="text-md text-gray-600 my-1 underline cursor-pointer" onClick={() => navigate(`/contact`)}>Contact Us</Typography>
             </div> 
             </div>
       {/* <Button onClick={handleOpenSignUp}>open</Button> */}
