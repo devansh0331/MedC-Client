@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -7,6 +7,12 @@ import { FaXTwitter } from "react-icons/fa6";
 import SideBar from "../components/SideBar";
 import { Button, Input, Textarea } from "@material-tailwind/react";
 import Footer from "../components/Footer";
+import { SERVER_URL } from "../ServerURL";
+import Cookies from "js-cookie";
+import { FaRegEdit } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
+import { toast, Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Contactus = () => {
   useEffect(() => {
@@ -15,6 +21,42 @@ const Contactus = () => {
       topElement.scrollIntoView({ behavior: "smooth" });
     }
   }, []);
+  const [name, setName] = useState("");
+  const [senderEmail, setSenderEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const email = "amnumcreations@gmail.com";
+  const mailContent = `<p>You have a new message from ${name}</p>` + `<p>${message}</p>` + `<p>From: ${senderEmail}</p>`;
+
+  const sendEmail = async () => {
+      try {
+        const response = await fetch(
+          `${SERVER_URL}/userjob/contactus-mail`,
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${Cookies.get("token")}`,
+            },
+            body: JSON.stringify({
+              candidateEmail: email,
+              mailbody: mailContent,
+            }),
+          }
+        );
+        const res = await response.json();
+        if (res.success) {
+          toast.success("Message sent successfully");
+          setName("");
+          setSenderEmail("");
+          setMessage("");
+        } else {
+          toast.error(res.error);
+        }
+      } catch (error) {
+        toast.error("Failed to send email");
+      }
+  };
 
   return (
     <div id="contact" className="h-[90vh] overflow-y-scroll scrollbar-thin">
@@ -36,21 +78,28 @@ const Contactus = () => {
               placeholder="Name"
               type="text"
               className="bg-white w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <input
               placeholder="Email"
               type="email"
               className="bg-white w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
-            />
+              value={senderEmail}
+              onChange={(e) => setSenderEmail(e.target.value)}
+           />
             <textarea
               placeholder="Write your message here"
               className="bg-white h-40 w-full flex gap-2 justify-between border-[1px] border-gray-400 p-2 rounded-md items-center text-blue-gray-500 text-sm"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
             />
             <Button
               size="sm"
               color="blue"
               variant="outlined"
               className="bg-white w-min mx-auto lg:mr-auto lg:ml-0"
+              onClick={sendEmail}
             >
               Submit
             </Button>
@@ -100,8 +149,8 @@ const Contactus = () => {
           </div>
         </div>
       </div>
+      <Toaster position="top-right" />
 
-      <Footer />
     </div>
   );
 };

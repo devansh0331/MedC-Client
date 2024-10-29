@@ -264,7 +264,7 @@ function Main() {
         }
       />
       <Route
-        path="/contactus"
+        path="/contact"
         element={
           <>
             <NavMain />
