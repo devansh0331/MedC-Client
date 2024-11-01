@@ -66,7 +66,7 @@ function SideBar() {
   };
   return (
     <>
-      <div className="fixed top-[10vh] w-16 cursor-pointer z-40 hidden lg:block">
+      <div className="fixed top-[10vh] w-16 cursor-pointer z-40 hidden lg:block overflow-y-scroll h-[90vh] scrollbar-invisible">
         <Card
           className="flex flex-col items-start h-full w-full rounded-none "
           shadow={false}
@@ -140,7 +140,6 @@ function SideBar() {
                   <MdOutlineArticle className="w-6 h-6" />
                 </ListItemPrefix>
               </div>
-
               <div
                 className={`hidden lg:flex items-center justify-center px-4 py-3 rounded-md my-1 cursor-pointer ${currentPage.includes("/settings") ? active : ""}`}
                 onClick={() => navigate("/settings")}
@@ -173,27 +172,25 @@ function SideBar() {
           </CardBody>
         </Card>
       </div>
-      <Drawer open={open} onClose={closeDrawer}>
+      <Drawer open={open} onClose={closeDrawer} className="overflow-y-scroll h-screen scrollbar-invisible">
         <Card
           className="flex flex-col justify-between items-start h-full w-full"
           shadow={false}
         >
           {userInfo.state && (
-          <CardHeader
-            shadow={false}
-            floated={false}
+          <div
             className="flex flex-col w-full m-0"
           >
             <div
-              className={`flex items-center border-b-2 mt-4 p-4 cursor-pointer hover:bg-opacity-90 rounded-xl ${currentPage.includes(`/user/${user._id}`) ? active : ""}`}
+              className={`flex items-center border-b-2 mt-4 p-4 cursor-pointer hover:bg-opacity-90 rounded-xl text-gray-800 ${currentPage.includes(`/user/${user._id}`) ? active : ""}`}
               onClick={() => {navigate(`/user/${user._id}`);  closeDrawer();}}
             >
-              <Avatar
+              <img
                 src={user.profileURL ? user.profileURL : altprofile}
-                size="md"
+                className="w-12 h-12 rounded-full"
               />
-              <div className=" flex flex-col ml-3">
-                <Typography className={`font-semibold ${currentPage.includes(`/user/${user._id}`) ? "text-white" : "text-black"}`}>
+              <div className="flex flex-col ml-3">
+                <Typography className={`font-semibold ${currentPage.includes(`/user/${user._id}`) ? "text-white" : "text-gray-800"}`}>
                   {userInfo.name}
                 </Typography>
                 {user.bio && (
@@ -201,7 +198,7 @@ function SideBar() {
                 )}
               </div>
             </div>
-          </CardHeader>
+          </div>
           )}
           <CardBody className="p-0 w-full">
             <div className="mt-2 p-2  border-b-2 mx-2">

@@ -13,7 +13,7 @@ const SingleBlogCard = (props) => {
             className="w-full h-64 object-cover rounded-lg"
           />
         </div>
-        <div className="w-[95%] lg:w-4/5 p-4 pl-6">
+        <div className=" p-4 pl-6">
           <Typography className="text-[42px] font-semibold text-gray-900">
             {props?.blog?.title}
           </Typography>

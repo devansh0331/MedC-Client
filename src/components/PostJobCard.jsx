@@ -283,25 +283,27 @@ const PostJobCard = () => {
               onChange={(e) => setLastDateToApply(e.target.value)}
               value={lastDateToApply}
             />
-            <Switch
-              color="blue"
-              checked={acceptingResponses}
-              onChange={() => setAcceptingResponses(!acceptingResponses)}
-              label="Accept Responses"
-            />
-          </div>
-          <div className="w-full md:flex gap-4 hidden">
-            <Button
-              size="sm"
-              color="blue"
-              variant="outlined"
-              onClick={() => setPreview(!preview)}
-            >
-              {preview ? "Edit" : "Preview"}
-            </Button>
-            <Button size="sm" color="blue" onClick={() => handlePostJob()}>
-              Post
-            </Button>
+            <div className="flex justify-between w-full items-center">
+              <Switch
+                color="blue"
+                checked={acceptingResponses}
+                onChange={() => setAcceptingResponses(!acceptingResponses)}
+                label="Accept Responses"
+              />
+              <div className="md:flex gap-4 hidden">
+                <Button
+                  size="sm"
+                  color="blue"
+                  variant="outlined"
+                  onClick={() => setPreview(!preview)}
+                >
+                  {preview ? "Edit" : "Preview"}
+                </Button>
+                <Button size="sm" color="blue" onClick={() => handlePostJob()}>
+                  Post
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
         <div className="m-0 p-0 w-full md:w-3/5  scrollbar-invisible h-full">

@@ -48,7 +48,6 @@ const Admin = (props) => {
     setReportBoxOpen(!reportBoxOpen);
   };
 
-
   const getAllBlogs = async () => {
     try {
       const response = await fetch(`${SERVER_URL}/blog/all-blogs`, {

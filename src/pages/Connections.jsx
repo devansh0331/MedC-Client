@@ -332,7 +332,7 @@ const Connections = () => {
         <SideBar className="" />
       </div>
       {userInfo.state ? (
-        <div className="flex w-full gap-6 justify-center">
+        <div className="flex w-[95%] lg:w-[88%] gap-6 justify-center mx-auto">
           <Card
             shadow={false}
             floated={false}
@@ -394,7 +394,7 @@ const Connections = () => {
               </ListItem>
             </List>
           </Card>
-          <div className="xl:w-3/6 lg:w-4/6 w-5/6 mt-4">
+          <div className="xl:w-3/6 lg:w-4/6 md:w-5/6 w-full mt-4">
 
           <div className="" id="navbar">
               <Card
@@ -518,7 +518,7 @@ const Connections = () => {
                     onClick={() => setActiveTab("Sent")}
                   >
                     <Typography className="text-gray-700 text-sm">
-                      Sent Invites
+                      Requests
                     </Typography>
                   </div>
                   <div
