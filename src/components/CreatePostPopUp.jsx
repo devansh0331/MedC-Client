@@ -23,80 +23,127 @@ function CreatePostPopUp(props) {
   const handleOpen = () => {
     props.setOpen(!props.open);
   }
+  // const handleSubmit = async () => {
+  //   const formData = new FormData();
+  //   const data = {
+  //     audience: audience,
+  //     description: post,
+  //   };
+  //   formData.append("data", JSON.stringify(data));
+  //   // FOR POSTING WITH A FILE
+  //   if (file) {
+  //     formData.append("filepath", file);
+  //     try {
+  //       console.log("Form Data: ", formData.getAll());
+  //       const response = await fetch(`${SERVER_URL}/post/create-post`, {
+  //         method: "POST",
+  //         credentials: "include",
+  //         headers: {
+  //           Authorization: `Bearer ${Cookies.get("token")}`,
+  //         },
+  //         body: formData,
+  //       });
+
+  //       const result = await response.json();
+  //       console.log(response);
+  //       if (response.ok) {
+  //         toast.success("Post created successfully:");
+  //         setPost("");
+  //         setFile(null);
+  //         setTimeout(() => {
+  //           props.getAllPosts();
+  //           handleOpen();
+  //         }, 2000);
+  //       } else {
+  //         console.error("Failed to create post:", result.error);
+  //         toast.error("Failed to create post");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error creating post:", error);
+  //       toast.error("Failed to create post");
+  //     }
+  //   }
+  //   // FOR POSTING WITHOUT A FILE
+  //   else {
+  //     try {
+  //       console.log("Form Data: ", formData.getAll());
+  //       const response = await fetch(`${SERVER_URL}/post/create-post-no-file`, {
+  //         method: "POST",
+  //         credentials: "include",
+  //         headers: {
+  //           Authorization: `Bearer ${Cookies.get("token")}`,
+  //         },
+  //         body: formData,
+  //       });
+
+  //       const result = await response.json();
+  //       console.log(response);
+  //       if (response.ok) {
+  //         toast.success("Post created successfully:");
+  //         setPost("");
+  //         setFile(null);
+  //         setTimeout(() => {
+  //           props.getAllPosts();
+  //           handleOpen();
+  //         }, 2000);
+  //       } else {
+  //         console.error("Failed to create post:", result.error);
+  //         toast.error("Failed to create post");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error creating post:", error);
+  //       toast.error("Failed to create post");
+  //     }
+  //   }
+  // };
+
+
   const handleSubmit = async () => {
     const formData = new FormData();
-    const data = {
-      audience: audience,
-      description: post,
-    };
-    formData.append("data", JSON.stringify(data));
-
-    // FOR POSTING WITH A FILE
-    if (file) {
-      formData.append("filepath", file);
-      try {
-        // console.log("Form Data: ", formData.getAll);
-        const response = await fetch(`${SERVER_URL}/post/create-post`, {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            Authorization: `Bearer ${Cookies.get("token")}`,
-          },
-          body: formData,
-        });
-
-        const result = await response.json();
-        console.log(response);
-        if (response.ok) {
-          toast.success("Post created successfully:");
-          setPost("");
-          setFile(null);
-          setTimeout(() => {
-            props.getAllPosts();
-            handleOpen();
-          }, 2000);
-        } else {
-          console.error("Failed to create post:", result.error);
-          toast.error("Failed to create post");
-        }
-      } catch (error) {
-        console.error("Error creating post:", error);
-        toast.error("Failed to create post");
-      }
+    formData.append("file", file);
+    formData.append("upload_preset", "ml_default");
+    try {
+      let api = `https://api.cloudinary.com/v1_1/dn7l5h2gk/image/upload`
+      const response = await fetch(api, {
+        method: "POST",
+        body: formData
+      })
+      const result = await response.json();
+      console.log(result);
+      // if (response.ok) {
+      //   const data = {
+      //     audience: audience,
+      //     description: post,
+      //     fileURL: result.secure_url,
+      //   };
+      //   const response = await fetch(`${SERVER_URL}/post/create-post`, {
+      //     method: "POST",
+      //     credentials: "include",
+      //     headers: {
+      //       Authorization: `Bearer ${Cookies.get("token")}`,
+      //     },
+      //     body: JSON.stringify(data),
+      //   });
+      //   const result = await response.json();
+      //   console.log(response);
+      //   if (response.ok) {
+      //     toast.success("Post created successfully:");
+      //     setPost("");
+      //     setFile(null);
+      //     setTimeout(() => {
+      //       props.getAllPosts();
+      //       handleOpen();
+      //     }, 2000);
+      //   } else {
+      //     console.error("Failed to create post:", result.error);
+      //     toast.error("Failed to create post");
+      //   }
+      //   }
+    } catch (error) {
+      console.error("Error creating post:", error);
+      toast.error("Failed to create post");
     }
-    // FOR POSTING WITHOUT A FILE
-    else {
-      try {
-        console.log("Form Data: ", formData.getAll);
-        const response = await fetch(`${SERVER_URL}/post/create-post-no-file`, {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            Authorization: `Bearer ${Cookies.get("token")}`,
-          },
-          body: formData,
-        });
-
-        const result = await response.json();
-        console.log(response);
-        if (response.ok) {
-          toast.success("Post created successfully:");
-          setPost("");
-          setFile(null);
-          setTimeout(() => {
-            props.getAllPosts();
-            handleOpen();
-          }, 2000);
-        } else {
-          console.error("Failed to create post:", result.error);
-          toast.error("Failed to create post");
-        }
-      } catch (error) {
-        console.error("Error creating post:", error);
-        toast.error("Failed to create post");
-      }
-    }
-  };
+  }
 
   const handleAudienceChange = (event) => {
     setAudience(event.target.value);

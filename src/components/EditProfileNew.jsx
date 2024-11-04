@@ -99,12 +99,13 @@ function EditProfileNew({
       twitter: twitter,
       website: website,
     };
-    console.log(data);
+    // console.log(data);
     formData.append("data", JSON.stringify(data));
 
     if (file) {
       formData.append("filepath", file);
       try {
+        console.log(formData.getAll("data"));
         const response = await fetch(
           `${SERVER_URL}/auth/update-profile/social-info`,
           {

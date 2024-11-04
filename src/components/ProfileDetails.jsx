@@ -72,7 +72,6 @@ const ProfileDetails = (props) => {
 
   useEffect(() => {
     getUserPosts();
-    // console.log(singleUserExperience);
   }, [userId]);
 
   return (
