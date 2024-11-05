@@ -36,7 +36,7 @@ function CreatePostPopUp(props) {
       if(secureURL){
         const response = await fetch(`${SERVER_URL}/post/create-post`, {
           method: "POST",
-          mode: "no-cors",
+          mode: "cors",
           credentials: "include",
           headers: {
             Authorization: `Bearer ${Cookies.get("token")}`,
