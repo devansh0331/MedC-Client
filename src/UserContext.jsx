@@ -432,17 +432,18 @@ export function UserContextProvider({ children }) {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", "ml_default");
-      console.log(formData.get("file"));
+      // console.log(formData.get("file"));
       let api = `https://api.cloudinary.com/v1_1/dn7l5h2gk/${type}/upload`;
-      console.log(api);
+      // console.log(api);
       const response = await fetch(api, {
         method: "POST",
         body: formData,
       });
       const result = await response.json();
-      console.log(result);
+      // console.log(result);
       const secure_url = result.secure_url;
-      setSecureURL(result.secure_url);
+      setSecureURL(secure_url);
+      return secure_url;
     } catch (error) {
       console.error("Error creating post:", error);
       toast.error("Failed to create post");
