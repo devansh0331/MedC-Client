@@ -16,6 +16,7 @@ import { RiGalleryFill } from "react-icons/ri";
 import Cookies from "js-cookie";
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
+
 function CreatePostPopUp(props) {
   const [audience, setAudience] = useState("Everyone");
   const [post, setPost] = useState("");
@@ -33,9 +34,9 @@ function CreatePostPopUp(props) {
     try {
       await handleUpload(file, "image");
       if(secureURL){
-        console.log("Sercure URL:", secureURL, "audience:", audience, "post:", post);
         const response = await fetch(`${SERVER_URL}/post/create-post`, {
           method: "POST",
+          mode: "no-cors",
           credentials: "include",
           headers: {
             Authorization: `Bearer ${Cookies.get("token")}`,
