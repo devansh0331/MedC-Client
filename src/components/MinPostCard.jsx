@@ -15,7 +15,7 @@ const MinPostCard = (props) => {
   }
 
   return (
-    <Card className="w-full bg-white my-2 p-4  rounded-md">
+    <Card className="w-full bg-white p-4  rounded-md">
       <div className="flex justify-between  bg-white">
         {/* NAME AND DETAILS */}
         <div className="flex items-center gap-4">
@@ -67,7 +67,7 @@ const MinPostCard = (props) => {
       {/* POST */}
       <div className="flex flex-col w-full mt-2">
         <Typography className="min-w-full text-gray-800">
-          {post?.description.substring(0, 80)}...
+          {post?.description?.substring(0, 80)}...
           <br />
           <button
             className="text-blue-500"

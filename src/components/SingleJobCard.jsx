@@ -13,10 +13,6 @@ const SingleJobCard = (props) => {
         <div className="flex gap-3 items-center justify-center">
           <Typography className="text-[19px] font-medium text-gray-900">{job?.jobTitle? job.jobTitle : "N/A"}</Typography>
         </div>
-        {/* SAVE JOB */}
-        <div className="flex items-center justify-center">
-          <CiStar className="w-6 h-6" />
-        </div>
       </div>
 
       {/* LOCATION */}

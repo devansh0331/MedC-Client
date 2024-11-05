@@ -68,12 +68,8 @@ const SinglePostCard = (props) => {
   const [postdescp, setPostDescp] = useState(post?.description);
   const [deletePost, setDeletePost] = useState(false);
   const [archivePost, setArchivePost] = useState(false);
-  const [postContent, setPostContent] = useState(
-    post?.description?.substring(0, 100)
-  );
-  const [postReadMore, setPostReadMore] = useState(
-    post?.description?.length > 100
-  );
+  const [postContent, setPostContent] = useState("");
+  const [postReadMore, setPostReadMore] = useState(false);
   const [isLiked, setIsLiked] = useState(
     post?.likes && user && post?.likes[user]
   );
@@ -94,6 +90,12 @@ const SinglePostCard = (props) => {
       setPostLoading(false);
     }
   });
+
+  useEffect(() => {
+    setPostContent(post?.description?.substring(0, 100));
+    setPostReadMore(post?.description?.length > 100);
+  }, [post]);
+
   const handleDeletePostBox = () => {
     setDeletePost(!deletePost);
   };
@@ -375,10 +377,11 @@ const SinglePostCard = (props) => {
             </div>
           </CardHeader>
           <CardBody className="m-0 p-0 z-0">
-            {postContent && (
+            {post?.description && postContent && (
               <Typography className="py-4 px-2 text-gray-800 cursor-pointer">
                 <span onClick={() => navigate(`/post/${props.postId}`)}>
                   {postContent}
+                  {/* {post?.description} */}
                 </span>
                 {postReadMore && (
                   <>
