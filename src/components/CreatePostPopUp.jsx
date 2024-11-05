@@ -14,15 +14,17 @@ import { SERVER_URL } from "../ServerURL";
 import toast, { Toaster } from "react-hot-toast";
 import { RiGalleryFill } from "react-icons/ri";
 import Cookies from "js-cookie";
+import { useContext } from "react";
+import { UserContext } from "../UserContext";
 function CreatePostPopUp(props) {
   const [audience, setAudience] = useState("Everyone");
   const [post, setPost] = useState("");
   const [file, setFile] = useState(null);
   const [userId, setUserID] = useState("");
-
+  const { handleUpload, secureURL, setSecureURL } = useContext(UserContext);
   const handleOpen = () => {
     props.setOpen(!props.open);
-  }
+  };
   // const handleSubmit = async () => {
   //   const formData = new FormData();
   //   const data = {
@@ -97,53 +99,46 @@ function CreatePostPopUp(props) {
   //   }
   // };
 
-
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "ml_default");
     try {
-      let api = `https://api.cloudinary.com/v1_1/dn7l5h2gk/image/upload`
-      const response = await fetch(api, {
+      await handleUpload(file, "image");
+      const data = {
+        audience: audience,
+        description: post,
+        fileURL: secureURL,
+      };
+      const response = await fetch(`${SERVER_URL}/post/create-post`, {
         method: "POST",
-        body: formData
-      })
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        body: JSON.stringify(data),
+      });
+      console.log(response);
       const result = await response.json();
-      console.log(result);
-      // if (response.ok) {
-      //   const data = {
-      //     audience: audience,
-      //     description: post,
-      //     fileURL: result.secure_url,
-      //   };
-      //   const response = await fetch(`${SERVER_URL}/post/create-post`, {
-      //     method: "POST",
-      //     credentials: "include",
-      //     headers: {
-      //       Authorization: `Bearer ${Cookies.get("token")}`,
-      //     },
-      //     body: JSON.stringify(data),
-      //   });
-      //   const result = await response.json();
-      //   console.log(response);
-      //   if (response.ok) {
-      //     toast.success("Post created successfully:");
-      //     setPost("");
-      //     setFile(null);
-      //     setTimeout(() => {
-      //       props.getAllPosts();
-      //       handleOpen();
-      //     }, 2000);
-      //   } else {
-      //     console.error("Failed to create post:", result.error);
-      //     toast.error("Failed to create post");
-      //   }
-      //   }
+      console.log(response);
+      if (response.ok) {
+        toast.success("Post created successfully:");
+        setPost("");
+        setFile(null);
+        setSecureURL("");
+        setTimeout(() => {
+          props.getAllPosts();
+          handleOpen();
+        }, 2000);
+      } else {
+        console.error("Failed to create post:", result.error);
+        toast.error("Failed to create post");
+      }
     } catch (error) {
       console.error("Error creating post:", error);
       toast.error("Failed to create post");
     }
-  }
+  };
 
   const handleAudienceChange = (event) => {
     setAudience(event.target.value);
@@ -156,23 +151,23 @@ function CreatePostPopUp(props) {
           <Typography className="mb-1 text-xl font-bold">
             Create a post{" "}
           </Typography>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="mr-3 h-5 w-5 cursor-pointer"
-          onClick={() => {
-            setPost("");
-            setFile(null);
-            handleOpen();
-          }}
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-            clipRule="evenodd"
-          />
-        </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="mr-3 h-5 w-5 cursor-pointer"
+            onClick={() => {
+              setPost("");
+              setFile(null);
+              handleOpen();
+            }}
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+              clipRule="evenodd"
+            />
+          </svg>
         </DialogHeader>
       </div>
       <DialogBody className="m-0 b p-0 px-6">

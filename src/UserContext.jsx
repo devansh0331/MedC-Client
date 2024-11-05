@@ -26,6 +26,7 @@ export function UserContextProvider({ children }) {
   const [userId, setUserId] = useState(null);
   const [friendStatus, setFriendStatus] = useState(0);
   const [statusValue, setStatusValue] = useState("");
+  const [secureURL, setSecureURL] = useState("");
 
   const getUserExperience = async () => {
     try {
@@ -324,10 +325,12 @@ export function UserContextProvider({ children }) {
       if (!parsedRes.success) {
         console.error(parsedRes.error);
       } else {
-        if(userInfo.state){
+        if (userInfo.state) {
           // console.log(userInfo, "true")
-          setAllUsers(parsedRes.data.filter((user) => user.email !== userInfo.email));
-        }else{
+          setAllUsers(
+            parsedRes.data.filter((user) => user.email !== userInfo.email)
+          );
+        } else {
           // console.log(userInfo, "false")
           setAllUsers(parsedRes.data);
         }
@@ -417,12 +420,34 @@ export function UserContextProvider({ children }) {
       if (!res.success) {
         console.error(res.error);
       } else {
-        setAdminStatus(true)
+        setAdminStatus(true);
       }
     } catch (error) {
       console.error("Failed to fetch admin status");
     }
-  }
+  };
+
+  const handleUpload = async (file, type) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ml_default");
+      console.log(formData.get("file"));
+      let api = `https://api.cloudinary.com/v1_1/dn7l5h2gk/${type}/upload`;
+      console.log(api);
+      const response = await fetch(api, {
+        method: "POST",
+        body: formData,
+      });
+      const result = await response.json();
+      console.log(result);
+      const secure_url = result.secure_url;
+      setSecureURL(secure_url);
+    } catch (error) {
+      console.error("Error creating post:", error);
+      toast.error("Failed to create post");
+    }
+  };
 
   useEffect(() => {
     getUser();
@@ -462,6 +487,9 @@ export function UserContextProvider({ children }) {
         singleUserExperience,
         singleUserEducation,
         adminStatus,
+        handleUpload,
+        setSecureURL,
+        secureURL,
       }}
     >
       {children}
