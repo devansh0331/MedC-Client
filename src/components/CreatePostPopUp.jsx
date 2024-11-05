@@ -21,7 +21,7 @@ function CreatePostPopUp(props) {
   const [post, setPost] = useState("");
   const [file, setFile] = useState(null);
   const [userId, setUserID] = useState("");
-  const { handleUpload, secureURL, setSecureURL } = useContext(UserContext);
+  const { handleUpload, secureURL, setSecureURL, getPosts } = useContext(UserContext);
   const handleOpen = () => {
     props.setOpen(!props.open);
   };
@@ -32,37 +32,43 @@ function CreatePostPopUp(props) {
     formData.append("upload_preset", "ml_default");
     try {
       await handleUpload(file, "image");
-      const data = {
-        audience: audience,
-        description: post,
-        fileURL: secureURL,
-      };
-      const response = await fetch(`${SERVER_URL}/post/create-post`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-        body: JSON.stringify(data),
-      });
-      console.log(response);
-      const result = await response.json();
-      console.log(response);
-      if (response.ok) {
-        toast.success("Post created successfully:");
-        setPost("");
-        setFile(null);
-        setSecureURL("");
-        setTimeout(() => {
-          props.getAllPosts();
-          handleOpen();
-        }, 2000);
+      if(secureURL){
+        console.log("Sercure URL:", secureURL, "audience:", audience, "post:", post);
+        const response = await fetch(`${SERVER_URL}/post/create-post`, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            audience: audience,
+            description: post,
+            fileURL: secureURL,
+          }),
+        });
+        console.log(response);
+        const result = await response.json();
+        console.log(response);
+        if (response.ok) {
+          toast.success("Post created successfully:");
+          setPost("");
+          setFile(null);
+          setSecureURL("");
+          setTimeout(() => {
+            getPosts();
+            handleOpen();
+          }, 2000);
+        } else {
+          console.error("Failed to create post:", result.error);
+          toast.error("Failed to create post");
+        }
       } else {
-        console.error("Failed to create post:", result.error);
+        console.error("Failed to create post:" );
         toast.error("Failed to create post");
       }
     } catch (error) {
-      console.error("Error creating post:", error);
+      console.error("Error creating post");
       toast.error("Failed to create post");
     }
   };

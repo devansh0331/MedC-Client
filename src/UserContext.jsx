@@ -442,7 +442,7 @@ export function UserContextProvider({ children }) {
       const result = await response.json();
       console.log(result);
       const secure_url = result.secure_url;
-      setSecureURL(secure_url);
+      setSecureURL(result.secure_url);
     } catch (error) {
       console.error("Error creating post:", error);
       toast.error("Failed to create post");
