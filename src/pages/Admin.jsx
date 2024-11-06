@@ -41,7 +41,7 @@ const Admin = (props) => {
   const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
   const [blogs, setBlogs] = useState([]);
 
-  const { getPosts, posts, getAllUsers, allUsers, adminStatus } = useContext(UserContext);
+  const { getPosts, posts, getAllUsers, allUsers, adminStatus, adminArchivedPosts, setAdminArchivedPosts, getAdminArchivedPosts } = useContext(UserContext);
   const [reportBoxOpen, setReportBoxOpen] = useState(false);
 
   const handleReportBoxOpen = () => {
@@ -91,6 +91,8 @@ const Admin = (props) => {
 
   useEffect(() => {
     getAllBlogs();
+    getAllUsers();
+    getAdminArchivedPosts();
   }, []);
 
 
@@ -198,31 +200,14 @@ console.log(adminStatus);
                     Live Posts
                   </Typography>
                 </div>
-                <div className="w-full h-[75vh] overflow-y-scroll scrollbar-thin">
-                  <div className="grid grid-cols-2 w-4/5 gap-5 justify-evenly mx-auto">
+                <div className="w-full h-[75vh] overflow-y-scroll scrollbar-thin overflow-x-hidden">
+                  <div className="grid grid-cols-2 w-11/12 gap-5 justify-evenly mx-auto">
                     {posts.map((post, key) => (
                       <AdminPostCard
                         key={key}
-                        img={post.fileURL == "" ? null : post.fileURL}
-                        name={
-                          post.user && post.user.name
-                            ? post.user.name
-                            : "Unknown User"
-                        }
-                        bio={post.user && post.user.bio ? post.user.bio : "User"}
-                        profileURL={
-                          post.user && post.user.profileURL
-                            ? post.user.profileURL
-                            : ""
-                        }
-                        profileId={
-                          post.user && post.user._id ? post.user._id : ""
-                        }
-                        description={post.description}
-                        postedAt={
-                          <ReactTimeAgo date={post.createdAt} locale="en-US" />
-                        }
                         postId={post._id}
+                        post={post}
+                        parentFunction={getPosts}
                       />
                     ))}
                   </div>
@@ -237,11 +222,15 @@ console.log(adminStatus);
                   </Typography>
                 </div>
                 <div className="w-full h-[75vh] overflow-y-scroll scrollbar-thin">
-                  <div className="w-1/2 mx-auto">
-                    <AdminPostCard />
-                    <AdminPostCard />
-                    <AdminPostCard />
-                    <AdminPostCard />
+                  <div className="grid grid-cols-2 w-11/12 gap-5 justify-evenly mx-auto">
+                    {adminArchivedPosts.map((post, key) => (
+                      <AdminPostCard
+                        key={key}
+                        postId={post._id}
+                        post={post}
+                        parentFunction={getAdminArchivedPosts}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
@@ -254,16 +243,13 @@ console.log(adminStatus);
                   </Typography>
                 </div>
                 <div className="w-full h-[70vh] overflow-y-scroll scrollbar-thin">
-                  <div className=" grid grid-cols-3 w-3/4 mx-auto">
+                  <div className=" grid grid-cols-3 w-11/12 mx-auto">
                     {allUsers.length > 0 &&
                       allUsers.map((user, key) => (
                         <UserCardAdmin
-                          name={user.name ? user.name : null}
-                          bio={user.bio ? user.bio : null}
-                          profileURL={user.profileURL ? user.profileURL : null}
-                          profileId={user._id ? user._id : null}
-                          location={user.location ? user.location : null}
+                          user={user}
                           key={key}
+                          parentFunction={getAllUsers}
                         />
                       ))}
                   </div>
@@ -290,7 +276,7 @@ console.log(adminStatus);
                       {blog.coverImage && (
                       <Card
                         key={index}
-                        className="w-56 h-[500px] flex flex-col justify-start relative mx-auto cursor-pointer"
+                        className="w-56 h-[450px] flex flex-col justify-start relative mx-auto cursor-pointer"
                         onMouseEnter={() => setHoveredCardIndex(index)}
                         onMouseLeave={() => setHoveredCardIndex(null)}
                       >

@@ -18,11 +18,42 @@ import { IoLocationSharp } from "react-icons/io5";
 import { BsBuildingsFill } from "react-icons/bs";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SERVER_URL } from "../ServerURL";
+import Cookies from "js-cookie";
+import toast, { Toaster } from "react-hot-toast";
 
 const UserCardAdmin = (props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
   const navigate = useNavigate();
+  const mailBody = document.getElementById("mailBody")?.innerHTML;
+  const [reason, setReason] = useState("");
+  const user = props.user;
+
+  console.log(user);
+  
+  const deactivateUser = async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/admin/deactivate-account/${user._id}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        body: JSON.stringify({userEmail: user.email, mailbody: mailBody }),
+      });
+      const res = await response.json();
+      if (res.success) {
+        setOpen(false);
+        props.parentFunction();
+        toast.success(res.message);
+      } else {
+        toast.error(res.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Card className="p-3 m-3 cursor-pointer">
@@ -32,35 +63,29 @@ const UserCardAdmin = (props) => {
         color="transparent"
         className="p-0 m-0  flex flex-col items-center justify-center w-full border-b-2 rounded-none pb-2"
         onClick={() => {
-          navigate(`/user/${props.profileId}`);
+          navigate(`/user/${user._id}`);
         }}
       >
         <Avatar
-          src={props.profileURL ? props.profileURL : altprofile}
+          src={user.profileURL ? user.profileURL : altprofile}
           alt="altprofile"
           size="xl"
           className="w-24 h-24 mx-auto"
         />
         <Typography className="text-lg mt-2">
-          {props.name ? props.name : "Unknown User"}
+          {user.name ? user.name : "Unknown User"}
         </Typography>
         <Typography className="text-sm font-serif">
-          {props.bio ? props.bio : "New User"}
+          {user.bio ? user.bio : "New User"}
         </Typography>
       </CardHeader>
       <CardBody className="m-0 p-0 mt-3 border-b-2 rounded-none pb-2">
         <Typography className="flex items-center">
           <IoLocationSharp />
           <span className="ml-1">
-            {props.location ? props.location : "India"}
+            {user.location ? user.location : "India"}
           </span>
         </Typography>
-        {props.work && (
-          <Typography className="flex items-center">
-            <BsBuildingsFill />
-            <span className="ml-1">ABC Hospital</span>
-          </Typography>
-        )}
       </CardBody>
       <CardFooter className="m-0 p-0 mt-3 mx-auto">
         <Button
@@ -75,34 +100,34 @@ const UserCardAdmin = (props) => {
       </CardFooter>
 
       {/* DELETE DIALOG */}
-      <Dialog open={open} handler={handleOpen}>
+      <Dialog open={open} handler={handleOpen} size="">
         <DialogHeader className="text-gray-800 m-0 pb-2">
           Delete User
         </DialogHeader>
         <DialogBody className="m-0 pt-2">
           <Typography className="text-gray-800 text-lg">
-            Choose the reason why you want to delete this user.
+            Send user the following mail as a reason for deleting their account:
           </Typography>
-          <div className="w-full p-3 text-[16px] text-gray-700">
-            <div className="flex items-center">
-              <input id="default-radio-1" type="radio" name="reason" />
-              <label className="ml-3" htmlFor="default-radio-1">
-                Inappropriate content
-              </label>
-            </div>
-            <div className="flex items-center">
-              <input id="default-radio-2" type="radio" name="reason" />
-              <label className="ml-3" htmlFor="default-radio-2">
-                Inappropriate content
-              </label>
-            </div>
-            <div className="flex items-center">
-              <input id="default-radio-3" type="radio" name="reason" />
-              <label className="ml-3" htmlFor="default-radio-3">
-                Inappropriate content
-              </label>
-            </div>
-          </div>
+          <p id="mailBody" className="w-full p-2 mt-2 border rounded-md h-52">
+            Dear {user.name},
+            <br />
+            We are writing this to inform you that your account has been removed
+            from the MedC job portal due to {reason}.
+          <br/> 
+          If you have any queries or concerns, please do not hesitate to contact us at medcofficalsupport.com.
+            <br />
+            <br />
+            Best regards,
+            <br />
+            MedC Team
+          </p>
+          <input
+            id="reason"
+            type="text"
+            placeholder="Reason for deleting account"
+            className="w-full p-2 mt-2 border rounded-md"
+            onChange={(e) => setReason(e.target.value)}
+          />
         </DialogBody>
         <DialogFooter className="flex gap-4">
           <Button
@@ -114,11 +139,12 @@ const UserCardAdmin = (props) => {
           >
             Cancel
           </Button>
-          <Button variant="" color="blue" onClick={handleOpen} size="sm">
+          <Button variant="" color="blue" onClick={deactivateUser} size="sm">
             Delete User
           </Button>
         </DialogFooter>
       </Dialog>
+      <Toaster position="top-right" />
     </Card>
   );
 };

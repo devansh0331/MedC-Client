@@ -27,6 +27,7 @@ export function UserContextProvider({ children }) {
   const [friendStatus, setFriendStatus] = useState(0);
   const [statusValue, setStatusValue] = useState("");
   const [secureURL, setSecureURL] = useState("");
+  const [adminArchivedPosts, setAdminArchivedPosts] = useState([]);
 
   const getUserExperience = async () => {
     try {
@@ -321,7 +322,7 @@ export function UserContextProvider({ children }) {
         // },
       });
       const parsedRes = await res.json();
-      // console.log(parsedRes);
+      console.log(parsedRes);
       if (!parsedRes.success) {
         console.error(parsedRes.error);
       } else {
@@ -332,7 +333,7 @@ export function UserContextProvider({ children }) {
           );
         } else {
           // console.log(userInfo, "false")
-          setAllUsers(parsedRes.data);
+          setAllUsers(parsedRes.users);
         }
       }
     } catch (error) {
@@ -453,6 +454,27 @@ export function UserContextProvider({ children }) {
   useEffect(() => {
     getUser();
   }, []);
+
+  const getAdminArchivedPosts = async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/post/get-archived-posts`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
+      const res = await response.json();
+      if (!res.success) {
+        console.error(res.error);
+      } else {
+        setAdminArchivedPosts(res.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch admin archived posts");
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -491,6 +513,9 @@ export function UserContextProvider({ children }) {
         handleUpload,
         setSecureURL,
         secureURL,
+        getAdminArchivedPosts,
+        adminArchivedPosts,
+        setAdminArchivedPosts
       }}
     >
       {children}
