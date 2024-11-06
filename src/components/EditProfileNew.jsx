@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { useEffect } from "react";
 import profile2 from "../assets/profile2.png";
 import { IoLocationSharp } from "react-icons/io5";
@@ -30,6 +30,7 @@ import {
 import Cookies from "js-cookie";
 import { SERVER_URL } from "../ServerURL";
 import { BioRoles } from "./BioRoles";
+import { UserContext } from "../UserContext";
 
 function EditProfileNew({
   user,
@@ -39,6 +40,7 @@ function EditProfileNew({
   getSingleUser,
 }) {
   const handleOpenEdit = () => setOpenEdit();
+  const { handleUpload } = useContext(UserContext);
   const CityArr = City.getCitiesOfCountry("IN");
   const StateArr = State.getStatesOfCountry("IN");
   const [resume, setResume] = useState(Resume);
@@ -87,8 +89,10 @@ function EditProfileNew({
   };
 
   const handleSaveProfile = async () => {
-    console.log(location);
-    const formData = new FormData();
+    let fileURL = "";
+    if (file) {
+      fileURL = await handleUpload(file, "image");
+    }
     const data = {
       name: fName + " " + lName,
       email: email,
@@ -98,74 +102,37 @@ function EditProfileNew({
       linkedin: linkedin,
       twitter: twitter,
       website: website,
+      fileURL: file ? fileURL : null,
     };
-    // console.log(data);
-    formData.append("data", JSON.stringify(data));
-
-    if (file) {
-      formData.append("filepath", file);
-      try {
-        console.log(formData.getAll("data"));
-        const response = await fetch(
-          `${SERVER_URL}/auth/update-profile/social-info`,
-          {
-            method: "POST",
-            credentials: "include",
-            headers: {
-              Authorization: `Bearer ${Cookies.get("token")}`,
-            },
-            body: formData,
-          }
-        );
-
-        const res = await response.json();
-        console.log(res);
-        
-        if (res.success) {
-          getSingleUser();
-          setOpenEdit();
-          setToast("Profile updated successfully", true);
-        }else{
-          setError(res.error);
-          setTimeout(() => {
-            setError("");
-          }, 2000);
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/auth/update-profile/social-info`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         }
-      } catch (error) {
-        setOpenEdit();
-        setToast("Failed to update", false);
-      }
-    }
+      );
 
-    // NO FILE
-    else {
-      try {
-        console.log(formData.getAll("data"));
-        const response = await fetch(
-          `${SERVER_URL}/auth/update-profile/social-info-no-profile`,
-          {
-            method: "POST",
-            credentials: "include",
-            headers: {
-              Authorization: `Bearer ${Cookies.get("token")}`,
-            },
-            body: formData,
-          }
-        );
+      const res = await response.json();
 
-        const res = await response.json();
-        console.log(res);
-        if (!res.success) {
-          props.setToast("Failed to update", false);
-        } else {
-          getSingleUser();
-          setOpenEdit();
-          setToast("Profile updated successfully", true);
-        }
-      } catch (error) {
+      if (res.success) {
+        getSingleUser();
         setOpenEdit();
-        setToast("Failed to update", false);
+        setToast("Profile updated successfully", true);
+      } else {
+        setError(res.error);
+        setTimeout(() => {
+          setError("");
+        }, 2000);
       }
+    } catch (error) {
+      setOpenEdit();
+      setToast("Failed to update", false);
     }
   };
 
