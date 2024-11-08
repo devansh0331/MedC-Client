@@ -18,7 +18,7 @@ import { MdDelete } from "react-icons/md";
 import toast, { Toaster } from "react-hot-toast";
 
 const ResumeDialog = (props) => {
-  const { user } = useContext(UserContext);
+  const { user, handleUpload } = useContext(UserContext);
   const [file, setFile] = useState(null);
   const [allfiles, setAllFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -92,9 +92,14 @@ const ResumeDialog = (props) => {
       toast.error("Please select a file");
       return;
     }
-    const formData = new FormData();
+
     if (file) {
-      formData.append("filepath", file);
+      const fileURL = await handleUpload(file, "image");
+      console.log(file);
+      const data = {
+        fileURL,
+        fileName: file.name,
+      };
       // console.log(formData);
 
       try {
@@ -102,8 +107,9 @@ const ResumeDialog = (props) => {
           method: "POST",
           headers: {
             Authorization: `Bearer ${Cookies.get("token")}`,
+            "Content-Type": "application/json",
           },
-          body: formData,
+          body: JSON.stringify(data),
         });
 
         const res = await response.json();
@@ -145,19 +151,19 @@ const ResumeDialog = (props) => {
       console.log(error);
     }
   };
-// console.log(props?.jobId)
-// console.log("resume",selectedFile);
+  // console.log(props?.jobId)
+  // console.log("resume",selectedFile);
 
   const handleJobApplication = async () => {
-    if(!selectedFile){
+    if (!selectedFile) {
       setError("Please select a file");
       setTimeout(() => {
         setError("");
-      },2000)
-    }else{
+      }, 2000);
+    } else {
       // userId, jobId, userResumeId
       try {
-        const response = await fetch(`${SERVER_URL}/userJob/apply-job`,{
+        const response = await fetch(`${SERVER_URL}/userJob/apply-job`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -166,23 +172,23 @@ const ResumeDialog = (props) => {
           body: JSON.stringify({
             userId: user._id,
             userResumeId: selectedFile,
-            jobId: props?.jobId
+            jobId: props?.jobId,
           }),
-        })
+        });
 
         const res = await response.json();
-        if(res.success){
+        if (res.success) {
           props.handler();
           props.checkIfApplied();
           toast.success(res.message);
-        }else{
+        } else {
           setError(res.error);
         }
       } catch (error) {
         setError(error.message);
       }
     }
-  }
+  };
 
   useEffect(() => {
     getAllFiles();
@@ -199,8 +205,12 @@ const ResumeDialog = (props) => {
               <div
                 key={index}
                 className={`my-1 w-full sm:w-2/3 p-2 rounded-md flex items-center justify-between cursor-pointer ${
-                  selectedFile === file._id 
-                    ? `${props.route === "Apply" ? "border-2 border-blue-400 text-blue-400" : "border-[1px] border-gray-400" }` 
+                  selectedFile === file._id
+                    ? `${
+                        props.route === "Apply"
+                          ? "border-2 border-blue-400 text-blue-400"
+                          : "border-[1px] border-gray-400"
+                      }`
                     : "border-[1px] border-gray-400"
                 }`}
                 onClick={() => setSelectedFile(file._id)}
@@ -269,7 +279,13 @@ const ResumeDialog = (props) => {
           Apply
         </Button>
       </DialogFooter>
-      <div className={`text-red-500 w-full text-center mb-2 ${error === "" ? "hidden" : "block"}`}>{error}</div>
+      <div
+        className={`text-red-500 w-full text-center mb-2 ${
+          error === "" ? "hidden" : "block"
+        }`}
+      >
+        {error}
+      </div>
     </Dialog>
   );
 };
