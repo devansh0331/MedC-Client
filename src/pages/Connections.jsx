@@ -264,7 +264,7 @@ const Connections = () => {
       });
     }
     setFilteredUsers(arr.flat());
-    if(filteredUsers.length == 0){
+    if (filteredUsers.length == 0) {
       setMessage("No users found!!");
     }
   };
@@ -302,11 +302,10 @@ const Connections = () => {
     getConnections();
   }, []);
 
-
   // SCROLL NAVBAR FUNCTION
   useEffect(() => {
     const mainContainer = document.getElementById("posts");
-    if(mainContainer){
+    if (mainContainer) {
       let prevScrollPos = mainContainer.scrollTop;
       mainContainer.onscroll = () => {
         let currentScrollPos = document.getElementById("posts").scrollTop;
@@ -322,9 +321,7 @@ const Connections = () => {
         prevScrollPos = currentScrollPos;
       };
     }
-
-  },[]);
-
+  }, []);
 
   return (
     <div className="flex overflow-hidden bg-background h-[90vh]">
@@ -395,8 +392,7 @@ const Connections = () => {
             </List>
           </Card>
           <div className="xl:w-3/6 lg:w-4/6 md:w-5/6 w-full mt-4">
-
-          <div className="" id="navbar">
+            <div className="" id="navbar">
               <Card
                 className="flex flex-col md:flex-row rounded-md items-center z-10 px-3 py-2"
                 id="sub-nav"
@@ -479,62 +475,68 @@ const Connections = () => {
                 <button
                   type="button"
                   className="select-none rounded-lg bg-blue-500 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none  my-1 md:my-0"
-                  onClick={() => {setActiveTab("Community");handleFilterProfiles()}}
+                  onClick={() => {
+                    setActiveTab("Community");
+                    handleFilterProfiles();
+                  }}
                 >
                   Search
                 </button>
               </Card>
-          </div>
+            </div>
 
-              <div
-                className="p-2 bg-gray-100 justify-between block lg:hidden"
-                style={{ transition: "all 0.5s ease" }}
-              >
-                <div className="flex w-full justify-between mx-auto">
-                  <div
-                    className={`flex px-2 py-1 w-1/3 mx-1 ${
-                      activeTab === "Pending" ? "shadow-md bg-white" : ""
-                    } justify-center items-center rounded-md cursor-pointer`}
-                    onClick={() => setActiveTab("Pending")}
-                  >
-                    <Typography className="text-gray-700 text-sm">
-                      Pending
-                    </Typography>
-                  </div>
-                  <div
-                    className={`flex px-2 py-1 w-1/3 mx-1 ${
-                      activeTab === "Connections" ? "shadow-md bg-white" : ""
-                    } justify-center items-center rounded-md cursor-pointer`}
-                    onClick={() => setActiveTab("Connections")}
-                  >
-                    <Typography className="text-gray-700 text-sm">
-                      Connections
-                    </Typography>
-                  </div>
-                  <div
-                    className={`flex px-2 py-1 w-1/3 mx-1 ${
-                      activeTab === "Sent" ? "shadow-md bg-white" : ""
-                    } justify-center items-center rounded-md cursor-pointer`}
-                    onClick={() => setActiveTab("Sent")}
-                  >
-                    <Typography className="text-gray-700 text-sm">
-                      Requests
-                    </Typography>
-                  </div>
-                  <div
-                    className={`flex px-2 py-1 w-1/3 mx-1 ${
-                      activeTab === "Community" ? "shadow-md bg-white" : ""
-                    } justify-center items-center rounded-md cursor-pointer`}
-                    onClick={() => setActiveTab("Community")}
-                  >
-                    <Typography className="text-gray-700 text-sm">
-                      Community
-                    </Typography>
-                  </div>
+            <div
+              className="p-2 bg-gray-100 justify-between block lg:hidden"
+              style={{ transition: "all 0.5s ease" }}
+            >
+              <div className="flex w-full justify-between mx-auto">
+                <div
+                  className={`flex px-2 py-1 w-1/3 mx-1 ${
+                    activeTab === "Pending" ? "shadow-md bg-white" : ""
+                  } justify-center items-center rounded-md cursor-pointer`}
+                  onClick={() => setActiveTab("Pending")}
+                >
+                  <Typography className="text-gray-700 text-sm">
+                    Pending
+                  </Typography>
+                </div>
+                <div
+                  className={`flex px-2 py-1 w-1/3 mx-1 ${
+                    activeTab === "Connections" ? "shadow-md bg-white" : ""
+                  } justify-center items-center rounded-md cursor-pointer`}
+                  onClick={() => setActiveTab("Connections")}
+                >
+                  <Typography className="text-gray-700 text-sm">
+                    Connections
+                  </Typography>
+                </div>
+                <div
+                  className={`flex px-2 py-1 w-1/3 mx-1 ${
+                    activeTab === "Sent" ? "shadow-md bg-white" : ""
+                  } justify-center items-center rounded-md cursor-pointer`}
+                  onClick={() => setActiveTab("Sent")}
+                >
+                  <Typography className="text-gray-700 text-sm">
+                    Requests
+                  </Typography>
+                </div>
+                <div
+                  className={`flex px-2 py-1 w-1/3 mx-1 ${
+                    activeTab === "Community" ? "shadow-md bg-white" : ""
+                  } justify-center items-center rounded-md cursor-pointer`}
+                  onClick={() => setActiveTab("Community")}
+                >
+                  <Typography className="text-gray-700 text-sm">
+                    Community
+                  </Typography>
                 </div>
               </div>
+            </div>
 
-            <div className="flex flex-col max-h-[80vh] overflow-y-scroll scrollbar-thin w-full mt-1 z-0" id="posts">
+            <div
+              className="flex flex-col max-h-[80vh] overflow-y-scroll scrollbar-thin w-full mt-1 z-0"
+              id="posts"
+            >
               {activeTab == "Pending" && (
                 <>
                   {pendingRequestsData.length == 0 ? (

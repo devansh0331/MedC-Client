@@ -18,7 +18,6 @@ import {
   CardBody,
   CardFooter,
   Typography,
-  Avatar,
   Input,
   Menu,
   MenuHandler,
@@ -315,7 +314,7 @@ const SinglePostCard = (props) => {
           >
             <div className="flex items-center">
               <div className="">
-                <Avatar
+                <img
                   src={
                     post?.user?.profileURL
                       ? `${post?.user?.profileURL}`
@@ -323,7 +322,7 @@ const SinglePostCard = (props) => {
                   }
                   alt="profile"
                   size="lg"
-                  className="cursor-pointer"
+                  className="rounded-full w-16 h-16 flex justify-center items-center cursor-pointer profile-pic"
                   onClick={() => navigate(`/user/${post?.user?._id}`)}
                 />
               </div>
@@ -501,7 +500,7 @@ const SinglePostCard = (props) => {
                     {comments.map((commentDetail, key) => (
                       <div className="flex justify-between text-black rounded-md bg-background items-center  p-2 px-2">
                         <div className="flex items-start">
-                          <Avatar
+                          <img
                             src={
                               commentDetail.userId.profileURL
                                 ? commentDetail.userId.profileURL
@@ -509,7 +508,7 @@ const SinglePostCard = (props) => {
                             }
                             alt="profile"
                             size="sm"
-                            className="cursor-pointer"
+                            className="cursor-pointer profile-pic w-10 h-10 rounded-full"
                             onClick={() =>
                               navigate(`/user/${commentDetail.userId._id}`)
                             }
@@ -709,7 +708,7 @@ const SinglePostCard = (props) => {
           <Dialog
             open={imagePreview}
             handler={handleImagePreview}
-            className="bg-transparent border-none shadow-none"
+            className="bg-transparent border-none shadow-none max-h-[90vh] overflow-y-auto scrollbar-invisible"
           >
             {post?.fileURL && (
               <img

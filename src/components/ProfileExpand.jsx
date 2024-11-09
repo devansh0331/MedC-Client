@@ -5,7 +5,6 @@ import {
   CardBody,
   CardFooter,
   Typography,
-  Avatar,
   Button,
   Badge,
   Chip,
@@ -39,10 +38,10 @@ const ProfileExpand = (props) => {
           shadow={false}
           floated={false}
         >
-          <Avatar
+          <img
             src={props.user?.profileURL ? props.user.profileURL : altprofile}
             alt="profile"
-            className="w-36 h-36 rounded-full"
+            className="w-36 h-36 rounded-full profile-pic"
           />
           <Typography className="text-xl font-semibold mt-2">
             {props.user?.name ? props.user.name : "Unknown User"}

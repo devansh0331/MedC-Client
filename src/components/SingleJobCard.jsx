@@ -2,7 +2,7 @@
 import React from "react";
 import { CiStar } from "react-icons/ci";
 import alt from "../assets/altprofile.png";
-import { Avatar, Card, Typography } from "@material-tailwind/react";
+import { Card, Typography } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 const SingleJobCard = (props) => {
   const navigate = useNavigate()

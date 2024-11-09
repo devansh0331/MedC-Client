@@ -93,7 +93,7 @@ const NavMain = () => {
           {userInfo.state && (
             <img
               src={`${user?.profileURL}`}
-              className="w-8 h-8 rounded-full cursor-pointer"
+              className="w-8 h-8 rounded-full cursor-pointer profile-pic"
               onClick={() => navigate(`/user/${user?._id}`)}
             />
           )}

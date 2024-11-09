@@ -6,7 +6,7 @@ import ReactTimeAgo from "react-time-ago";
 import { Toaster } from "react-hot-toast";
 import { UserContext } from "../UserContext";
 import { Link } from "react-router-dom";
-import { Avatar, Card, Input } from "@material-tailwind/react";
+import { Card, Input } from "@material-tailwind/react";
 import SinglePostSkeleton from "./SinglePostSkeleton";
 import { motion, useAnimation, useScroll } from "framer-motion";
 
@@ -39,16 +39,16 @@ function PostCard() {
 
   return (
     <div
-      className="w-full flex flex-col mx-auto mt-5 bg-inherit relative"
+      className="flex flex-col flex-wrap max-w-[100vw] mx-auto mt-5 bg-inherit"
     >
       {userInfo.state && (  
       <div id="navbar" className="relative" style={{transition: "all 0.5s ease-in-out"}}>
         <Card className="flex flex-row gap-4 w-full bg-white py-2 items-center rounded-md shadow-md px-4 mb-2 top-0" id="sub-nav"
         style={{transition: "all 0.5s ease-in-out"}}>
           <Link to={`/user/${user._id}`}>
-            <Avatar
+            <img
               src={user.profileURL ? user.profileURL : altprofile}
-              className="rounded-full h-10 md:h-11 w-10 md:w-11"
+              className="rounded-full h-10 md:h-11 w-10 md:w-11 profile-pic"
               alt="profile"
             />
           </Link>
@@ -63,7 +63,7 @@ function PostCard() {
         </Card>
       </div>
       )}
-      <div className="flex flex-col w-full h-[82vh] overflow-y-scroll scrollbar-invisible" id="posts">
+      <div className="flex flex-col w-full h-[82vh] overflow-y-scroll scrollbar-invisible overflow-x-hidden" id="posts">
         {posts.length === 0 ? (
           <div className="w-full h-full flex items-center justify-center">
             {/* <p className="font-bold text-lg">No Posts Available!</p> */}

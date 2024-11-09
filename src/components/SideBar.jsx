@@ -6,7 +6,6 @@ import {
   CardBody,
   CardFooter,
   Typography,
-  Avatar,
   List,
   ListItem,
   ListItemPrefix,

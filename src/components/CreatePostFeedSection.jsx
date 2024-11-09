@@ -9,7 +9,7 @@ function CreatePostFeedSection(props) {
         <img
           src={props.profileURL != "" ? props.profileURL : altprofile}
           alt=""
-          className="rounded-full h-12 md:h-16 w-12 md:w-16 object-cover object-center"
+          className="rounded-full h-12 md:h-16 w-12 md:w-16 profile-pic"
         />
       </div>
       <div className="w-full pl-3 md:pl-0 md:w-5/6" onClick={props.handleOpen}>

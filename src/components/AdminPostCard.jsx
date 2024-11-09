@@ -6,7 +6,6 @@ import {
   ListItem,
   Typography,
   CardHeader,
-  Avatar,
   Menu,
   MenuHandler,
   CardBody,
@@ -121,7 +120,7 @@ const AdminPostCard = (props) => {
               <img
                 src={`${post.user.profileURL ? post.user.profileURL : altprofile}`}
                 alt="profile"
-                className="cursor-pointer rounded-full h-14 w-14"
+                className="cursor-pointer rounded-full h-14 w-14 profile-pic"
                 onClick={() => navigate(`/user/${post.user._id}`)}
               />
             </div>

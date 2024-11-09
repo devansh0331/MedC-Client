@@ -21,7 +21,6 @@ import {
   CardBody,
   Input,
   Typography,
-  Avatar,
   Button,
   Dialog,
   CardFooter,
@@ -144,9 +143,9 @@ function EditProfileNew({
       </div>
       <div className="px-5 pb-5 flex flex-col lg:flex-row gap-4 w-full">
         <div className="lg:w-2/5 lg:flex items-center hidden">
-          <Avatar
+          <img
             src={uploadedFile ? URL.createObjectURL(uploadedFile) : file}
-            className="aspect-square w-1/3 lg:w-full h-min"
+            className=" w-1/3 lg:w-full h-min profile-pic rounded-full"
           />
         </div>
         <div className="lg:w-3/5 flex flex-col">

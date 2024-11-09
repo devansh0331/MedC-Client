@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import altprofile from "../assets/altprofile.png";
 import { Link, useNavigate } from "react-router-dom";
-import { Avatar, Card, Typography } from "@material-tailwind/react";
+import { Card, Typography } from "@material-tailwind/react";
 import { UserContext } from "../UserContext";
 import SignUpDialog from "./SignUpDialog";
 const MinPostCard = (props) => {
@@ -20,12 +20,13 @@ const MinPostCard = (props) => {
         {/* NAME AND DETAILS */}
         <div className="flex items-center gap-4">
           <Link to={`/user/${post?.user._id}`}>
-            <Avatar
+            <img
               src={`${
                 post?.user.profileURL ? post?.user.profileURL : altprofile
               }`}
               alt="profile"
               size="sm"
+              className="rounded-full h-10 md:h-12 w-10 md:w-12 profile-pic"
             />
           </Link>
           <div className="flex flex-col">

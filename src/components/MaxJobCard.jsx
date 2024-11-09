@@ -286,7 +286,7 @@ const MaxJobCard = (props) => {
         </div>
 
         {/* APPLY */}
-        <div className="w-full flex flex-col md:flex-row md:justify-between mt-2 md:mt-0 md:my-2">
+        <div className="w-full flex flex-col sm:flex-row sm:justify-between mt-2 md:mt-0 md:my-2">
           {props.parent === "Posted" && (
             <>
               <div className="flex flex-col">

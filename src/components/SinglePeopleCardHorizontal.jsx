@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Button,
   Card,
   CardBody,
@@ -86,7 +85,7 @@ function SinglePeopleCardHorizontal({
               src={user.profileURL ? user.profileURL : altprofile}
               alt="Profile"
               size="lg"
-              className="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover"
+              className="w-12 h-12 md:w-16 md:h-16 rounded-full profile-pic"
             />
           </Link>
           <div className="">

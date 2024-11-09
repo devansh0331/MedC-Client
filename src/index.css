@@ -120,3 +120,9 @@
 .scrollbar-invisible::-webkit-scrollbar {
   display: none;
 }
+
+.profile-pic{
+  object-fit: cover ;
+  object-position: center;
+  transform: translate3d(0px, 0px, 0.1px);
+}

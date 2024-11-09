@@ -5,7 +5,6 @@ import {
   ListItemPrefix,
   ListItemSuffix,
   Card,
-  Avatar,
   Typography,
 } from "@material-tailwind/react";
 import altprofile from "../assets/altprofile.png";
@@ -34,8 +33,8 @@ const YouMayKnow = () => {
               <Link to={`/user/${user._id}`}>
                 <ListItem>
                   <ListItemPrefix>
-                    <Avatar
-                      className="w-9 h-9"
+                    <img
+                      className="w-9 h-9 rounded-full profile-pic "
                       src={user.profileURL ? user.profileURL : altprofile}
                       alt="altprofile"
                     />

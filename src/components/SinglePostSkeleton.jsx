@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Card, Typography } from "@material-tailwind/react";
+import { Card, Typography } from "@material-tailwind/react";
 import { AiFillLike } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { IoPaperPlaneOutline } from "react-icons/io5";

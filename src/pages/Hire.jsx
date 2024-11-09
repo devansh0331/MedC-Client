@@ -328,7 +328,7 @@ const Hire = () => {
                       <img
                         src={user?.profileURL ? user?.profileURL : altprofile}
                         alt="altprofile"
-                        className="w-24 h-24 mx-auto rounded-full"
+                        className="w-24 h-24  rounded-full profile-pic"
                       />
                       <Typography className="text-lg mt-2">
                         {user?.name}

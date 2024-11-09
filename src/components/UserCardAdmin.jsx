@@ -4,7 +4,6 @@ import {
   CardBody,
   CardHeader,
   CardFooter,
-  Avatar,
   Badge,
   Typography,
   Button,
@@ -66,11 +65,11 @@ const UserCardAdmin = (props) => {
           navigate(`/user/${user._id}`);
         }}
       >
-        <Avatar
+        <img
           src={user.profileURL ? user.profileURL : altprofile}
           alt="altprofile"
           size="xl"
-          className="w-24 h-24 mx-auto"
+          className="w-24 h-24 mx-auto profile-pic rounded-full "
         />
         <Typography className="text-lg mt-2">
           {user.name ? user.name : "Unknown User"}

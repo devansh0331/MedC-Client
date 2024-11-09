@@ -21,7 +21,6 @@ import {
   CardBody,
   Input,
   Typography,
-  Avatar,
   Button,
   Dialog,
   DialogHeader,
@@ -202,7 +201,7 @@ const ProfileCard = (props) => {
           >
             <img
               src={props.user.profileURL ? props.user.profileURL : altprofile}
-              className="mb-3 cursor-pointer w-24 h-24 aspect-square rounded-full"
+              className="mb-3 cursor-pointer w-24 h-24 aspect-square rounded-full profile-pic"
               alt="profile"
               onClick={handleOpenProfile}
             />
@@ -363,11 +362,11 @@ const ProfileCard = (props) => {
         open={openProfile}
         handler={handleOpenProfile}
         className="flex flex-col sm:flex-row justify-between p-4 gap-4 items-center border-8 border-blue-400"
-        size="md"
+        
       >
         <img
           src={props.user.profileURL ? props.user.profileURL : altprofile}
-          className="sm:w-80 w-full sm:h-80 h-full object-cover "
+          className="w-2/5 aspect-square profile-pic rounded-sm"
           alt="profile"
         />
         <div className="w-full flex flex-col justify-center items-center">
