@@ -38,18 +38,31 @@ function EditProfileNew({
   setToast,
   getSingleUser,
 }) {
-  const handleOpenEdit = () => setOpenEdit();
-  const { handleUpload } = useContext(UserContext);
+
+  // LOCATION CONSTANTS
   const CityArr = City.getCitiesOfCountry("IN");
   const StateArr = State.getStatesOfCountry("IN");
+  const [location, setLocation] = useState(user.location ? user.location : "");
+  const [locationArray, setLocationArray] = useState([]);
+  const [locSuggestionbox, setLocSuggestionbox] = useState(false);
+  const [fixedLocationArray, setFixedLocationArray] = useState(location);
+  const locDropDown = useRef(null);
+
+  // BIO ROLE CONSTANTS
+  const [manualBio, setManualBio] = useState(false);
+  const [bio, setBio] = useState(user.bio ? user.bio : "");
+  const [bioRolesArray, setBioRolesArray] = useState([]);
+  const [bioSuggestionbox, setBioSuggestionbox] = useState(false);
+  const bioDropDown = useRef(null);
+
+
+  const handleOpenEdit = () => setOpenEdit();
+  const { handleUpload } = useContext(UserContext);
   const [resume, setResume] = useState(Resume);
   const [number, setNumber] = useState("");
   const [fName, setFName] = useState(user.name ? user.name.split(" ")[0] : "");
   const [lName, setLName] = useState(user.name ? user.name.split(" ")[1] : "");
   const [email, setEmail] = useState(user.email ? user.email : "");
-  const [bio, setBio] = useState(user.bio ? user.bio : "");
-  const [manualBio, setManualBio] = useState(false);
-  const [location, setLocation] = useState(user.location ? user.location : "");
   const [file, setFile] = useState(
     user.profileURL ? user.profileURL : altprofile
   );
@@ -60,23 +73,44 @@ function EditProfileNew({
   const [linkedin, setLinkedin] = useState(user.linkedin ? user.linkedin : "");
   const [twitter, setTwitter] = useState(user.twitter ? user.twitter : "");
   const [website, setWebsite] = useState(user.website ? user.website : "");
-  const [bioRolesArray, setBioRolesArray] = useState([]);
-  const [bioSuggestionbox, setBioSuggestionbox] = useState(false);
-  const bioDropDown = useRef(null);
   const [error, setError] = useState("");
 
+
+  // LOCATION FUNCTIONS
+  const buildLocationArr = () => {
+    let locationSuggestionsArr = [];    
+    for (let i = 0; i < CityArr.length; i++) {
+      locationSuggestionsArr.push(
+        `${CityArr[i].name}, ${StateArr.filter(
+          (state) => state.isoCode === CityArr[i].stateCode
+        )[0]?.name}`
+      );
+    }
+    setFixedLocationArray(locationSuggestionsArr);
+    setLocationArray(locationSuggestionsArr);
+  }
+  
+  const handleClickEvent2 = (event) => {
+    if (locDropDown.current && !locDropDown.current.contains(event.target)) {
+      setLocSuggestionbox(false);
+    }
+  };
+
+  const locationSuggestions = (keyword) => {
+    if(keyword.length == 0) setLocationArray([]);
+    const filteredList = fixedLocationArray.filter((item) => {
+      return item.toLowerCase().startsWith(keyword.toLowerCase());
+    });
+    setLocationArray(filteredList);
+  };
+
+  
+  // BIO ROLE FUNCTIONS
   const handleClickEvent = (event) => {
     if (bioDropDown.current && !bioDropDown.current.contains(event.target)) {
       setBioSuggestionbox(false);
     }
   };
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickEvent);
-    return () => {
-      document.removeEventListener("click", handleClickEvent);
-    };
-  }, []);
 
   const bioSuggestions = (keyword) => {
     if (!keyword) setBioRolesArray([]);
@@ -87,6 +121,26 @@ function EditProfileNew({
     setBioRolesArray(filteredList);
   };
 
+  // USE EFFECTS
+  useEffect(() => {
+    document.addEventListener("click", handleClickEvent2);
+    return () => {
+      document.removeEventListener("click", handleClickEvent2);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickEvent);
+    return () => {
+      document.removeEventListener("click", handleClickEvent);
+    };
+  }, []);
+
+  useEffect(() => {
+    buildLocationArr();
+  },[]);
+
+  // SERVER SIDE FUNCTIONS
   const handleSaveProfile = async () => {
     let fileURL = "";
     if (file) {
@@ -187,6 +241,7 @@ function EditProfileNew({
               onChange={(e) => setLName(e.target.value)}
               className="col-span-1 w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
             />
+            {/* Bio and Tagline */}
             <div className="col-span-2 relative">
               <input
                 placeholder="Tagline"
@@ -253,30 +308,74 @@ function EditProfileNew({
                 </div>
               )}
             </div>
-            <select
-              className="col-span-2 border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center"
-              disabled={false}
-              value={location}
-              onChange={(e) => {
-                // console.log(e.target.value);
-                setLocation(e.target.value);
-              }}
-              size={1}
-            >
-              <option disabled value={""}>
-                Location
-              </option>
-              {CityArr.map((city, index) => (
-                <option key={index}>
-                  {city.name},{" "}
-                  {
-                    StateArr.filter(
-                      (state) => state.isoCode === city.stateCode
-                    )[0]?.name
+            {/* Location */}
+            <div className="col-span-2 relative">
+              <input
+                placeholder="Location"
+                value={location || ""}
+                type="text"
+                className="col-span-2 w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
+                onChange={(e) => {
+                  setLocation(e.target.value);
+                  locationSuggestions(e.target.value);
+                  if (e.target.value.length > 2) setLocSuggestionbox(true);
+                }}
+                onKeyDown={(e) => {
+                  if (locSuggestionbox) {
+                    const selectedIndex = locationArray.findIndex(
+                      (role) => role === location
+                    );
+                    switch (e.key) {
+                      case "ArrowDown":
+                        const nextIndex = Math.min(
+                          selectedIndex + 1,
+                          locationArray.length - 1
+                        );
+                        setLocation(locationArray[nextIndex]);
+                        break;
+                      case "ArrowUp":
+                        const prevIndex = Math.max(selectedIndex - 1, 0);
+                        setLocation(locationArray[prevIndex]);
+                        break;
+                      case "Enter":
+                        setLocSuggestionbox(false);
+                        break;
+                      default:
+                        break;
+                    }
                   }
-                </option>
-              ))}
-            </select>
+                }}
+              />
+              <IoClose
+                className="w-5 h-5 absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+                onClick={() => {
+                  setLocSuggestionbox(false);
+                  setLocation("");
+                }}
+              />
+              {locSuggestionbox && (
+                <div
+                  ref={locDropDown}
+                  className="w-full border-[1px] border-gray-400 absolute bg-white z-10 rounded-md px-2 max-h-72 h-min overflow-y-scroll scrollbar-thin shadow-md"
+                >
+                  {locationArray.map((locationWord, index) => (
+                    <div
+                      className={`border-b-[1px] border-gray-400 cursor-default hover:bg-blue-800 hover:text-white ${
+                        location === locationWord ? "bg-blue-800 text-white" : "" // Highlight selected role
+                      }`}
+                      key={index}
+                      onClick={() => {
+                        setLocation(locationWord);
+                        setLocSuggestionbox(false);
+                      }}
+                    >
+                      {locationWord}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+           
             <input
               placeholder="Email"
               value={email}

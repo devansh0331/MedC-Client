@@ -29,7 +29,7 @@ const UserCardAdmin = (props) => {
   const [reason, setReason] = useState("");
   const user = props.user;
 
-  console.log(user);
+  // console.log(user.email);
   
   const deactivateUser = async () => {
     try {
@@ -38,6 +38,7 @@ const UserCardAdmin = (props) => {
         credentials: "include",
         headers: {
           Authorization: `Bearer ${Cookies.get("token")}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({userEmail: user.email, mailbody: mailBody }),
       });

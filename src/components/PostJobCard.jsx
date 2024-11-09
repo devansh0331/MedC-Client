@@ -11,7 +11,7 @@ import {
   Switch,
   Typography,
 } from "@material-tailwind/react";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -21,6 +21,7 @@ import { UserContext } from "../UserContext";
 import { SERVER_URL } from "../ServerURL";
 import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
+import { IoClose } from "react-icons/io5";
 
 const PostJobCard = () => {
   const [acceptingResponses, setAcceptingResponses] = useState(true);
@@ -44,12 +45,9 @@ const PostJobCard = () => {
     //   matchVisual: false,
     // },
   };
-  const CityArr = City.getCitiesOfCountry("IN");
-  const StateArr = State.getStatesOfCountry("IN");
   const { user } = useContext(UserContext);
   const [jobTitle, setJobTitle] = useState("");
   const [organziationName, setOrganziationName] = useState("");
-  const [location, setLocation] = useState("");
   const [minSalary, setMinSalary] = useState("");
   const [maxSalary, setMaxSalary] = useState("");
   const [salaryType, setSalaryType] = useState("Yearly");
@@ -60,6 +58,16 @@ const PostJobCard = () => {
   const [minExperience, setMinExperience] = useState(0);
   const [lastDateToApply, setLastDateToApply] = useState("");
   const [description, setDescription] = useState("");
+
+  // LOCATION CONSTANTS
+  const CityArr = City.getCitiesOfCountry("IN");
+  const StateArr = State.getStatesOfCountry("IN");
+  const [location, setLocation] = useState("");
+  const [locationArray, setLocationArray] = useState([]);
+  const [locSuggestionbox, setLocSuggestionbox] = useState(false);
+  const [fixedLocationArray, setFixedLocationArray] = useState(location);
+  const locDropDown = useRef(null);
+
   const job = {
     user: user,
     jobTitle: jobTitle,
@@ -75,6 +83,47 @@ const PostJobCard = () => {
     description: description,
     noOfApplications: 0,
   };
+
+
+  // LOCATION FUNCTIONS
+  const buildLocationArr = () => {
+    let locationSuggestionsArr = [];    
+    for (let i = 0; i < CityArr.length; i++) {
+      locationSuggestionsArr.push(
+        `${CityArr[i].name}, ${StateArr.filter(
+          (state) => state.isoCode === CityArr[i].stateCode
+        )[0]?.name}`
+      );
+    }
+    setFixedLocationArray(locationSuggestionsArr);
+    setLocationArray(locationSuggestionsArr);
+  }
+  
+  const handleClickEvent2 = (event) => {
+    if (locDropDown.current && !locDropDown.current.contains(event.target)) {
+      setLocSuggestionbox(false);
+    }
+  };
+
+  const locationSuggestions = (keyword) => {
+    if(keyword.length == 0) setLocationArray([]);
+    const filteredList = fixedLocationArray.filter((item) => {
+      return item.toLowerCase().startsWith(keyword.toLowerCase());
+    });
+    setLocationArray(filteredList);
+  };
+
+    // USE EFFECTS
+    useEffect(() => {
+      document.addEventListener("click", handleClickEvent2);
+      return () => {
+        document.removeEventListener("click", handleClickEvent2);
+      };
+    }, []);
+  
+    useEffect(() => {
+      buildLocationArr();
+    },[]);
 
   const handleMinExp = (val) => {
     setMinExp(`${val} Years`);
@@ -180,30 +229,72 @@ const PostJobCard = () => {
               value={organziationName}
             />
             {/* Location */}
-            <select
-              className="col-span-2 border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center text-blue-gray-500 text-sm"
-              disabled={false}
-              value={location}
-              onChange={(e) => {
-                // console.log(e.target.value);
-                setLocation(e.target.value);
-              }}
-              size={1}
-            >
-              <option selected disabled value={""} key={0}>
-                Location
-              </option>
-              {CityArr.map((city, index) => (
-                <option key={index}>
-                  {city.name},{" "}
-                  {
-                    StateArr.filter(
-                      (state) => state.isoCode === city.stateCode
-                    )[0]?.name
+            <div className="col-span-2 relative">
+              <input
+                placeholder="Location"
+                value={location || ""}
+                type="text"
+                className="col-span-2 w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
+                onChange={(e) => {
+                  setLocation(e.target.value);
+                  locationSuggestions(e.target.value);
+                  if (e.target.value.length > 2) setLocSuggestionbox(true);
+                }}
+                onKeyDown={(e) => {
+                  if (locSuggestionbox) {
+                    const selectedIndex = locationArray.findIndex(
+                      (role) => role === location
+                    );
+                    switch (e.key) {
+                      case "ArrowDown":
+                        const nextIndex = Math.min(
+                          selectedIndex + 1,
+                          locationArray.length - 1
+                        );
+                        setLocation(locationArray[nextIndex]);
+                        break;
+                      case "ArrowUp":
+                        const prevIndex = Math.max(selectedIndex - 1, 0);
+                        setLocation(locationArray[prevIndex]);
+                        break;
+                      case "Enter":
+                        setLocSuggestionbox(false);
+                        break;
+                      default:
+                        break;
+                    }
                   }
-                </option>
-              ))}
-            </select>
+                }}
+              />
+              <IoClose
+                className="w-5 h-5 absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+                onClick={() => {
+                  setLocSuggestionbox(false);
+                  setLocation("");
+                }}
+              />
+              {locSuggestionbox && (
+                <div
+                  ref={locDropDown}
+                  className="w-full border-[1px] border-gray-400 absolute bg-white z-10 rounded-md px-2 max-h-72 h-min overflow-y-scroll scrollbar-thin shadow-md"
+                >
+                  {locationArray.map((locationWord, index) => (
+                    <div
+                      className={`text-sm text-gray-600 border-b-[1px] border-gray-400 cursor-default hover:bg-blue-800 hover:text-white ${
+                        location === locationWord ? "bg-blue-800 text-white" : "" // Highlight selected role
+                      }`}
+                      key={index}
+                      onClick={() => {
+                        setLocation(locationWord);
+                        setLocSuggestionbox(false);
+                      }}
+                    >
+                      {locationWord}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
             {/* Salary */}
             <div className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm">
               <span className="">Rs.</span>

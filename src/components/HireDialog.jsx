@@ -84,7 +84,7 @@ const HireDialog = (props) => {
 
   return (
     <>
-      <Dialog open={props.open} handler={props.handler}>
+      <Dialog open={props.open} handler={props.handler} className="overflow-y-scroll scrollbar-invisible h-[90vh]">
         <DialogHeader>Hire {props.name}</DialogHeader>
         <DialogBody className="">
           <div className="w-4/5 border-2 border-gray-500 rounded-lg p-4 bg-gray-50 mx-auto dialogBody">

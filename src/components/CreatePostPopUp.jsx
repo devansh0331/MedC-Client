@@ -28,54 +28,73 @@ function CreatePostPopUp(props) {
   };
 
   const handleSubmit = async () => {
-    if(!file){
-      toast.error("Please select an image");
-      return;
-    }
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "ml_default");
-    try {
-      const fileURL = await handleUpload(file, "image");
-      setSecureURL(fileURL);
-      if(fileURL.length > 0){
-        const response = await fetch(`${SERVER_URL}/post/create-post`, {
-          method: "POST",
-          mode: "cors",
-          credentials: "include",
-          headers: {
-            Authorization: `Bearer ${Cookies.get("token")}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            audience: audience,
-            description: post,
-            fileURL: fileURL,
-          }),
-        });
-        // console.log(response);
-        const result = await response.json();
-        // console.log(response);
-        if (response.ok) {
-          toast.success("Post created successfully:");
-          setPost("");
-          setFile(null);
-          // setSecureURL("");
-          setTimeout(() => {
-            getPosts();
-            handleOpen();
-          }, 2000);
+    if(file){
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ml_default");
+      try {
+        const fileURL = await handleUpload(file, "image");
+        setSecureURL(fileURL);
+        if(fileURL.length > 0){
+          const response = await fetch(`${SERVER_URL}/post/create-post`, {
+            method: "POST",
+            mode: "cors",
+            credentials: "include",
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token")}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              audience: audience,
+              description: post,
+              fileURL: fileURL,
+            }),
+          });
+          // console.log(response);
+          const result = await response.json();
+          // console.log(response);
+          if (response.ok) {
+            toast.success("Post created successfully:");
+            setPost("");
+            setFile(null);
+              getPosts();
+              handleOpen();
+          } else {
+            console.error("Failed to create post:", result.error);
+            toast.error("Failed to create post");
+          }
         } else {
-          console.error("Failed to create post:", result.error);
+          console.error("Failed to create post:" );
           toast.error("Failed to create post");
         }
-      } else {
-        console.error("Failed to create post:" );
+      } catch (error) {
+        console.error("Error creating post");
         toast.error("Failed to create post");
       }
-    } catch (error) {
-      console.error("Error creating post");
-      toast.error("Failed to create post");
+    }else{
+      const response = await fetch(`${SERVER_URL}/post/create-post`, {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          audience: audience,
+          description: post,
+        }),
+      });
+      // console.log(response);
+      const result = await response.json();
+      // console.log(response);
+      if (response.ok) {
+        toast.success("Post created successfully:");
+        setPost("");
+        setFile(null);
+          getPosts();
+          handleOpen();
+    }
     }
   };
 
