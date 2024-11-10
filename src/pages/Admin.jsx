@@ -40,7 +40,7 @@ const Admin = (props) => {
   const navigate = useNavigate();
   const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
   const [blogs, setBlogs] = useState([]);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(true);
 
   const {
     getPosts,
@@ -170,7 +170,7 @@ const Admin = (props) => {
                 <HiOutlineDotsHorizontal className="cursor-pointer" onClick={() => setMenuOpen(!menuOpen)} />
               </CardBody>
             </Card>
-            <Card className={`w-full lg:w-min h-min ${menuOpen ? "block" : "hidden"}`}>
+            <Card className={`w-full lg:w-min h-min ${menuOpen ? "block" : "hidden lg:block"}`}>
               <List className="p-2 ">
                 <div
                   onClick={() => setActive(0)}

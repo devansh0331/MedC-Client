@@ -186,6 +186,12 @@ const UserCardAdmin = (props) => {
             Delete User
           </Button>
         )}
+        <Button
+          size="sm"
+          color="blue"
+          onClick={addAdmin}
+          >
+            Add Admin</Button>
       </CardFooter>
 
       {/* DELETE DIALOG */}
