@@ -26,38 +26,35 @@ const YouMayKnow = () => {
       </Typography>
       <Card className="overflow-y-scroll scrollbar-thin h-96">
         <List>
-          {allUsers.length == 0 ? (
-            <ListItem></ListItem>
-          ) : (
-            allUsers.map((user) => (
-              <Link to={`/user/${user._id}`}>
-                <ListItem>
-                  <ListItemPrefix>
-                    <img
-                      className="w-9 h-9 rounded-full profile-pic "
-                      src={user.profileURL ? user.profileURL : altprofile}
-                      alt="altprofile"
-                    />
-                  </ListItemPrefix>
-                  <div className="flex flex-col">
-                    <Typography className="font-medium text-sm">
-                      {user.name}
+          {allUsers && 
+           allUsers?.map((user) => (
+            <Link to={`/user/${user._id}`}>
+              <ListItem>
+                <ListItemPrefix>
+                  <img
+                    className="w-9 h-9 rounded-full profile-pic "
+                    src={user.profileURL ? user.profileURL : altprofile}
+                    alt="altprofile"
+                  />
+                </ListItemPrefix>
+                <div className="flex flex-col">
+                  <Typography className="font-medium text-sm">
+                    {user.name}
+                  </Typography>
+                  {user.bio && (
+                    <Typography className="text-sm text-gray-600">
+                      {user.bio ? user.bio : "New User"}
                     </Typography>
-                    {user.bio && (
-                      <Typography className="text-sm text-gray-600">
-                        {user.bio ? user.bio : "New User"}
-                      </Typography>
-                    )}
+                  )}
+                </div>
+                <ListItemSuffix>
+                  <div className="border-[1px] p-1 rounded-full border-gray-400">
+                    <IoPersonAddOutline className="w-4 h-4 text-gray-500" />
                   </div>
-                  <ListItemSuffix>
-                    <div className="border-[1px] p-1 rounded-full border-gray-400">
-                      <IoPersonAddOutline className="w-4 h-4 text-gray-500" />
-                    </div>
-                  </ListItemSuffix>
-                </ListItem>
-              </Link>
-            ))
-          )}
+                </ListItemSuffix>
+              </ListItem>
+            </Link>
+          ))}
         </List>
       </Card>
     </Card>

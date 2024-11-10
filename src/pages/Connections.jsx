@@ -105,10 +105,10 @@ const Connections = () => {
       if (!data.success) {
         // toast.error(data.error);
         setMessage(data.error);
-        console.log(message);
+        console.log(data);
       } else {
         setSentRequestsData(data.data);
-        setSentCount(data.data.length);
+        setSentCount(data.data?.length);
         // console.log(data);
       }
     } catch (error) {
@@ -132,7 +132,7 @@ const Connections = () => {
         console.log(message);
       } else {
         setConnectionsData(data.data);
-        setConnectionsCount(data.data.length);
+        setConnectionsCount(data.data?.length);
         // console.log(data);
       }
     } catch (error) {
@@ -148,7 +148,7 @@ const Connections = () => {
 
   const buildLocationArray = () => {
     let arr = [];
-    for (let i = 0; i < CityArr.length; i++) {
+    for (let i = 0; i < CityArr?.length; i++) {
       arr.push(
         `${CityArr[i].name}, ${
           StateArr.filter((state) => state.isoCode === CityArr[i].stateCode)[0]
@@ -173,7 +173,7 @@ const Connections = () => {
   const setLocationFunc = (item) => {
     const words = location.split("|").map((word) => word.trim());
     const newLocation = words
-      .slice(0, words.length - 1)
+      .slice(0, words?.length - 1)
       .concat(item.trim())
       .join(" | ");
     setLocation(`${newLocation} |`);
@@ -187,7 +187,7 @@ const Connections = () => {
 
   const buildKeywordArray = () => {
     let arr = [];
-    for (let i = 0; i < allUsers.length; i++) {
+    for (let i = 0; i < allUsers?.length; i++) {
       if (allUsers[i].name === undefined) continue;
       if (!arr.includes(allUsers[i].name)) {
         arr.push(allUsers[i].name);
