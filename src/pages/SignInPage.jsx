@@ -41,7 +41,7 @@ function SignInPage() {
         body: JSON.stringify({ token }),
       });
       const parsedResponse = await response.json();
-      console.log(parsedResponse);
+      // console.log(parsedResponse);
       if (parsedResponse.success == true) {
         const parsedName = await parsedResponse.user.name;
         const parsedEmail = await parsedResponse.user.email;
@@ -58,7 +58,7 @@ function SignInPage() {
           // location.reload();
         }, 2000);
       } else {
-        toast.error(parsedResponse);
+        toast.error(parsedResponse.error);
       }
     } catch (error) {
       toast.error(error);
@@ -82,10 +82,10 @@ function SignInPage() {
         });
 
         const parsedResponse = await response.json();
-        console.log(parsedResponse);
+        // console.log(parsedResponse);
         if (parsedResponse.success == false) {
           console.log(parsedResponse.message);
-          toast.error(parsedResponse.message);
+          toast.error(parsedResponse.error);
         } else {
           const parsedName = await parsedResponse.user.name;
           const parsedEmail = await parsedResponse.user.email;
@@ -126,20 +126,7 @@ function SignInPage() {
           <span className="line"></span>
           <span className="text-word">or</span>
           <span className="line"></span>
-        </div>
-        {/* <button className="w-full rounded-full mb-3 flex items-center border border-1 border-gray-500 py-2 px-3">
-          <img src={emaillogo} alt="email" className="h-7 w-7" />
-          <p
-            onClick={() => setBool(!bool)}
-            className="text-center text-base font-medium w-full"
-          >
-            Continue with Email
-          </p>
-        </button> */}
-      
-        {/* <img src={google} alt="google" className="h-7 w-7" />
-          <p className="text-center text-base w-full">Continue with Google</p> */}
-        {/* </GoogleLogin> */}  
+        </div> 
             <div className="w-full">
               <div className="flex flex-col my-2">
                 <label

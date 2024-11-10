@@ -126,7 +126,7 @@ const SinglePost = () => {
               post={post}
               userId={currentUserId}
               postId={post._id}
-              parentFunction={getPosts}
+              parentFunction={getSinglePost}
             />
           )}
         </div>

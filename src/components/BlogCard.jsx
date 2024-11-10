@@ -44,7 +44,7 @@ const BlogCard = () => {
       <div className="w-full h-full relative flex justify-center">
         <Carousel autoplay loop className="w-full h-full">
           {blogs.map((blog, index) => (
-            <>
+            <div key={index}>
               {blog.coverImage && (
                 <div className="w-full h-full">
                   <img
@@ -54,7 +54,7 @@ const BlogCard = () => {
                   />
                 </div>
               )}
-            </>
+            </div>
           ))}
         </Carousel>
       </div>

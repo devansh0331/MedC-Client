@@ -23,16 +23,62 @@ import { FaXTwitter } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import SignUpDialog from "../components/SignUpDialog";
 import { UserContext } from "../UserContext";
+import { SERVER_URL } from "../ServerURL";
+import Cookies from "js-cookie";
+import toast, { Toaster } from "react-hot-toast";
 
 
 const Settings = () => {
   const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
-  const {user} = useContext(UserContext);
+  const {user, setUserInfo} = useContext(UserContext);
   
   const handleDeleteConfirmation = () => setOpenDeleteConfirmation(!openDeleteConfirmation);
   const handleOpenSignUp = () => setOpenSignUp(!openSignUp);
   const navigate = useNavigate();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    try {
+      Cookies.remove("token");
+      Cookies.remove("name");
+      Cookies.remove("email");
+      setUserInfo({ state: false });
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
+  const deactivateAccount = async (e) => {
+    try {
+      const reponse = await fetch(`${SERVER_URL}/user/deactivate-account`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        }
+      })
+      const res = await reponse.json();
+      if (res.success) {
+        handleDeleteConfirmation();
+        toast.success(res.message);
+        setTimeout(() => {
+          handleLogout(e);
+          navigate("/");
+        }, 2000);
+      }else{
+        toast.error(res.error);
+        handleDeleteConfirmation();
+      }
+    } catch (error) {
+      toast.error(error);
+      handleDeleteConfirmation();
+    }
+  }
   return (
     <div className="w-full h-[90vh] flex bg-background">
       <SideBar />
@@ -104,10 +150,10 @@ const Settings = () => {
       <SignUpDialog open={openSignUp} handler={handleOpenSignUp}/>
 
       <Dialog open={openDeleteConfirmation} handler={handleDeleteConfirmation} size="sm">
-          <DialogHeader className="m-0">Delete your account?</DialogHeader>
+          <DialogHeader className="m-0">Deactivate your account?</DialogHeader>
           <DialogBody 
           className="text-lg text-black p-0 px-4">
-            <p className="text-red-700 text-sm">*This action cannot be undone. All the information related to your account will be deleted permanently.</p>
+            <p className="text-gray-900 text-sm">Are you sure you want to deactivate your account? You can activate your account at any time by mailing us at medcofficial.com.</p>
           </DialogBody>
           <DialogFooter className="flex gap-2">
             <Button
@@ -120,15 +166,15 @@ const Settings = () => {
               <span>Cancel</span>
             </Button>
             <Button
-              variant=""
               size="sm"
               color="red"
-              onClick={handleDeleteConfirmation}
+              onClick={(e) => deactivateAccount(e)}
             >
-              <span>Delete</span>
+              <span>Deactivate</span>
             </Button>
           </DialogFooter>
       </Dialog>
+      <Toaster position="top-right" />
     </div>
   );
 };

@@ -322,7 +322,7 @@ export function UserContextProvider({ children }) {
         // },
       });
       const parsedRes = await res.json();
-      console.log(parsedRes);
+      // console.log(parsedRes);
       if (!parsedRes.success) {
         console.error(parsedRes.error);
       } else {
@@ -405,7 +405,6 @@ export function UserContextProvider({ children }) {
       console.error("Failed to accept request");
     }
   };
-
   const isAdmin = async () => {
     try {
       const response = await fetch(`${SERVER_URL}/admin/is-admin`, {
@@ -427,7 +426,6 @@ export function UserContextProvider({ children }) {
       console.error("Failed to fetch admin status");
     }
   };
-
   const handleUpload = async (file, type) => {
     try {
       const formData = new FormData();

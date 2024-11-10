@@ -40,6 +40,7 @@ const Admin = (props) => {
   const navigate = useNavigate();
   const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
   const [blogs, setBlogs] = useState([]);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const {
     getPosts,
@@ -52,6 +53,7 @@ const Admin = (props) => {
     getAdminArchivedPosts,
   } = useContext(UserContext);
   const [reportBoxOpen, setReportBoxOpen] = useState(false);
+  const [deactivatedUsers, setDeactivatedUsers] = useState([]);
 
   const handleReportBoxOpen = () => {
     setReportBoxOpen(!reportBoxOpen);
@@ -100,12 +102,25 @@ const Admin = (props) => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    getAllBlogs();
-    getAllUsers();
-    getAdminArchivedPosts();
-  }, []);
+  const getDeactivatedUsers = async () => {
+    try {
+      const res = await fetch(`${SERVER_URL}/admin/deactivated-accounts`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
+      const parsedRes = await res.json();
+      if (!parsedRes.success) {
+        console.error(parsedRes.error);
+      } else {
+        setDeactivatedUsers(await parsedRes.data);
+      }
+    } catch (error) {
+      console.error("Failed to get profiles");
+    }
+  };
 
   const getReportedProfiles = async () => {
     try {
@@ -133,7 +148,13 @@ const Admin = (props) => {
       navigate("/");
     }
   }, []);
-  // console.log(adminStatus);
+  
+  useEffect(() => {
+    getAllBlogs();
+    getAllUsers();
+    getAdminArchivedPosts();
+    getDeactivatedUsers();
+  }, []);
 
   return (
     <>
@@ -142,8 +163,14 @@ const Admin = (props) => {
       ) : (
         <div className="w-full h-[90vh] flex flex-row bg-background overflow-y-hidden">
           <SideBar />
-          <div className="mt-5 w-[95%] lg:w-[85%] xl:w-[80%] mx-auto flex flex-col lg:flex-row gap-4">
-            <Card className="w-min h-min hidden lg:block">
+          <div className="mt-5 w-[95%] lg:w-[85%] xl:w-[80%] mx-auto flex flex-col lg:flex-row gap-1 lg:gap-4">
+            <Card className="w-full lg:w-min h-min m-0">
+              <CardBody className="px-4 py-2 flex justify-between lg:hidden">
+                <p>Menu</p>
+                <HiOutlineDotsHorizontal className="cursor-pointer" onClick={() => setMenuOpen(!menuOpen)} />
+              </CardBody>
+            </Card>
+            <Card className={`w-full lg:w-min h-min ${menuOpen ? "block" : "hidden"}`}>
               <List className="p-2 ">
                 <div
                   onClick={() => setActive(0)}
@@ -201,9 +228,22 @@ const Admin = (props) => {
                 >
                   Reports
                 </div>
+                <div
+                  onClick={() => {
+                    getReportedProfiles();
+                    setActive(5);
+                  }}
+                  className={`px-3 py-2 rounded-md my-1 cursor-pointer hover:bg-blue-50 hover:text-gray-800 ${
+                    active === 5
+                      ? "bg-blue-500 text-white"
+                      : "bg-white text-gray-800"
+                  }`}
+                >
+                  Deactivated Accounts
+                </div>
               </List>
             </Card>
-            <div className="flex justify-between h-min lg:hidden">
+            {/* <div className="flex justify-between h-min lg:hidden">
               <div
                 onClick={() => setActive(0)}
                 className={`px-3 py-2 rounded-md my-1 cursor-pointer hover:bg-blue-50 hover:text-gray-800 w-full text-center ${
@@ -260,7 +300,20 @@ const Admin = (props) => {
               >
                 Reports
               </div>
-            </div>
+              <div
+                onClick={() => {
+                  getReportedProfiles();
+                  setActive(5);
+                }}
+                className={`px-3 py-2 rounded-md my-1 cursor-pointer hover:bg-blue-50 hover:text-gray-800 w-full text-center ${
+                  active === 5
+                    ? "bg-blue-500 text-white"
+                    : "bg-white text-gray-800"
+                }`}
+              >
+                Deactivated
+              </div>
+            </div> */}
             <Card className="w-full h-full">
               {active === 0 && (
                 <div className="p-4">
@@ -474,6 +527,22 @@ const Admin = (props) => {
                             </div>
                           </Card>
                         ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+              {active === 5 && (
+                <div className="p-4">
+                  <div className="z-10 bg-white w-full">
+                    <Typography className="text-xl text-gray-700 ">
+                      Deactivated Accounts
+                    </Typography>
+                  </div>
+                  <div className="w-full h-[70vh] overflow-y-scroll scrollbar-thin">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto">
+                     {deactivatedUsers && deactivatedUsers.map((user, key) => (
+                       <UserCardAdmin key={key} user={user} parentFunction={getDeactivatedUsers} />
+                     ))}
                     </div>
                   </div>
                 </div>

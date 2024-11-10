@@ -29,6 +29,7 @@ function SingleUserProfilePage() {
   const [userLoading, setUserLoading] = useState(true);
   const navigate = useNavigate();
   const userId = useParams();
+  const [userDeactivated, setUserDeactivated] = useState(false);
   // console.log(userId.id);
  
   const getSingleUser = async () => {
@@ -43,7 +44,10 @@ function SingleUserProfilePage() {
       });
       const data = await response.json();
 
-      if (!data.success) toast.error("data.error");
+      if (data.error === "User does not exist"){
+        setUserDeactivated(true);
+        return;
+      }
       else {
         setUser(data.user);
         setIsExisting(data.isExisting);
@@ -69,6 +73,16 @@ function SingleUserProfilePage() {
     <div className="bg-background w-full overflow-x-hidden lg:h-[90vh] lg:overflow-y-hidden pb-5 lg:pb-0 scrollbar-thin">
       <div className="flex">
         <SideBar />
+        {userDeactivated ? (
+          <>
+          <div className="flex flex-col justify-center items-center w-full h-[80vh]">
+            <Typography className="my-4 text-3xl font-semibold">
+            User does not exist.
+            </Typography>
+          </div>
+          </>
+        ) :
+        <>
         {userInfo.state ? (
         <div className="w-[85%] flex flex-col lg:flex-row mx-auto mt-5 gap-5">
           <div className="w-full lg:w-min mx-auto">
@@ -106,6 +120,8 @@ function SingleUserProfilePage() {
             <Button onClick={() => navigate('/signin')} color="blue" >Sign In</Button>
           </div>
         )}
+        </>
+        }
         <Toaster position="top-right" />
       </div>
     </div>

@@ -364,7 +364,7 @@ const ProfileDetails = (props) => {
           </>
         )}
         {section === "Posts" && (
-          <div className="xl:w-2/3 mx-auto">
+          <div className="xl:w-2/3 mx-auto flex flex-col gap-2">
             {posts.length > 0 ? (
               <>
                 {posts.map((post, key) => (
