@@ -221,8 +221,8 @@ const SinglePostCard = (props) => {
       if (!res.success) {
         toast.error("Failed to delete post due to: ", res.error);
       } else {
-        props.parentFunction();
         toast.success("Post deleted successfully", true);
+        props.parentFunction();
         setDeletePost(false);
       }
     } catch (error) {
@@ -298,7 +298,9 @@ const SinglePostCard = (props) => {
     }
   };
 
-  const noOfLikes = post?.likes ? Object.keys(post?.likes).length : 0;
+  const [noOfLikes, setNoOfLikes] = useState(
+    post?.likes ? Object.keys(post?.likes).length : 0
+  );
 
   return (
     <>
@@ -414,7 +416,8 @@ const SinglePostCard = (props) => {
                     onClick={() => {
                       if (userInfo.state) {
                         handleLike(postId);
-                        props.parentFunction();
+                        // props.parentFunction();
+                        setNoOfLikes(noOfLikes - 1);
                         setIsLiked(false);
                       } else {
                         setSignUpDialog(true);
@@ -427,7 +430,8 @@ const SinglePostCard = (props) => {
                     onClick={() => {
                       if (userInfo.state) {
                         handleLike(postId);
-                        props.parentFunction();
+                        // props.parentFunction();
+                        setNoOfLikes(noOfLikes + 1);
                         setIsLiked(true);
                       } else {
                         setSignUpDialog(true);

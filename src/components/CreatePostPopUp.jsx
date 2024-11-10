@@ -22,20 +22,20 @@ function CreatePostPopUp(props) {
   const [post, setPost] = useState("");
   const [file, setFile] = useState(null);
   const [userId, setUserID] = useState("");
-  const { handleUpload, secureURL, setSecureURL, getPosts } = useContext(UserContext);
+  const { handleUpload, secureURL, setSecureURL } = useContext(UserContext);
   const handleOpen = () => {
     props.setOpen(!props.open);
   };
 
   const handleSubmit = async () => {
-    if(file){
+    if (file) {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", "ml_default");
       try {
         const fileURL = await handleUpload(file, "image");
         setSecureURL(fileURL);
-        if(fileURL.length > 0){
+        if (fileURL.length > 0) {
           const response = await fetch(`${SERVER_URL}/post/create-post`, {
             method: "POST",
             mode: "cors",
@@ -57,21 +57,21 @@ function CreatePostPopUp(props) {
             toast.success("Post created successfully:");
             setPost("");
             setFile(null);
-              getPosts();
-              handleOpen();
+            props.getAllPosts();
+            handleOpen();
           } else {
             console.error("Failed to create post:", result.error);
             toast.error("Failed to create post");
           }
         } else {
-          console.error("Failed to create post:" );
+          console.error("Failed to create post:");
           toast.error("Failed to create post");
         }
       } catch (error) {
         console.error("Error creating post");
         toast.error("Failed to create post");
       }
-    }else{
+    } else {
       const response = await fetch(`${SERVER_URL}/post/create-post`, {
         method: "POST",
         mode: "cors",
@@ -92,9 +92,9 @@ function CreatePostPopUp(props) {
         toast.success("Post created successfully:");
         setPost("");
         setFile(null);
-          getPosts();
-          handleOpen();
-    }
+        props.getAllPosts();
+        handleOpen();
+      }
     }
   };
 

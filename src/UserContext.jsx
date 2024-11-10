@@ -306,7 +306,7 @@ export function UserContextProvider({ children }) {
       if (!parsedRes.success) {
         toast.error(parsedRes.error);
       } else {
-        getPosts();
+        // getPosts();
       }
     } catch (error) {
       console.error("Failed to like post");
@@ -515,7 +515,7 @@ export function UserContextProvider({ children }) {
         secureURL,
         getAdminArchivedPosts,
         adminArchivedPosts,
-        setAdminArchivedPosts
+        setAdminArchivedPosts,
       }}
     >
       {children}

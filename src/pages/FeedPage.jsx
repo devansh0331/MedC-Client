@@ -52,8 +52,11 @@ function FeedPage() {
         userId={user._id}
       />
       <div className="flex mx-auto gap-4 justify-center">
-        <div className="hidden 2xl:block w-56 cursor-pointer mt-5" onClick={() => navigate("/blogs")}>
-          <BlogCard/>
+        <div
+          className="hidden 2xl:block w-56 cursor-pointer mt-5"
+          onClick={() => navigate("/blogs")}
+        >
+          <BlogCard />
         </div>
         <div className="w-[95%] sm:w-[90%] md:w-[500px] mx-auto">
           <PostCard />
@@ -62,7 +65,7 @@ function FeedPage() {
           <JobCard />
         </div>
       </div>
-      <Toaster position="top-right"/>
+      <Toaster position="top-right" />
     </div>
   );
 }
