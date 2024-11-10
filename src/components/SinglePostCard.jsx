@@ -221,8 +221,8 @@ const SinglePostCard = (props) => {
       if (!res.success) {
         toast.error("Failed to delete post due to: ", res.error);
       } else {
-        props.parentFunction();
         toast.success("Post deleted successfully", true);
+        props.parentFunction();
         setDeletePost(false);
       }
     } catch (error) {
@@ -284,34 +284,6 @@ const SinglePostCard = (props) => {
     }
   };
 
-  const [noOfLikes, setNoOfLikes] = useState(Object.keys(post.likes).length);
-
-  // const getSinglePost = async () => {
-  //   console.log("like", noOfLikes);
-    
-  //   const response = await fetch(
-  //     `${SERVER_URL}/post/single-post/${postId}`,
-  //     {
-  //       method: "GET",
-  //       credentials: "include",
-  //       headers: {
-  //         Authorization: `Bearer ${Cookies.get("token")}`,
-  //       },
-  //     }
-  //   );
-  //   const res = await response.json();
-  //   if (!res.success) {
-  //     console.log(res.error);
-  //   } else {
-  //     setNoOfLikes(Object.keys(res.data.likes).length);
-  //     // console.log(res.data);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getSinglePost();
-  // }, [postId]);
-
   const postUrl = `${window.location.origin}/post/${props.postId}`;
   const copyUrl = async () => {
     try {
@@ -326,7 +298,9 @@ const SinglePostCard = (props) => {
     }
   };
 
-  // const noOfLikes = post?.likes ? Object.keys(post?.likes).length : 0;
+  const [noOfLikes, setNoOfLikes] = useState(
+    post?.likes ? Object.keys(post?.likes).length : 0
+  );
 
   return (
     <>
@@ -442,6 +416,7 @@ const SinglePostCard = (props) => {
                     onClick={() => {
                       if (userInfo.state) {
                         handleLike(postId);
+                        // props.parentFunction();
                         setNoOfLikes(noOfLikes - 1);
                         setIsLiked(false);
                       } else {
@@ -455,6 +430,7 @@ const SinglePostCard = (props) => {
                     onClick={() => {
                       if (userInfo.state) {
                         handleLike(postId);
+                        // props.parentFunction();
                         setNoOfLikes(noOfLikes + 1);
                         setIsLiked(true);
                       } else {

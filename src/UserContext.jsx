@@ -513,7 +513,7 @@ export function UserContextProvider({ children }) {
         secureURL,
         getAdminArchivedPosts,
         adminArchivedPosts,
-        setAdminArchivedPosts
+        setAdminArchivedPosts,
       }}
     >
       {children}
