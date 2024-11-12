@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
-import BlogCard from "../components/BlogCard";
 import SingleBlogCard from "../components/SingleBlogCard";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";

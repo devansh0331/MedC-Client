@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { createContext, useEffect, useState } from "react";
 import { SERVER_URL } from "./ServerURL";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export const UserContext = createContext({});
 
@@ -252,7 +253,8 @@ export function UserContextProvider({ children }) {
       });
 
       const res = await response.json();
-
+      console.log(res);
+      
       if (!res.success) {
         console.error(res.error);
       } else {
@@ -262,11 +264,29 @@ export function UserContextProvider({ children }) {
         if (name === undefined || email === undefined) {
           const state = false;
           setUserInfo({ state, name, email });
+
+        } else if (res.data.isDeactivated === true) {
+          toast.error(
+            "Your account has been deactivated. Please contact the admin to reactivate your account."
+          );
+          try {
+            Cookies.remove("token");
+            Cookies.remove("name");
+            Cookies.remove("email");
+            setUserInfo({ state: false });
+            setTimeout(() => {
+              window.location.assign("https://www.medcofficial.com/")
+            }, 1000);
+          } catch (error) {
+            toast.error(error);
+          }
         } else {
           const state = true;
           setUserInfo({ state, name, email });
         }
         setUser(res.data);
+        console.log(res.data);
+
         await isAdmin();
       }
     } catch (error) {

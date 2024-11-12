@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import SingleBlogCard from "../components/SingleBlogCard";
 import { Button, Card, Input, Typography } from "@material-tailwind/react";
 import { RiGalleryFill } from "react-icons/ri";
@@ -8,6 +8,7 @@ import SideBar from "../components/SideBar";
 import toast, { Toaster } from "react-hot-toast";
 import { SERVER_URL } from "../ServerURL";
 import Cookies from "js-cookie";
+import { UserContext } from "../UserContext";
 
 const CreateBlog = () => {
   const [active, setActive] = useState(0);
@@ -33,6 +34,7 @@ const CreateBlog = () => {
     //   matchVisual: false,
     // },
   };
+  const { handleUpload, secureURL, setSecureURL} = useContext(UserContext);
   
   let blog = {
     title: title,
@@ -40,38 +42,44 @@ const CreateBlog = () => {
     coverImage: file ? URL.createObjectURL(file) : "",
   };
 
-
   const postBlog = async () => {
     if (!file || !title || !description) {
-      console.log(file, title, description);
-      
       toast.error("Please fill all the fields");
       return;
     }
+    const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ml_default");
+    
     try {
-      const formData = new FormData();
-      const data = { title: title, content: description };
-      formData.append("data", JSON.stringify(data));
-      if (file) {
-        formData.append("filepath", file);
-      }
-      const response = await fetch(`${SERVER_URL}/blog/single-blog/add`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-        body: formData,
-      });
-      const res = await response.json();
-
-      if (res.success) {
-        toast.success(res.message);
-        setFile(null);
-        setTitle("");
-        setDescription("");
-      } else {
-        toast.error(res.error);
+      const fileURL = await handleUpload(file, "image");
+      setSecureURL(fileURL);
+      if (fileURL.length > 0) {
+        const response = await fetch(`${SERVER_URL}/blog/single-blog/add`, {
+          method: "POST",
+          mode: "cors",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: title,
+            content: description,
+            coverImage: fileURL,
+          }),
+        });
+        const res = await response.json();
+        if (res.success) {
+          toast.success(res.message);
+          setFile(null);
+          setTitle("");
+          setDescription("");
+          console.log(res);
+          
+        } else {
+          toast.error(res.error);
+        }
       }
     } catch (error) {
       toast.error(error);
@@ -81,11 +89,11 @@ const CreateBlog = () => {
   return (
     <div className="w-full h-[90vh] overflow-y-scroll scrollbar-thin flex bg-background pb-5">
       <SideBar />
-      <div className="flex flex-col w-3/5 my-5 mx-auto pb-5">
+      <div className="flex flex-col  md:w-[95%] xl:w-[80%] my-5 mx-auto pb-5">
       <div className="">
         {active === 0 && (
-          <Card className="flex flex-row">
-            <div className="w-56 h-[500px] rounded-lg relative bg-gray-300">
+          <Card className="flex flex-col">
+            <div className="w-full h-64 object-cover rounded-lg bg-gray-300">
               {file ? (
                 <>
                   <img

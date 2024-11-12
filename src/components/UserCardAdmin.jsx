@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Card,
   CardBody,
@@ -24,11 +24,12 @@ import toast, { Toaster } from "react-hot-toast";
 const UserCardAdmin = (props) => {
   const [open, setOpen] = useState(false);
   const [activateOpen, setActivateOpen] = useState(false);
+  const [adminOpen, setAdminOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
   const handleActivateOpen = () => setActivateOpen(!activateOpen);
+  const handleAdminOpen = () => setAdminOpen(!adminOpen);
   const navigate = useNavigate();
   const user = props.user;
-  const mailBody = document.getElementById("mailBody")?.innerHTML;
   const [mailBody2, setMailBody2] = useState(`Dear ${user.name},
             <br />
             <br />
@@ -44,10 +45,12 @@ const UserCardAdmin = (props) => {
             <br />
             MedC Team`);
   const [reason, setReason] = useState("");
+  const [isUserAdmin, setIsUserAdmin] = useState(false);
 
-  // console.log(user);
+  // console.log(user._id);
 
   const deactivateUser = async () => {
+    const mailBody = document.getElementById("mailBody")?.innerHTML;
     try {
       const response = await fetch(
         `${SERVER_URL}/admin/deactivate-account/${user._id}`,
@@ -65,6 +68,7 @@ const UserCardAdmin = (props) => {
       if (res.success) {
         setOpen(false);
         props.parentFunction();
+
         toast.success(res.message);
       } else {
         toast.error(res.error);
@@ -75,7 +79,7 @@ const UserCardAdmin = (props) => {
   };
 
   const activateUser = async () => {
-    console.log(user.email, mailBody2);
+    // console.log(user.email, mailBody2);
     try {
       const response = await fetch(
         `${SERVER_URL}/admin/activate-account/${user._id}`,
@@ -104,19 +108,43 @@ const UserCardAdmin = (props) => {
     }
   };
 
-  const addAdmin = async () => {
+  const checkUserAdmin = async () => {
     try {
       const response = await fetch(
-        `${SERVER_URL}/admin/add/${user._id}`,
+        `${SERVER_URL}/admin/is-user-admin/${user._id}`,
         {
           method: "POST",
           credentials: "include",
           headers: {
             Authorization: `Bearer ${Cookies.get("token")}`,
-            "Content-Type": "application/json",
           },
         }
       );
+      const res = await response.json();
+      if (res.success) {
+        setIsUserAdmin(true);
+      } else {
+        setIsUserAdmin(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    checkUserAdmin();
+  }, [user]);
+
+  const addAdmin = async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/admin/add/${user._id}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+          "Content-Type": "application/json",
+        },
+      });
       const res = await response.json();
       if (res.success) {
         props.parentFunction();
@@ -130,14 +158,11 @@ const UserCardAdmin = (props) => {
   };
 
   return (
-    <Card className="p-3 m-3 cursor-pointer">
+    <div className="p-3 m-3 cursor-pointer z-0 bg-white rounded-lg">
       {user.isUserDeactivated && (
         <p className="text-red-500 mb-1">*Deactivated by User</p>
       )}
-      <CardHeader
-        floated={false}
-        shadow={false}
-        color="transparent"
+      <div
         className="p-0 m-0  flex flex-col items-center justify-center w-full border-b-2 rounded-none pb-2"
         onClick={() => {
           navigate(`/user/${user._id}`);
@@ -155,7 +180,7 @@ const UserCardAdmin = (props) => {
         <Typography className="text-sm font-serif">
           {user.bio ? user.bio : "New User"}
         </Typography>
-      </CardHeader>
+      </div>
       <CardBody className="m-0 p-0 mt-3 border-b-2 rounded-none pb-2">
         <Typography className="flex items-center">
           <IoLocationSharp />
@@ -164,7 +189,7 @@ const UserCardAdmin = (props) => {
           </span>
         </Typography>
       </CardBody>
-      <CardFooter className="m-0 p-0 mt-3 mx-auto flex gap-3">
+      <CardFooter className="m-0 p-0 mt-3 mx-auto flex gap-3 justify-evenly">
         {user.isDeactivated ? (
           <Button
             size="sm"
@@ -173,7 +198,7 @@ const UserCardAdmin = (props) => {
             color="green"
             onClick={handleActivateOpen}
           >
-            Activate User
+            Activate
           </Button>
         ) : (
           <Button
@@ -186,12 +211,15 @@ const UserCardAdmin = (props) => {
             Delete User
           </Button>
         )}
-        <Button
-          size="sm"
-          color="blue"
-          onClick={addAdmin}
-          >
-            Add Admin</Button>
+        {isUserAdmin ? (
+          <Button size="sm" color="black" variant="outlined" className="">
+            Remove Admin
+          </Button>
+        ) : (
+          <Button size="sm" color="blue" onClick={handleAdminOpen}>
+            Add Admin
+          </Button>
+        )}
       </CardFooter>
 
       {/* DELETE DIALOG */}
@@ -228,6 +256,7 @@ const UserCardAdmin = (props) => {
             placeholder="Reason for deleting account"
             className="w-full p-2 mt-2 border rounded-md"
             onChange={(e) => setReason(e.target.value)}
+            value={reason}
           />
         </DialogBody>
         <DialogFooter className="flex gap-4">
@@ -294,7 +323,33 @@ const UserCardAdmin = (props) => {
         </DialogFooter>
       </Dialog>
       <Toaster position="top-right" />
-    </Card>
+
+      {/* MAKE ADMIN DIALOG */}
+      <Dialog open={adminOpen} handler={handleAdminOpen}>
+        <DialogHeader className="text-gray-800 m-0 pb-2">
+          Make Admin
+        </DialogHeader>
+        <DialogBody className="m-0 pt-2">
+          <Typography className="text-gray-800 text-lg">
+            Are you sure you want to add this user as an admin?
+          </Typography>
+        </DialogBody>
+        <DialogFooter className="flex gap-4">
+          <Button
+            variant="outlined"
+            color="blue"
+            onClick={handleAdminOpen}
+            size="sm"
+            className=""
+          >
+            Cancel
+          </Button>
+          <Button variant="" color="blue" onClick={addAdmin} size="sm">
+            Add Admin
+          </Button>
+        </DialogFooter>
+      </Dialog>
+    </div>
   );
 };
 

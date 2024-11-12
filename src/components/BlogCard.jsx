@@ -1,13 +1,8 @@
 import { Card, Carousel, Typography } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
-import BlogBG from "../assets/BlogBG.png";
-import BlogBG2 from "../assets/BlogBG2.png";
-import BlogBG3 from "../assets/BlogBG3.png";
-import professional from "../assets/professional.png";
-import { IoMdArrowDroprightCircle } from "react-icons/io";
-import { IoMdArrowDropleftCircle } from "react-icons/io";
 import { SERVER_URL } from "../ServerURL";
 import Cookies from "js-cookie";
+import toast, { Toaster } from "react-hot-toast";
 
 const BlogCard = () => {
   const [blogs, setBlogs] = useState([]);
@@ -16,10 +11,10 @@ const BlogCard = () => {
     try {
       const response = await fetch(`${SERVER_URL}/blog/all-blogs`, {
         method: "GET",
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
+        // credentials: "include",
+        // headers: {
+        //   Authorization: `Bearer ${Cookies.get("token")}`,
+        // },
       });
       const res = await response.json();
       if (res.success) {
@@ -37,14 +32,14 @@ const BlogCard = () => {
   }, []);
 
   return (
-    <Card className="h-4/5 rounded-lg">
+    <Card className="h-96 rounded-lg">
       <div className="">
         <Typography className="text-xl font-semibold m-2">New Blogs</Typography>
       </div>
       <div className="w-full h-full relative flex justify-center">
         <Carousel autoplay loop className="w-full h-full">
           {blogs.map((blog, index) => (
-            <div key={index}>
+            <div key={index} className="w-full h-full">
               {blog.coverImage && (
                 <div className="w-full h-full">
                   <img

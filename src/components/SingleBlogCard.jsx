@@ -1,11 +1,10 @@
 import { Button, Card, Typography } from "@material-tailwind/react";
 import React from "react";
-import BlogBg from "../assets/BlogBG.png";
 
 const SingleBlogCard = (props) => {
   return (
     <>
-      <Card className="flex flex-col mx-auto" shadow={false}>
+      <Card className="flex flex-col mx-auto w-full" shadow={false}>
         <div className="">
           <img
             src={`${props?.blog?.coverImage}`}
