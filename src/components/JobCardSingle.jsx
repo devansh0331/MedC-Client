@@ -9,14 +9,10 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { IoPaperPlaneOutline } from "react-icons/io5";
-import { TiDocumentText } from "react-icons/ti";
-import { MdOutlineLocationCity } from "react-icons/md";
-import { FaMoneyBill } from "react-icons/fa6";
 import { IoMdTimer } from "react-icons/io";
 import { TbPigMoney } from "react-icons/tb";
-import { FaRegCalendarAlt } from "react-icons/fa";
 import { FaUserGraduate } from "react-icons/fa6";
-import { HiHomeModern } from "react-icons/hi2";
+import { MdManageHistory } from "react-icons/md";
 import React, { useContext, useState, useEffect } from "react";
 import Resume from "../assets/Resume.pdf";
 import { UserContext } from "../UserContext";
@@ -30,6 +26,7 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { FaSquareWhatsapp } from "react-icons/fa6";
 import { FaCopy } from "react-icons/fa6";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 const JobCardSingle = (props) => {
   const job = props.job;
@@ -43,6 +40,10 @@ const JobCardSingle = (props) => {
   const [openApplyDialog, setOpenApplyDialog] = useState(false);
   const { user, userInfo } = useContext(UserContext);
   const navigate = useNavigate();
+  const [salaryView, setSalaryView] = useState(false);
+  const [qualificationView, setQualificationView] = useState(false);
+  const [employmentTypeView, setEmploymentTypeView] = useState(false);
+  const [experienceView, setExperienceView] = useState(false);
 
   const handleOpenApplyDialog = () => {
     setOpenApplyDialog(!openApplyDialog);
@@ -227,10 +228,10 @@ const JobCardSingle = (props) => {
       }`}
     >
       <div
-        className={`p-2 m-0 flex justify-between gap-2 ${
+        className={`relative p-2 m-0 flex justify-between gap-2 ${
           props.route === "ViewApplications"
             ? "flex-col"
-            : " flex-col sm:flex-row lg:flex-col 2xl:flex-row"
+            : " flex-col md:flex-row lg:flex-col 2xl:flex-row"
         }`}
       >
         <div className="flex flex-col">
@@ -244,7 +245,7 @@ const JobCardSingle = (props) => {
             </span>
           </Typography>
         </div>
-        <div className="flex gap-2 items-start">
+        <div className="flex gap-2 items-start mr-8">
           <div className="flex flex-col">
             <Typography className="text-sm">
               {job?.noOfApplications} Applicants
@@ -256,10 +257,7 @@ const JobCardSingle = (props) => {
               </span>
             </Typography>
           </div>
-          <button
-            className="flex items-center justify-center"
-            onClick={handleShareBox}
-          >
+          <button className="absolute top-2 right-2" onClick={handleShareBox}>
             <IoPaperPlaneOutline className="w-6 h-6" />
           </button>
         </div>
@@ -271,37 +269,119 @@ const JobCardSingle = (props) => {
           className={`flex ${
             props.route === "ViewApplications"
               ? "flex-col gap-1"
-              : "flex-col sm:flex-row lg:flex-col 2xl:flex-row gap-2 sm:gap-5 lg:gap-2 2xl:gap-5"
-          } text-gray-700 w-full px-5 mt-3 `}
+              : "flex-col md:flex-row lg:flex-col 2xl:flex-row gap-2 md:gap-5 lg:gap-2 2xl:gap-5"
+          } text-gray-700 w-full px-5 mt-3 relative`}
         >
-          <Typography className="flex items-center gap-1">
-            <TbPigMoney className="w-5 h-5 text-black" />
-            <span className="">
-              {job?.salaryRange ? job.salaryRange : "N/A"}
-            </span>
-          </Typography>
-          <Typography className="flex items-center gap-1">
-            <FaUserGraduate className="w-5 h-5 text-black" />
-            <span className="">
-              {job?.requiredQualification ? job.requiredQualification : "N/A"}
-            </span>
-          </Typography>
-          <Typography className="flex items-center gap-1">
-            <IoMdTimer className="w-5 h-5 text-black" />
-            <span className="">
+          {/* SALARY RANGE */}
+          <div className="">
+            <Typography
+              className="flex items-center gap-1"
+              onMouseEnter={() => setSalaryView(true)}
+              onMouseLeave={() => setSalaryView(false)}
+            >
+              <TbPigMoney className="w-5 h-5 text-black" />
+              <span className="">
+                Rs. {job?.minimumSalary ? job.minimumSalary : "N/A"}{" "}
+                {job?.maximumSalary ? "- Rs. " + job.maximumSalary : ""}{" "}
+                {job?.salaryType ? job.salaryType : "N/A"}
+              </span>
+            </Typography>
+            <p
+              className={`bg-gray-200 px-2 py-1 rounded-md text-[14px] absolute ${
+                salaryView ? "opacity-100 z-0" : "opacity-0 -z-10"
+              }`}
+              style={{ transition: "opacity 0.2s ease-in-out" }}
+            >
+              Salary Range: Rs. {job?.minimumSalary ? job.minimumSalary : "N/A"}{" "}
+              {job?.maximumSalary ? "- Rs. " + job.maximumSalary : ""}{" "}
+              {job?.salaryType ? job.salaryType : "N/A"}
+            </p>
+          </div>
+
+          {/* EMPLOYMENT TYPE */}
+          <div className="">
+            <Typography
+              className="flex items-center gap-1"
+              onMouseEnter={() => setEmploymentTypeView(true)}
+              onMouseLeave={() => setEmploymentTypeView(false)}
+            >
+              <IoMdTimer className="w-5 h-5 text-black" />
+              <span className="">
+                {job?.employementType ? job.employementType : "N/A"}
+              </span>
+            </Typography>
+            <p
+              className={`bg-gray-200 px-2 py-1 rounded-md text-[14px] absolute ${
+                employmentTypeView ? "opacity-100 z-0" : "opacity-0 -z-10"
+              }`}
+              style={{ transition: "opacity 0.2s ease-in-out" }}
+            >
+              Employment Type:{" "}
               {job?.employementType ? job.employementType : "N/A"}
-            </span>
-          </Typography>
-          <Typography className="flex items-center gap-1">
-            <TiDocumentText className="w-5 h-5 text-black" />
-            <span className="">
-              {job?.minExperience ? job.minExperience : "N/A"}
-            </span>
-          </Typography>
+            </p>
+          </div>
+
+          {/* REQUIRED QUALIFICATION */}
+          <div className="">
+            <Typography
+              className="flex items-center gap-1"
+              onMouseEnter={() => setQualificationView(true)}
+              onMouseLeave={() => setQualificationView(false)}
+            >
+              <FaUserGraduate className="w-5 h-5 text-black" />
+              <span className="">
+                {job?.requiredQualification ? job.requiredQualification : "N/A"}
+              </span>
+            </Typography>
+            <p
+              className={`bg-gray-200 px-2 py-1 rounded-md text-[14px] absolute ${
+                qualificationView ? "opacity-100 z-0" : "opacity-0 -z-10"
+              }`}
+              style={{ transition: "opacity 0.2s ease-in-out" }}
+            >
+              Required Qualification:{" "}
+              {job?.requiredQualification ? job.requiredQualification : "N/A"}
+            </p>
+          </div>
+
+          {/* MINIMUM EXPERIENCE */}
+          <div>
+            <Typography
+              className="flex items-center gap-1"
+              onMouseEnter={() => setExperienceView(true)}
+              onMouseLeave={() => setExperienceView(false)}
+            >
+              <MdManageHistory className="w-5 h-5 text-black" />
+              <span className="">
+                {job?.minExperience === 0
+                  ? "Fresher"
+                  : `${
+                      job?.minExperience === 1
+                        ? "1 Year"
+                        : job.minExperience + " Years"
+                    }`}
+              </span>
+            </Typography>
+            <p
+              className={`bg-gray-200 px-2 py-1 rounded-md text-[14px] absolute ${
+                experienceView ? "opacity-100 z-0" : "opacity-0 -z-10"
+              }`}
+              style={{ transition: "opacity 0.2s ease-in-out" }}
+            >
+              Minimum Experience:{" "}
+              {job?.minExperience === 0
+                ? "Fresher"
+                : `${
+                    job?.minExperience === 1
+                      ? "1 Year"
+                      : job.minExperience + " Years"
+                  }`}
+            </p>
+          </div>
         </div>
 
         {/* DETAILS 2 */}
-        <Typography className="flex items-center px-5 pt-3 2xl:pt-1 ">
+        <Typography className="flex items-center px-5 pt-3 2xl:pt-1">
           <span className="text-sm text-gray-700">
             Last Date to apply:{" "}
             {job?.lastDateToApply
@@ -372,6 +452,7 @@ const JobCardSingle = (props) => {
 
       <div className="m-0 p-0 mt-3">
         <div className="w-full py-2 px-3">
+          <Typography className="text-lg font-semibold">Description</Typography>
           <div
             className="no-twp"
             dangerouslySetInnerHTML={{
@@ -383,47 +464,47 @@ const JobCardSingle = (props) => {
         {props.route === "ViewApplications" ? (
           <></>
         ) : (
-             <div className="flex text-gray-700 w-full px-3 mt-6 gap-5 items-end">
-             {isApplied ? (
-               <div className="flex md:justify-end items-end gap-4 mt-2 md:mt-0">
-                 <Button
-                   size="sm"
-                   color="red"
-                   onClick={() => deleteApplication()}
-                 >
-                   Withdraw
-                 </Button>
-               </div>
-             ) : (
-               <Button size="sm" color="blue" onClick={handleOpenApplyDialog}>
-                 Apply
-               </Button>
-             )}
- 
-             {isSaved ? (
-               <>
-                 <Button
-                   size="sm"
-                   variant="outlined"
-                   color="black"
-                   onClick={handleUnsaveJob}
-                 >
-                   Unsave
-                 </Button>
-               </>
-             ) : (
-               <>
-                 <Button
-                   size="sm"
-                   variant="outlined"
-                   color="blue"
-                   onClick={handleSaveJob}
-                 >
-                   Save
-                 </Button>
-               </>
-             )}
-           </div>
+          <div className="flex text-gray-700 w-full px-3 mt-6 gap-5 items-end">
+            {isApplied ? (
+              <div className="flex md:justify-end items-end gap-4 mt-2 md:mt-0">
+                <Button
+                  size="sm"
+                  color="red"
+                  onClick={() => deleteApplication()}
+                >
+                  Withdraw
+                </Button>
+              </div>
+            ) : (
+              <Button size="sm" color="blue" onClick={handleOpenApplyDialog}>
+                Apply
+              </Button>
+            )}
+
+            {isSaved ? (
+              <>
+                <Button
+                  size="sm"
+                  variant="outlined"
+                  color="black"
+                  onClick={handleUnsaveJob}
+                >
+                  Unsave
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  size="sm"
+                  variant="outlined"
+                  color="blue"
+                  onClick={handleSaveJob}
+                >
+                  Save
+                </Button>
+              </>
+            )}
+          </div>
         )}
       </div>
 

@@ -29,6 +29,7 @@ import { FaCopy } from "react-icons/fa6";
 import { TbPigMoney } from "react-icons/tb";
 import { FaUserGraduate } from "react-icons/fa6";
 import { UserContext } from "../UserContext";
+import { MdManageHistory } from "react-icons/md";
 import SignUpDialog from "./SignUpDialog";
 import { SERVER_URL } from "../ServerURL";
 import toast, { Toaster } from "react-hot-toast";
@@ -248,7 +249,9 @@ const MaxJobCard = (props) => {
         <Typography className="flex items-center">
             <TbPigMoney className="w-5 h-5" />
             <span className="ml-3">
-              {props.job?.salaryRange ? props.job.salaryRange : "N/A"}
+            Rs. {props.job?.minimumSalary ? props.job.minimumSalary : "N/A"}{" "}
+                {props.job?.maximumSalary ? "- Rs. " + props.job.maximumSalary : ""}{" "}
+                {props.job?.salaryType ? props.job.salaryType : "N/A"}
             </span>
           </Typography>
           {props.job?.requiredQualification && (
@@ -268,9 +271,11 @@ const MaxJobCard = (props) => {
             </span>
           </Typography>
           <Typography className="flex items-center">
-            <TiDocumentText className="w-5 h-5" />
+            <MdManageHistory className="w-5 h-5" />
             <span className="ml-3">
-              {props.job?.minExperience ? props.job.minExperience : "N/A"} 
+            {props.job?.minExperience === 0
+                  ? "Fresher"
+                  : `${props.job?.minExperience === 1 ? props.job.minExperience + " Year" : props.job.minExperience + " Years"}`} 
             </span>
           </Typography>
           <Typography className="flex items-center">
@@ -295,7 +300,7 @@ const MaxJobCard = (props) => {
                 </Typography>
               </div>
               <div className="flex md:justify-end items-end gap-4 mt-2 md:mt-0">
-                <Button size="sm" variant="outlined" color="blue">
+                <Button size="sm" variant="outlined" color="blue" onClick={()=> navigate(`/user-saves/job-edit/${props?.job._id}`)}>
                   Edit
                 </Button>
                 <Button

@@ -32,7 +32,7 @@ import Contactus from "./Contactus";
 import ViewApplications from "./ViewApplications";
 import PostCardNew from "../components/PostCardNew";
 import EditBlog from "./EditBlog";
-// import { NavbarWithSearch } from "./Nav";
+import EditJob from "./EditJob";
 
 function Main() {
   return (
@@ -296,6 +296,15 @@ function Main() {
           <>
           <NavMain/>
           <EditBlog/>
+          </>
+        }
+      />
+      <Route
+        path="/user-saves/job-edit/:id"
+        element= {
+          <>
+          <NavMain/>
+          <EditJob/>
           </>
         }
       />

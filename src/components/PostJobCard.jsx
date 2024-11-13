@@ -23,9 +23,22 @@ import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
 
-const PostJobCard = () => {
+const PostJobCard = (props) => {
+  const [jobTitle, setJobTitle] = useState("");
+  const [organziationName, setOrganziationName] = useState("");
+  const [location, setLocation] = useState("");
+  const [minimumSalary, setMinimumSalary] = useState(0);
+  const [maximumSalary, setMaximumSalary] = useState(0);
+  const [salaryType, setSalaryType] = useState("Yearly");
+  const [requiredQualification, setRequiredQualification] = useState("");
+  const [employementType, setEmployementType] = useState("");
+  const [minExperience, setMinExperience] = useState(0);
+  const [lastDateToApply, setLastDateToApply] = useState("");
+  const [description, setDescription] = useState("");
   const [acceptingResponses, setAcceptingResponses] = useState(true);
+  
   const [preview, setPreview] = useState(false);
+  const { user } = useContext(UserContext);
   const modules = {
     toolbar: [
       // [{ header: "1" }, { header: "2" }],
@@ -45,24 +58,10 @@ const PostJobCard = () => {
     //   matchVisual: false,
     // },
   };
-  const { user } = useContext(UserContext);
-  const [jobTitle, setJobTitle] = useState("");
-  const [organziationName, setOrganziationName] = useState("");
-  const [minSalary, setMinSalary] = useState("");
-  const [maxSalary, setMaxSalary] = useState("");
-  const [salaryType, setSalaryType] = useState("Yearly");
-  const [salaryRange, setSalaryRange] = useState("");
-  const [requiredQualification, setRequiredQualification] = useState("");
-  const [employementType, setEmployementType] = useState("");
-  const [minExp, setMinExp] = useState("");
-  const [minExperience, setMinExperience] = useState(0);
-  const [lastDateToApply, setLastDateToApply] = useState("");
-  const [description, setDescription] = useState("");
 
   // LOCATION CONSTANTS
   const CityArr = City.getCitiesOfCountry("IN");
   const StateArr = State.getStatesOfCountry("IN");
-  const [location, setLocation] = useState("");
   const [locationArray, setLocationArray] = useState([]);
   const [locSuggestionbox, setLocSuggestionbox] = useState(false);
   const [fixedLocationArray, setFixedLocationArray] = useState(location);
@@ -73,17 +72,16 @@ const PostJobCard = () => {
     jobTitle: jobTitle,
     organziationName: organziationName,
     location: location,
-    salaryRange: `Rs. ${minSalary} ${
-      maxSalary == 0 ? "" : `- ${maxSalary}`
-    } ${salaryType}`,
+    minimumSalary: minimumSalary,
+    maximumSalary: maximumSalary,
+    salaryType: salaryType,
     requiredQualification: requiredQualification,
     employementType: employementType,
-    minExperience: `${minExperience} Years`,
+    minExperience: minExperience,
     lastDateToApply: lastDateToApply,
     description: description,
     noOfApplications: 0,
   };
-
 
   // LOCATION FUNCTIONS
   const buildLocationArr = () => {
@@ -125,23 +123,8 @@ const PostJobCard = () => {
       buildLocationArr();
     },[]);
 
-  const handleMinExp = (val) => {
-    setMinExp(`${val} Years`);
-  };
-
-  const handleSalaryRange = (min, max, salary) => {
-    if (min > max && max != 0) {
-      toast.error("Minimum salary cannot be greater than maximum salary");
-      return;
-    } else if (maxSalary == 0) {
-      setSalaryRange(`Rs. ${min} ${salary}`);
-    } else if (max > min) {
-      setSalaryRange(`Rs. ${min} - ${max} ${salary}`);
-    }
-  };
-
   const handlePostJob = async () => {
-    if (minSalary > maxSalary && maxSalary != 0) {
+    if (Number(minimumSalary) > Number(maximumSalary) && Number(maximumSalary) != 0) {
       toast.error("Minimum salary cannot be greater than maximum salary");
       return;
     }
@@ -149,10 +132,11 @@ const PostJobCard = () => {
       jobTitle == "" ||
       organziationName == "" ||
       location == "" ||
-      salaryRange == "" ||
+      minimumSalary == "" ||
+      maximumSalary == "" ||
       requiredQualification == "" ||
       employementType == "" ||
-      minExp == "" ||
+      minExperience == "" ||
       lastDateToApply == "" ||
       description == ""
     ) {
@@ -172,12 +156,16 @@ const PostJobCard = () => {
           jobTitle,
           organziationName,
           location,
-          salaryRange,
+          minimumSalary,
+          maximumSalary,
+          salaryType,
           requiredQualification,
           employementType,
-          minExperience: minExp,
+          minExperience,
           lastDateToApply,
           description,
+          archived: !acceptingResponses,
+          userArchived: !acceptingResponses,
         }),
       });
 
@@ -189,10 +177,8 @@ const PostJobCard = () => {
         setJobTitle("");
         setOrganziationName("");
         setLocation("");
-        setSalaryRange("");
-        setMaxSalary("");
-        setMinExp("");
-        setMinSalary("");
+        setMinimumSalary("");
+        setMaximumSalary("");
         setSalaryType("Yearly");
         setRequiredQualification("");
         setEmployementType("");
@@ -205,6 +191,92 @@ const PostJobCard = () => {
       console.log(error);
     }
   };
+
+  const handleEditJob = async () => {
+    if (minimumSalary > maximumSalary && maximumSalary != 0) {
+      toast.error("Minimum salary cannot be greater than maximum salary");
+      return;
+    }
+    try {
+      const response = await fetch(`${SERVER_URL}/job/edit-job/${props.jobId}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        body: JSON.stringify({
+          jobTitle,
+          organziationName,
+          location,
+          minimumSalary,
+          maximumSalary,
+          salaryType,
+          requiredQualification,
+          employementType,
+          minExperience,
+          lastDateToApply,
+          description,
+          archived: !acceptingResponses,
+          userArchived: !acceptingResponses
+        }),
+      });
+      const data = await response.json();
+      if (!data.success) {
+        console.log(data.error);
+      } else {
+        setJobTitle("");
+        setOrganziationName("");
+        setLocation("");
+        setMinimumSalary(0);
+        setMaximumSalary(0);
+        setSalaryType("Yearly");
+        setRequiredQualification("");
+        setEmployementType("");
+        setMinExperience(0);
+        setLastDateToApply("");
+        setDescription("");
+        setAcceptingResponses(false);
+        toast.success("Job edited successfully");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getSingleJob = async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/job/single-job/${props.jobId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await response.json();
+      if (res.success) {
+        setJobTitle(res.job.jobTitle);
+        setOrganziationName(res.job.organziationName);
+        setLocation(res.job.location);
+        setMinimumSalary(res.job.minimumSalary);
+        setMaximumSalary(res.job.maximumSalary);
+        setSalaryType(res.job.salaryType);
+        setRequiredQualification(res.job.requiredQualification);
+        setEmployementType(res.job.employementType);
+        setMinExperience(res.job.minExperience);
+        setLastDateToApply(res.job.lastDateToApply);
+        setDescription(res.job.description);
+        setAcceptingResponses(!res.job.archived);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (props.route == "Edit") {
+      getSingleJob();
+    }
+  }, [props.jobId]);
+  
 
   return (
     <div className="bg-white p-4 w-full h-full rounded-lg overflow-y-visible">
@@ -303,10 +375,9 @@ const PostJobCard = () => {
                 placeholder="Minimum"
                 className="no-spinner w-[30%] active:border-none"
                 onChange={(e) => {
-                  setMinSalary(e.target.value);
-                  handleSalaryRange(e.target.value, maxSalary, salaryType);
+                  setMinimumSalary(e.target.value);
                 }}
-                value={minSalary}
+                value={minimumSalary}
               />
               <span className="flex items-center">-</span>
               <input
@@ -314,16 +385,14 @@ const PostJobCard = () => {
                 placeholder="Maximum (0 for fixed salary)"
                 className="no-spinner w-[40%] active:border-none"
                 onChange={(e) => {
-                  setMaxSalary(e.target.value);
-                  handleSalaryRange(minSalary, e.target.value, salaryType);
+                  setMaximumSalary(e.target.value);
                 }}
-                value={maxSalary}
+                value={maximumSalary}
               />
               <select
                 className=""
                 onChange={(e) => {
                   setSalaryType(e.target.value);
-                  handleSalaryRange(minSalary, maxSalary, e.target.value);
                 }}
                 value={salaryType}
               >
@@ -360,7 +429,6 @@ const PostJobCard = () => {
                 className="no-spinner h-full w-full"
                 onChange={(e) => {
                   setMinExperience(e.target.value);
-                  handleMinExp(e.target.value);
                 }}
                 value={minExperience}
               />
@@ -374,6 +442,7 @@ const PostJobCard = () => {
               onChange={(e) => setLastDateToApply(e.target.value)}
               value={lastDateToApply}
             />
+            {/* Accepting responses */}
             <div className="flex justify-between w-full items-center">
               <Switch
                 color="blue"
@@ -390,9 +459,15 @@ const PostJobCard = () => {
                 >
                   {preview ? "Edit" : "Preview"}
                 </Button>
+                {props.route === "Edit" ? (
+                <Button size="sm" color="blue" onClick={() => handleEditJob()}>
+                  Update
+                </Button>
+                ) : (
                 <Button size="sm" color="blue" onClick={() => handlePostJob()}>
                   Post
                 </Button>
+                )}
               </div>
             </div>
           </div>
@@ -426,10 +501,15 @@ const PostJobCard = () => {
             >
               {preview ? "Edit" : "Preview"}
             </Button>
-
+            {props.route === "Edit" ? (
+              <Button size="sm" color="blue" onClick={() => handleEditJob()}>
+                Update
+              </Button>
+            ) : (
             <Button size="sm" color="blue" onClick={() => handlePostJob()}>
               Post Job
             </Button>
+            )}
           </div>
         </div>
       </div>
