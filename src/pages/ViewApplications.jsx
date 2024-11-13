@@ -177,7 +177,7 @@ const ViewApplications = () => {
                               />
                             </Badge>
                             <Typography className="text-lg mt-2">
-                              {user.name}
+                              {user?.userId.name ? user.userId.name : "Anonymous"}
                             </Typography>
                           </CardHeader>
                           {user.userId.location || user.userId.bio ? (

@@ -331,7 +331,7 @@ const Hire = () => {
                         className="w-24 h-24  rounded-full profile-pic"
                       />
                       <Typography className="text-lg mt-2">
-                        {user?.name}
+                        {user?.name ? user?.name : "Anonymous"}
                       </Typography>
                     </div>
                     {user?.location || user?.bio ? (

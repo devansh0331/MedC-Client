@@ -122,6 +122,10 @@ const SinglePost = () => {
         </div>
         <div className="lg:w-3/5 2xl:w-2/5 mt-5">
         {isArchived ? (
+          <div className="w-full h-80 bg-white flex justify-center items-center rounded-lg shadow-md">
+          <p className="text-center">This post has been removed.</p>
+        </div>
+        ) : (
           <>
           {postLoading ? (
             <SinglePostSkeleton />
@@ -134,10 +138,7 @@ const SinglePost = () => {
             />
           )}
           </>
-        ) : (
-          <div className="w-full h-80 bg-white flex justify-center items-center rounded-lg shadow-md">
-            <p className="text-center">This post has been removed.</p>
-          </div>
+          
         )}
         </div>
         <div className="w-96 2xl:block hidden mt-5">

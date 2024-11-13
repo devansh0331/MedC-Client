@@ -44,10 +44,8 @@ const SingleJob = (props) => {
           <div className="overflow-y-scroll scrollbar-thin flex flex-col gap-3 mb-5">
             {/* <JobNav/> */}
             {isArchived ? (
-              <div className="w-full flex items-center justify-center">
-                <h1 className="text-2xl font-semibold text-light-blue-400">
-                  This job is not longer available.
-                </h1>
+                <div className="w-full h-80 bg-white flex justify-center items-center rounded-lg shadow-md">
+                <p className="text-center">This job is no longer available.</p>
               </div>
             ) : (
               <JobCardSingle job={job} parentFunction={getSingleJob} />
