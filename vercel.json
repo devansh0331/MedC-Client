@@ -24,6 +24,6 @@
     { "src": "/faq", "dest": "/" },
     { "src": "/about", "dest": "/" },
     { "src": "/archivedPosts", "dest": "/" },
-    { "src": "/user-saves/", "dest": "/" }
+    { "src": "/user-saves", "dest": "/" }
   ]
 }
