@@ -23,6 +23,7 @@
     { "src": "/privacypolicy", "dest": "/" },
     { "src": "/faq", "dest": "/" },
     { "src": "/about", "dest": "/" },
-    { "src": "/archivedPosts", "dest": "/" }
+    { "src": "/archivedPosts", "dest": "/" },
+    { "src": "/user-saves/", "dest": "/" }
   ]
 }
