@@ -12,16 +12,17 @@ import toast, { Toaster } from "react-hot-toast";
 import Cookies from "js-cookie";
 
 const HireDialog = (props) => {
-  const mailContent =
-    document.getElementsByClassName("dialogBody")[0]?.innerHTML;
   const [senderEmail, setSenderEmail] = useState(props.senderEmail);
-    
-
+  
+  // console.log(props.candidateId);
+  
   const sendEmail = async () => {
+    const mailContent =
+      document.getElementsByClassName("dialogBody")[0]?.innerHTML;
     if (props.jobId) {
       try {
         const response = await fetch(
-          `${SERVER_URL}/userjob/shortlist-candidate/${props.JobId}`,
+          `${SERVER_URL}/userjob/shortlist-candidate/${props.candidateId}`,
           {
             method: "POST",
             credentials: "include",

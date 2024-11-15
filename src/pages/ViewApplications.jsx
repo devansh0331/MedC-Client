@@ -84,6 +84,7 @@ const ViewApplications = () => {
       console.log(error);
     }
   };
+console.log(jobId);
 
   const shortListCandidate = async () => {
     try {
@@ -233,7 +234,7 @@ const ViewApplications = () => {
                   isShortListing={isShortListing}
                   setCandidateEmail={setCandidateEmail}
                   setCandidateId={setCandidateId}
-                  shortListCandidate={shortListCandidate}
+                  // shortListCandidate={shortListCandidate}
                   jobTitle={job.jobTitle}
                   organizationName={job.organizationName}
                   jobId={job._id}
