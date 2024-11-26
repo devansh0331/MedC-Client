@@ -384,7 +384,7 @@ const SinglePostCard = (props) => {
                   {postContent}
                   {/* {post?.description} */}
                 </span>
-                {postReadMore && (
+                {postReadMore ? (
                   <>
                     <span>... </span>
                     <span
@@ -395,6 +395,19 @@ const SinglePostCard = (props) => {
                       }}
                     >
                       Read More
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <br />
+                    <span
+                      className="text-blue-500"
+                      onClick={() => {
+                        setPostContent(post?.description?.substring(0, 100));
+                        setPostReadMore(true);
+                      }}
+                    >
+                      Read Less
                     </span>
                   </>
                 )}
