@@ -32,11 +32,11 @@ const PostJobCard = (props) => {
   const [salaryType, setSalaryType] = useState("Yearly");
   const [requiredQualification, setRequiredQualification] = useState("");
   const [employementType, setEmployementType] = useState("");
-  const [minExperience, setMinExperience] = useState(0);
+  const [minExperience, setMinExperience] = useState();
   const [lastDateToApply, setLastDateToApply] = useState("");
   const [description, setDescription] = useState("");
   const [acceptingResponses, setAcceptingResponses] = useState(true);
-  
+
   const [preview, setPreview] = useState(false);
   const { user } = useContext(UserContext);
   const modules = {
@@ -85,18 +85,19 @@ const PostJobCard = (props) => {
 
   // LOCATION FUNCTIONS
   const buildLocationArr = () => {
-    let locationSuggestionsArr = [];    
+    let locationSuggestionsArr = [];
     for (let i = 0; i < CityArr.length; i++) {
       locationSuggestionsArr.push(
-        `${CityArr[i].name}, ${StateArr.filter(
-          (state) => state.isoCode === CityArr[i].stateCode
-        )[0]?.name}`
+        `${CityArr[i].name}, ${
+          StateArr.filter((state) => state.isoCode === CityArr[i].stateCode)[0]
+            ?.name
+        }`
       );
     }
     setFixedLocationArray(locationSuggestionsArr);
     setLocationArray(locationSuggestionsArr);
-  }
-  
+  };
+
   const handleClickEvent2 = (event) => {
     if (locDropDown.current && !locDropDown.current.contains(event.target)) {
       setLocSuggestionbox(false);
@@ -104,27 +105,30 @@ const PostJobCard = (props) => {
   };
 
   const locationSuggestions = (keyword) => {
-    if(keyword.length == 0) setLocationArray([]);
+    if (keyword.length == 0) setLocationArray([]);
     const filteredList = fixedLocationArray.filter((item) => {
       return item.toLowerCase().startsWith(keyword.toLowerCase());
     });
     setLocationArray(filteredList);
   };
 
-    // USE EFFECTS
-    useEffect(() => {
-      document.addEventListener("click", handleClickEvent2);
-      return () => {
-        document.removeEventListener("click", handleClickEvent2);
-      };
-    }, []);
-  
-    useEffect(() => {
-      buildLocationArr();
-    },[]);
+  // USE EFFECTS
+  useEffect(() => {
+    document.addEventListener("click", handleClickEvent2);
+    return () => {
+      document.removeEventListener("click", handleClickEvent2);
+    };
+  }, []);
+
+  useEffect(() => {
+    buildLocationArr();
+  }, []);
 
   const handlePostJob = async () => {
-    if (Number(minimumSalary) > Number(maximumSalary) && Number(maximumSalary) != 0) {
+    if (
+      Number(minimumSalary) > Number(maximumSalary) &&
+      Number(maximumSalary) != 0
+    ) {
       toast.error("Minimum salary cannot be greater than maximum salary");
       return;
     }
@@ -182,7 +186,7 @@ const PostJobCard = (props) => {
         setSalaryType("Yearly");
         setRequiredQualification("");
         setEmployementType("");
-        setMinExperience(0);
+        setMinExperience();
         setLastDateToApply("");
         setDescription("");
         toast.success("Job posted successfully");
@@ -198,29 +202,32 @@ const PostJobCard = (props) => {
       return;
     }
     try {
-      const response = await fetch(`${SERVER_URL}/job/edit-job/${props.jobId}`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-        body: JSON.stringify({
-          jobTitle,
-          organziationName,
-          location,
-          minimumSalary,
-          maximumSalary,
-          salaryType,
-          requiredQualification,
-          employementType,
-          minExperience,
-          lastDateToApply,
-          description,
-          archived: !acceptingResponses,
-          userArchived: !acceptingResponses
-        }),
-      });
+      const response = await fetch(
+        `${SERVER_URL}/job/edit-job/${props.jobId}`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+          body: JSON.stringify({
+            jobTitle,
+            organziationName,
+            location,
+            minimumSalary,
+            maximumSalary,
+            salaryType,
+            requiredQualification,
+            employementType,
+            minExperience,
+            lastDateToApply,
+            description,
+            archived: !acceptingResponses,
+            userArchived: !acceptingResponses,
+          }),
+        }
+      );
       const data = await response.json();
       if (!data.success) {
         console.log(data.error);
@@ -246,12 +253,15 @@ const PostJobCard = (props) => {
 
   const getSingleJob = async () => {
     try {
-      const response = await fetch(`${SERVER_URL}/job/single-job/${props.jobId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${SERVER_URL}/job/single-job/${props.jobId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const res = await response.json();
       if (res.success) {
         setJobTitle(res.job.jobTitle);
@@ -276,7 +286,6 @@ const PostJobCard = (props) => {
       getSingleJob();
     }
   }, [props.jobId]);
-  
 
   return (
     <div className="bg-white p-4 w-full h-full rounded-lg overflow-y-visible">
@@ -353,7 +362,9 @@ const PostJobCard = (props) => {
                   {locationArray.map((locationWord, index) => (
                     <div
                       className={`text-sm text-gray-600 border-b-[1px] border-gray-400 cursor-default hover:bg-blue-800 hover:text-white ${
-                        location === locationWord ? "bg-blue-800 text-white" : "" // Highlight selected role
+                        location === locationWord
+                          ? "bg-blue-800 text-white"
+                          : "" // Highlight selected role
                       }`}
                       key={index}
                       onClick={() => {
@@ -435,13 +446,18 @@ const PostJobCard = (props) => {
               <p>Years</p>
             </div>
             {/* Last Date to apply */}
-            <input
-              placeholder="Last Date to Apply"
-              className="w-full flex gap-2 justify-between border-[1px] border-gray-400 h-10 p-2 rounded-md items-center text-blue-gray-500 text-sm"
-              type="date"
-              onChange={(e) => setLastDateToApply(e.target.value)}
-              value={lastDateToApply}
-            />
+            <div className="flex items-center border-gray-400 border-[1px] h-10 p-2 rounded-md">
+              <span className="flex-1 text-blue-gray-500 text-sm">
+                Last Date to apply
+              </span>
+              <input
+                placeholder="Last Date to Apply"
+                className="w-full  flex-1   items-center border-[1px] border-gray-400 rounded-md  text-blue-gray-500 text-sm"
+                type="date"
+                onChange={(e) => setLastDateToApply(e.target.value)}
+                value={lastDateToApply}
+              />
+            </div>
             {/* Accepting responses */}
             <div className="flex justify-between w-full items-center">
               <Switch
@@ -460,13 +476,21 @@ const PostJobCard = (props) => {
                   {preview ? "Edit" : "Preview"}
                 </Button>
                 {props.route === "Edit" ? (
-                <Button size="sm" color="blue" onClick={() => handleEditJob()}>
-                  Update
-                </Button>
+                  <Button
+                    size="sm"
+                    color="blue"
+                    onClick={() => handleEditJob()}
+                  >
+                    Update
+                  </Button>
                 ) : (
-                <Button size="sm" color="blue" onClick={() => handlePostJob()}>
-                  Post
-                </Button>
+                  <Button
+                    size="sm"
+                    color="blue"
+                    onClick={() => handlePostJob()}
+                  >
+                    Post
+                  </Button>
                 )}
               </div>
             </div>
@@ -506,9 +530,9 @@ const PostJobCard = (props) => {
                 Update
               </Button>
             ) : (
-            <Button size="sm" color="blue" onClick={() => handlePostJob()}>
-              Post Job
-            </Button>
+              <Button size="sm" color="blue" onClick={() => handlePostJob()}>
+                Post Job
+              </Button>
             )}
           </div>
         </div>
