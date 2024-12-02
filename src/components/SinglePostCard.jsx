@@ -69,6 +69,7 @@ const SinglePostCard = (props) => {
   const [archivePost, setArchivePost] = useState(false);
   const [postContent, setPostContent] = useState("");
   const [postReadMore, setPostReadMore] = useState(false);
+  const [postReadLess, setPostReadLess] = useState(false);
   const [isLiked, setIsLiked] = useState(
     post?.likes && user && post?.likes[user]
   );
@@ -392,9 +393,25 @@ const SinglePostCard = (props) => {
                       onClick={() => {
                         setPostContent(post?.description);
                         setPostReadMore(false);
+                        setPostReadLess(true);
                       }}
                     >
                       Read More
+                    </span>
+                  </>
+                )}
+                {postReadLess && (
+                  <>
+                    <br />
+                    <span
+                      className="text-blue-500"
+                      onClick={() => {
+                        setPostContent(post?.description?.substring(0, 100));
+                        setPostReadMore(true);
+                        setPostReadLess(false);
+                      }}
+                    >
+                      Read Less
                     </span>
                   </>
                 )}

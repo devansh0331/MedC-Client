@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import logofoot from "../assets/logofoot.png";
-import profile3 from "../assets/profile3.png";
+import altprofile from "../assets/altprofile.png";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import SideBar from "../components/SideBar";
@@ -15,9 +15,9 @@ const AboutPage = () => {
   return (
     <div id="about" className="h-[90vh] overflow-y-scroll scrollbar-thin">
       <div className="block lg:hidden">
-      <SideBar />
+        <SideBar />
       </div>
-      <div className="flex justify-center py-10 px-10 about-main" >
+      <div className="flex justify-center py-10 px-10 about-main">
         <h2 className="text-[80px] lg:text-[120px] 2xl:text-[160px] font-bold text-light-blue-400 text-center drop-shadow-lg">
           About MedC
         </h2>
@@ -74,23 +74,23 @@ const AboutPage = () => {
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4 mt-3 justify-center items-center">
           <div className="flex flex-col items-center gap-3">
-            <img src={profile3} className="rounded-lg" />
+            <img src={altprofile} className="rounded-lg" />
             <p>Mr. Aman</p>
           </div>
           <div className="flex flex-col items-center gap-3">
-            <img src={profile3} className="rounded-lg" />
+            <img src={altprofile} className="rounded-lg" />
             <p>Mr. Himanshu</p>
           </div>
           <div className="flex flex-col items-center gap-3">
-            <img src={profile3} className="rounded-lg" />
+            <img src={altprofile} className="rounded-lg" />
             <p>Mr. Gautam</p>
           </div>
           <div className="flex flex-col items-center gap-3">
-            <img src={profile3} className="rounded-lg" />
+            <img src={altprofile} className="rounded-lg" />
             <p>Ms. Yukti</p>
           </div>
           <div className="flex flex-col items-center gap-3">
-            <img src={profile3} className="rounded-lg" />
+            <img src={altprofile} className="rounded-lg" />
             <p>Mr. Devansh</p>
           </div>
         </div>
