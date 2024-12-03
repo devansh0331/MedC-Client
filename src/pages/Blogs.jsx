@@ -60,7 +60,7 @@ const Blogs = () => {
                   }}
                 >
                   <Typography
-                    className={`text-xl font-semibold text-gray-900`}
+                    className={`text-base lg:text-xl font-semibold text-gray-900`}
                   >
                     {blog.title}
                   </Typography>

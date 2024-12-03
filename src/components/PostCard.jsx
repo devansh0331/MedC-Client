@@ -119,7 +119,7 @@ function PostCard() {
         id="posts"
       >
         {posts.length === 0 ? (
-          <div className="w-full h-full flex items-center justify-center">
+          <div className="w-full h-full flex justify-center">
             {/* <p className="font-bold text-lg">No Posts Available!</p> */}
             <SinglePostSkeleton />
           </div>
