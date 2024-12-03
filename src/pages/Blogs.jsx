@@ -60,19 +60,22 @@ const Blogs = () => {
                   }}
                 >
                   <Typography
-                    className={`text-base lg:text-xl font-semibold text-gray-900`}
-                  >
-                    {blog.title}
-                  </Typography>
-                  <Typography
-                    className={`text-sm text-gray-700`}
                     style={{
                       transition: "height 0.5s ease-in-out",
-                      height: hoveredCardIndex === index ? "120px" : "0",
+                      height: hoveredCardIndex === index ? "200px" : "70px",
                       overflow: "hidden",
                     }}
-                    dangerouslySetInnerHTML={{ __html: blog.content }}
-                  ></Typography>
+                  >
+                    <Typography
+                      className={`text-base lg:text-xl font-semibold text-gray-900`}
+                    >
+                      {blog.title}
+                    </Typography>
+                    <Typography
+                      className={`text-sm text-gray-700`}
+                      dangerouslySetInnerHTML={{ __html: blog.content }}
+                    ></Typography>
+                  </Typography>
                 </div>
               </Card>
             )}
