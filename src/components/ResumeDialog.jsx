@@ -15,7 +15,7 @@ import { UserContext } from "../UserContext";
 import { SERVER_URL } from "../ServerURL";
 import Cookies from "js-cookie";
 import { MdDelete } from "react-icons/md";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const ResumeDialog = (props) => {
   const { user, handleUpload } = useContext(UserContext);
@@ -23,6 +23,7 @@ const ResumeDialog = (props) => {
   const [allfiles, setAllFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handlefileDownload = (resumeFile, resumeName) => {
     const pdfUrl = resumeFile;
@@ -50,14 +51,15 @@ const ResumeDialog = (props) => {
       const response = await fetch(`${SERVER_URL}/userResume/get-resume`, {
         method: "GET",
         headers: {
-          // "Content-Type": "application/json",
           Authorization: `Bearer ${Cookies.get("token")}`,
         },
       });
       const res = await response.json();
-      // console.log("res", res);
       if (res.success) {
+        // reverse the array
+        res.data.reverse();
         setAllFiles(res.data);
+        setSelectedFile(res.data[0]?._id);
       } else {
         console.log(res.error);
       }
@@ -89,19 +91,20 @@ const ResumeDialog = (props) => {
 
   const handleUploadfile = async () => {
     if (!file) {
-      toast.error("Please select a file");
+      setError("Please select a file");
+      setTimeout(() => {
+        setError("");
+      }, 2000);
       return;
     }
 
     if (file) {
       const fileURL = await handleUpload(file, "image");
-      console.log(file);
+      // console.log(file);
       const data = {
         fileURL,
         fileName: file.name,
       };
-      // console.log(formData);
-
       try {
         const response = await fetch(`${SERVER_URL}/userResume/add-resume`, {
           method: "POST",
@@ -113,17 +116,22 @@ const ResumeDialog = (props) => {
         });
 
         const res = await response.json();
-        console.log(res);
         if (res.success) {
-          toast.success(res.message);
           getAllFiles();
+          // setSelectedFile(allfiles[0]?._id);
           setFile(null);
+          setSuccess(res.message);
+          setTimeout(() => {
+            setSuccess("");
+          }, 1000);
         } else {
-          toast.error(res.error);
+          setError(res.error);
+          setTimeout(() => {
+            setError("");
+          }, 2000);
         }
       } catch (error) {
-        console.error(error); // Log the actual error for debugging
-        toast.error(error.message || "Error uploading resume"); // Use error message if available, otherwise a fallback message
+        setError(error.message || "Error uploading resume");
       }
     }
   };
@@ -142,17 +150,18 @@ const ResumeDialog = (props) => {
       const res = await response.json();
       console.log("res", res);
       if (res.success) {
-        toast.success(res.message);
+        setSuccess(res.message);
+        setTimeout(() => {
+          setSuccess("");
+        }, 1000);
         getAllFiles();
       } else {
-        toast.error(res.error);
+        setError(res.error);
       }
     } catch (error) {
       console.log(error);
     }
   };
-  // console.log(props?.jobId)
-  // console.log("resume",selectedFile);
 
   const handleJobApplication = async () => {
     if (!selectedFile) {
@@ -180,7 +189,11 @@ const ResumeDialog = (props) => {
         if (res.success) {
           props.handler();
           props.checkIfApplied();
+          setSuccess(res.message);
           toast.success(res.message);
+          setTimeout(() => {
+            setSuccess("");
+          }, 1000);
         } else {
           setError(res.error);
         }
@@ -192,7 +205,6 @@ const ResumeDialog = (props) => {
 
   useEffect(() => {
     getAllFiles();
-    // getAllResume();
   }, [user]);
 
   return (
@@ -232,7 +244,8 @@ const ResumeDialog = (props) => {
             ))}
         </div>
         <p className="">Upload New Resume</p>
-        <div className="mt-1 relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
+        <div className="relative mt-1 border-[1px] border-dashed border-gray-400 w-full h-24 p-2 rounded-md flex items-center justify-center cursor-pointer">
+          <div className="flex w-full h-full items-center justify-center">
           <input
             id="file-upload"
             className="hidden"
@@ -240,14 +253,15 @@ const ResumeDialog = (props) => {
             accept=".pdf"
             onChange={handleFileChange}
           />
-          <label htmlFor="file-upload" className="">
-            <IoDocumentTextSharp className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2" />{" "}
-            <span className="ml-8 absolute top-1/2 -translate-y-1/2">
+          <label htmlFor="file-upload" className="flex gap-1">
+            <IoDocumentTextSharp className="w-5 h-5" />{" "}
+            <span className="">
               {file ? file.name : "Upload file"}
             </span>
           </label>
+          </div>
           <IoClose
-            className="w-5 h-5 absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+            className="w-4 h-4 absolute right-1 top-1 cursor-pointer text-gray-600"
             onClick={() => setFile(null)}
           />
         </div>
@@ -281,10 +295,17 @@ const ResumeDialog = (props) => {
       </DialogFooter>
       <div
         className={`text-red-500 w-full text-center mb-2 ${
-          error === "" ? "hidden" : "block"
+          error.length < 0 ? "hidden" : "block"
         }`}
       >
         {error}
+      </div>
+      <div
+        className={`text-green-500 w-full text-center mb-2 ${
+          success.length < 0 ? "hidden" : "block"
+        }`}
+      >
+        {success}
       </div>
     </Dialog>
   );
