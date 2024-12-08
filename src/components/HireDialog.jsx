@@ -22,7 +22,7 @@ const HireDialog = (props) => {
     if (props.jobId) {
       try {
         const response = await fetch(
-          `${SERVER_URL}/userjob/shortlist-candidate/${props.candidateId}`,
+          `${SERVER_URL}/userjob/shortlist-candidate/${props.jobId}`,
           {
             method: "POST",
             credentials: "include",

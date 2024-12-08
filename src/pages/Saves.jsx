@@ -100,7 +100,7 @@ const Saves = () => {
     getSavedJobs();
     getAppliedJobs();
     getPostedJobs();
-    console.log(postedJobs);
+    // console.log(postedJobs);
   }, [user._id]);
 
   return (
