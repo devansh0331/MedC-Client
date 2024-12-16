@@ -38,7 +38,7 @@ const UserCardAdmin = (props) => {
             You can now log in to your account with your previous credentials.
             <br />
             If you have any queries or concerns, please do not hesitate to
-            contact us at medcofficalsupport.com.
+            contact us at https://www.medcofficial.com/contact.
             <br />
             <br />
             Best regards,
@@ -125,7 +125,7 @@ const UserCardAdmin = (props) => {
         setIsUserAdmin(true);
       } else {
         setIsUserAdmin(false);
-      }
+      }  
     } catch (error) {
       console.log(error);
     }
@@ -243,7 +243,7 @@ const UserCardAdmin = (props) => {
             from the MedC job portal due to {reason}.
             <br />
             If you have any queries or concerns, please do not hesitate to
-            contact us at medcofficalsupport.com.
+            contact us at https://www.medcofficial.com/contact.
             <br />
             <br />
             Best regards,

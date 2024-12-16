@@ -179,7 +179,7 @@ const MaxJob = () => {
 
   useEffect(() => {
     buildLocationArray();
-  }, [CityArr]);
+  }, []);
 
   useEffect(() => {
     buildKeywordArray();

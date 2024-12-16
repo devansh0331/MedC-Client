@@ -188,6 +188,8 @@ const ProfileDetails = (props) => {
       <CardBody className="w-full max-h-[70vh] overflow-y-scroll scrollbar-thin pt-4">
         {section === "About" && (
           <>
+            <p className="text-gray-800 text-md md:text-xl font-semibold">About</p>
+
             {props.user.about && (
               <Typography className="text-gray-800 text-md">
                 {props.user.about}
@@ -201,6 +203,8 @@ const ProfileDetails = (props) => {
         )}
         {section === "Experience" && (
           <>
+            <p className="text-gray-800 text-md md:text-xl font-semibold">Experience</p>
+
             {singleUserExperience.length > 0 ? (
               <>
                 {singleUserExperience.map((exp, key) => (
@@ -247,6 +251,8 @@ const ProfileDetails = (props) => {
         )}
         {section === "Education" && (
           <>
+            <p className="text-gray-800 text-md md:text-xl font-semibold">Education</p>
+
             {singleUserEducation.length > 0 ? (
               <>
                 {singleUserEducation.map((edu, key) => (
@@ -289,6 +295,10 @@ const ProfileDetails = (props) => {
         )}
         {section === "Certificates" && (
           <>
+            <p className="text-gray-800 text-md md:text-xl font-semibold">
+              Certificates
+            </p>
+
             {singleUserCertificate.length > 0 ? (
               <>
                 {singleUserCertificate.map((cert, key) => (
@@ -331,6 +341,8 @@ const ProfileDetails = (props) => {
         )}
         {section === "Achievements" && (
           <>
+            <p className="text-gray-800 text-md md:text-xl font-semibold">Achievements</p>
+
             {singleUserAchievement.length > 0 ? (
               <>
                 {singleUserAchievement.map((ach, key) => (
@@ -365,6 +377,7 @@ const ProfileDetails = (props) => {
         )}
         {section === "Posts" && (
           <div className="xl:w-2/3 mx-auto flex flex-col gap-3">
+            <p className="text-gray-800 text-md md:text-xl font-semibold">Your Posts</p>
             {posts.length > 0 ? (
               <>
                 {posts.map((post, key) => (

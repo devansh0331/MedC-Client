@@ -296,7 +296,7 @@ const MaxJobCard = (props) => {
             <>
               <div className="flex flex-col">
                 <Typography className="text-gray-700">
-                  {props.job?.noOfApplications ? props.job.noOfApplications : 0} Applicants
+                  {props.job?.noOfApplications ? props.job.noOfApplications : 0} {props.job?.noOfApplications === 1 ? "Application" : "Applications"}
                 </Typography>
               </div>
               <div className="flex md:justify-end items-end gap-4 mt-2 md:mt-0">
@@ -308,7 +308,7 @@ const MaxJobCard = (props) => {
                   color="blue"
                   onClick={() => navigate(`/job/${props?.job._id}/applications`)}
                 >
-                  View
+                  View Applications
                 </Button>
               </div>
             </>
@@ -441,7 +441,7 @@ const MaxJobCard = (props) => {
         open={openApplyDialog}
         handler={handleOpenApplyDialog}
         jobId={props.job?._id}
-        title="Select a Resume"
+        title={`Apply for ${props.job?.jobTitle}`}
         route="Apply"
         checkIfApplied={checkIfApplied}
       />

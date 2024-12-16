@@ -165,7 +165,7 @@ function SignUpPage() {
                   htmlFor="password"
                   className="text-sm font-medium tracking-wider text-gray-700"
                 >
-                  Password
+                  Create Password
                 </label>
                 <div className="relative">
                   <input
@@ -174,7 +174,7 @@ function SignUpPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     id="password"
                     className="text-sm font-medium text-gray-800 p-2 border border-gray-600 rounded-sm w-full pr-10"
-                    placeholder="Password"
+                    placeholder="Create Password"
                   />
                   <span
                     onClick={togglePasswordVisibility}

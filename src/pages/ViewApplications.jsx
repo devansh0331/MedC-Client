@@ -151,6 +151,9 @@ console.log(jobId);
                     <JobCardSingle job={job} route={"ViewApplications"} />
                   </AccordionBody>
                 </Accordion>
+                <div className=" bg-white rounded-lg px-4 py-2">
+
+                <p className="text-2xl font-bold">Applications</p>
                 <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 overflow-visible md:overflow-y-scroll max-h-[80vh] scrollbar-thin gap-3">
                   {applications.map((user, index) => (
                     <>
@@ -226,6 +229,7 @@ console.log(jobId);
                       ) : null}
                     </>
                   ))}
+                </div>
                 </div>
               </div>
               <div className="w-1/4 hidden xl:block">

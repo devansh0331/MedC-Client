@@ -22,6 +22,7 @@ const ResumeDialog = (props) => {
   const [file, setFile] = useState(null);
   const [allfiles, setAllFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFileName, setSelectedFileName] = useState(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -60,6 +61,9 @@ const ResumeDialog = (props) => {
         res.data.reverse();
         setAllFiles(res.data);
         setSelectedFile(res.data[0]?._id);
+        setSelectedFileName(res.data[0]?.resumeName);
+        // console.log(res.data);
+        
       } else {
         console.log(res.error);
       }
@@ -211,7 +215,8 @@ const ResumeDialog = (props) => {
     <Dialog open={props.open} handler={props.handler} size="sm">
       <DialogHeader className="py-2 px-4 pt-2">{props.title}</DialogHeader>
       <DialogBody className="flex flex-col py-0 px-4 m-0">
-        <div className="mb-4">
+        <p className="text-black">Your uploaded resumes</p>
+        <div className="mb-4 max-h-24 overflow-y-scroll scrollbar-thin">
           {allfiles?.length > 0 &&
             allfiles.map((file, index) => (
               <div
@@ -225,7 +230,7 @@ const ResumeDialog = (props) => {
                       }`
                     : "border-[1px] border-gray-400"
                 }`}
-                onClick={() => setSelectedFile(file._id)}
+                onClick={() => {setSelectedFile(file._id), setSelectedFileName(file.resumeName)}}
               >
                 <p>{file.resumeName}</p>
                 <div className="flex gap-1">
@@ -240,10 +245,11 @@ const ResumeDialog = (props) => {
                     onClick={() => handlefileDelete(file._id)}
                   />
                 </div>
+                
               </div>
             ))}
         </div>
-        <p className="">Upload New Resume</p>
+        <p className="">Upload a New Resume</p>
         <div className="relative mt-1 border-[1px] border-dashed border-gray-400 w-full h-24 p-2 rounded-md flex items-center justify-center cursor-pointer">
           <div className="flex w-full h-full items-center justify-center">
           <input
@@ -266,31 +272,34 @@ const ResumeDialog = (props) => {
           />
         </div>
       </DialogBody>
-      <DialogFooter className="flex gap-2">
+      <DialogFooter className="flex gap-2 w-full flex-col">
+          <Button
+            size="sm"
+            color={`${file ? "blue" : "blue-gray"}`}
+            onClick={handleUploadfile}
+            className=" w-full disabled:bg-gray-400 disabled:cursor-not-allowed"
+            variant={`${props.route === "Apply" ? "outlined" : "filled"}`}
+            disabled={!file}
+          >
+            Upload Resume
+          </Button>
         <Button
           size="sm"
           variant="outlined"
           color="blue"
           onClick={props.handler}
-          className={`${props.route === "Apply" ? "hidden" : "block"}`}
+          className={`${props.route === "Apply" ? "hidden" : "block"} w-full`}
         >
           Cancel
         </Button>
         <Button
           size="sm"
           color="blue"
-          onClick={handleUploadfile}
-          variant={`${props.route === "Apply" ? "outlined" : "filled"}`}
-        >
-          Upload
-        </Button>
-        <Button
-          size="sm"
-          color="blue"
           onClick={handleJobApplication}
-          className={`${props.route === "Apply" ? "block" : "hidden"}`}
+          variant="outlined"
+          className={`${props.route === "Apply" ? "block" : "hidden"} w-full`}
         >
-          Apply
+          Apply with <span className="text-gray-700">{selectedFileName}</span>
         </Button>
       </DialogFooter>
       <div

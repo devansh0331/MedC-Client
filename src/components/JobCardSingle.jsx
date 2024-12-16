@@ -248,7 +248,7 @@ const JobCardSingle = (props) => {
         <div className="flex gap-2 items-start mr-8">
           <div className="flex flex-col">
             <Typography className="text-sm">
-              {job?.noOfApplications} Applicants
+              {job?.noOfApplications} {job?.noOfApplications === 1 ? "Application" : "Applications"}
             </Typography>
             <Typography className="text-sm">
               Posted by,{" "}
