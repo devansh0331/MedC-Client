@@ -354,3 +354,24 @@ const UserCardAdmin = (props) => {
 };
 
 export default UserCardAdmin;
+
+  // const deleteUserPermanently = async () => {
+  //   try {
+  //     const response = await fetch(`${SERVER_URL}/user/delete-user/${user._id}`,{
+  //       method: "POST",
+  //       credentials: "include",
+  //       headers: {
+  //         Authorization: `Bearer ${Cookies.get("token")}`,
+  //       },
+  //     })
+  //     const res = await response.json();
+  //     if(res.success){
+  //       toast.success(res.message)
+  //       props.parentFunction();
+  //     }else{
+  //       toast.error(res.error)
+  //     }
+  //   } catch (error) {
+  //     toast.error(error);
+  //   }
+  // }

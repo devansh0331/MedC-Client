@@ -30,6 +30,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { UserContext } from "../UserContext";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { MdOutlineArticle } from "react-icons/md";
+import { IoMdCloseCircleOutline } from "react-icons/io";
 
 function SideBar() {
   const dispatch = useDispatch();
@@ -176,6 +177,7 @@ function SideBar() {
           className="flex flex-col justify-between items-start h-full w-full"
           shadow={false}
         >
+          <button className="absolute right-2 top-2" onClick={closeDrawer}><IoMdCloseCircleOutline className="h-5 w-5 cursor-pointer" /></button>
           {userInfo.state && (
           <div
             className="flex flex-col w-full m-0"

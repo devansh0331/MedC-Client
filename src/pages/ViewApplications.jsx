@@ -40,6 +40,7 @@ const ViewApplications = () => {
   const [candidateEmail, setCandidateEmail] = useState("");
   const [candidateId, setCandidateId] = useState("");
   const [isShortListing, setIsShortListing] = useState(true);
+  const [shortlistedCandidates, setShortlistedCandidates] = useState([]);
 
   const handleProfileExpand = () => {
     setProfileExpand(!profileExpand);
@@ -84,7 +85,30 @@ const ViewApplications = () => {
       console.log(error);
     }
   };
-console.log(jobId);
+
+  const getShortlistedCandidates = async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/userjob/get-shortlisted-candidates/${jobId}`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      )
+      const res = await response.json();
+      // console.log(res)
+      if(res.success){
+        setShortlistedCandidates(res.data);
+      }else{
+        toast.error(res.message)
+      }
+    } catch (error) {
+      toast.error(error);
+      
+    }
+  }
 
   const shortListCandidate = async () => {
     try {
@@ -118,13 +142,14 @@ console.log(jobId);
   useEffect(() => {
     getSingleJob();
   }, []);
-
+  
   useEffect(() => {
     setUserExpand(applications[0]?.userId);
   }, [applications]);
-
+  
   useEffect(() => {
     getAllApplications();
+    getShortlistedCandidates();
   }, [jobId]);
 
   return (
@@ -152,11 +177,10 @@ console.log(jobId);
                   </AccordionBody>
                 </Accordion>
                 <div className=" bg-white rounded-lg px-4 py-2">
-
                 <p className="text-2xl font-bold">Applications</p>
                 <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 overflow-visible md:overflow-y-scroll max-h-[80vh] scrollbar-thin gap-3">
                   {applications.map((user, index) => (
-                    <>
+                    <div key={index}>
                       {user.userId.name != "" ? (
                         <Card
                           className="p-3 flex flex-col gap-3 justify-between"
@@ -227,7 +251,86 @@ console.log(jobId);
                           </CardFooter>
                         </Card>
                       ) : null}
-                    </>
+                    </div>
+                  ))}
+                </div>
+                </div>
+                <div className=" bg-white rounded-lg px-4 py-2">
+                <p className="text-2xl font-bold">Shortlisted</p>
+                <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 overflow-visible md:overflow-y-scroll max-h-[80vh] scrollbar-thin gap-3">
+                  {shortlistedCandidates.map((user, index) => (
+                    <div key={index}>
+                      {user.userId.name != "" ? (
+                        <Card
+                          className="p-3 flex flex-col gap-3 justify-between"
+                          key={index}
+                        >
+                          <CardHeader
+                            floated={false}
+                            shadow={false}
+                            color="transparent"
+                            className="p-0 m-0  flex flex-col items-center justify-center w-full border-b-2 rounded-none pb-2 "
+                          >
+                            <Badge color="green" overlap="circular" invisible>
+                              <Avatar
+                                src={
+                                  user.userId.profileURL
+                                    ? user.userId.profileURL
+                                    : altprofile
+                                }
+                                alt="altprofile"
+                                size="xl"
+                                className="w-24 h-24 mx-auto"
+                              />
+                            </Badge>
+                            <Typography className="text-lg mt-2">
+                              {user?.userId.name ? user.userId.name : "Anonymous"}
+                            </Typography>
+                          </CardHeader>
+                          {user.userId.location || user.userId.bio ? (
+                            <CardBody className="m-0 p-0 border-b-2 rounded-none pb-2">
+                              {user.userId.bio && (
+                                <Typography className="flex items-center">
+                                  <BsBuildingsFill />
+                                  <span className="ml-1">
+                                    {user.userId.bio}
+                                  </span>
+                                </Typography>
+                              )}
+                              {user.userId.location && (
+                                <Typography className="flex items-center">
+                                  <IoLocationSharp />
+                                  <span className="ml-1">
+                                    {user.userId.location}
+                                  </span>
+                                </Typography>
+                              )}
+                            </CardBody>
+                          ) : null}
+                          <CardFooter className="m-0 p-0 mx-auto">
+                            <Button
+                              size="sm"
+                              className="px-2 py-1 font-light rounded-md hidden xl:block"
+                              color="light-blue"
+                              onClick={() => setUserExpand(user.userId)}
+                            >
+                              Show Details
+                            </Button>
+                            <Button
+                              size="sm"
+                              className="px-2 py-1 font-light rounded-md xl:hidden block"
+                              color="light-blue"
+                              onClick={() => {
+                                setUserExpand(user.userId);
+                                handleProfileExpand();
+                              }}
+                            >
+                              Show Details
+                            </Button>
+                          </CardFooter>
+                        </Card>
+                      ) : null}
+                    </div>
                   ))}
                 </div>
                 </div>

@@ -113,7 +113,7 @@ const Contactus = () => {
                 <p className="flex items-center my-2 gap-2 cursor-pointer">
                   <IoLocationSharp className="w-5 h-5 text-gray-700" />{" "}
                   <span className="text-base text-gray-800">
-                    Kolkata, India
+                    Bhilai, Chattissgarh
                   </span>
                 </p>
               </a>
@@ -121,7 +121,7 @@ const Contactus = () => {
                 <p className="flex items-center my-2 gap-2 cursor-pointer">
                   <MdEmail className="w-5 h-5 text-gray-700" />{" "}
                   <span className="text-base text-gray-800">
-                    abc@example.com
+                  officialmedc@gmail.com.
                   </span>
                 </p>
               </a>
@@ -129,7 +129,7 @@ const Contactus = () => {
                 <p className="flex items-center my-2 gap-2 cursor-pointer">
                   <FaPhoneAlt className="w-5 h-5 text-gray-700" />{" "}
                   <span className="text-base text-gray-800">
-                    +91 00000 00000
+                  +91 96172 62494
                   </span>
                 </p>
               </a>
