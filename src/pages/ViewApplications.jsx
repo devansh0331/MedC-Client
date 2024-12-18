@@ -98,7 +98,7 @@ const ViewApplications = () => {
         }
       )
       const res = await response.json();
-      // console.log(res)
+      console.log(res)
       if(res.success){
         setShortlistedCandidates(res.data);
       }else{
@@ -181,7 +181,7 @@ const ViewApplications = () => {
                 <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 overflow-visible md:overflow-y-scroll max-h-[80vh] scrollbar-thin gap-3">
                   {applications.map((user, index) => (
                     <div key={index}>
-                      {user.userId.name != "" ? (
+                      {user?.userId?.name != "" ? (
                         <Card
                           className="p-3 flex flex-col gap-3 justify-between"
                           key={index}
@@ -195,8 +195,8 @@ const ViewApplications = () => {
                             <Badge color="green" overlap="circular" invisible>
                               <Avatar
                                 src={
-                                  user.userId.profileURL
-                                    ? user.userId.profileURL
+                                  user?.userId?.profileURL
+                                    ? user?.userId?.profileURL
                                     : altprofile
                                 }
                                 alt="altprofile"
@@ -205,12 +205,12 @@ const ViewApplications = () => {
                               />
                             </Badge>
                             <Typography className="text-lg mt-2">
-                              {user?.userId.name ? user.userId.name : "Anonymous"}
+                              {user?.userId?.name ? user?.userId?.name : "Anonymous"}
                             </Typography>
                           </CardHeader>
-                          {user.userId.location || user.userId.bio ? (
+                          {user?.userId?.location || user?.userId?.bio ? (
                             <CardBody className="m-0 p-0 border-b-2 rounded-none pb-2">
-                              {user.userId.bio && (
+                              {user?.userId?.bio && (
                                 <Typography className="flex items-center">
                                   <BsBuildingsFill />
                                   <span className="ml-1">
@@ -218,7 +218,7 @@ const ViewApplications = () => {
                                   </span>
                                 </Typography>
                               )}
-                              {user.userId.location && (
+                              {user?.userId?.location && (
                                 <Typography className="flex items-center">
                                   <IoLocationSharp />
                                   <span className="ml-1">
@@ -256,11 +256,11 @@ const ViewApplications = () => {
                 </div>
                 </div>
                 <div className=" bg-white rounded-lg px-4 py-2">
-                <p className="text-2xl font-bold">Shortlisted</p>
+                <p className="text-2xl font-bold">Hired Candidates</p>
                 <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 overflow-visible md:overflow-y-scroll max-h-[80vh] scrollbar-thin gap-3">
                   {shortlistedCandidates.map((user, index) => (
                     <div key={index}>
-                      {user.userId.name != "" ? (
+                      {user?.userId?.name != "" ? (
                         <Card
                           className="p-3 flex flex-col gap-3 justify-between"
                           key={index}
@@ -274,8 +274,8 @@ const ViewApplications = () => {
                             <Badge color="green" overlap="circular" invisible>
                               <Avatar
                                 src={
-                                  user.userId.profileURL
-                                    ? user.userId.profileURL
+                                  user?.userId?.profileURL
+                                    ? user?.userId?.profileURL
                                     : altprofile
                                 }
                                 alt="altprofile"
@@ -284,10 +284,10 @@ const ViewApplications = () => {
                               />
                             </Badge>
                             <Typography className="text-lg mt-2">
-                              {user?.userId.name ? user.userId.name : "Anonymous"}
+                              {user?.userId?.name ? user?.userId?.name : "Anonymous"}
                             </Typography>
                           </CardHeader>
-                          {user.userId.location || user.userId.bio ? (
+                          {user?.userId?.location || user?.userId?.bio ? (
                             <CardBody className="m-0 p-0 border-b-2 rounded-none pb-2">
                               {user.userId.bio && (
                                 <Typography className="flex items-center">

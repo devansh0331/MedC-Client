@@ -177,13 +177,13 @@ function SideBar() {
           className="flex flex-col justify-between items-start h-full w-full"
           shadow={false}
         >
-          <button className="absolute right-2 top-2" onClick={closeDrawer}><IoMdCloseCircleOutline className="h-5 w-5 cursor-pointer" /></button>
+          <button className="absolute right-2 top-2 bg-white rounded-full" onClick={closeDrawer}><IoMdCloseCircleOutline className="h-5 w-5 cursor-pointer" /></button>
           {userInfo.state && (
           <div
             className="flex flex-col w-full m-0"
           >
             <div
-              className={`flex items-center border-b-2 mt-4 p-4 cursor-pointer hover:bg-opacity-90 rounded-xl text-gray-800 ${currentPage.includes(`/user/${user._id}`) ? active : ""}`}
+              className={`flex items-center border-b-2 p-4 cursor-pointer hover:bg-opacity-90 text-gray-800 ${currentPage.includes(`/user/${user._id}`) ? active : ""}`}
               onClick={() => {navigate(`/user/${user._id}`);  closeDrawer();}}
             >
               <img

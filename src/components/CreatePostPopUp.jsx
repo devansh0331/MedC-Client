@@ -23,11 +23,13 @@ function CreatePostPopUp(props) {
   const [file, setFile] = useState(null);
   const [userId, setUserID] = useState("");
   const { handleUpload, secureURL, setSecureURL } = useContext(UserContext);
+  const [loader, setLoader] = useState(false);
   const handleOpen = () => {
     props.setOpen(!props.open);
   };
 
   const handleSubmit = async () => {
+    setLoader(true);
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
@@ -96,6 +98,7 @@ function CreatePostPopUp(props) {
         handleOpen();
       }
     }
+    setLoader(false);
   };
 
   const handleAudienceChange = (event) => {
@@ -128,56 +131,63 @@ function CreatePostPopUp(props) {
           </svg>
         </DialogHeader>
       </div>
-      <DialogBody className="m-0 b p-0 px-6">
-        <div className="grid">
-          <textarea
-            placeholder="Share Your experience"
-            value={post}
-            onChange={(e) => setPost(e.target.value)}
-            required
-            className="h-48 overflow-y-scroll w-full flex gap-2 justify-between border-[1px] border-gray-400 p-2 rounded-md items-center text-blue-gray-500 text-sm"
-          ></textarea>
-        </div>
-
-        <div className="flex flex-col my-1">
-          <label className="text-gray-700 text-sm">Upload File</label>
-          <div className="relative">
-            <input
-              id="file-upload"
-              className="hidden"
-              type="file"
-              onChange={(e) => setFile(e.target.files[0])}
-            />
-            <label
-              htmlFor="file-upload"
-              className="border-2 profilepic border-gray-400 rounded-md px-3 py-0.5 w-full h-full text-sm text-gray-700 flex items-center cursor-pointer"
-            >
-              <RiGalleryFill className="w-5 h-5" />{" "}
-              <span className="ml-2">{file ? file.name : "Upload File"}</span>
-            </label>
+      <div className="relative">
+        <DialogBody className="m-0 b p-0 px-6">
+          <div className="grid">
+            <textarea
+              placeholder="Share Your experience"
+              value={post}
+              onChange={(e) => setPost(e.target.value)}
+              required
+              className="h-48 overflow-y-scroll w-full flex gap-2 justify-between border-[1px] border-gray-400 p-2 rounded-md items-center text-blue-gray-500 text-sm"
+            ></textarea>
           </div>
-        </div>
-      </DialogBody>
-      <DialogFooter className="space-x-2">
-        <Button
-          variant="text"
-          color="gray"
-          onClick={() => {
-            handleOpen();
-            setPost("");
-            setFile(null);
-          }}
-        >
-          cancel
-        </Button>
-        <Button
-          onClick={() => handleSubmit()}
-          className=" bg-primary text-white  rounded-full "
-        >
-          Post
-        </Button>
-        <Toaster position="top-right" />
-      </DialogFooter>
+
+          <div className="flex flex-col my-1">
+            <label className="text-gray-700 text-sm">Upload File</label>
+            <div className="relative">
+              <input
+                id="file-upload"
+                className="hidden"
+                type="file"
+                onChange={(e) => setFile(e.target.files[0])}
+              />
+              <label
+                htmlFor="file-upload"
+                className="border-2 profilepic border-gray-400 rounded-md px-3 py-0.5 w-full h-full text-sm text-gray-700 flex items-center cursor-pointer"
+              >
+                <RiGalleryFill className="w-5 h-5" />{" "}
+                <span className="ml-2">{file ? file.name : "Upload File"}</span>
+              </label>
+            </div>
+          </div>
+        </DialogBody>
+        <DialogFooter className="space-x-2">
+          <Button
+            variant="text"
+            color="gray"
+            onClick={() => {
+              handleOpen();
+              setPost("");
+              setFile(null);
+            }}
+          >
+            cancel
+          </Button>
+          <Button
+            onClick={() => handleSubmit()}
+            className=" bg-primary text-white  rounded-full "
+          >
+            Post
+          </Button>
+          <Toaster position="top-right" />
+        </DialogFooter>
+        {loader && (
+          <div className="w-full h-full absolute bg-white opacity-80 top-0 flex justify-center items-center">
+            <div class="loader"></div>
+          </div>
+        )}
+      </div>
     </Dialog>
   );
 }

@@ -219,7 +219,7 @@ const MaxJob = () => {
           style={{ transition: "all 0.5s ease" }}
         >
           {/* KEYWORD FILTER */}
-          <div className="w-1/2 relative" ref={keywordRef}>
+          <div className="w-full md:w-1/2 relative" ref={keywordRef}>
             <input
               placeholder="Search Jobs"
               icon={<IoMdSearch />}
@@ -252,7 +252,7 @@ const MaxJob = () => {
             )}
           </div>
           {/* LOCATION FILTER */}
-          <div ref={locationRef} className="w-1/2 relative">
+          <div ref={locationRef} className="w-full md:w-1/2 relative">
             <input
               placeholder="Location"
               icon={<GrLocation />}
