@@ -145,7 +145,7 @@ const Connections = () => {
     if (locationRef.current && !locationRef.current.contains(event.target))
       setLocationBox(false);
   };
-
+  
   const buildLocationArray = () => {
     let arr = [];
     for (let i = 0; i < CityArr?.length; i++) {
@@ -282,8 +282,10 @@ const Connections = () => {
   }, [allUsers]);
 
   useEffect(() => {
-    buildLocationArray();
-  }, [CityArr]);
+    if (CityArr && StateArr) { 
+      buildLocationArray();
+    }
+  }, []);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutsideLocation);

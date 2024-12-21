@@ -18,7 +18,6 @@ import Cookies from "js-cookie";
 import { UserContext } from "../UserContext";
 import { FaUserClock } from "react-icons/fa";
 import { FaUserFriends } from "react-icons/fa";
-import { CgCommunity } from "react-icons/cg";
 import { MdOutlinePresentToAll } from "react-icons/md";
 import { RiUserSharedLine } from "react-icons/ri";
 

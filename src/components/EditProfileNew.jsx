@@ -13,6 +13,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { RiGalleryFill } from "react-icons/ri";
 import Resume from "../assets/Resume.pdf";
 import { IoClose } from "react-icons/io5";
+import { AiOutlineDelete } from "react-icons/ai";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { Country, State, City } from "country-state-city";
 import {
@@ -38,7 +39,6 @@ function EditProfileNew({
   setToast,
   getSingleUser,
 }) {
-
   // LOCATION CONSTANTS
   const CityArr = City.getCitiesOfCountry("IN");
   const StateArr = State.getStatesOfCountry("IN");
@@ -54,7 +54,6 @@ function EditProfileNew({
   const [bioRolesArray, setBioRolesArray] = useState([]);
   const [bioSuggestionbox, setBioSuggestionbox] = useState(false);
   const bioDropDown = useRef(null);
-
 
   const handleOpenEdit = () => setOpenEdit();
   const { handleUpload } = useContext(UserContext);
@@ -75,21 +74,21 @@ function EditProfileNew({
   const [website, setWebsite] = useState(user.website ? user.website : "");
   const [error, setError] = useState("");
 
-
   // LOCATION FUNCTIONS
   const buildLocationArr = () => {
-    let locationSuggestionsArr = [];    
+    let locationSuggestionsArr = [];
     for (let i = 0; i < CityArr.length; i++) {
       locationSuggestionsArr.push(
-        `${CityArr[i].name}, ${StateArr.filter(
-          (state) => state.isoCode === CityArr[i].stateCode
-        )[0]?.name}`
+        `${CityArr[i].name}, ${
+          StateArr.filter((state) => state.isoCode === CityArr[i].stateCode)[0]
+            ?.name
+        }`
       );
     }
     setFixedLocationArray(locationSuggestionsArr);
     setLocationArray(locationSuggestionsArr);
-  }
-  
+  };
+
   const handleClickEvent2 = (event) => {
     if (locDropDown.current && !locDropDown.current.contains(event.target)) {
       setLocSuggestionbox(false);
@@ -97,14 +96,13 @@ function EditProfileNew({
   };
 
   const locationSuggestions = (keyword) => {
-    if(keyword.length == 0) setLocationArray([]);
+    if (keyword.length == 0) setLocationArray([]);
     const filteredList = fixedLocationArray.filter((item) => {
       return item.toLowerCase().startsWith(keyword.toLowerCase());
     });
     setLocationArray(filteredList);
   };
 
-  
   // BIO ROLE FUNCTIONS
   const handleClickEvent = (event) => {
     if (bioDropDown.current && !bioDropDown.current.contains(event.target)) {
@@ -138,13 +136,15 @@ function EditProfileNew({
 
   useEffect(() => {
     buildLocationArr();
-  },[]);
+  }, []);
 
   // SERVER SIDE FUNCTIONS
   const handleSaveProfile = async () => {
     let fileURL = "";
     if (file) {
       fileURL = await handleUpload(file, "image");
+    }else{
+      fileURL = "";
     }
     const data = {
       name: fName + " " + lName,
@@ -155,7 +155,7 @@ function EditProfileNew({
       linkedin: linkedin,
       twitter: twitter,
       website: website,
-      fileURL: file ? fileURL : null,
+      fileURL: file ? fileURL : "",
     };
     try {
       const response = await fetch(
@@ -190,21 +190,53 @@ function EditProfileNew({
   };
 
   return (
-    <Dialog open={openEdit} handler={handleOpenEdit} size="lg" className="">
+    <Dialog
+      open={openEdit}
+      handler={handleOpenEdit}
+      size="lg"
+      className="overflow-y-scroll max-h-[80vh] scrollbar-thin"
+    >
       <div className="flex px-4 py-2 w-full justify-between items-start">
         <Typography className="text-2xl font-bold">Edit Profile</Typography>
         <IoClose className="cursor-pointer w-6 h-6" onClick={handleOpenEdit} />
       </div>
       <div className="px-5 pb-5 flex flex-col lg:flex-row gap-4 w-full">
-        <div className="lg:w-2/5 lg:flex items-center hidden">
+        <div className="lg:w-2/5 lg:flex items-center relative">
           <img
             src={uploadedFile ? URL.createObjectURL(uploadedFile) : file}
-            className=" w-1/3 lg:w-full h-min profile-pic rounded-full"
+            className=" w-1/2 lg:w-full aspect-square profile-pic rounded-full mx-auto justify-start items-start flex"
           />
+          <div className="w-1/2 lg:w-full aspect-square profile-pic rounded-full mx-auto absolute bg-black bg-opacity-50 flex justify-center items-center gap-6">
+            <input
+              id="file-upload-image"
+              className="hidden"
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                setUploadedFile(e.target.files[0]);
+                setFile(e.target.files[0]);
+              }}
+            />
+            <label htmlFor="file-upload-image">
+              <FaRegEdit
+                className="w-6 h-6 text-white cursor-pointer hover:w-7 hover:h-7"
+                style={{ transition: "all 0.2s ease-in-out" }}
+              />
+            </label>
+
+            <AiOutlineDelete
+              className="w-6 h-6 text-white cursor-pointer hover:w-7 hover:h-7"
+              style={{ transition: "all 0.2s ease-in-out" }}
+              onClick={() => {
+                setFile(null);
+                setUploadedFile(null);
+              }}
+            />
+          </div>
         </div>
         <div className="lg:w-3/5 flex flex-col">
           <div className="flex flex-col sm:grid grid-cols-2 gap-4">
-            <div className="col-span-2 relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
+            {/* <div className="col-span-2 relative border-[1px] border-gray-400 w-full h-10 p-2 rounded-md flex items-center">
               <input
                 id="file-upload-image"
                 className="hidden"
@@ -228,7 +260,7 @@ function EditProfileNew({
                   setUploadedFile(null);
                 }}
               />
-            </div>
+            </div> */}
             <input
               placeholder="First Name"
               value={fName}
@@ -361,7 +393,9 @@ function EditProfileNew({
                   {locationArray.map((locationWord, index) => (
                     <div
                       className={`border-b-[1px] border-gray-400 cursor-default hover:bg-blue-800 hover:text-white ${
-                        location === locationWord ? "bg-blue-800 text-white" : "" // Highlight selected role
+                        location === locationWord
+                          ? "bg-blue-800 text-white"
+                          : "" // Highlight selected role
                       }`}
                       key={index}
                       onClick={() => {
@@ -375,7 +409,7 @@ function EditProfileNew({
                 </div>
               )}
             </div>
-           
+
             <input
               placeholder="Email"
               value={email}
