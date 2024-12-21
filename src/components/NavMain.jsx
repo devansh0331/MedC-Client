@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SideBar from "./SideBar";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
+import altprofile from "../assets/altprofile.png";
 
 const NavMain = () => {
   const dispatch = useDispatch();
@@ -92,7 +93,7 @@ const NavMain = () => {
           }
           {userInfo.state && (
             <img
-              src={`${user?.profileURL}`}
+              src={`${user?.profileURL}` ? user?.profileURL : altprofile}
               className="w-8 h-8 rounded-full cursor-pointer profile-pic"
               onClick={() => navigate(`/user/${user?._id}`)}
             />
