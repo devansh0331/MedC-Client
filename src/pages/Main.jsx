@@ -219,7 +219,7 @@ function Main() {
         }
       />
       <Route
-        path="/user-saves"
+        path="/job-actions"
         element={
           <>
             <NavMain />

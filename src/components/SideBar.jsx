@@ -31,6 +31,7 @@ import { UserContext } from "../UserContext";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { MdOutlineArticle } from "react-icons/md";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import { MdSaveAs } from "react-icons/md";
 
 function SideBar() {
   const dispatch = useDispatch();
@@ -130,6 +131,14 @@ function SideBar() {
               >
                 <ListItemPrefix className="mx-auto">
                   <FaSquarePlus className="w-6 h-6" />
+                </ListItemPrefix>
+              </div>
+              <div
+                className={`hidden lg:flex items-center justify-center px-2 py-3 rounded-md my-1 cursor-pointer ${currentPage.includes("/job-actions") ? active : ""}`}
+                onClick={() => navigate("/job-actions")}
+              >
+                <ListItemPrefix className="mx-auto">
+                  <MdSaveAs className="w-6 h-6" />
                 </ListItemPrefix>
               </div>
               <div
@@ -262,6 +271,18 @@ function SideBar() {
                   <FaSquarePlus className="w-6 h-6" />
                 </ListItemPrefix>
                 <Typography className="ml-2">Post a Job</Typography>
+              </div>
+              <div
+                className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-opacity-90 cursor-pointer ${currentPage.includes("/job-actions") ? active : ""}`}
+                onClick={() => {
+                  navigate("/job-actions");
+                  closeDrawer();
+                }}
+              >
+                <ListItemPrefix>
+                  <MdSaveAs  className="w-6 h-6" />
+                </ListItemPrefix>
+                <Typography className="ml-2">Job Actions</Typography>
               </div>
               <div
                 className={`flex items-center px-2 py-3 rounded-md my-1 hover:bg-opacity-90 cursor-pointer ${currentPage.includes("/blogs") ? active : ""}`}

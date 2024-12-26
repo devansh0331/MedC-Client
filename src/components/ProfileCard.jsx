@@ -272,7 +272,7 @@ const ProfileCard = (props) => {
             <CardBody className="flex flex-col px-4 py-2 border-b-2">
               <div
                 className="flex flex-row gap-1 items-center mb-1 text-blue-800 justify-between cursor-pointer underline decoration-1 underline-offset-2"
-                onClick={() => navigate("/user-saves")}
+                onClick={() => navigate("/job-actions")}
               >
                 <Typography className="">Job Actions</Typography>
               </div>
